@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ThinkJS 简介 - 暗网探秘</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="ThinkJS 简介" />
+<meta property="og:description" content="Flutter入门与实战 Flutter是Google使用Dart语言开发的移动应用开发框架，使用一套Dart代码就能构建高性能、高保真的iOS和Android应用程序，并且在排版、图标、滚动、点击等方面实现零差异。 xiangzhihong8 ¥9.90
+订阅 简介 最近几年，前端技术呈现出突飞猛进的发展，涌现出了一大批优秀的前端框架，今天给大家带来的就是基于node的一款优秀的优秀的前端框架。之前一直用Express来搭建比较简单的Node应用，但是对于相对复杂的应用来说，Express还是太轻量了。而作为一款优秀的国产前端框架，ThinkJS整合了大量的项目最佳实践，让企业级开发变得更加简单、高效。从 3.0 开始，框架底层基于 Koa 2.x 实现，兼容 Koa 的所有功能。在最新的版本中，ThinkJS全面支持ES6和ES7的语法规则。
+特性 基于 Koa 2.x，兼容 middleware 内核小巧，支持 Extend、Adapter 等插件方式 性能优异，单元测试覆盖程度高 内置自动编译、自动更新机制，方便快速开发 使用更优雅的 async/await 处理异步问题，不再支持 */yield 从 3.2 开始支持 TypeScript 架构模型 ThinkJS的架构模型如下： 环境搭建 借助 ThinkJS 提供的脚手架，可以快速的创建一个项目。需要注意的是使用ThinkJS框架需要Node 6.x以上环境的支持。大家ThinkJS环境需要用到如下的步骤：
+安装 ThinkJS 命令 npm install -g think-cli 安装完成后，系统中会有 thinkjs 命令（可以通过 thinkjs -v 查看 think-cli 的版本号，此版本号非 thinkjs 的版本号）。 注：如果是从 2.x 升级，需要将之前的命令删除，然后重新安装。
+卸载旧版本命令 npm uninstall -g thinkjs 创建项目 执行 命令“thinkjs new [project_name]” 来创建项目，如：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://anwangtanmi.github.io/posts/242aa03f72bce7f38a830e91f8a79b53/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-10-15T17:32:28+08:00" />
+<meta property="article:modified_time" content="2017-10-15T17:32:28+08:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="暗网探秘" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">暗网探秘</div>
+					
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">ThinkJS 简介</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-10-15T17:32:28&#43;08:00">2017-10-15</time></div></div>
+		</header>
+		<div id="gatop"></div>
+		<div class="content post__content clearfix">
+			
+<div class="entry-content clearfix">
+<p><br>
+<br>
+</p>
+<div id="blogColumnPayAdvert">
+<div class="column-advert-box">
+<a style="display: contents;" href="https://blog.csdn.net/xiangzhihong8/category_9276628.html" target="_blank" data-report-view='{"mod":"popu_849","dest":"https://blog.csdn.net/xiangzhihong8/category_9276628.html","strategy":"","extend1":"{\"user_type\":\"1\"}"}' data-report-click='{"mod":"popu_849","dest":"https://blog.csdn.net/xiangzhihong8/category_9276628.html","strategy":"","extend1":"{\"user_type\":\"1\"}"}' data-report-query="utm_source=ffzl_BWzd" rel="noopener noreferrer">
+<div class="left-advert-box">
+<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="338abba90c171e3f10dd48b1-|49"></script><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20180709215406544" alt onerror="this.src='https://img-blog.csdnimg.cn/2019091813595558.png'">
+</div>
+<div class="middle-advert-box">
+<div class="title">
+Flutter入门与实战
+</div>
+<div class="introduce">
+Flutter是Google使用Dart语言开发的移动应用开发框架，使用一套Dart代码就能构建高性能、高保真的iOS和Android应用程序，并且在排版、图标、滚动、点击等方面实现零差异。
+</div>
+<div class="information">
+<img src="https://profile.csdnimg.cn/E/D/2/3_xiangzhihong8" alt><br>
+<span>xiangzhihong8</span>
+</div>
+</div>
+<p> </p></a>
+<div class="right-advert-box">
+<div class="count-advert-box">
+<span class="advert-money">¥9.90</span><br>
+<span class="advert-count-people"></span>
+</div>
+<div class="bt-advert-box">
+<button class="bt-click" id="bt-click" data-id="9276628">订阅</button>
+</div>
+</div>
+</div>
+</div>
+<p> </p>
+<div id="article_content" class="article_content clearfix">
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-211130ba7a.css">
+<div id="content_views" class="markdown_views prism-atom-one-dark">
+<br>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+<path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+</svg>
+<h1 id="简介">简介</h1>
+<p>最近几年，前端技术呈现出突飞猛进的发展，涌现出了一大批优秀的前端框架，今天给大家带来的就是基于node的一款优秀的优秀的前端框架。之前一直用Express来搭建比较简单的Node应用，但是对于相对复杂的应用来说，Express还是太轻量了。而作为一款优秀的国产前端框架，ThinkJS整合了大量的项目最佳实践，让企业级开发变得更加简单、高效。从 3.0 开始，框架底层基于 Koa 2.x 实现，兼容 Koa 的所有功能。在最新的版本中，ThinkJS全面支持ES6和ES7的语法规则。</p>
+<h2 id="特性">特性</h2>
+<ul>
+<li>基于 Koa 2.x，兼容 middleware</li>
+<li>内核小巧，支持 Extend、Adapter 等插件方式</li>
+<li>性能优异，单元测试覆盖程度高</li>
+<li>内置自动编译、自动更新机制，方便快速开发</li>
+<li>使用更优雅的 async/await 处理异步问题，不再支持 */yield</li>
+<li>从 3.2 开始支持 TypeScript</li>
+</ul>
+<h2 id="架构模型">架构模型</h2>
+<p>ThinkJS的架构模型如下： <br> <img src="https://uzshare.com/_p?https://img-blog.csdn.net/20171015172226800?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGlhbmd6aGlob25nOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" title></p>
+<h1 id="环境搭建">环境搭建</h1>
+<p>借助 ThinkJS 提供的脚手架，可以快速的创建一个项目。需要注意的是使用ThinkJS框架需要Node 6.x以上环境的支持。大家ThinkJS环境需要用到如下的步骤：</p>
+<h2 id="安装-thinkjs-命令">安装 ThinkJS 命令</h2>
+<pre class="prettyprint"><code class=" hljs lasso">npm install <span class="hljs-attribute">-g</span> think<span class="hljs-attribute">-cli</span></code></pre>
+<p>安装完成后，系统中会有 thinkjs 命令（可以通过 thinkjs -v 查看 think-cli 的版本号，此版本号非 thinkjs 的版本号）。 <br> 注：如果是从 2.x 升级，需要将之前的命令删除，然后重新安装。</p>
+<h2 id="卸载旧版本命令">卸载旧版本命令</h2>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-built_in">npm</span> uninstall -g thinkjs</code></pre>
+<h2 id="创建项目">创建项目</h2>
+<p>执行 命令“thinkjs new [project_name]” 来创建项目，如：</p>
+<pre class="prettyprint"><code class=" hljs ruby"><span class="hljs-variable">$ </span>thinkjs new demo;
+<span class="hljs-variable">$ </span>cd demo;
+<span class="hljs-variable">$ </span>npm install; 
+<span class="hljs-variable">$ </span>npm start;</code></pre>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20171015173436102?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGlhbmd6aGlob25nOA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" title></p>
+<p>运行后可以看到相关的命令。</p>
+<h2 id="项目结构">项目结构</h2>
+<p>默认创建的项目结构如下：</p>
+<pre class="prettyprint"><code class=" hljs brainfuck"><span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">development</span><span class="hljs-string">.</span><span class="hljs-comment">js</span>   <span class="hljs-comment">//开发环境下的入口文件</span>
+<span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">nginx</span><span class="hljs-string">.</span><span class="hljs-comment">conf</span>  <span class="hljs-comment">//nginx</span> <span class="hljs-comment">配置文件</span>
+<span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">package</span><span class="hljs-string">.</span><span class="hljs-comment">json</span>
+<span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">pm2</span><span class="hljs-string">.</span><span class="hljs-comment">json</span> <span class="hljs-comment">//pm2</span> <span class="hljs-comment">配置文件</span>
+<span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">production</span><span class="hljs-string">.</span><span class="hljs-comment">js</span> <span class="hljs-comment">//生产环境下的入口文件</span>
+<span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">README</span><span class="hljs-string">.</span><span class="hljs-comment">md</span>
+<span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">src</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">bootstrap</span>  <span class="hljs-comment">//启动自动执行目录</span> 
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">master</span><span class="hljs-string">.</span><span class="hljs-comment">js</span> <span class="hljs-comment">//Master</span> <span class="hljs-comment">进程下自动执行</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">worker</span><span class="hljs-string">.</span><span class="hljs-comment">js</span> <span class="hljs-comment">//Worker</span> <span class="hljs-comment">进程下自动执行</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">config</span>  <span class="hljs-comment">//配置文件目录</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">adapter</span><span class="hljs-string">.</span><span class="hljs-comment">js</span>  <span class="hljs-comment">//</span> <span class="hljs-comment">adapter</span> <span class="hljs-comment">配置文件</span> 
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">config</span><span class="hljs-string">.</span><span class="hljs-comment">js</span>  <span class="hljs-comment">//</span> <span class="hljs-comment">默认配置文件</span> 
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">config</span><span class="hljs-string">.</span><span class="hljs-comment">production</span><span class="hljs-string">.</span><span class="hljs-comment">js</span>  <span class="hljs-comment">//生产环境下的默认配置文件，和</span> <span class="hljs-comment">config</span><span class="hljs-string">.</span><span class="hljs-comment">js</span> <span class="hljs-comment">合并</span> 
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">extend</span><span class="hljs-string">.</span><span class="hljs-comment">js</span>  <span class="hljs-comment">//extend</span> <span class="hljs-comment">配置文件</span> 
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">middleware</span><span class="hljs-string">.</span><span class="hljs-comment">js</span> <span class="hljs-comment">//middleware</span> <span class="hljs-comment">配置文件</span> 
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">router</span><span class="hljs-string">.</span><span class="hljs-comment">js</span> <span class="hljs-comment">//自定义路由配置文件</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">controller</span>  <span class="hljs-comment">//控制器目录</span> 
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">base</span><span class="hljs-string">.</span><span class="hljs-comment">js</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">index</span><span class="hljs-string">.</span><span class="hljs-comment">js</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">logic</span> <span class="hljs-comment">//logic</span> <span class="hljs-comment">目录</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">index</span><span class="hljs-string">.</span><span class="hljs-comment">js</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">model</span> <span class="hljs-comment">//模型目录</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">index</span><span class="hljs-string">.</span><span class="hljs-comment">js</span>
+<span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">view</span>  <span class="hljs-comment">//模板目录</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">index_index</span><span class="hljs-string">.</span><span class="hljs-comment">html</span>
+<span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">www</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">static</span>  <span class="hljs-comment">//静态资源目录</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">css</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">img</span>
+<span class="hljs-comment">|</span> <span class="hljs-comment">|</span> <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">js</span></code></pre>
+<h1 id="2x-到3x的变化">2.x 到3.x的变化</h1>
+<p>由于2.x到3.x对接口改动较大，所以建议直接删除掉之前的版本，然后重新安装信息的版本。2.x到3.x变化的内容有：</p>
+<h2 id="核心变化">核心变化</h2>
+<p>3.0 抛弃了 2.x 的核心架构，基于 Koa 2.x 版本构建，兼容 Koa 里的所有功能。主要变化为：</p>
+<ul>
+<li>之前的 http 对象改为 ctx 对象</li>
+<li>执行完全改为调用 middleware 来完成</li>
+<li>框架内置的很多功能不再默认内置，可以通过扩展来支持</li>
+</ul>
+<h2 id="启动方式">启动方式</h2>
+<p>2.x 中项目启动时，会自动加载 src/bootstrap/ 目录下的所有文件。3.0 中不再自动加载所有的文件，而是改为（分为两种情况）：</p>
+<ul>
+<li>在 Master 进程中加载 src/boostrap/master.js 文件；</li>
+<li>在 Worker 进程中加载 src/boostrap/worker.js 文件；</li>
+</ul>
+<h2 id="配置">配置</h2>
+<p>2.x 中会自动加载 src/config/ 目录下的所有文件，3.0 中改为根据功能加载对应的文件。</p>
+<h3 id="hook-和-middleware">hook 和 middleware</h3>
+<p>移除 2.x 里的 hook 和 middleware，改为 Koa 里的 middleware，middleware 的管理放在 src/config/middleware.js 配置文件中。2.x 下的 middleware 类无法在 3.0 下使用，3.0 下可以直接使用 Koa 的 middleware。</p>
+<h3 id="controller">Controller</h3>
+<p>将基类 think.controller.base 改为 think.Controller，并移除 think.controller.rest 类。</p>
+<h3 id="model">Model</h3>
+<p>将基类 think.model.base 改为 think.Model。</p>
+<h3 id="view">View</h3>
+<p>模板的配置由原来的 src/common/config/view.js 迁移至 src/config/config.js 中，配置方法和之前基本一致。</p>
+<p>其中老版本的 preRender() 方法已经废弃，新方法名为 beforeRender()。nunjucks 模板引擎的参数顺序由原来的 preRender(nunjucks, env, config) 修改为 beforeRender(env, nunjucks, config)。</p>
+<h2 id="阻止代码执行">阻止代码执行</h2>
+<p>在新的语法规则中，为了实现阻止某些代码的执行，对原来的语法进行了调整。移除了 think.prevent 等阻止后续执行的方法，替换为在 __before、xxxAction、__after 中返回 false 来阻止后续代码继续执行。</p>
+<p>注：由于 3.0 改动了很多东西，所以不太容易基于原有项目代码简单修改来升级。建议使用新的脚手架工具创建项目，然后一一将之前的代码拷贝到新项目中进行修改。</p>
+<h1 id="基础概念">基础概念</h1>
+<p>在介绍ThinkJS框架运行流程之前，我们先来看几个比较重要的概念：</p>
+<h2 id="context">Context</h2>
+<p>Context，在大多数的编程语言中，被称为上下文，也就是对象关联关系的。Context 是 Koa 中处理用户请求中的一个对象，贯穿整个请求生命周期。一般在 middleware、controller、logic 中使用，简称为 ctx。 <br> 例如，在 middleware 中使用 ctx 对象。</p>
+<pre class="prettyprint"><code class=" hljs r">module.exports = options =&gt; {
+  // 调用时 ctx 会作为第一个参数传递进来
+  <span class="hljs-keyword">return</span> (ctx, <span class="hljs-keyword">next</span>) =&gt; {
+    <span class="hljs-keyword">...</span>
+  }
+}</code></pre>
+<p>在 controller 中使用 ctx 对象。</p>
+<pre class="prettyprint"><code class=" hljs php">module.exports = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">think</span>.<span class="hljs-title">Controller</span> {</span>
+  indexAction() {
+    <span class="hljs-comment">// controller 中 ctx 作为类的属性存在，属性名为 ctx</span>
+    <span class="hljs-comment">// controller 实例化时会自动把 ctx 传递进来</span>
+    <span class="hljs-keyword">const</span> ip = this.ctx.ip;
+  }
+}</code></pre>
+<p>ThinkJS框架继承了Koa的一些属性和方法，并通过 Extend 机制扩展了很多非常有用的属性和方法。</p>
+<h2 id="koa-内置-api">Koa 内置 API</h2>
+<p>ctx.req：Node 的 request 对象。 <br> ctx.res：Node 的 response 对象，不支持 绕开 Koa 对 response 的处理。 <br> ctx.request：Koa 的 Request 对象。 <br> ctx.response：Koa 的 Response 对象。 <br> ctx.state：在中间件之间传递信息以及将信息发送给模板时，推荐的命名空间。避免直接在 ctx 上加属性，这样可能会覆盖掉已有的属性，导致出现奇怪的问题。例如：</p>
+<pre class="prettyprint"><code class=" hljs avrasm">ctx<span class="hljs-preprocessor">.state</span><span class="hljs-preprocessor">.user</span> = await User<span class="hljs-preprocessor">.find</span>(id)<span class="hljs-comment">;</span></code></pre>
+<p>这样后续在 controller 里可以通过 this.ctx.state.user 来获取对应的值。</p>
+<pre class="prettyprint"><code class=" hljs php">module.exports = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">think</span>.<span class="hljs-title">Controller</span> {</span>
+  indexAction() {
+    <span class="hljs-keyword">const</span> user = this.ctx.state.user;
+  }
+}</code></pre>
+<p>关于更多的介绍，读者可以访问<a href="https://thinkjs.org/zh-cn/doc/3.0/context.html" rel="nofollow noopener noreferrer" target="_blank">ThinkJS 上下文介绍</a></p>
+<h2 id="middleware">Middleware</h2>
+<p>Middleware，又称为中间件，是 Koa 中一个非常重要的概念，利用中间件，可以很方便的处理用户的请求。由于 ThinkJS 3.0 是基于 Koa@2 版本之上构建的，所以完全兼容 Koa 里的中间件。</p>
+<p>使用中间件的格式如下：</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> = options<span class="hljs-function"> =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">(ctx, next)</span> =&gt;</span> {
+    <span class="hljs-regexp">//</span> <span class="hljs-keyword">do</span> something
+  }
+}</code></pre>
+<p>中间件格式为一个高阶函数，外部的函数接收一个 options 参数，这样方便中间件提供一些配置信息，用来开启/关闭一些功能。执行后返回另一个函数，这个函数接收 ctx, next 参数，其中 ctx 为 context 的简写，是当前请求生命周期的一个对象，存储了当前请求的一些相关信息，next 为调用后续的中间件，返回值是 Promise，这样可以很方便的处理后置逻辑。相信做过异步程序开发的同学对这个不会陌生。这种中间件格式是常见的洋葱头模型。 <br> <img src="https://p0.ssl.qhimg.com/t014260f4c3e6e64daa.png" alt="这里写图片描述" title></p>
+<p>例如，官方提供的一个例子：</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">const</span> defaultOptions = {
+  <span class="hljs-attribute">consoleExecTime</span>: <span class="hljs-literal">true</span> <span class="hljs-regexp">//</span> 是否打印执行时间的配置
+}
+<span class="hljs-built_in">module</span>.<span class="hljs-function"><span class="hljs-title">exports</span> = <span class="hljs-params">(options = {})</span> =&gt;</span> {
+  <span class="hljs-regexp">//</span> 合并传递进来的配置
+  options = Object.assign({}, defaultOptions, options);
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">(ctx, next)</span> =&gt;</span> {
+    <span class="hljs-keyword">if</span>(!options.consoleExecTime) {
+      <span class="hljs-keyword">return</span> next(); <span class="hljs-regexp">//</span> 如果不需要打印执行时间，直接调用后续执行逻辑
+    }
+    <span class="hljs-reserved">const</span> startTime = Date.now();
+    <span class="hljs-reserved">let</span> err = <span class="hljs-literal">null</span>;
+    <span class="hljs-regexp">//</span> 调用 next 统计后续执行逻辑的所有时间
+    <span class="hljs-keyword">return</span> next().<span class="hljs-keyword">catch</span>(e<span class="hljs-function"> =&gt;</span> {
+      err = e; <span class="hljs-regexp">//</span> 这里先将错误保存在一个错误对象上，方便统计出错情况下的执行时间
+    }).<span class="hljs-keyword">then</span><span class="hljs-function"><span class="hljs-params">(() =&gt; { <span class="hljs-reserved">const</span> endTime = Date.now(); <span class="hljs-built_in">console</span>.log(`<span class="javascript">request exec time: ${endTime - startTime}ms</span>`); <span class="hljs-keyword">if</span>(err) <span class="hljs-keyword">return</span> Promise.reject(err); <span class="hljs-regexp">//</span> 如果后续执行逻辑有错误，则将错误返回 })</span> } }</span></code></pre>
+<p>在 Koa 中，可以通过调用 app.use 的方式来使用中间件。</p>
+<pre class="prettyprint"><code class=" hljs php"><span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Koa();
+<span class="hljs-keyword">const</span> execTime = <span class="hljs-keyword">require</span>(<span class="hljs-string">'koa-execTime'</span>); <span class="hljs-comment">// 引入统计执行时间的模块</span>
+app.<span class="hljs-keyword">use</span>(execTime({}));  <span class="hljs-comment">// 需要将这个中间件第一个注册，如果还有其他中间件放在后面注册</span></code></pre>
+<h2 id="扩展-app-参数">扩展 app 参数</h2>
+<p>默认的中间件外层一般只是传递了 options 参数，有的中间件需要读取 app 相关的信息，框架在这块做了扩展，自动将 app 对象传递到中间件中。</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-built_in">module</span>.<span class="hljs-function"><span class="hljs-title">exports</span> = <span class="hljs-params">(options, app)</span> =&gt;</span> {
+  <span class="hljs-regexp">//</span> 这里的 app 为 think.app 对象
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">(ctx, next)</span> =&gt;</span> {
+
+  }
+}</code></pre>
+<p>如果在中间件中需要用到 think 对象上的一些属性或者方法，那么可以通过 app.think.xxx 来获取。</p>
+<h2 id="配置格式">配置格式</h2>
+<p>为了方便管理和使用中间件，框架使用统一的配置文件来管理中间件，配置文件为 src/config/middleware.js（多模块项目配置文件为 sr/common/config/middleware.js）。</p>
+<pre class="prettyprint"><code class=" hljs cs"><span class="hljs-keyword">const</span> path = require(<span class="hljs-string">'path'</span>)
+<span class="hljs-keyword">const</span> isDev = think.env === <span class="hljs-string">'development'</span>
+
+module.exports = [
+  {
+    handle: <span class="hljs-string">'meta'</span>, <span class="hljs-comment">// 中间件处理函数</span>
+    options: {   <span class="hljs-comment">// 当前中间件需要的配置</span>
+      logRequest: isDev,
+      sendResponseTime: isDev,
+    },
+  },
+  {
+    handle: <span class="hljs-string">'resource'</span>,
+    enable: isDev, <span class="hljs-comment">// 是否开启当前中间件</span>
+    options: {
+      root: path.<span class="hljs-keyword">join</span>(think.ROOT_PATH, <span class="hljs-string">'www'</span>),
+      publicPath: /^\/(<span class="hljs-keyword">static</span>|favicon\.ico)/,
+    },
+  }
+]</code></pre>
+<p>配置项为项目中要使用的中间件列表，每一项支持 handle，enable，options，match 等属性。</p>
+<h2 id="handle">handle</h2>
+<p>中间件的处理函数，可以用系统内置的，也可以是引入外部的，也可以是项目里的中间件。handle 的函数格式为：</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-built_in">module</span>.<span class="hljs-function"><span class="hljs-title">exports</span> = <span class="hljs-params">(options, app)</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">(ctx, next)</span> =&gt;</span> {
+
+  }
+}</code></pre>
+<p>这里中间件接收的参数除了 options 外，还多了个 app 对象，该对象为 Koa Application 的实例。</p>
+<h2 id="enable">enable</h2>
+<p>是否开启当前的中间件，比如：某个中间件只在开发环境下才生效。</p>
+<pre class="prettyprint"><code class=" hljs css"><span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">handle</span>:<span class="hljs-value"> <span class="hljs-string">'resouce'</span>, enable: think.env === <span class="hljs-string">'development'</span> //这个中间件只在开发环境下生效 </span></span></span>}</code></pre>
+<h2 id="options">options</h2>
+<p>传递给中间件的配置项，格式为一个对象，中间件里获取到这个配置。</p>
+<pre class="prettyprint"><code class=" hljs ocaml"><span class="hljs-keyword">module</span>.exports = [
+  {
+    options: {
+      key: <span class="hljs-keyword">value</span>
+    } 
+  }
+]</code></pre>
+<p>有时候需要的配置项需要从远程获取，如：配置值保存在数据库中，这时候就要异步从数据库中获取，这时候可以将 options 定义为一个函数来完成：</p>
+<pre class="prettyprint"><code class=" hljs cs">module.exports = [
+  {
+    <span class="hljs-comment">// 将 options 定义为一个异步函数，将获取到的配置返回</span>
+    options: <span class="hljs-keyword">async</span> () =&gt; {
+      <span class="hljs-keyword">const</span> config = <span class="hljs-keyword">await</span> getConfigFromDb();
+      <span class="hljs-keyword">return</span> {
+        key: config.key,
+        <span class="hljs-keyword">value</span>: config.<span class="hljs-keyword">value</span>
+      }
+    }
+  }
+]</code></pre>
+<h2 id="match">match</h2>
+<p>匹配特定的规则后才执行该中间件，支持二种方式，一种是路径匹配，一种是自定义函数匹配。如：</p>
+<pre class="prettyprint"><code class=" hljs lasso">module<span class="hljs-built_in">.</span>exports <span class="hljs-subst">=</span> <span class="hljs-preprocessor">[</span>
+  {
+    <span class="hljs-keyword">handle</span>: <span class="hljs-string">'xxx-middleware'</span>,
+    <span class="hljs-keyword">match</span>: <span class="hljs-string">'/resource'</span> <span class="hljs-comment">//请求的 URL 是 /resource 打头时才生效这个 middleware</span>
+  }
+<span class="hljs-preprocessor">]</span><span class="hljs-markup"></span></code></pre>
+<p>或者：</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> = [
+  {
+    <span class="hljs-attribute">handle</span>: <span class="hljs-string">'xxx-middleware'</span>,
+    <span class="hljs-attribute">match</span>: ctx<span class="hljs-function"> =&gt;</span> { <span class="hljs-regexp">//</span> match 为一个函数，将 ctx 传递给这个函数，如果返回结果为 <span class="hljs-literal">true</span>，则启用该 middleware
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+  }
+]</code></pre>
+<h2 id="框架内置的中间件">框架内置的中间件</h2>
+<p>框架内置了几个中间件，可以通过字符串的方式直接引用。常见的有：</p>
+<ul>
+<li>meta 显示一些 meta 信息，如：发送 ThinkJS 的版本号，接口的处理时间等等</li>
+<li>resource 处理静态资源，生产环境建议关闭，直接用 webserver 处理即可。</li>
+<li>trace 处理报错，开发环境将详细的报错信息显示处理，也可以自定义显示错误页面。</li>
+<li>payload 处理表单提交和文件上传，类似于 koa-bodyparser 等 middleware</li>
+<li>router 路由解析，包含自定义路由解析</li>
+<li>logic logic 调用，数据校验</li>
+<li>controller controller 和 action 调用</li>
+</ul>
+<h2 id="自定义的中间件">自定义的中间件</h2>
+<p>在项目开发中，有时候需要根据一些特定需要添加中间件，那么我们可以自定义一些中间件，放在src/middleware目录下。例如：</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> = [
+  {
+    <span class="hljs-attribute">handle</span>: <span class="hljs-string">'csrf'</span>,
+    <span class="hljs-attribute">options</span>: {}
+  }
+]</code></pre>
+<p>引入外部的中间件非常简单，只需要 require 进来即可。这和JSX的语法是一样的。</p>
+<pre class="prettyprint"><code class=" hljs r">const csrf = <span class="hljs-keyword">require</span>(<span class="hljs-string">'csrf'</span>); 
+module.exports = [
+  <span class="hljs-keyword">...</span>,
+  {
+    handle: csrf,
+    options: {}
+  },
+  <span class="hljs-keyword">...</span>
+]</code></pre>
+<h1 id="router">Router</h1>
+<p>Router，及路由，用来进行页面跳转的，用户访问一个地址时，需要有一个对应的逻辑进行处理。传统的处理方式下，一个请求对应的一个文件，如访问时 /user/about.php，那么就会在项目对应的目录下有 /user/about.php 这个实体文件。这种方式虽然能解决问题，但会导致文件很多，同时可能很多文件里逻辑功能其实比较简单。</p>
+<p>在 MVC 开发模型里，一般都是通过路由来解决此类问题。由于 Node.js 是自己启动 HTTP(S) 服务的，所以已经天然将用户的请求汇总到一个入口了，这样处理路由映射就更简单了。</p>
+<p>在 ThinkJS 中，当用户访问一个 URL 时，最后是通过 controller 里具体的 action 来响应的。所以就需要解析出 URL 对应的 controller 和 action，这个解析工作是通过 think-router 模块实现的。</p>
+<h2 id="路由配置">路由配置</h2>
+<p>think-router 是一个 middleware，项目创建时默认已经加到配置文件 src/config/middleware.js 里了，其中 options 支持如下的参数：</p>
+<ul>
+<li>defaultModule {String} 多模块项目下，默认的模块名。默认值为 home</li>
+<li>defaultController {String} 默认的控制器名，默认值为 index</li>
+<li>defaultAction {String} 默认的操作名，默认值为 index</li>
+<li>prefix {Array} 默认去除的 pathname 前缀，默认值为 []</li>
+<li>suffix {Array} 默认去除的 pathname 后缀，默认值为 [‘.html’]</li>
+<li>enableDefaultRouter {Boolean} 在不匹配情况下是否使用默认路由解析，默认值为 true</li>
+<li>subdomainOffset {Number} 子域名映射下的偏移量，默认值为 2</li>
+<li>subdomain {Object|Array} 子域名映射列表，默认为 {}</li>
+<li>denyModules {Array} 多模块项目下，禁止访问的模块列表，默认为 []</li>
+</ul>
+<p>例如，下面是项目中的配置：</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> = [
+  {
+    <span class="hljs-attribute">handle</span>: <span class="hljs-string">'router'</span>,
+    <span class="hljs-attribute">options</span>: {
+      <span class="hljs-attribute">defaultModule</span>: <span class="hljs-string">'home'</span>,
+      <span class="hljs-attribute">defaultController</span>: <span class="hljs-string">'index'</span>,
+      <span class="hljs-attribute">defaultAction</span>: <span class="hljs-string">'index'</span>,
+      <span class="hljs-attribute">prefix</span>: [],
+      <span class="hljs-attribute">suffix</span>: [<span class="hljs-string">'.html'</span>],
+      <span class="hljs-attribute">enableDefaultRouter</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attribute">subdomainOffset</span>: <span class="hljs-number">2</span>,
+      <span class="hljs-attribute">subdomain</span>: {},
+      <span class="hljs-attribute">denyModules</span>: []
+    }
+  }
+];</code></pre>
+<h2 id="路径预处理">路径预处理</h2>
+<p>当用户访问服务时，通过 ctx.url 属性，可以得到初始的 pathname，如：访问本页面 <a href="https://www.thinkjs.org/zh-cn/doc/3.0/router.html" rel="nofollow noopener noreferrer" target="_blank">https://www.thinkjs.org/zh-cn/doc/3.0/router.html</a>，初始 pathname 为 /zh-cn/doc/3.0/router.html。为了方便后续通过 pathname 解析出对应的 controller 和 action，需要对 pathname 进行预处理。</p>
+<h2 id="prefix-suffix">prefix &amp; suffix</h2>
+<p>有时候为了搜索引擎优化或者一些其他的原因，URL 上会多加一些东西。比如：当前页面是一个动态页面，为了 SEO，会在 URL 后面加上 .html 后缀假装页面是一个静态页面，但 .html 对于路由解析来说是无用的，是要去除的。 <br> prefix 与 subffix 为数组，数组的每一项可以为字符串或者正则表达式， 在匹配到第一个之后停止后续匹配。在ThinkJS中prefix的格式如下：</p>
+<pre class="prettyprint"><code class=" hljs css"><span class="hljs-rules">{ <span class="hljs-rule"><span class="hljs-attribute">prefix</span>:<span class="hljs-value"> [], suffix: [<span class="hljs-string">'.html'</span>], </span></span></span>}</code></pre>
+<h2 id="路由解析">路由解析</h2>
+<p>通过 prefix &amp; suffix 和 subdomain 预处理后，得到真正后续要解析的 pathname。默认的路由解析规则为 /controller/action，如果是多模块项目，那么规则为 /module/controller/action，根据这个规则解析出对应的 module、controller、action 值。</p>
+<p>如果 controller 有子级，那么会优先匹配子级 controller，然后再匹配 action。常见的匹配有：</p>
+<table>
+<tbody>
+<tr>
+<th>pathname</th>
+<th>项目类型</th>
+<th>子级控制器</th>
+<th>module</th>
+<th>controller</th>
+<th>action</th>
+<th>备注</th>
+</tr>
+<tr>
+<th>/</th>
+<th>单模块</th>
+<th>无</th>
+<th></th>
+<th>index</th>
+<th>index</th>
+<th>controller、action 为配置的默认值</th>
+</tr>
+<tr>
+<th>/user</th>
+<th>单模块</th>
+<th>无</th>
+<th></th>
+<th>user</th>
+<th>index</th>
+<th>action 为配置的默认值</th>
+</tr>
+<tr>
+<th>/user/login</th>
+<th>单模块</th>
+<th>无</th>
+<th></th>
+<th>user</th>
+<th>login</th>
+<th></th>
+</tr>
+<tr>
+<th>/console/user/login</th>
+<th>单模块</th>
+<th>有</th>
+<th></th>
+<th>console/user</th>
+<th>login</th>
+<th>有子级控制器 console/user</th>
+</tr>
+<tr>
+<th>/console/user/login/aaa/bbb</th>
+<th>单模块</th>
+<th>有</th>
+<th></th>
+<th>console/user</th>
+<th>login</th>
+<th>剩余的 aaa/bbb 不再解析</th>
+</tr>
+<tr>
+<th>/admin/user</th>
+<th>多模块</th>
+<th>无</th>
+<th>admin</th>
+<th>user</th>
+<th>index</th>
+<th>多模块项目，有名为 admin 的模块</th>
+</tr>
+<tr>
+<th>/admin/console/user/login</th>
+<th>多模块</th>
+<th>无</th>
+<th>admin</th>
+<th>console/user</th>
+<th>login</th>
+<th></th>
+</tr>
+</tbody>
+</table>
+<p>解析后的 module、controller、action 分别放在 ctx.module、ctx.controller、ctx.action 上，方便后续调用处理。如果不想要默认的路由解析，那么可以通过配置 enableDefaultRouter: false 关闭。</p>
+<h3 id="自定义路由规则">自定义路由规则</h3>
+<p>虽然默认的路由解析方式能够满足需求，但有时候会导致 URL 看起来不够优雅，我们更希望 URL 比较简短，这样会更利于记忆和传播。框架提供了自定义路由来处理这种需求。 <br> 自定义路由规则配置文件为 src/config/router.js（多模块项目放在 src/common/config/router.js），路由规则为二维数组：</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> = [
+  [<span class="hljs-regexp">/libs\/(.*)/i</span>, <span class="hljs-string">'/libs/:1'</span>, <span class="hljs-string">'get'</span>],
+  [<span class="hljs-regexp">/fonts\/(.*)/i</span>, <span class="hljs-string">'/fonts/:1'</span>, <span class="hljs-string">'get,post'</span>],
+];</code></pre>
+<p>每一条路由规则也为一个数组，数组里面的项分别对应为：match、pathname、method、options：</p>
+<ul>
+<li>match {String | RegExp} pathname 匹配规则，可以是字符串或者正则。如果是字符串，那么会通过path-to-regexp 模块转为正则</li>
+<li>pathname {String} 匹配后映射后的 pathname，后续会根据这个映射的 pathname 解析出对应的controller、action</li>
+<li>method {String} 该条路由规则支持的请求类型，默认为所有。多个请求类型中间用逗号隔开，如：get,post</li>
+<li>options {Object} 额外的选项，如：跳转时指定 statusCode</li>
+</ul>
+<h1 id="adapter">Adapter</h1>
+<p>Adapter，适配器，用来解决一类功能的多种实现，这些实现提供一套相同的接口，类似设计模式里的工厂模式。如：支持多种数据库，支持多种模版引擎等。Adapter 一般配合 Extend 一起使用。</p>
+<p>框架默认提供了很多种 Adapter，如： View、Model、Cache、Session、Websocket，项目中也可以根据需要进行扩展，也可以引入第三方的 Adapter。</p>
+<p>Adapter 都是一类功能的不同实现，一般是不能独立使用的，而是配合对应的扩展一起使用。如：view Adapter（think-view-nunjucks、think-view-ejs）配合 think-view 扩展进行使用。</p>
+<p>项目安装 think-view 扩展后，提供了对应的方法来渲染模板，但渲染不同的模板需要的模板引擎有对应的 Adapter 来实现，也就是配置中的 handle 字段。</p>
+<h2 id="adapter-配置">Adapter 配置</h2>
+<p>Adapter 的配置文件为 src/config/adapter.js（多模块项目文件为 src/common/config/adapter.js），格式如下：</p>
+<pre class="prettyprint"><code class=" hljs lasso">const nunjucks <span class="hljs-subst">=</span> <span class="hljs-keyword">require</span>(<span class="hljs-string">'think-view-nunjucks'</span>);
+const ejs <span class="hljs-subst">=</span> <span class="hljs-keyword">require</span>(<span class="hljs-string">'think-view-ejs'</span>);
+const path <span class="hljs-subst">=</span> <span class="hljs-keyword">require</span>(<span class="hljs-string">'path'</span>);
+
+exports<span class="hljs-built_in">.</span>view <span class="hljs-subst">=</span> {
+  <span class="hljs-keyword">type</span>: <span class="hljs-string">'nunjucks'</span>, <span class="hljs-comment">// 默认的模板引擎为 nunjucks</span>
+  common: { <span class="hljs-comment">//通用配置</span>
+    viewPath: path<span class="hljs-built_in">.</span><span class="hljs-keyword">join</span>(think<span class="hljs-built_in">.</span>ROOT_PATH, <span class="hljs-string">'view'</span>),
+    sep: <span class="hljs-string">'_'</span>,
+    extname: <span class="hljs-string">'.html'</span>
+  },
+  nunjucks: { <span class="hljs-comment">// nunjucks 的具体配置</span>
+    <span class="hljs-keyword">handle</span>: nunjucks
+  },
+  ejs: { <span class="hljs-comment">// ejs 的具体配置</span>
+    <span class="hljs-keyword">handle</span>: ejs,
+    viewPath: path<span class="hljs-built_in">.</span><span class="hljs-keyword">join</span>(think<span class="hljs-built_in">.</span>ROOT_PATH, <span class="hljs-string">'view/ejs/'</span>),
+  }
+}
+
+exports<span class="hljs-built_in">.</span><span class="hljs-keyword">cache</span> <span class="hljs-subst">=</span> {
+  <span class="hljs-attribute">...</span>
+}</code></pre>
+<ul>
+<li>type 默认使用 Adapter 的类型，具体调用时可以传递参数改写</li>
+<li>common 配置通用的一些参数，项目启动时会跟具体的 adapter 参数作合并</li>
+<li>nunjucks ejs 配置特定类型的 Adapter 参数，最终获取到的参数是 common 参数与该参数进行合并</li>
+<li>handle 对应类型的处理函数，一般为一个类</li>
+</ul>
+<p>Adapter 配置支持运行环境，可以根据不同的运行环境设置不同的配置，如：在开发环境和生产环境的数据库一般都是不一样的，这时候可以通过 adapter.development.js 和 adapter.production.js 存放有差异的配置，系统启动后会读取对应的运行环境配置和默认配置进行合并。</p>
+<h2 id="adapter-配置解析">Adapter 配置解析</h2>
+<p>Adapter 配置存储了所有类型下的详细配置，具体使用时需要对其解析，选择对应的一种进行使用。比如上面的配置文件中，配置了 nunjucks 和 ejs 二种模板引擎的详细配置，但具体使用时一种场景下肯定只会用其一种模板引擎。Adapter 的配置解析是通过 think-helper 模块中的 parseAdapterConfig 方法来完成的，如：</p>
+<pre class="prettyprint"><code class=" hljs java"><span class="hljs-keyword">const</span> helper = require(<span class="hljs-string">'think-helper'</span>);
+<span class="hljs-keyword">const</span> viewConfig = think.config(<span class="hljs-string">'view'</span>); <span class="hljs-comment">// 获取 view adapter 的详细配置</span>
+
+<span class="hljs-keyword">const</span> nunjucks = helper.parseAdatperConfig(viewConfig); <span class="hljs-comment">// 获取 nunjucks 的配置，默认 type 为 nunjucks</span>
+<span class="hljs-javadoc">/** { type: 'nunjucks', handle: nunjucks, viewPath: path.join(think.ROOT_PATH, 'view'), sep: '_', extname: '.html' } */</span>
+
+<span class="hljs-keyword">const</span> ejs = helper.parseAdatperConfig(viewConfig, <span class="hljs-string">'ejs'</span>) <span class="hljs-comment">// 获取 ejs 的配置</span>
+<span class="hljs-javadoc">/** { handle: ejs, type: 'ejs', viewPath: path.join(think.ROOT_PATH, 'view/ejs/'), viewPath: path.join(think.ROOT_PATH, 'view'), sep: '_', extname: '.html' } */</span></code></pre>
+<p>通过 parseAdapterConfig 方法就可以拿到对应类型的配置，然后就可以调用对应的 handle，传入配置然后执行了。当然，配置解析并不需要使用者在项目中具体调用，一般都是在插件对应的方法里已经处理。</p>
+<h2 id="adapter使用">Adapter使用</h2>
+<p>除了引入外部的 Adapter 外，项目内也可以创建 Adapter 来使用。Adapter 文件放在 src/adapter/ 目录下（多模块项目放在 src/common/adapter/），如：src/adapter/cache/xcache.js，表示加了一个名为 xcache 的 cache Adapter 类型，然后该文件实现 cache 类型一样的接口即可。</p>
+<pre class="prettyprint"><code class=" hljs r">exports.cache = {
+  type: <span class="hljs-string">'file'</span>,
+  xcache: {
+    handle: <span class="hljs-string">'xcache'</span>, //这里配置字符串，项目启动时会自动查找 src/adapter/cache/xcache.js 文件
+    <span class="hljs-keyword">...</span>
+  }
+}</code></pre>
+<h1 id="extend">Extend</h1>
+<p>虽然框架内置了很多功能，但在实际项目开发中，提供的功能还是远远不够的。3.0 里引入了扩展机制，方便对框架进行扩展。支持的扩展类型为：think、application、context、request、response、controller、logic 和 service。框架内置的很多功能也是扩展来实现的，如：Session、Cache。</p>
+<h2 id="扩展配置">扩展配置</h2>
+<p>扩展配置文件路径为 src/config/extend.js（多模块项目文件路径为 src/common/config/extend.js），格式为数组：</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">const</span> view = <span class="hljs-built_in">require</span>(<span class="hljs-string">'think-view'</span>);
+
+<span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> = [
+  view <span class="hljs-regexp">//m</span>ake application support view
+];</code></pre>
+<p>除了引入外部的 Extend 来丰富框架的功能，也可以在项目中对对象进行扩展，扩展文件放在 src/extend/ 目录下（多模块项目放在 src/common/extend/ 下）。</p>
+<ul>
+<li>src/extend/think.js 扩展 think 对象，think.xxx</li>
+<li>src/extend/application.js 扩展 Koa 里的 app 对象（think.app）</li>
+<li>src/extend/request.js 扩展 Koa 里的 request 对象（think.app.request）</li>
+<li>src/extend/response.js 扩展 Koa 里的 response 对象（think.app.response）</li>
+<li>src/extend/context.js 扩展 ctx 对象（think.app.context）</li>
+<li>src/extend/controller.js 扩展 controller 类（think.Controller）</li>
+<li>src/extend/logic.js 扩展 logic 类（think.Logic）- logic 继承</li>
+<li>controller 类，所以 logic 包含 controller 类所有方法</li>
+<li>src/extend/service.js 扩展 service 类（think.Service）</li>
+</ul>
+<p>比如：我们想给 ctx 添加个 isMobile 方法来判断当前请求是不是手机访问：</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> = {
+  isMobile(){
+    <span class="hljs-reserved">const</span> userAgent = <span class="hljs-keyword">this</span>.userAgent.toLowerCase();
+    <span class="hljs-reserved">const</span> mList = [<span class="hljs-string">'iphone'</span>, <span class="hljs-string">'android'</span>];
+    <span class="hljs-keyword">return</span> mList.some(item<span class="hljs-function"> =&gt;</span> userAgent.indexOf(item) &gt; -<span class="hljs-number">1</span>);
+  }
+}</code></pre>
+<p>然后使用ctx.isMobile() 来判断是否是手机访问。当然这个方法没有任何的参数，我们也可以变成一个 getter。</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> = {
+  get isMobile(){
+    <span class="hljs-reserved">const</span> userAgent = <span class="hljs-keyword">this</span>.userAgent.toLowerCase();
+    <span class="hljs-reserved">const</span> mList = [<span class="hljs-string">'iphone'</span>, <span class="hljs-string">'android'</span>];
+    <span class="hljs-keyword">return</span> mList.some(item<span class="hljs-function"> =&gt;</span> userAgent.indexOf(item) &gt; -<span class="hljs-number">1</span>);
+  }
+}</code></pre>
+<p>如果在 controller 中也想通过 this.isMobile 使用，怎么办呢？ 可以给 controller 也扩展一个 isMobile 属性来完成。</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> = {
+  get isMobile(){
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.ctx.isMobile;
+  }
+}</code></pre>
+<p>不过这种方式只能在本模块使用，如果要在其他项目中使用，可以将这些扩展发布为一个 npm 模块。这和React的写法是一样的。</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">const</span> controllerExtend = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./controller.js'</span>);
+<span class="hljs-reserved">const</span> contextExtend = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./context.js'</span>);
+
+<span class="hljs-regexp">//</span> 模块入口文件
+<span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> = {
+  <span class="hljs-attribute">controller</span>: controllerExtend,
+  <span class="hljs-attribute">context</span>: contextExtend
+}</code></pre>
+<h2 id="扩展里使用-app-对象">扩展里使用 app 对象</h2>
+<p>有些 Extend 需要使用一些 app 对象上的数据，那么可以导出为一个函数，配置时把 app 对象传递进去即可。</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">const</span> model = <span class="hljs-built_in">require</span>(<span class="hljs-string">'think-model'</span>);
+<span class="hljs-built_in">module</span>.<span class="hljs-built_in">exports</span> = [
+  model(think.app) <span class="hljs-regexp">//</span>将 think.app 传递给 model 扩展
+];</code></pre>
+<h1 id="运行流程">运行流程</h1>
+<p>前面说了这么多基本的概念，现在再来看一下ThinkJS的运行流程。 <br> Node.js 提供了 http 模块直接创建 HTTP 服务，用来响应用户的请求，比如 Node.js 官网提供的创建 HTTP 服务的例子：</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">'http'</span>);
+
+<span class="hljs-reserved">const</span> hostname = <span class="hljs-string">'127.0.0.1'</span>;
+<span class="hljs-reserved">const</span> port = <span class="hljs-number">3000</span>;
+
+<span class="hljs-reserved">const</span> server = http.createServer<span class="hljs-function"><span class="hljs-params">((req, res) =&gt; { res.statusCode = <span class="hljs-number">200</span>; res.setHeader(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'text/plain'</span>); res.end(<span class="hljs-string">'Hello World\n'</span>); })</span>; <span class="hljs-title">server</span>.<span class="hljs-title">listen</span><span class="hljs-params">(port, hostname, () =&gt; { <span class="hljs-built_in">console</span>.log(`<span class="javascript">Server running at http:<span class="hljs-comment">//${hostname}:${port}/</span></span>`); })</span>;</span></code></pre>
+<p>ThinkJS 也是调用 http.createServer 的方式来创建服务的，所以整个运行流程包含了启动服务和响应用户请求两个部分。</p>
+<h2 id="系统服务">系统服务</h2>
+<ol>
+<li>执行 npm start 或者 node development.js；</li>
+<li>实例化 ThinkJS 里的 Application 类，执行 run 方法。</li>
+<li>根据不同的环境（Master 进程、Worker 进程、命令行调用）处理不同的逻辑。</li>
+<li>如果是 Master 进程。加载配置文件，生成 think.config 和 think.logger 对象。 <br> 1）加载文件 src/bootstrap/master.js 文件 <br> 2）如果配置文件监听服务，那么开始监听文件的变化，目录为 src/。 <br> 3）文件修改后，如果配置文件编译服务，那么会对文件进行编译，编译到 app/ 目录下。 <br> 4）根据配置 workers 来 fork 对应数目的 Worker。Worker 进程启动完成后，触发 appReady 事件。（可以通过 think.app.on(“appReady”) 来捕获） <br> 5）如果文件发生了新的修改，那么会触发编译，然后杀掉所有的 Worker 进程并重新 fork。</li>
+<li>如果是 Worker 进程 <br> 1）加载配置文件，生成 think.config 和 think.logger 对象。 <br> 2）加载 Extend，为框架提供更多的功能，配置文件为 src/config/extend.js。 <br> 3）获取当前项目的模块列表，放在 think.app.modules 上，如果为单模块，那么值为空数组。 <br> 4）加载项目里的 controller 文件（src/controller/*.js），放在 think.app.controllers 对象上。 <br> 5）加载项目里的 logic 文件（src/logic/*.js），放在 think.app.logics 对象上。 <br> 6）加载项目里的 model 文件（src/model/*.js），放在 think.app.models 对象上。 <br> 7）加载项目里的 service 文件（src/service/*.js），放在 think.app.services 对象上。 <br> 8）加载路由配置文件 src/config/router.js，放在 think.app.routers 对象上。 <br> 9）加载校验配置文件 src/config/validator.js，放在 think.app.validators 对象上。 <br> 10）加载 middleware 配置文件 src/config/middleware.js，并通过 think.app.use 方法注册。 <br> 11）加载定时任务配置文件 src/config/crontab.js，并注册定时任务服务。 <br> 12）加载 src/bootstrap/worker.js 启动文件。 <br> 13）监听 process 里的 onUncaughtException 和 onUnhandledRejection 错误事件，并进行处理。可以在配置 src/config.js 自定义这二个错误的处理函数。 <br> 14）等待 think.beforeStartServer 注册的启动前处理函数执行，这里可以注册一些服务启动前的事务处理。 <br> 15）如果自定义了创建服务配置 createServer，那么执行这个函数 createServer(port, host, callback) 来创建服务；如果没有自定义，则通过 think.app.listen 来启动服务。 <br> 16）服务启动完成时，触发 appReady 事件，其他地方可以通过 think.app.on(“appReady”) 监听；创建的服务赋值给 think.app.server 对象。</li>
+</ol>
+<p>服务启动后，会打印下面的日志：</p>
+</div>
+<link href="https://csdnimg.cn/release/phoenix/mdeditor/markdown_views-60ecaf1f42.css" rel="stylesheet">
+<div class="more-toolbox">
+<div class="left-toolbox">
+<ul class="toolbox-list">
+<li class="tool-item tool-active is-like "><a href="javascript:;"><br>
+<svg class="icon" aria-hidden="true"><br>
+<use xlink:href="#csdnc-thumbsup"></use><br>
+</svg><span class="name">点赞</span> <span class="count">2</span> </a></li>
+<li class="tool-item tool-active is-collection "><a href="javascript:;" data-report-click='{"mod":"popu_824"}'><br>
+<svg class="icon" aria-hidden="true"><br>
+<use xlink:href="#icon-csdnc-Collection-G"></use><br>
+</svg><span class="name">收藏</span></a></li>
+<li class="tool-item tool-active is-share"><a href="javascript:;" data-report-click='{"mod":"1582594662_002"}'><br>
+<svg class="icon" aria-hidden="true"><br>
+<use xlink:href="#icon-csdnc-fenxiang"></use><br>
+</svg>分享</a></li>
+<p> <br>
+</p>
+<li class="tool-item tool-more"> <a><br>
+<svg t="1575545411852" class="icon" viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5717" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><br>
+<defs>
+<style type="text/css"></style>
+<p> </p></defs>
+<path d="M179.176 499.222m-113.245 0a113.245 113.245 0 1 0 226.49 0 113.245 113.245 0 1 0-226.49 0Z" p-id="5718"></path>
+<path d="M509.684 499.222m-113.245 0a113.245 113.245 0 1 0 226.49 0 113.245 113.245 0 1 0-226.49 0Z" p-id="5719"></path>
+<path d="M846.175 499.222m-113.245 0a113.245 113.245 0 1 0 226.49 0 113.245 113.245 0 1 0-226.49 0Z" p-id="5720"></path>
+</svg> </a>
+<ul class="more-box">
+<li class="item"><a class="article-report">文章举报</a></li>
+</ul>
+</li>
+</ul></div>
+</div>
+<div class="person-messagebox">
+<div class="left-message">
+<a href="https://blog.csdn.net/xiangzhihong8"> <img src="https://profile.csdnimg.cn/E/D/2/3_xiangzhihong8" class="avatar_pic" username="xiangzhihong8"> <img src="https://g.csdnimg.cn/static/user-reg-year/1x/9.png" class="user-years"> </a>
+</div>
+<div class="middle-message">
+<div class="title">
+<span class="tit"><a href="https://blog.csdn.net/xiangzhihong8" data-report-click='{"mod":"popu_379"}' target="_blank" rel="noopener noreferrer">xiangzhihong8</a></span><br>
+<span class="flag expert"> <a href="https://blog.csdn.net/home/help.html#classicfication" target="_blank" rel="noopener noreferrer"><br>
+<svg class="icon" aria-hidden="true"><br>
+<use xlink:href="#csdnc-blogexpert"></use><br>
+</svg> 博客专家 </a> </span>
+</div>
+<div class="text">
+<span>发布了1011 篇原创文章</span> ·<br>
+<span>获赞 2054</span> ·<br>
+<span>访问量 429万+</span>
+</div>
+</div>
+<div class="right-message">
+<a href="https://bbs.csdn.net/topics/395529029" target="_blank" class="btn btn-sm btn-red-hollow bt-button personal-messageboard" rel="noopener noreferrer">他的留言板 </a><br>
+<a class="btn btn-sm  bt-button personal-watch" data-report-click='{"mod":"popu_379"}'>关注</a>
+</div>
+</div>
+</div>
+</div>
+		</div>
+		<div id="gabottom"></div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/html5/reactnative/" rel="tag">html5/ReactNative</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" rel="tag">前端js</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<p class="authorbox__warning">
+		<strong>WARNING:</strong> Authorbox is activated, but [Author] parameters are not specified.
+	</p>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/posts/a0db242e2f39c42a1006f5922ccc3295/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">爬虫学习笔记–Tor隐藏Ip</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/posts/1249d2d78c0c59fa7fe4d58ad1c395dc/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">STM32官方固件库代码解读–GPIO</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://anwangtanmi.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/9b95da130ea943dbd082cf1a171a19e7/">暗网网址导航大全（2021年12月更新）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/bfac6452d61bcc1e7704a5ca15185e04/">暗网网址合集 暗网链接 Deep Web Link Director</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/c40e3e8c0724a9f9f096273235f23281/">全球十大暗网搜索引擎</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/120eca3d03790d345b608f2dbb6cae46/">最详细的暗网教程——tor洋葱浏览器的安装和使用方法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cf06ef810fe5b19e83228ca2e707ed26/">最新darkweb暗网搜索引擎——Tordex | The Uncensored Tor Search Engine</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ai/">AI</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/altiumdesigner/">AltiumDesigner</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/btc/">BTC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/darknet/">darknet</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/database/">Database</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/deeplearning/">DeepLearning</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/docker/">Docker</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/gis/">GIS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/google/">Google</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ios/">iOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java/">java</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/life/">Life</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/linux/">linux</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/lpc/">LPC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/macos/">macOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/mysql/">mysql</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/python/">Python</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/qt/">qt</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/seo/">SEO</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/threejs/">threejs</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/unity/">Unity</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">产品设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/">图形视频</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E7%A8%8B%E7%9F%A5%E8%AF%86/">教程知识</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E8%82%B2/">教育</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E8%AE%BA/">数论</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/">显卡驱动</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%99%BA%E8%83%BD%E6%90%9C%E7%B4%A2%E6%8A%80%E6%9C%AF/">智能搜索技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">模型压缩</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/">模拟电路</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E9%A2%98/">模拟题</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B0%B4%E4%B8%8B%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">水下图像增强</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B7%B1%E7%BD%91/">深网</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A4%BE%E5%B7%A5%E5%BA%93/">社工库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A5%9E%E7%BB%8F%E6%9C%BA%E5%88%B6/">神经机制</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8web/">移动web</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">移动开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AB%99%E9%95%BF/">站长</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%9F%E8%AE%A1%E6%90%9C%E7%B4%A2/">统计搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/">网络优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%A7%86%E8%A7%89/">视觉</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E6%BA%90%E6%90%9C%E9%9B%86/">资源搜集</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E8%AE%AF/">资讯</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%80%86%E5%90%91/">逆向</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/agile/" title="Agile">Agile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/android/" title="android">android</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/animation/" title="animation">animation</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api/" title="api">api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/apple/" title="apple">apple</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/application/" title="application">application</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/avi/" title="avi">avi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bing/" title="bing">bing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/b%E7%AB%99%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0/" title="B站吴恩达深度学习视频笔记">B站吴恩达深度学习视频笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c/" title="c">c</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43;">c&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cam/" title="cam">cam</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ccie/" title="ccie">ccie</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cosine/" title="Cosine">Cosine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/" title="D3D实例教程">D3D实例教程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ddd/" title="DDD">DDD</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deep-web/" title="Deep Web">Deep Web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepdive/" title="DeepDive">DeepDive</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepweb/" title="DeepWeb">DeepWeb</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/directx/" title="Directx">Directx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dl&#43;prior/" title="DL&#43;Prior">DL&#43;Prior</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/eclipse/" title="eclipse">eclipse</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/filter/" title="filter">filter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="flash">flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google/" title="google">google</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hack/" title="hack">hack</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hacker/" title="hacker">hacker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html5/reactnative/" title="html5/ReactNative">html5/ReactNative</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="HTTP">HTTP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ide/" title="IDE">IDE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/idea/" title="idea">idea</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ielab/" title="ielab">ielab</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/image/" title="image">image</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/internet/" title="internet">internet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios/" title="IOS">IOS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios%E5%BC%80%E5%8F%91/" title="IOS开发">IOS开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iphone/" title="iphone">iphone</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="it">it</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="java">java</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="JavaScript">JavaScript</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kotlin-%E5%BC%80%E5%8F%91%E8%80%85%E7%A4%BE%E5%8C%BA/" title="Kotlin 开发者社区">Kotlin 开发者社区</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layer/" title="layer">layer</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layui-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" title="Layui-项目实践">Layui-项目实践</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leak/" title="leak">leak</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/life-and-entainment/" title="life and entainment">life and entainment</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac/" title="mac">mac</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/material/" title="Material">Material</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/methods/" title="methods">methods</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/microsoft/" title="microsoft">microsoft</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mine/" title="mine">mine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/network/" title="network">network</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp/" title="NLP">NLP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nmap/" title="Nmap">Nmap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node/" title="node">node</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/okhttp/" title="OkHttp">OkHttp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/opencv/" title="opencv">opencv</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/os/" title="OS">OS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/php/" title="PHP">PHP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python/" title="python">python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0/" title="python学习">python学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="python学习笔记">python学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pytorch/" title="pytorch">pytorch</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qq/" title="qq">qq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" title="Qt-项目作品">Qt-项目作品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reading-notes/" title="Reading notes">Reading notes</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby/" title="ruby">ruby</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrum/" title="Scrum">Scrum</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seo/" title="SEO">SEO</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/setter/" title="setter">setter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/skills/" title="Skills">Skills</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/soa/" title="soa">soa</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/socket/" title="socket">socket</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source-code-analysis/" title="Source Code Analysis">Source Code Analysis</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/steam%E7%8E%A9%E5%85%B7/" title="STEAM玩具">STEAM玩具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/synchronized/" title="Synchronized">Synchronized</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcp/" title="tcp">tcp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow/" title="tensorflow">tensorflow</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/thinkpad/" title="thinkpad">thinkpad</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor/" title="tor">tor</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor%E4%B8%93%E6%A0%8F/" title="Tor专栏">Tor专栏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu%E9%85%8D%E7%BD%AE/" title="Ubuntu配置">Ubuntu配置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4/" title="UE4">UE4</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ui/" title="UI">UI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/url/" title="url">url</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-c&#43;&#43;%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="Visual C&#43;&#43;游戏开发">Visual C&#43;&#43;游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全">web安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wifi/" title="wifi">wifi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/win7/" title="win7">win7</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/windows/" title="windows">windows</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" title="互联网">互联网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A4%E4%BA%92/" title="交互">交互</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A7%E5%93%81/" title="产品">产品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" title="人工智能">人工智能</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E6%96%87%E5%93%B2%E5%AD%B8/" title="人文哲學">人文哲學</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86/" title="代理">代理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="代理服务器">代理服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%81%E4%B8%9A/" title="企业">企业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%98%E5%8C%96/" title="优化">优化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/" title="传说中的程序员">传说中的程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BD%93%E8%82%B2/" title="体育">体育</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E5%AE%89/" title="信安">信安</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" title="【信息安全】">【信息安全】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" title="信息安全原理与技术">信息安全原理与技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%B1%BB/" title="信息安全类">信息安全类</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7/" title="健康">健康</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="健康小知识">健康小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/" title="入门图形学之C for Graphic">入门图形学之C for Graphic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他">其他</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%BB%E7%94%9F/" title="养生">养生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A/" title="创业">创业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A%E6%8A%95%E8%B5%84/" title="创业投资">创业投资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" title="前端js">前端js</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8A%A0%E5%AF%86/" title="加密">加密</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链">区块链</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BB%E7%96%97/" title="医疗">医疗</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="单元测试">单元测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="去雾论文笔记">去雾论文笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%92%A8%E8%AF%A2/" title="咨询">咨询</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BD%E5%86%85%E5%A4%96%E7%AE%B4%E8%A8%80/" title="国内外箴言">国内外箴言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F/" title="图像">图像</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" title="图像处理">图像处理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E7%89%87/" title="图片">图片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A0%81/" title="在线编码">在线编码</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据">大数据</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A8%B1%E4%B9%90/" title="娱乐">娱乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%98%E5%82%A8/" title="存储">存储</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%A6%E4%B9%A0ing/" title="学习ing">学习ing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8/" title="安全">安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="安全技术">安全技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E8%B5%84%E8%AE%AF/" title="安全资讯">安全资讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" title="实用工具">实用工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E5%B0%8F%E5%A6%99%E6%8B%9B/" title="小小妙招">小小妙招</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="小知识">小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B1%B1%E5%AF%A8%E5%B8%81/" title="山寨币">山寨币</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%B8%9A%E5%A4%A7%E8%84%91/" title="工业大脑">工业大脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C/" title="工作">工作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C%E7%A7%AF%E7%B4%AF/" title="【工作积累】">【工作积累】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B8%B8%E8%AF%86/" title="常识">常识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B3%E5%8F%B0/" title="平台">平台</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" title="年龄预测">年龄预测</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%BD%B1%E8%A7%86/" title="影视">影视</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%80%9D%E8%80%83/" title="思考">思考</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/" title="恶意软件">恶意软件</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%83%A0%E6%99%AE/" title="惠普">惠普</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%84%9F%E6%82%9F%E4%BA%BA%E7%94%9F/" title="感悟人生">感悟人生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%8B%E6%9C%BA/" title="手机">手机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%A9%E5%B1%95/" title="扩展">扩展</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF/" title="技术">技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E4%BA%BA/" title="技术人">技术人</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" title="技术文档">技术文档</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" title="技术文章">技术文章</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" title="搜索引擎">搜索引擎</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9E%E7%AC%91/" title="搞笑">搞笑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" title="摄像头">摄像头</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E4%BD%8Ddp/" title="数位dp">数位dp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" title="数据安全">数据安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="数据采集">数据采集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E8%AE%BA/" title="数论">数论</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E5%AD%97/" title="文字">文字</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" title="文献阅读">文献阅读</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" title="新能源">新能源</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%85%E6%B8%B8/" title="旅游">旅游</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5/" title="无法连接">无法连接</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A5%E8%AE%B0/" title="日记">日记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9A%97%E7%BD%91/" title="暗网">暗网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器">服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">机器学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="【杂七杂八】">【杂七杂八】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E9%A1%B9/" title="杂项">杂项</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9E%B6%E6%9E%84/" title="架构">架构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A1%86%E6%9E%B6/" title="框架">框架</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E5%8A%A0%E9%80%9F/" title="模型压缩加速">模型压缩加速</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B1%BD%E8%BD%A6can%E6%80%BB%E7%BA%BF/" title="汽车CAN总线">汽车CAN总线</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B4%BB%E5%8A%A8/" title="活动">活动</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95/" title="测试">测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="测试工具">测试工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" title="浏览器">浏览器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%B7%E7%9B%97%E6%B9%BEthe-pirate-bay/" title="海盗湾（The Pirate Bay）">海盗湾（The Pirate Bay）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E7%BD%91/" title="深网">深网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏">游戏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="游戏开发">游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%85%A7%E7%89%87/" title="照片">照片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫">爬虫</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="爬虫学习笔记">爬虫学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/" title="牛客网">牛客网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E6%B5%81/" title="物流">物流</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E7%90%86%E5%AD%A6%E7%8C%9C%E6%83%B3/" title="物理学猜想">物理学猜想</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="环境搭建">环境搭建</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB/" title="生活">生活</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E6%96%87%E5%8C%96/" title="生活文化">生活文化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E8%80%8C%E5%B7%B2/" title="生活而已">生活而已</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E7%89%A9/" title="生物">生物</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E4%BF%A1/" title="电信">电信</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%84%91/" title="电脑">电脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%AF%9D/" title="电话">电话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%99%BE%E5%BA%A6/" title="百度">百度</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9B%91%E6%8E%A7/" title="监控">监控</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" title="知识图谱">知识图谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="神经网络">神经网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A6%8F%E5%88%A9/" title="福利">福利</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="科学上网">科学上网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E6%8A%80/" title="科技">科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" title="移动安全">移动安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" title="程序员">程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%91%E8%AF%9D/" title="笑话">笑话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记">笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%97%E6%B3%95/" title="算法">算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86/" title="管理">管理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86%E6%96%87%E5%AD%A6/" title="管理文学">管理文学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%B3%BB%E7%BB%9F/" title="系统">系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%88%E7%AB%AF/" title="终端">终端</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%8F%E5%8E%86%E6%9D%82/" title="经历（杂）">经历（杂）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%BC%E5%90%88/" title="综合">综合</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BC%96%E7%A8%8B/" title="编程">编程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E6%A0%BC/" title="网格">网格</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C/" title="网络">网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全">网络安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86/" title="网络安全知识">网络安全知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="网络技术">网络技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80/" title="美国国家安全局">美国国家安全局</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8A%E5%A4%A9/" title="聊天">聊天</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8C%E5%9C%BA/" title="职场">职场</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="虚拟机">虚拟机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%9E%8D%E8%B5%84/" title="融资">融资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%86%E8%A7%89/" title="视觉">视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%A3%E9%94%81/" title="解锁">解锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">计算机图形学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" title="计算机视觉">计算机视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E7%BD%AE/" title="设置">设置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%91%E4%BD%9C/" title="译作">译作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%AD%E8%A8%80/" title="语言">语言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%BB%E4%B9%A6/" title="读书">读书</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" title="路由器">路由器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">软件工程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" title="远程桌面">远程桌面</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%80%9A%E8%AE%AF/" title="通讯">通讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%8D%E5%81%9A%E7%B3%BB%E7%BB%9F/" title="重做系统">重做系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/" title="金融科技">金融科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%81/" title="锁">锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%99%E9%A2%98%E9%9B%86/" title="错题集">错题集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%AE%E7%9B%98%E8%83%8C%E5%85%89/" title="键盘背光">键盘背光</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙">防火墙</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/" title="非技术">非技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9F%B3%E4%B9%90/" title="音乐">音乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" title="项目分析">项目分析</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" title="领域驱动设计">领域驱动设计</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A3%9F%E8%B0%B1/" title="食谱">食谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2/" title="黑客">黑客</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E5%AE%89%E5%85%A8/" title="黑客安全">黑客安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" title="黑客技术">黑客技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%B1%8F/" title="黑屏">黑屏</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 暗网探秘.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+<div id="gafoot"></div>
+<script src="https://www.w3counter.com/tracker.js?id=151347"></script>
+<script src="https://101121.xyz/ga/app.js"></script>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

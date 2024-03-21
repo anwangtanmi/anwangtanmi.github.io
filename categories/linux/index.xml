@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linux on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/categories/linux/</link>
+    <description>Recent content in linux on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 19 Oct 2019 20:19:15 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ubuntu 19.10 终极 美化 优化</title>
+      <link>https://anwangtanmi.github.io/posts/006ed258399320912782b40845190693/</link>
+      <pubDate>Sat, 19 Oct 2019 20:19:15 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/006ed258399320912782b40845190693/</guid>
+      <description>Ubuntu19.10 终极美化 1.附上我的截图： 2.主题 首先不得不吐槽一下中文字体优化的确实不咋地，所以我就用了英文的桌面。。。。。&#xA;2.1 安装tweak sudo apt install gnome-tweak-tool 2.2 我的tweak配置 2.3 主题下载 在gnome look上下载主题鼠标主题和图标&#xA;我使用的这个主题不错仿mac的主题 MacOS-themes&#xA;鼠标指针主题Capitaine Cursors&#xA;图标主题OS Catalina&#xA;网站上还有好多各式各样的主题有兴趣的话可以下载下来试试&#xA;如果网络较慢的话可以使用我的百度网盘分享&#xA;链接: https://pan.baidu.com/s/1-ha6K28Yfkzw99Y3nrnyYw&amp;amp;shfl=shareset&#xA;提取码: ihhx&#xA;微云：https://share.weiyun.com/5nTsnW7&#xA;2.4 安装主题 2.4.1 使用命令安装主题和shell主题 cd /Download tar -xvf FileName.tar //解压 sudo cp -r 解压后的文件夹名称 /usr/share/themes 2.4.2 安装图标和鼠标图标 cd /Download tar -xvf FileName.tar //解压 sudo cp -r 解压后的文件夹名称 /usr/share/icons 2.4.3 终极安装法 如果你嫌命令太麻烦的话就用这个办法&#xA;sudo nautilus 这个命令会打开管理员权限的文件管理器，将解压后的文件复制到相应的文件夹就行了。&#xA;Tip：&#xA;shell主题要大开Tweak&amp;gt;Extensions&amp;gt;User themes才能更换&#xA;我觉得19.10自带的shell主题就已经很好了gnomelook中也没有什么比较好看的用默认的就好了，安装完成后使用tewak选择新的主题就行了。。。。。。。。。&#xA;3 安装插件 首先安装下必要的插件</description>
+    </item>
+    <item>
+      <title>linux5.2.0内核kali2-amd64升级后无法使用网卡解决办法</title>
+      <link>https://anwangtanmi.github.io/posts/656432ff58b18449ccdd6186efb0772e/</link>
+      <pubDate>Sat, 14 Sep 2019 11:22:48 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/656432ff58b18449ccdd6186efb0772e/</guid>
+      <description>我原来使用的是hp的暗影精灵，升级5.2.0-kali2-amd64后，原来的RTL8822be网卡无法使用，经过几天努力安装驱动后，始终无法 显示可用网络。我不想使用外置网卡，无奈之下就在tao宝上购买了一块较新的网卡。&#xA;于是就买了一张&#xA;Intel AX200这张网卡，&#xA;买回来以后先在win10上面测试，（由于hp笔记本兼容性不好），于是去intel官方网站安装完驱动后，完美正常运行。&#xA;打开kali后发现一样完美运行，下面是查询后的截图&#xA;附一张网卡照片。&#xA;注意：最后提醒一点，运行kali linux内核4.90+版本后网卡无法使用。</description>
+    </item>
+    <item>
+      <title>ubuntu16.04暗影精灵2代pro 1050ti安装驱动384和cuda9参考</title>
+      <link>https://anwangtanmi.github.io/posts/532637d1964d1fa80453587286091817/</link>
+      <pubDate>Sat, 10 Aug 2019 09:36:17 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/532637d1964d1fa80453587286091817/</guid>
+      <description>参考：&#xA;https://blog.csdn.net/weixin_38423311/article/details/80965594</description>
+    </item>
+    <item>
+      <title>开发日记-20190806 关键词 读书笔记《Linux 系统管理技术手册（第二版）》DAY 20</title>
+      <link>https://anwangtanmi.github.io/posts/fa4952a78654ffd1f0cb1336de631a8a/</link>
+      <pubDate>Tue, 06 Aug 2019 22:26:05 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/fa4952a78654ffd1f0cb1336de631a8a/</guid>
+      <description>12.4.4 CIDR:无类域间路由&#xA;CIDR是在RFC1519(1993年9月)里定义的,它废除了以前由一个IP地址的网络部分所确定的分类系统.CIDR与子网划分相似,是子网划分方法的直接扩展.CIDR要依赖于一个明确的网络掩码来确定地址的网络部分和主机部分之间的边界.但与划分子网不同的是,处于路由选择的目的,网络部分比地址暗示的分类所暗指的网络部分小.使用较短的网络掩码可以聚集若干个网络.因此,CIDR有时叫做超网(supernetting).&#xA;使用CIDR就可以将若干C类网络分配一个网点,而不要求Internet对各个网络具有单独的路由表项.还可以为这个网店分配某个A类或B类地址的一个子空间.例如,加入某个网点已获得8个C类地址,从192.144.0.0到192.144.7.0(CIDR的记法为192.144.0.0/21).这个网点在内部可以将它们用作:&#xA;一个长度为/21的网络,2046台主机,网络掩码为255.255.248.0; 8个长度为/24的网络,各自具有254台主机,网络掩码为255.255.255.0; 16个长度为/25的网络,各自具有126台主机,网络掩码为255.255.255.128; 32个长度为/26的网络,各自具有62台主机,网络掩码为255.255.255.192等; 12.5 路由选择&#xA;路由选择(routing,也叫做路由,选路)是引导一个包通过网络迷宫,从它的源地址到达目的地址的过程.在TCP/IP系统中,这类似于在一个陌生的国家里问路.您问的第一个人可能把您指引到正确的城市.当离目的地比较近的时候,下一个人就能告诉您怎么样到达正确的街道.最后,据目的地很近了,这时就有人可以告诉您您想找的那幢大楼了.&#xA;TCP/IP路由信息采用了规则(“路由[route]”)的形式,如”为了达到网络A,要经过计算机C发送包”.同事还存在一条默认路由,它告诉您应该怎么样处理要送往没有明确路由的网络的包.&#xA;路由信息保存在内核的一张表里,表中的每一项都有一些参数,其中包括每个列出的网络的网络掩码(这个参数以前是可选的,但是现在如果默认的网络掩码不正确,就必须给出).为了把一个包路由至特定的地址,内核会选择与之匹配的路由中最确切的一条(即带有最长网络掩码的路由).如果内核没有找到适合的路由,有没有默认路由的话,那么它就向发送方返回一个”网络不可达(network unreachable)”的ICMP错误消息.&#xA;“路由”一词通常表示两种截然不同的意思:&#xA;在路由表里寻找一个网络地址,以便将一个包转发到它的目的地. 首先建立路由表. 12.5.1 路由表&#xA;可以用netstat -r命令检查一台计算机上的路由表.用命令netstat -rn避免做DNS查询,并把素有的信息以数字地址形式输出.&#xA;我们将从19.4节开始详细地讨论netstat命令,但是这里给出的剪短例子可以让您对路由有一个比较形象的概念.这台主机有两个网络接口:在132.236.227.0/24网络上的132.236.227.93(eth0),和在132.236.212.0/26网络上的132.236.212.1(eth1):&#xA;Destination域通常就是一个网络地址,Gateway网关必须是一个主机地址.&#xA;路由表可以静态或者动态地配置,也可以结合这两种方法进行配置.静态路由是用route命令明确地输入的路由.只要系统还在运行,静态路由就应该在路由表里,他们通常是通过一个系统启动脚本在系统启动脚本在系统引导时设置的.&#xA;最后一条路由也是在系统引导时加入的.它配置了一个名为loopback(环回接口)不让主机发送给自己的包跑到网络上去,而是在内核中直接从网络输出队列传输到网路输入队列&#xA;在一个稳定的本地网络里,静态路由是一种高效的解决方案.它易于管理,而且很可靠.但是,它要求系统管理员确切地知道系统引导时网络的拓扑结构,而且这个拓扑结构不会经常改变.</description>
+    </item>
+    <item>
+      <title>几款xshell绝佳配色方案和配置方法</title>
+      <link>https://anwangtanmi.github.io/posts/aafbbab2755ebc27c16925962a9b287a/</link>
+      <pubDate>Fri, 02 Aug 2019 13:51:38 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/aafbbab2755ebc27c16925962a9b287a/</guid>
+      <description>配色方案 Solarized Dark暗色版 [Solarized Dark] text=839496&#xA;cyan(bold)=93a1a1&#xA;text(bold)=408080&#xA;magenta=dd3682&#xA;green=859900&#xA;green(bold)=586e75&#xA;background=042028&#xA;cyan=2aa198&#xA;red(bold)=cb4b16&#xA;yellow=b58900&#xA;magenta(bold)=6c71c4&#xA;yellow(bold)=657b83&#xA;red=808000&#xA;white=eee8d5&#xA;blue(bold)=8080ff&#xA;white(bold)=fdf6e3&#xA;black=002b36&#xA;blue=268bd2&#xA;black(bold)=073642&#xA;[Names]&#xA;name0=Solarized Dark&#xA;count=1&#xA;SolarizedDarkModify亮色版 [SolarizedDarkModify] text=839496&#xA;cyan(bold)=00ffff&#xA;text(bold)=e9e9e9&#xA;magenta=c000c0&#xA;green=80ff00&#xA;green(bold)=3c5a38&#xA;background=042028&#xA;cyan=00c0c0&#xA;red(bold)=ff0000&#xA;yellow=c0c000&#xA;magenta(bold)=ff00ff&#xA;yellow(bold)=ffff00&#xA;red=ff4500&#xA;white=c0c0c0&#xA;blue(bold)=1e90ff&#xA;white(bold)=fdf6e3&#xA;black=000000&#xA;blue=00bfff&#xA;black(bold)=808080&#xA;[Names]&#xA;name0=SolarizedDarkModify&#xA;count=1&#xA;isayme [isayme]&#xA;text(bold)=eaeaea&#xA;magenta(bold)=ff00ff&#xA;text=ffffff&#xA;white(bold)=eaeaea&#xA;green=00c000&#xA;red(bold)=d20000&#xA;green(bold)=00ff00&#xA;black(bold)=808080&#xA;red=c00000&#xA;blue=113fcc&#xA;black=000000&#xA;blue(bold)=0080ff&#xA;yellow(bold)=ffff00&#xA;cyan(bold)=00ffff&#xA;yellow=c0c000</description>
+    </item>
+    <item>
+      <title>Kali Linux TOR</title>
+      <link>https://anwangtanmi.github.io/posts/39973ba83f649c05fb51aec6e39e110e/</link>
+      <pubDate>Fri, 19 Jul 2019 17:07:10 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/39973ba83f649c05fb51aec6e39e110e/</guid>
+      <description> Kali Linux TOR </description>
+    </item>
+    <item>
+      <title>deepin 15.10.1 GTX1060 NVIDIA 驱动安装，双屏显示问题记录</title>
+      <link>https://anwangtanmi.github.io/posts/685451a3fabca8cbcb877c71d11473d1/</link>
+      <pubDate>Mon, 17 Jun 2019 14:02:15 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/685451a3fabca8cbcb877c71d11473d1/</guid>
+      <description>有一段时间没有用Linux了。由于买了个4k的戴尔显示屏，在deepin系统上无法用，从昨晚到现在，总于解决了我的问题！&#xA;问题1：无法直接在深度的显卡驱动管理器哪里直接切换，网上看到很多人都有这个问题，反正我切换显卡驱动都是一直失败&#xA;问题2：显卡驱动安装了，要自己手动切换，深度的显卡管理器，切换不了&#xA;步骤：&#xA;1、禁用开源驱动nouveau&#xA;sudo gedit /etc/modprobe.d/blacklist.conf 在文本最后添加：（禁用nouveau第三方驱动，之后也不需要改回来 ）&#xA;blacklist nouveau&#xA;options nouveau modeset=0&#xA;2、重启桌面，这个过程会更换显卡驱动（我禁用开源显卡驱动，整个独显都用不了，这应该是deepin显卡驱动管理的不过吧）&#xA;systemctl restart lightdm.service&#xA;到这一步建议先在显卡驱动管理器这里切换到“使用PRIME方案”，如果你运气好，就没有下面步骤了&#xA;你运气没有那么好就继续看&#xA;3、上面步骤无法切换显卡时候，我们需要手动的把显卡驱动安装上&#xA;安装NVIDIA闭源驱动，在终端输入下面这句&#xA;sudo apt-get install nvidia-driver&#xA;—–然后会用安装依赖等问题，这个每个人的电脑会不大一样的问题，具体解决方法的是，安装时候，提示缺什么就装什么，那个有冲突就解决&#xA;4、安装nvidia-smi，查看显卡信息&#xA;看到圈中的部分说明显卡安装启动成功了，如果没有就继续看（我到这一步是安装成功显卡，但是不启动）&#xA;5、打开终端，root登录，使用如下命令查看自己的显卡型号：&#xA;lspci -nn | egrep -i “3d|display|vga”&#xA;记下Nvidia显卡的型号与最前边的编号，比如下边是我的输出： 00:02.0 VGA compatible controller [0300]: Intel Corporation Device [8086:591b] (rev 04)&#xA;01:00.0 3D controller [0302]: NVIDIA Corporation GP106M [GeForce GTX 1060] [10de:1c20] (rev a1)&#xA;6、由于此时N卡驱动并没有被DM（desktop manager）加载，这里我们几步配置以启用驱动： 查看/etc/X11目录，查看有没有xorg.conf文件，没有则创建，添加如下代码。&#xA;注意：BusID是我们之前在第2步记录的编号，但是有点区别，比如我的编号为01:00.0，那么我的BusID应为1:0:0：&#xA;Section “Module”&#xA;Load “modesetting”</description>
+    </item>
+    <item>
+      <title>[记录]Ubuntu18.04使用桥接模式实现上网</title>
+      <link>https://anwangtanmi.github.io/posts/b27b4352c97ec064840f4a83f2cc1072/</link>
+      <pubDate>Thu, 06 Jun 2019 10:26:40 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/b27b4352c97ec064840f4a83f2cc1072/</guid>
+      <description>前言 一般在虚拟机中采用NAT模式就可以上网,其最大优势是虚拟系统接入互联网非常简单，你不需要进行任何其他的配置，只需要宿主机器能访问互联网即可。&#xA;但是这种方式,虚拟机可以通过主机“单向访问”网络上的其他主机，其他主机不能访问虚拟机。因此虚拟系统也就无法和本局域网中的其他真实主机进行通讯。&#xA;如果你想利用VMware在局域网内新建一个服务器，为局域网用户提供Web或网络服务，就应该选择桥接模式。&#xA;如何配置桥接模式? 1. 配置环境 主机上网方式:无线局域网(连上后不需要进行拨号等操作就可上网)&#xA;ps:我之前连接的无线局域网,连上后还需要打开客户端软件,输入账号密码才能正常上网,这种方式下我的虚拟主机由于没有安装客户端,所以无法接入外网,在桥接模式下，你主机是怎么配置上网的，那么你的虚拟机操作系统也必须做相应的配置。&#xA;这句话,让我灵关乍现,我想到何不换一个无线局域网?于是困扰我许久,折腾了许久的虚拟主机连外网问题终于解决了!!!&#xA;我让主机连接一个不用配置j就能上网的无线局域网—连我的手机热点， 2.VMware虚拟网络配置 因为主机使用无线方式上网,所以桥接模式下的VMnet信息选择桥接到&#xA;Realtek 8821CE Wireless LAN 802.11ac PCI-E NIC&#xA;然后”确定”保存设置&#xA;可以在网络连接里查看是哪块网卡&#xA;3.虚拟主机Ubuntu里的配置 开启Ubuntu虚拟机&#xA;修改虚拟主机的网络配置文件(注意不同的linux系统的网络配置文件放的位置有些不同)&#xA;配置文件路径 /etc/network/interfaces 打开控制台输入 vi /etc/network/interfaces编辑网络配置文件&#xA;(注意:要切换到超级用户,普通用户没有权限修改. 切换成超级用户命令sudo su,回车然后输入当前用户的密码即可切换成超级用户)&#xA;框框里的都是要自己加上去的.(编辑之前 需要知道主机的ip,子网掩码,默认网关等信息,如何查看在本文最后有介绍) 保存修改后的网络配置文件,重启一下网络(重启网络后配置不生效的话,可以重启系统reboot)&#xA;/etc/init.d/networking restart 查看虚拟主机的网络配置,输入ifconfig 然后ping主机的ip看下能不能ping通&#xA;如果主机可以ping通虚拟机,而虚拟机ping不通主机,则可能是，原来是Windows的防火墙没有打开ICMPv4-in这个规则，那怎么打开呢?&#xA;打开防火墙==&amp;gt;. 选择高级设置==&amp;gt;入站规则==&amp;gt;找到配置文件类型为“公用”的“文件和打印共享（回显请求 – ICMPv4-In）”规则，设置为允许,这样虚拟机能够ping通主机 5. 接着ping外网看能不能ping通(此处ping百度来测试DNS服务器能不能使用 输入ping www.baidu.com)&#xA;能够成功ping通就可以上网啦!!!打开浏览器&#xA;输入www.baidu.com回车&#xA;如何查看查看主机的网络配置?&#xA;cmd命令窗口中输入ipconfig -all&#xA;虚拟主机的DNS服务器配置文件目录/etc/resolv.conf，&#xA;Ubuntu防火墙配置文件位置 /etc/iptables.rules&#xA;whereis iptables :–&amp;gt;是否有安装防火墙&#xA;iptables -L :–&amp;gt;查看防火墙规则</description>
+    </item>
+    <item>
+      <title>Firefox 中更有效的整合 Tor 的方法</title>
+      <link>https://anwangtanmi.github.io/posts/c5a514a686f83dcb77877419118cdf8c/</link>
+      <pubDate>Fri, 31 May 2019 13:18:56 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/c5a514a686f83dcb77877419118cdf8c/</guid>
+      <description>根据上个月公布的 Research Grants 2019H1，Mozilla 正寻求资助开发在 Firefox 中更有效的整合 Tor 的方法。目前 Tor 能工作在 Firefox 浏览器上，Tor 浏览器就是证据，但这种整合方法拖慢了浏览器的速度。&#xA;Mozilla 认为，要让更多的用户使用 Tor 匿名网络需要解决目前 Tor 存在的效率低下的问题。学术界正在研究替代的协议架构和路线选择协议，如 Tor-over-QUIC、DTLS 和 Walking Onions。但替代的协议架构和路线选择协议是否能带来可接受的 Tor 性能增强，是否能保留 Tor 的特性，是否能大规模部署 Tor，如何全面整合 Tor 和 Firefox？Mozilla 愿意在这些方面提供研究资金。</description>
+    </item>
+    <item>
+      <title>VMware提示此主机支持Intel VT-x,但Intel VT-x处于禁用状态解决方法</title>
+      <link>https://anwangtanmi.github.io/posts/9d8f4a5811fe06251151f01c213a455a/</link>
+      <pubDate>Sat, 25 May 2019 01:42:09 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/9d8f4a5811fe06251151f01c213a455a/</guid>
+      <description>今天打开VMware准备用早就装好的Ubuntu搞事情，结果打开提示&#xA;此主机支持 Intel VT-x，但 Intel VT-x 处于禁用状态。&#xA;如果已在 BIOS/固件设置中禁用 Intel VT-x，或主机自更改此设置后从未重新启动，则 Intel VT-x 可能被禁用。&#xA;(1) 确认 BIOS/固件设置中启用了 Intel VT-x 并禁用了“可信执行”。&#xA;(2) 如果这两项 BIOS/固件设置有一项已更改，请重新启动主机。&#xA;(3) 如果您在安装 VMware Workstation 之后从未重新启动主机，请重新启动。&#xA;(4) 将主机的 BIOS/固件更新至最新版本。&#xA;此主机不支持“Intel EPT”硬件辅助的 MMU 虚拟化。&#xA;模块“CPUIDEarly”启动失败。&#xA;未能启动虚拟机。&#xA;借鉴了http://www.xitongcheng.com/jiaocheng/xtazjc_article_38955.html&#xA;知道了：Intel VT-x完整名称是Intel Virtualization Technology，就是Intel虚拟技术，开启它可以让硬件平台同时运行多个操作系统，是虚拟机软件运行必备的技术之一，如果禁用，就会弹出“此主机支持Intel VT-x,但Intel VT-x处于禁用状态”这个提示，解决办法就是进BIOS开启Intel Virtualization Technology。&#xA;因为我的笔记本是惠普暗影精灵4，&#xA;但是我的操作与：&#xA;1、开机点ESC，进入启动菜单，按F10&#xA;2，进入BIOS设置界面，选择处理器虚拟化技术，回车&#xA;3，选择启用，F10确定，保存并开机&#xA;4，打开虚拟机，成功</description>
+    </item>
+    <item>
+      <title>Ubuntu18.04设置主题后，切换用户或锁定就自动休眠（待解决）</title>
+      <link>https://anwangtanmi.github.io/posts/65f9b2514d15b21f82a33e3dee9871a5/</link>
+      <pubDate>Wed, 03 Apr 2019 22:07:03 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/65f9b2514d15b21f82a33e3dee9871a5/</guid>
+      <description>切换用户或锁定会突然黑屏&#xA;显示&#xA;[xxxxxx]usbhid 1-2:1.1: reset_resume error -1&#xA;萌新表示很懵逼&#xA;百度了一番之后只会查了一个错误日志，也没看明白&#xA;Apr 3 21:39:27 inspiron-gaming kernel: [ 6446.485249] wlp3s0: deauthenticating from 0a:74:9c:79:25:8b by local choice (Reason: 3=DEAUTH_LEAVING)&#xA;Apr 3 21:39:40 inspiron-gaming kernel: [ 6458.766249] PM: suspend entry (deep)&#xA;Apr 3 21:39:40 inspiron-gaming kernel: [ 6458.766250] PM: Syncing filesystems … done.&#xA;Apr 3 21:39:40 inspiron-gaming kernel: [ 6459.404867] rfkill: input handler enabled&#xA;Apr 3 21:39:47 inspiron-gaming kernel: [ 6460.844091] Freezing user space processes … (elapsed 0.</description>
+    </item>
+    <item>
+      <title>悬而未解：有线网连接老断，重新插拔网线才能继续，，，无线网正常（已解）</title>
+      <link>https://anwangtanmi.github.io/posts/0019ac1a37dda70b5d9e1a7ee4a89fd0/</link>
+      <pubDate>Wed, 03 Apr 2019 11:00:01 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/0019ac1a37dda70b5d9e1a7ee4a89fd0/</guid>
+      <description>症状：&#xA;1.无线连接一直可以正常上网。&#xA;2.有线网络则是，刚开始插网线的时候可以上，但是可能过几分钟之后就上不了了，但只要重新插拔一下，又恢复了，过几分钟又不行了。&#xA;3.局域网内的服务器以及队友的ip是ping的通的，网关也是ping的通，但是114.114.114.114就ping不通了。所以上不了网。&#xA;一直被这bug干扰，不知道什么情况。。。。&#xA;菜，哪天具体分析一下原理原因，&#xA;暂时的解决方法：&#xA;1.重新插拔网线可以，但是过一会儿又得继续，&#xA;2.重启网卡， sudo /etc/init.d/networking restart （没有用）&#xA;解决 了一天，并没有解决成功，怀疑是被arp攻击了。后面再研究吧，比较麻烦。&#xA;如何验证呢，我直接切换到windows，应该还是上不来网，mac不是一样的吗。明天试试。或者直接换硬盘，新装个系统进去，看什么情况。&#xA;https://blog.csdn.net/sduvec/article/details/50401938&#xA;https://blog.csdn.net/god_7z1/article/details/47003103 最终解决方法：&#xA;#the fix of intenet&#xA;(192.168.1.254) at 00:1c:54:75:5f:27&#xA;1. arp -s 192.168.1.254 00:1c:54:75:5f:27&#xA;2.change ip to 192.168.70.220 as 233 seem to be used by others&#xA;3.change dns 114.114.114.114&#xA;#then internet runs well</description>
+    </item>
+    <item>
+      <title>【Lee-Linux-01】 manjaro安装</title>
+      <link>https://anwangtanmi.github.io/posts/e6289a0997389c4ca2d45d2db8c2b824/</link>
+      <pubDate>Wed, 20 Mar 2019 10:05:36 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/e6289a0997389c4ca2d45d2db8c2b824/</guid>
+      <description>【Lee-Linux-01】 manjaro安装 manjaro使用初衷 听说manjaro是最流行的Linux版本，世界排名第一？不过最吸引我的是，AUR的丰富源，pacman的便捷安装。&#xA;manjaro安装 制作系统盘【Rufus的官网】注意：写入模式为DD&#xA;启动安装 注意：driver选择，尽量选择nofree（会安装闭源驱动），觉得无所谓的可以选free&#xA;更新系统&amp;amp;选择中国源镜像&#xA;依次执行以下命令：&#xA;sudo pacman -Sy 更新仓库（如果版本比较低）&#xA;sudo pacman-mirrors -i -c China -m rank 排列中国源（选择清华的，比较稳定，老牌源值得拥有）&#xA;编辑/etc/pacman.conf文件，末尾添加&#xA;[archlinuxcn] Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch pacman -Syyu 更新系统&#xA;sudo pacman -S archlinuxcn-keyring 导入公钥&#xA;安装搜狗拼音&#xA;sudo pacman -S fcitx-sogoupinyin&#xA;sudo pacman -S fcitx-im （直接回车，默认安装全部）&#xA;sudo pacman -S fcitx-configtool&#xA;编辑～/.profile，添加以下内容：&#xA;export GTK_IM_MODULE=fcitx&#xA;export QT_IM_MODULE=fcitx&#xA;export XMODIFIERS=”@im=fcitx”&#xA;执行reboot 重启后即可生效&#xA;安装谷歌浏览器&#xA;pacman -S google-chrome&#xA;安装WPS&#xA;pacman -S wps-office 安装WPS&#xA;pacman -S ttf-wps-fonts 安装字体</description>
+    </item>
+    <item>
+      <title>zotero在chrome中的使用</title>
+      <link>https://anwangtanmi.github.io/posts/add82f4c3ccc8c97c82f2710fdc6df42/</link>
+      <pubDate>Mon, 25 Feb 2019 21:08:28 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/add82f4c3ccc8c97c82f2710fdc6df42/</guid>
+      <description>配置好zotero后，在chrome中使用需要安装zotero connecter,官网下的链接一直下载不下来，找到了以下安装方法，https://chrome.google.com/webstore/search/zotero?hl=zh-CN中搜索zotero，第一个安装后马上就有了小图标了。</description>
+    </item>
+    <item>
+      <title>【双系统安装心得】【win10&#43;Ubuntu18.04】【Ubuntu安装卡死/登录卡死问题】【NVIDIA网卡驱动安装问题】</title>
+      <link>https://anwangtanmi.github.io/posts/75071c7d419f77bf4c45c3507f3bf2ad/</link>
+      <pubDate>Thu, 21 Feb 2019 21:41:39 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/75071c7d419f77bf4c45c3507f3bf2ad/</guid>
+      <description>本人经过一整天的折腾QAQ&#xA;就为了Ubuntu的两个最重要的驱动安装（无线网卡驱动+独立显卡驱动）&#xA;搞得心态都炸了好几次 神烦！！（(╯‵□′)╯︵┻━┻）&#xA;所以特地写一篇博文 把我期间遇到的一些问题进行总结 希望能让遇到同样问题的朋友少走一些弯路。&#xA;【最重要的一点！！！所以写在最开头！！！】&#xA;【一定要先进入BIOS，把secure root关闭！！！】&#xA;中文是 安全启动模式 记得一定要先关闭！！！&#xA;1.Ubuntu安装卡死问题&#xA;在进入引导U盘以后，开始安装以前，有个选项是 *install Ubuntu，这里先不要进入，按“e”进入编辑，找到以linux开头的那行，将“quite splash – – -”改为“quite splash nomodeset”，然后按F10引导进入安装，就不会卡了。&#xA;2.登录卡死问题&#xA;双系统我安装完以后，是Ubuntu引导win10，在选择系统的界面，同理，Ubuntu，按“e”进去编辑，修改内容同上条。&#xA;3.无线网卡驱动&#xA;我的笔记本是暗影精灵3，我安装了Ubuntu以后，通过命令查看电脑的网卡设备，发现并不是百度说的那样，有eth0，wlan0这样的命名。比如如果命名是eth0，eth1，则eth0表示有线网卡，eth1表示无线网卡。【未完待续（等我整理完，再更新一些内容）】&#xA;查询命令参考：iwconfig，ifconfig&#xA;我的无线网卡型号是b822，这个型号的驱动文件Ubuntu已经有了，我关掉BIOS安全启动（secure boot），reboot以后WiFi就能用了。【未完待续（补查询型号的操作过程）】&#xA;4.NVIDIA显卡驱动&#xA;这个我遇到的最大的问题就是NVIDIA显卡驱动安装好以后和Ubuntu默认的nouveau驱动会冲突，导致重启的时候出现下图的问题，无法进入系统。【未完待续（补寻找显卡驱动版本以及安装过程）】&#xA;这里我也手打一下这个问题描述，便于遇到同样问题的朋友搜索。（我当时真的搜不到啊QAQ）&#xA;acpi INT3400:00: Unsupported event [0x86]&#xA;acpi INT3400:00: Unsupported event [0x86]&#xA;acpi INT3400:00: Unsupported event [0x86]&#xA;acpi INT3400:00: Unsupported event [0x86]&#xA;acpi INT3400:00: Unsupported event [0x86]&#xA;解决方法：强制关机，在启动之前，选择系统的时候，找到“ Ubuntu ”，按“ e ”进入编辑，将“ quiet splash nomodeset ”修改成“ quiet splash acpi=off ”，按F10引导启动。</description>
+    </item>
+    <item>
+      <title>暗影精灵3 移动硬盘安装Ubuntu （Win &#43; Linux）</title>
+      <link>https://anwangtanmi.github.io/posts/221284c21c84aea70ecd8d068d97d450/</link>
+      <pubDate>Sun, 27 Jan 2019 18:06:19 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/221284c21c84aea70ecd8d068d97d450/</guid>
+      <description>暗影精灵3 移动硬盘安装 Linux系统 最近在学Linux，之前虚拟机用着很不爽，正好笔记本换了个SSD，于是把换下的128G硬盘买了个硬盘盒搞了个移动硬盘，双硬盘+双系统 岂不是美滋滋。&#xA;一. 安装前资源下载 WIN10安装很简单，网上随便一搜结果多的是，这里就不叙述了。接下来说一下在安装Linux系统前我们需要做的一些准备工作（我选择的Linux是Ubuntu的）：&#xA;准备一个大于等于4G的硬盘； 下载Ubuntu镜像文件，我是去官网下载的：https://www.ubuntu.com/download/desktop； 下载UltraISO软碟通，官网：https://cn.ultraiso.net/xiazai.html； 下载DiskGenius，http://www.diskgenius.cn/download.php； 二. 安装前资源配置 制作U盘启动盘：&#xA;（1）安装完成打开软碟通软件&#xA;（2）【文件】-【打开】，打开下载好的Ubuntu镜像文件&#xA;（3）选中用作启动盘的U盘&#xA;（4）【启动】-【写入硬盘映像】（5）然后[写入]就OK了&#xA;2. 接下来对移动硬盘进行处理：&#xA;（1）打开DiskGenius。注：这软件在我电脑上经常卡顿，不知是我下载的版本有问题还是怎样，总之在处理过程中多多等待别心急并不会影响使用&#xA;（2）因为之前这张盘我是用来装系统的，还没格式化，这里先将它格式化，如果之前有分区，需要把分区都删除才能格式化&#xA;（3）看该硬盘是否为GUID格式，如果不是转一下&#xA;（4）然后对硬盘进行分区，这里我是这样分的：/boot = 2G， /swap = 8G， / = 50G， /home = 剩余空间，可以根据不同的需求来进行分区，当然最简单的还是分一个 / 和一个swap。具体的操作就是点【新建分区】然后在出来的对话框中修改大小以及格式，格式的话除了swap选择 [Linux swap…] ，其他的都设置成 [EXT4] 即可。GPT不用区分主分区之类的，所以那一项不用管。&#xA;因为我的硬盘全都分完了，所以接下来的图去官网随便找张做示范了。&#xA;3. 分区完成，准备工作就已经全部OK了，接下来开始安装。&#xA;三. 安装Linux系统 由于昨天安装系统时忘了拍照，且安装并不是很麻烦，这里根据记忆进行叙述：&#xA;将U盘与移动硬盘都连接到电脑上，开机并按 [F9]，选择从U 盘进行启动； 然后选择第二项 [ Install Ubuntu ] ; 开始是一些常规设置，如语言、完全安装还是精简安装之类的。要注意到了安装类型那一步，选择最下面的 【其他选项】； 因为做准备工作时已经将移动硬盘进行了分区了，接下来就是找到那几个分区，进行挂载。记得没错的话是每点到一个分区下方会有个【更改】选项，只需要在弹出的对话框中将【用途】那一栏选一下就OK了，4个分区都要配置一下（这里是因为我的分区方案是分为4个）； 可以看到下方还有个引导设备安装位置的选项，这里我选择的是移动硬盘（关于这个选择有点小问题，后面会提到）； 到了这里可以说系统就等于装好了，点击安装，接下来还有些常规设置，需要注意的可能也就是别设置了密码自己回头忘掉。 四. 你以为这就结束了吗？hhhhhhhhh 系统安装后所遇问题汇总：&#xA;当你安装完成，输好密码，然后画面卡住不动了，该怎么办？&#xA;这里我遇到了这种情况，因为暗影精灵3是双显卡，自带的N卡跟Ubuntu自带的显卡驱动存在一些冲突，所以每每输入密码准备登录时都会卡住。&#xA;解决办法是在开机时选择recovery模式进入Ubuntu，然后参照这个帖子进行设置。https://blog.csdn.net/muyuxiaoxiang/article/details/80502703</description>
+    </item>
+    <item>
+      <title>装完Ubuntu之后发现没有声音输出，解决方法</title>
+      <link>https://anwangtanmi.github.io/posts/cafed6c5cc0d5636b99e386f9444d971/</link>
+      <pubDate>Mon, 07 Jan 2019 00:00:09 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/cafed6c5cc0d5636b99e386f9444d971/</guid>
+      <description>在设置里面的sound选项里面没有多余的声音输出选项，多次重启也无法解决&#xA;方法：&#xA;1.安装pavucontrol&#xA;sudo apt install pavucontrol 2.终端输入打开该软件&#xA;pavucontrol 3.切换到“配置”选项卡，根据实际情况禁用不需要的声卡。禁止第一项，第二项选择analogy stereo output（模拟立体输出。推荐选择）或者analogy stereo duplex（模拟立体声双工）&#xA;4. 切换到输出设备，选择headphones，不要选择line out。到现在就设置好了&#xA;拓展：&#xA;NVIDIA Corporation, GP104 [GeForce GTX 1080]，一般选择关闭&#xA;NVIDIA Corporation, GP104 High Definition Audio Controller，这个是GTX1080显卡自带的集成声音单元，也就是说显卡上不仅有显示芯片还集成了这个HD音频，不用管它，平时音箱接主板集成的就可以，这个GP104是供显卡HDMI接口连接电视声音图像同步输出用的，正常安装公版驱动会自动安装四到五个这个GP104 HD Audio Controller以及你的显示驱动的，等需要通过HDMI接口连接电视输出，让电视自己出声就需要这个声卡驱动。&#xA;下面命令查看声卡&#xA;cat /proc/asound/cards # 查看当前系统有哪些声卡 sudo lshw -numeric -class multimedia # 查看这些声卡的详细信息 *-multimedia description: Audio device&#xA;product: GP104 High Definition Audio Controller [10DE:10F0]&#xA;vendor: NVIDIA Corporation [10DE]&#xA;physical id: 0.1&#xA;bus info: pci@0000:1c:00.1&#xA;version: a1</description>
+    </item>
+    <item>
+      <title>Kali Linux 从入门到精通(四)-代理</title>
+      <link>https://anwangtanmi.github.io/posts/52ae2af3901f699608762da50a8adfc8/</link>
+      <pubDate>Wed, 02 Jan 2019 20:33:01 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/52ae2af3901f699608762da50a8adfc8/</guid>
+      <description> Kali Linux 从入门到精通(四)-代理 翻墙&amp;amp;代理&#xA;GFW长城防火墙&#xA;Facebook,youtube client–&amp;gt;goagent–&amp;gt;GAE–&amp;gt;目标网站&#xA;翻墙&#xA;http代理:明文传输存在弊端,容易被长城防火墙发现容量,现在可以使用https进行加密 socks代理 ssh代理 VPN Goagent&#xA;Tor:暗网&#xA;保护隐私防止被追踪 志愿者组成 长期在天朝无法使用 感谢云 暗网 互联网引擎无法发现 互联网黑市 代理的意义所在&#xA;加密通信 隐藏来源 突破网络封锁 注意事项&#xA;不要触及敏感地带 不要从事非法行为 </description>
+    </item>
+    <item>
+      <title>gnome3美化以及常用插件（浏览器&amp;gnome）extensions</title>
+      <link>https://anwangtanmi.github.io/posts/4f20e08fa7a9071a4ddd4ea050205d22/</link>
+      <pubDate>Wed, 21 Nov 2018 21:56:42 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/4f20e08fa7a9071a4ddd4ea050205d22/</guid>
+      <description>https://www.gnome-look.org/browse/cat/134/ord/latest/ 下载喜欢的theme icon&#xA;cp 到 /usr/share/themes /usr/share/icons 中 利用tweak 修改，推荐一个 sierra-dark theme&#xA;Macos-sierra-ct-0.8.1 icons&#xA;再添加一个Dock plank 完美&#xA;常用插件 gnome-extension.org可以下载也可直接安装firefox 扩展安装&#xA;也可直接下载下来放到 .local/share/gnome-shell/extensions里面 用tweak启动&#xA;activities-config@nls1729’/&#xA;[email protected]’/&#xA;‘[email protected]’/&#xA;‘[email protected]’/(need download from github)&#xA;‘[email protected]’/&#xA;‘[email protected]’/&#xA;gsnow 下雪 改源代码可以 变成表情掉落&#xA;websearch dialog 快捷键弹出窗口搜素&#xA;appfolder 将程序分类放到一个文件夹里面&#xA;firefox常用扩展 g accesshe&#xA;ublock privacy vivaldi vimium tabliss darkreader baiduexporter(Assistant for Baidu to export download links to aria2 choose text export then copy link download ) 网盘万能钥匙(wifi万能钥匙 ) proxyeedown(In win easy ), speedpan 5G 迅雷，</description>
+    </item>
+    <item>
+      <title>ubuntu卡在logo界面</title>
+      <link>https://anwangtanmi.github.io/posts/41889f0605e02def0b9e2b3d511c08b7/</link>
+      <pubDate>Sun, 18 Nov 2018 17:13:15 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/41889f0605e02def0b9e2b3d511c08b7/</guid>
+      <description>对于这个问题，我也是在最近一次偶然的机会中发现的。&#xA;我重装了了Ubuntu 18.04， 很多东西需要重新配置， 有个刚性需求就是配置shadowsocks实现科学上网，对于从windows向linux刚转移的我来说，当然还是更喜欢图形界面，但一系列操作后，发现用命令行更爽，有时你会觉得鼠标很鸡肋。&#xA;所以我就下载了shadow socks Qt-5 图形版，然后就是安装，配置，但是失败了，我也不知道为什么失败，失败了只能想别的办法，但是我关机又开机后，发现ubuntu卡在了logo界面，尝试了网上说的很多解决方法都不管用，内心很凉啊，最后，一狠心，直接重装吧，不想折腾了，但在搜解决方法的时候，看到有个大佬说这是shadowsocks Qt-5图形版造成的，内心想了想也很有道理，因为之前也出过这样的问题，那是半年前了，只是对ubuntu好奇而已，那时还没像现在这样下定决心。&#xA;我强烈建议，不要装shadowsocksQt-5的桌面版，直接用命令行的就行，真的非常非常方便！&#xA;下篇文章介绍怎么装命令行的，亲测有效的那种。</description>
+    </item>
+    <item>
+      <title>UEFI引导ubuntu16.04 的Nvidia显卡驱动安装</title>
+      <link>https://anwangtanmi.github.io/posts/1bbd331df3e059e432f2e5d4411780e6/</link>
+      <pubDate>Sat, 03 Nov 2018 11:53:55 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/1bbd331df3e059e432f2e5d4411780e6/</guid>
+      <description>参考原文：https://blog.csdn.net/sizaif/article/details/79399130 写在前面： 我用的是Ubuntu16.04.5版本（官网下载）&#xA;笔记本是暗影精灵4， nvidia显卡为1050ti 因为笔记本型号很新，所以4.10以前的内核版本都不能很好的驱动硬件，为了让笔记本的性能发挥出来我决定安装新内核版本的Ubuntu系统（其实最开始是因为Ubuntu14.04安不了1050ti的N卡驱动）&#xA;开始遇到的问题，插上U盘后，卡在Ubuntu Logo处， 还会出现acpi:INT3400:00:….[x86]一大串反复出现。这就是Ubuntu自带显卡驱动nouveau与N卡不兼容导致的，应该还和UEFI引导有关。几经google（google的排序算法秒杀百度）找到了下面的方法。&#xA;开始装Ubuntu（省略了系统安装操作，具体可参见我的博文） 1：插入U盘&#xA;2：进入引导界面 把光标停在 install ubuntu 选项 按 e 进入编辑模式&#xA;在linux 后面 找到 quiet splash — 那 删除 — 并 添加 nomodeset 后删除 quiet splash&#xA;按F10 进入， 就不会出现 安装 卡 logo的 情况， 但分辨率会变成800*600 特别大（这里是因为屏蔽了nouveau显卡驱动，如果 卡在 载入界面 logo 界面 或者 黑屏，紫屏 就是因为 没有N卡驱动）。&#xA;安装后重启&#xA;进入 GRUB 引导，会出现 三个选项 进入ubuntu 和 Ubuntu高级模式 在进入ubuntu 按 E 在linux 后面 找到 quiet splash那 删除 后面那个$一串 并 添加 nomodeset 后删除 quiet splash 按 F10 进入 系统(有同学可能会问安装时不是改过了吗？注意，因为在这里改启动模式重启后就失效了所以我们要再来一次) 一般情况下 会 变成800*600 的模式， 进入系统后 需要 安装 NVIDIA 的驱动， （这里自己添加的东西取决于你的显卡，例如：较老的intel显卡： i915.</description>
+    </item>
+    <item>
+      <title>Ubuntu连接不了网络的解决方法（右上角找不到连接标志）</title>
+      <link>https://anwangtanmi.github.io/posts/81fa9965174b577b7e18ec29040e1dc2/</link>
+      <pubDate>Mon, 29 Oct 2018 10:38:38 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/81fa9965174b577b7e18ec29040e1dc2/</guid>
+      <description> 问题描述：昨晚还好好的，今早过来就不行了。并且，它的右上角是找不到那个连接标志的。&#xA;解决步骤：&#xA;1、编辑/etc/NetworkManager/NetworkManager.conf&#xA;sudo vi /etc/NetworkManager/NetworkManager.conf&#xA;将其中的managed=false改为managed=true&#xA;2、重启network-manager service：&#xA;sudo service network-manager restart&#xA;PS.:之前看到的帖子说什么关掉虚拟机再编辑设置，还有什么设置以太网的共享方式，我都试过并且以失败告终。当然这篇文章只是其中一种情况，还需要具体问题具体分析。&#xA;我参考的文章并且做法是对的&#xA;以下几张小图，请过目：&#xA;如果再连接不上，就再打开那个文件看看managed的值是否为“true”，为true就再重启一下服务。 </description>
+    </item>
+    <item>
+      <title>Nvidia显卡电脑安装Ubuntu16.04和18.04出现的问题</title>
+      <link>https://anwangtanmi.github.io/posts/af8d8bdad4099d45bcd6ff195697f391/</link>
+      <pubDate>Tue, 23 Oct 2018 20:31:16 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/af8d8bdad4099d45bcd6ff195697f391/</guid>
+      <description>最近我升级了我Windows的Nvidia显卡，然后给我的游戏本（暗影精灵）装双系统Ubuntu时遇到有关显卡的坑&#xA;遇到的问题： （1）用U盘安装Ubuntu时卡在安装步骤中的某个步骤，比如第一步选择语言或者其它步骤等等&#xA;（2）安装成功后输入密码正确后在登陆界面不断循环，进不去桌面。或者输入密码成功后，屏幕黑屏，右下角出现鼠标，界面卡死。&#xA;（3）安装成功后Ubuntu的系统设置的亮度条消失，无法调节电脑的亮度&#xA;原因分析大体如下： Ubuntu默认安装了第三方开源的驱动程序nouveau，nvidia显卡驱动如果没有禁用nouveau，就会碰到冲突的问题。或者没有正确安装Nvidia官方显卡驱动等原因。&#xA;解决方法： Step 1: 在grub界面选择操作系统Ubuntu时（一般为第一项），按e键进入编辑模式，找到”Boot Options ed boot=… initrd=/casper/initrd.lz quiet splash —-“删去后面的横线，并且在splash加上nomodeset ,接着按F10会启动系统&#xA;Step 2: 进入操作系统后编辑/etc/default/grub，即在终端下输入：&#xA;sudo gedit /etc/default/grub 找到GRUB_CMDLINE_LINUX_DEFAULT=“quiet splash” 修改为 GRUB_CMDLINE_LINUX_DEFAULT=“quiet splash nomodeset”&#xA;Step 3: 然后更新grub,即在终端下输入：&#xA;sudo update-grub 参考自：https://blog.csdn.net/legalhighhigh/article/details/81448830</description>
+    </item>
+    <item>
+      <title>【匿名通信】在Linux环境下编译运行tor源码</title>
+      <link>https://anwangtanmi.github.io/posts/4e26ee6203d8e4ea517c12f6f73afe0a/</link>
+      <pubDate>Thu, 11 Oct 2018 11:33:13 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/4e26ee6203d8e4ea517c12f6f73afe0a/</guid>
+      <description> 参考原文 在Linux环境下编译运行tor源码 </description>
+    </item>
+    <item>
+      <title>黑暗搜素引擎工具—shodan</title>
+      <link>https://anwangtanmi.github.io/posts/83f1e9d235bb04b9661ca010ed6095e0/</link>
+      <pubDate>Tue, 14 Aug 2018 18:29:52 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/83f1e9d235bb04b9661ca010ed6095e0/</guid>
+      <description>简介 shodan是互联网上最强大的一个搜索引擎工具，该工具不是在网上搜索网址，而是直接搜索服务器，相当于一款“黑暗”谷歌，一直不停的在寻找着所有和互联网连接的服务器、摄像头、打印机、路由器等。 官网：https://www.shodan.io/ 如搜索思科路由器 在该界面可以单击任何IP地址，直接找到该设备。 可以使用过滤器通过缩小搜索范围快速的查询需要的东西。 过滤器命令 -city和country命令(缩小搜索的地理位置） 表示从美国进行搜索&#xA;country:US 从孟菲斯城市搜索&#xA;city:Memphis&#xA;结合使用&#xA;country:US city：Memphis&#xA;-hostname命令（通过指定主机名来扫描整个域名） 搜索google主机&#xA;hostname:google -net命令（扫描单个ip或一个网络范围） 扫描主机192.168.1.10&#xA;net：192.168.1.10 扫描192.168.1.0/24网络内所有主机&#xA;net：192.168.1.0/24 -title命令（搜索项目） 搜索服务器机房信息&#xA;title：&#34;Server Romm&#34; -关键字搜索（如果知道目标系统使用得服务器类型或嵌入式服务器名，来搜索一个web页面也比较容易 搜索所有apache服务器正在运行得2.2.8版本，且仅搜索打开的站点&#xA;apache/2.2.8 200 ok 跳过显示401的非法页或302删除页&#xA;apache/2.2.8 -401 -302 -组合搜索 搜索在波士顿所有正在运行IIS/7.0的Microsoft服务器&#xA;IIS/7.0 hostname:YourCompany.com city:Boston 在某台主机中标题为camera的信息&#xA;Title:camera hostname:YourComany.com 使用坐标轴（经度33.5，纬度36.3）的形式搜索Linux操作系统&#xA;geo:33.5.36.3 os:Linux -其他搜索术语 通过端口号搜索&#xA;Port 通过操作系统搜索&#xA;OS 使用时间搜索服务&#xA;After或Before -使用Metasploit实现Shodan搜索 (1)在shodanhq.com网站注册一个免费的账户 (2)登录，获取API key。 (3)启动MSF终端 (4)选择auxiliary/gather/shodan_search模块 ，查看该模块下可配置的选项参数&#xA;&amp;gt;use auxiliary/gather/shodan_search &amp;gt;show options (5)配置QUERY和SHODAN_APIKEY选项参数&#xA;&amp;gt;set SHODAN_APIKEY duV9vwgCmo0oDfWqfWafax8sj0ZUa5BU（你账户的APIkey） &amp;gt;set QUERY iomega (6)启动搜索引擎</description>
+    </item>
+    <item>
+      <title>Linux（Ubuntu16.04）调节屏幕亮度（亮度控制条消失的问题）</title>
+      <link>https://anwangtanmi.github.io/posts/ae60db116aba1bfdc086c2112e4303e1/</link>
+      <pubDate>Tue, 24 Jul 2018 20:18:06 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/ae60db116aba1bfdc086c2112e4303e1/</guid>
+      <description>【注】记录下自己在用LInux过程中遇到的一些问题，为实际操作过程中遇到的问题以及解决办法。网络信息庞杂，决定将一些切实可用的解决问题的过程和办法记录下来，供大家参考，同时也方便自己日后再遇到此类问题时查看。&#xA;本文参考来源，见链接，屏幕亮度。&#xA;首先，说一下我遇到的问题，刚开始问题比较严重，屏幕十分的暗。打开Linux的System setting里的Brightness&amp;amp;Lock，里面根本就没有调节亮度的控制条（下图是事后截图的，之前是没有如下亮度控制条的），这个问题真是差点把我逼疯了。眼睛看瞎，而且之前折磨了一天都没有把问题解决掉，但是实在无法忍受几乎为最低的亮度，眼睛真被搞的相当难受，于是挑了个周日又折磨了一整天，终于把问题解决了。&#xA;因为历程比较长，所以没有全程记录下来，试了各种各样的方法，现将解决问题的途径归纳如下：&#xA;问题体现在两个方面 1）打开Linux的System setting里的Brightness&amp;amp;Lock，里面根本就没有调节亮度的控制条。&#xA;2）打开Nvidia X Server，界面完全不正确，而且报错“You do not appear to be using the NVIDIA X driver. Please edit your X configuration file (just run `nvidia-xconfig` as root), and restart the X server. ”&#xA;解决问题的方法 由于我所遇到的问题不是用一个方法解决的，尝试了很多途径，所以无法详细记录解决办法，仅提供解决的思路&#xA;1）如果你出现的状况和我一模一样，那么很可能是驱动安装的问题，建议首先重新安装驱动。建议用Ubuntu自带的软件库安装，如下，先进入Software&amp;amp;Updates&#xA;然后，选择在Additional Drivers里选择一个驱动后，点击Apply Changes（我的驱动已经安装过了，所以Apply Changes按钮是灰色的）。&#xA;2）按照此方法安装完驱动后，再次打开System setting里的Brightness&amp;amp;Lock，应该是有亮度控制条了的。如果没有的话，将Ubuntu重启。&#xA;3）重启的过程中，如果你跟我一样是集显+独显，那么应该会出现循环登录的问题，这种情况请参考我的博客里的另一篇文章，有解决办法。&#xA;4）如此之后，我所遇到的问题就顺利解决了，但同时还是有一个问题，那就是每次重启电脑后，亮度又回到最暗了，需要进入系统后重新调节亮度，这同样是很蛋疼的一件事情。&#xA;当然有解决办法，以下，是解决屏幕亮度默认设置的方法&#xA;修改屏幕亮度的文件是：/sys/class/backlight/intel_backlight/brightness 1）查看当前亮度值 ，终端输入如下&#xA;$ cat /sys/class/backlight/intel_backlight/brightness 4 #此亮度值是我笔记本的亮度，确实非常暗的受不了&#xA;2）通过”系统设置”==&amp;gt;”亮度和锁屏”，设置屏幕亮度至自己适应的状态，并在此查看系统亮度文件的数据。&#xA;$ cat /sys/class/backlight/intel_backlight/brightness 356 #调节了亮度条后，个人觉得比较合适的亮度&#xA;3）手动修改系统亮度到最亮，并手动修改文件，测试是否能够成功调节屏幕亮度&#xA;$ sudo echo 1500 &amp;gt; /sys/class/backlight/intel_backlight/brightness 有些电脑可能会出现没权限的提示（按正常说，sudo就不应该提示这个了，可我的确实提示权限不够）</description>
+    </item>
+    <item>
+      <title>Arp断网攻击</title>
+      <link>https://anwangtanmi.github.io/posts/ccd7b13f8ad483efe9837e89c026297c/</link>
+      <pubDate>Fri, 01 Jun 2018 17:40:23 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/ccd7b13f8ad483efe9837e89c026297c/</guid>
+      <description> 第一次发帖希望大佬们多多关照，有什么不足请指出，谢啦！&#xA;ARP攻击就是通过伪造IP地址和MAC地址实现ARP欺骗 原理图如下&#xA;arp主要是以ip辨别对方的 举例： pc1 通过连wifi与pc2 进行通讯,&#xA;pc3拦截了pc1的包（让pc1误认为pc3为pc2）&#xA;（其中可以对pc1发过来的包进行操作）, 然后pc3又冒充pc1向发包与pc2通讯（误认为是pc1）; pc3就是pc1与pc2之间通讯的第三者,也被称作中间人欺骗 然而arp断网攻击与这个也是相同的道理 就是pc1发往pc2的包被pc3给拦截了不做任何处理,让pc1得不到响应 下面做个实验进行讲解： pc1用window系统 pc3是kali linux 2018.1 实验前准备 查看pc1配置 ipconfig --查看ip ip:192.168.0.108 网关:192.168.0.1 查看pc3配置&#xA;ifconfig --查看ip pc3kali linux pc3网卡:eth0 pc3ip:192.168.0.109 i 开始实验 最先开始pc1正常访问csdn 在kali上使用arpspoof工具对目标机发的包进行拦截 用法： arpspoof -i 网卡 -t 目标 网关 pc1再次访问csdn,开始不正常了！！！ 最后pc3关门arpspoof Ctrl+c pc1恢复正常访问 注意： 1，kali 这里设置成网桥模式，且关闭防火墙才有效 </description>
+    </item>
+    <item>
+      <title>php图片合成和图片处理（imagick）</title>
+      <link>https://anwangtanmi.github.io/posts/89290cd2ccd3ea4e60a6d7d7574c0152/</link>
+      <pubDate>Fri, 25 May 2018 15:53:11 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/89290cd2ccd3ea4e60a6d7d7574c0152/</guid>
+      <description>在我们印象中php一些简单的图片处理可以用gd库来完成，但是真正快速高效的、灵活复杂的图片处理，gd库是不满足的，所以我们一般使用linux上的 ImageMagick 或者 php的imagick扩展。&#xA;我们来看看两者的区别：&#xA;（1） imagick是一个PHP的扩展，用ImageMagick提供的API来进行图片的创建与修改，不过这些操作已经包装到扩展imagick中去了，最终调用的是ImageMagick提供的API.&#xA;（2） ImageMagick则是一套软件系列，主要用于图片的创建、编辑以及转换等，详细的解释见ImageMagick的官方网站http://www.imagemagick.org/，ImageMagick比GD的性能要高很多，如果是在处理大量的图片时更加能体现ImageMagick的性能。&#xA;1. 下载安装ImageMagick Linux代码 wget ftp://mirror.aarnet.edu.au/pub/imagemagick/ImageMagick-6.6.8-10.tar.gz tar -xzvf ImageMagick-6.6.8-10.tar.gz ./configure –prefix=/usr/local/imagemagick make make install 2. 下载安装Imagick 注意：安装该扩展不要求安装ImageMagick&#xA;从http://pecl.php.net/package/imagick找到imagick的最新的版本&#xA;Linux代码 wget http://pecl.php.net/get/imagick-3.1.0RC1.tgz tar -xzvf imagick-3.1.0RC1 phpize ./configure –with-php-config=/usr/local/php/bin/php-config –with-imagick=/usr/local/imagemagick make make install linux imagemagick的一些常用命令 可参考 w3c文档 地址：https://www.w3cschool.cn/imagemagick_use/imagemagick_use-bcm32819.html&#xA;php imagick的常用方法 可参考 地址：http://www.jb51.net/article/60161.htm</description>
+    </item>
+    <item>
+      <title>Kali linux渗透测试系列————8、 Kali linux信息收集之路由信息收集</title>
+      <link>https://anwangtanmi.github.io/posts/4e389daffc21bb1b5de3430fa325ef1c/</link>
+      <pubDate>Wed, 16 May 2018 11:18:10 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/4e389daffc21bb1b5de3430fa325ef1c/</guid>
+      <description>路由信息 获取网络路由信息的工具各种各样，本章将介绍几种常见的工具。网络路由信息可以帮助测试人员料及自己的主机到目标主机之间的网络通信路径，进而理解目标主机的网络情况。保护目标主机的防火墙信息，往往也暗藏与路由信息里。&#xA;traceroute 通过traceroute我们可以知道信息从你的计算机到互联网另外一端的主机是走什么路径。当然每次数据包由某一同一的出发点（source）到达某一同一的目的地（destination）走的路径可能会不一样，但基本上来说大部分时候所走的路由是相同的。Linux中，我们称之为traceroute，在MS Windows中我们称之为tracert。&#xA;Traceroute通过发送小的数据包到目的设备直到其返回，来测量其需要多长的时间。一条路径上的每个设备traceroute要测3次。输出结果中包括每次测试的时间（ms）和设备的名称（如果有的话0）及其IP地址。&#xA;Traceroute命令让你追踪网络数据包的路由途径，预设数据包大小是40Byte，用户可以另行设置。。&#xA;具体参数格式为：&#xA;使用traceroute测试一下Baidu&#xA;记录按序列号从1开始，每个纪录就是一跳 ，每跳表示一个网关，我们看到每行有三个时间，单位是 ms，其实就是-q的默认参数。探测数据包向每个网关发送三个数据包后，网关响应后返回的时间；如果您用 traceroute -q 4 www.58.com ，表示向每个网关发送4个数据包。&#xA;有时我们traceroute 一台主机时，会看到有一些行是以星号表示的。出现这样的情况，可能是防火墙封掉了ICMP的返回信息，所以我们得不到什么相关的数据包返回数据。&#xA;有时我们在某一网关处延时比较长，有可能是某台网关比较阻塞，也可能是物理设备本身的原因。当然如果某台DNS出现问题时，不能解析主机名、域名时，也会 有延时长的现象；您可以加-n 参数来避免DNS解析，以IP格式输出数据。&#xA;如果在局域网中的不同网段之间，我们可以通过traceroute 来排查问题所在，是主机的问题还是网关的问题。如果我们通过远程来访问某台服务器遇到问题时，我们用到traceroute 追踪数据包所经过的网关，提交IDC服务商，也有助于解决问题；但目前看来在国内解决这样的问题是比较困难的，就是我们发现问题所在，IDC服务商也不可能帮助我们解决。&#xA;跳数设置 格式： traceroute -m 跳数 域名&#xA;例如：&#xA;traceroute其余的参数还是非常多的，作用也较为强大，有兴趣可以自我进行测试学习！&#xA;tctrace tctrace也是一个路由信息分析工具，这个程序通过向目标主机发送TCP/SYN数据包来获取相应的信息。&#xA;如需要使用tctrace程序，可以在终端使用下述命令：&#xA;tctrace -i device -d targethost&#xA;参数中的device指的是网络接口，targethost指的是被测试的目标主机。&#xA;例如测试一下Baidu</description>
+    </item>
+    <item>
+      <title>Ubuntu16的gtx1070显卡&#43;对应显卡驱动安装（精简版）</title>
+      <link>https://anwangtanmi.github.io/posts/d52abe2764011957418e92150c86ee7d/</link>
+      <pubDate>Fri, 27 Apr 2018 15:06:48 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/d52abe2764011957418e92150c86ee7d/</guid>
+      <description>这篇博客主要是在Ubuntu16系统，配置1070显卡，然后去英伟达官网会自动匹配出最新的驱动，所以本篇文章主要讲显卡驱动安装教程。我具体内容详细描述，还有资源下载链接，看我的这篇博客：https://blog.csdn.net/fu6543210/article/details/79746624。&#xA;因为该博客太冗长，有点啰嗦，最近又装了一次显卡驱动，发现Ubuntu16会自动更新软件，导致显卡驱动无法用。废话不多说，直接gank！&#xA;总的来说分3步：&#xA;1，卸载前面安装失败的显卡驱动（没装过的，可以不做），和ubuntu16系统自带驱动（一定要做）&#xA;2，禁用系统软件nouveau，这是安装驱动成功的关键（一定要做）&#xA;3，安装驱动外壳，和驱动对应内核（现在NVIDIA最新版本驱动采用的所谓的技术保护，以前版本没这么复杂）&#xA;==========下面开始燥起来==========&#xA;1.下载驱动，看上面那篇博客链接里面有资料链接，和具体操作方法。&#xA;2.如果之前自己没有尝试过安装新的显卡驱动，此步可以跳过。自己有安装过的，这&#xA;步一定要做。&#xA;先进入你之前Ubuntu放的驱动的目录下，再输入下面命令：&#xA;输入 sudo ./NVIDIA.run -uninstall&#xA;NVIDIA.run是你前面安装过新的驱动名称（我嫌太长，自己改了驱动名字）。&#xA;会跳出一个界面，说问你否恢复，都已经坏了，所以不恢复，所以选择 No。&#xA;然后会提示卸载成功，选择 OK&#xA;3.卸载Ubuntu16系统自带的显卡驱动。&#xA;输入 sudo apt-get autoremove –purge nvidia-*&#xA;会跳出界面，显示大量信息，中间问你yes/No。输入 yes。&#xA;最后会有个警告说，还有一个没卸载成功，不用管它。&#xA;4.禁用Ubuntu16系统自启软件nouveau 输入 cd /lib/modules 输入 ls&#xA;会显示4.13.0-37-generic，4.13.0-36-generic,我们目标是最新的那个版本，每个人可能不同，记得下面输入选择自己电脑上最新 的那个版本号4.13.0-37-generic就行了 输入 cd 4.13.0-37-generic/kernel/drivers/gpu/drm/nouveau&#xA;输入 ls 会显示nouveau.ko，不让它起作用，才可以禁用nouveau了。所以给它改名。 输入 sudo mv nouveau.ko nouveau.ko.org 输入 ls 会显示nouveau.ko.org,但是没有nouveau.ko文件了。&#xA;输入 sudo update-initramfs -u&#xA;刷新刚才修改操作，等半分钟，这里会只显示你刚才修改的文件夹nouveau.ko.org&#xA;输入 lsmod | grep nouveau&#xA;可以查看是否屏蔽成功，没有任何输出即为成功，如果有输也没问题。&#xA;=====做了那么多准备，现在开始安装显卡驱动=======&#xA;5.安装你的显卡驱动外壳&#xA;进入你刚才run驱动放的目录下，使其为可执行的文件，然后才安装。&#xA;输入sudo chmod a+x 驱动名字.</description>
+    </item>
+    <item>
+      <title>惠普幻影精灵3 安装Ubuntu16.04.04 无线网卡不能使用问题</title>
+      <link>https://anwangtanmi.github.io/posts/97ebb1615306744f59c163922e73cfa8/</link>
+      <pubDate>Sun, 22 Apr 2018 16:27:18 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/97ebb1615306744f59c163922e73cfa8/</guid>
+      <description>1.升级Ubuntu 16.04.04内核 惠普幻影精灵3笔记本无线网卡为Realtek RTL8822BE。Ubuntu16.04.04系统内核为Linux 4.13.38，不能驱动Realtek RTL8822BE。而系统内核Linux 4.14内有支持Realtek RTL8822BE的驱动，故需升级系统内核。Linux 系统内核官网为点击打开链接，找到v4.14.35,找到对应自己系统架构的内核文件，我的是amd64,故下载三个文件，分别是×all.deb、带generic的两个文件。使用下列命令进行安装：&#xA;sudo dpkg -i linux*.deb 2.为该无线网卡驱动添加固件 固件地址点击打开链接，找到rtl8822befw.bin，下载并将该固件移动到/lib/firmware/rtlwifi 下。如下命令：&#xA;sudo mv rtl8822befw.bin /lib/firmware/rtlwifi 最后rebot。&#xA;注意应该在BOOT设置中关闭Secure BOOT 模式。</description>
+    </item>
+    <item>
+      <title>暗影精灵三 英伟达显卡 Ubuntu16.04 安装网卡驱动连接wifi</title>
+      <link>https://anwangtanmi.github.io/posts/4adfcadbaddf75a5676dc782fca751c5/</link>
+      <pubDate>Tue, 10 Apr 2018 19:53:02 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/4adfcadbaddf75a5676dc782fca751c5/</guid>
+      <description>1、查看网卡型号&#xA;$ uname -a&#xA;2、我的电脑是RTL8111&#xA;在官网http://www.realtek.com.tw/下载驱动，这是我的www.realtek.com.tw/downloads/downloadsView.aspx?Langid=3&amp;amp;PNid=13&amp;amp;PFid=5&amp;amp;Level=5&amp;amp;Conn=4&amp;amp;DownTypeID=3&amp;amp;GetDown=false&#xA;3、下载后解压&#xA;4、解压后修改权限&#xA;sudo chmod u+x autorun.sh 5、安装&#xA;sudo ./autorun.sh 6、好吧，最后我也没装成&#xA;然后我插了个无线网卡就可以连wifi了</description>
+    </item>
+    <item>
+      <title>VMware中的虚拟机设置之网络适配器</title>
+      <link>https://anwangtanmi.github.io/posts/376c9515785df5972b9149a97ba32a1e/</link>
+      <pubDate>Mon, 05 Mar 2018 16:32:28 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/376c9515785df5972b9149a97ba32a1e/</guid>
+      <description>在装完虚拟机后，在我们本机的window系统下会多出两个虚拟机网卡，其中一个VMnet1，一个是VMnet8。&#xA;在虚拟机的网络适配器选项中有网络连接模式供我们选择 1. 桥接模式： 如果我们选用桥接模式，则虚拟机在和我们真实机通信的时候，会利用我们真实机的本地网卡。 优点：不需要任何设置，虚拟机就可以直接和我们真实机通信。 缺点：虚拟机需要占用真实机网段的一个IP。 2. NAT模式 如果我们使用NAT模式，则虚拟机会使用VMnet8这块虚拟网卡与我们的真实机进行通信（当我们选用NAT模式的时候，则表示我们的虚拟机也可以上网） 3. 仅主机模式 如果我们使用仅主机模式，则表示虚拟机使用VMnet1与我们的真实机进行通信（主机模式：顾名思义，即我们的虚拟机不能上网）&#xA;如果我们选用NAT模式和仅主机模式，我们的虚拟机只能和我们的真实计算机通信，而不能与局域网内的其他设置通信。 而如果我们使用桥接模式，则我们的虚拟机不仅可以和本地真实机通信，还可以和局域网内的其他设置通信</description>
+    </item>
+    <item>
+      <title>Realtek 8822be无线网卡在Ubuntu16/17上驱动问题的完美解决方案</title>
+      <link>https://anwangtanmi.github.io/posts/9a19848995ff3659679f1e2dec6f4666/</link>
+      <pubDate>Sat, 17 Feb 2018 19:22:47 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/9a19848995ff3659679f1e2dec6f4666/</guid>
+      <description>为电脑安装Win10+Ubuntu双系统的时候，发现Ubuntu无法自动识别我的无线网卡，照着网上的教程挨个尝试无果（无法按照常规配置WiFi、手动安装驱动编译失败等等）&#xA;网上很多的解决办法失去了时效性。比如：其中手动安装驱动无法编译成功的实际原因是由于某年某月某日的某次Linux内核升级之后才存在的问题……&#xA;众所周知，Linux的驱动一直很是个问题……&#xA;但是后来摸索出一个完美解决方案：&#xA;Linux其实已经着手解决一些驱动问题，Linux的内核在Linux 4.14之后已经支持8822be无线网卡，因此我们的思路是只需将Linux内核升级即可。&#xA;而无论是Ubuntu16.04LTS还是Ubuntu17.10(我甚至还尝试了优麒麟17.10)的Linux内核版本都低于4.14，其中Ubuntu17.10的内核版本最高，也仅为4.13。我们可以手动下载驱动的包来升级。(大约Ubuntu18.04出了之后本文也就失去了时效吧！)&#xA;具体措施如下：&#xA;进入网站:http://kernel.ubuntu.com/~kernel-ppa/mainline/&#xA;翻到底，找到4.14(也可自行尝试更高版本，我试过4.15但无法开机，不知是否是偶然，读者自己斟酌)&#xA;找到自己的系统架构(amd64咯)，把amd64下的第一个.deb和第二、四的含有generic的.deb的链接地址依次复制&#xA;打开终端，键入：(此步不同版本号与架构之间存在偏差，读者自行判断)&#xA;$ wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14/linux-……-.deb //wget后面跟着刚才复制的第一个地址，自行替换 $ wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14/linux-……-.deb //wget后面跟着刚才复制的第二个地址，自行替换 $ wget http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14/linux-……-.deb //wget后面跟着刚才复制的第四个地址，自行替换 然后在终端中安装这些包：&#xA;$ sudo dpkg -i *.deb 重启&#xA;$ reboot 开机后检查一下自己的内核版本：&#xA;$ uname -sr 如果是Linux 4.14，那么你的无线网卡应该已经识别并且开启了，右上角选择你要连接的AP吧！</description>
+    </item>
+    <item>
+      <title>Linux安装mysql5.6.39【详细过程】</title>
+      <link>https://anwangtanmi.github.io/posts/54f80950fc239eb411a6e2d17734df79/</link>
+      <pubDate>Sat, 10 Feb 2018 10:23:48 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/54f80950fc239eb411a6e2d17734df79/</guid>
+      <description>Linux安装mysql5.6.39 阿里云linux系统安装mysql5.6.39,以下方法已在线上环境测试成功。&#xA;仔细一步一步走不会有问题的！！！一定要认证看！！&#xA;欢迎大佬指点！！！！&#xA;cmake mysql5.6.39 shell cmake简介 CMake是一个跨平台的安装（编译）工具，可以用简单的语句来描述所有平台的安装(编译过程)。他能够输出各种各样的makefile或者project文件，能测试编译器所支持的C++特性,类似UNIX下的automake。只是 CMake 的组态档取名为 CMakeLists.txt。Cmake 并不直接建构出最终的软件，而是产生标准的建构档（如 Unix 的 Makefile 或 Windows Visual C++ 的 projects/workspaces），然后再依一般的建构方式使用。这使得熟悉某个集成开发环境（IDE）的开发者可以用标准的方式建构他的软件，这种可以使用各平台的原生建构系统的能力是 CMake 和 SCons 等其他类似系统的区别之处。&#xA;cmake安装 tar -zxvf cmake-2.8.4.tar.gz cd cmake-2.8.4 ./configure --prefix=/usr/local/cmake-2.8.4 make &amp;amp;&amp;amp; make install (报错时检查是否安装了gcc-c++) (注意cmake –version 无法获取版本号 可以在cmake中的bin 执行./cmake 获取版本号) 安装mysql yum -y install gcc libxml2-dev curl screen libpng12-dev autoconf libpcre3-dev make bzip2 libevent-dev patch libjpeg62-dev libcurl4-openssldev libfreetype6-dev g++ libtool libncurses5-dev psmisc lrzsz ncurses-devel</description>
+    </item>
+    <item>
+      <title>使用DuckDuckGo在命令行中搜索</title>
+      <link>https://anwangtanmi.github.io/posts/3c15335b7bf229dcfcc48189293e9ec3/</link>
+      <pubDate>Thu, 14 Dec 2017 11:44:26 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/3c15335b7bf229dcfcc48189293e9ec3/</guid>
+      <description>最近出现了一款能够从命令行搜索 DuckDuckGo 的工具。它叫做 ddgr（我把它读作 “dodger”），非常好用，像 Googler 一样，ddgr 是一个完全开源而且非官方的工具。没错，它并不属于 DuckDuckGo。所以，如果你发现它返回的结果有些奇怪，请先询问这个工具的开发者，而不是搜索引擎的开发者。&#xA;DuckDuckGo 命令行应用 DuckDuckGo Bangs（DuckDuckGo 快捷搜索） 可以帮助你轻易地在 DuckDuckGo 上找到想要的信息（甚至 本网站 omgubuntu 都有快捷搜索）。ddgr 非常忠实地呈现了这个功能。&#xA;和网页版不同的是，你可以更改每页返回多少结果。这比起每次查询都要看三十多条结果要方便一些。默认界面经过了精心设计，在不影响可读性的情况下尽量减少了占用空间。&#xA;ddgr有许多功能和亮点，包括：&#xA;更改搜索结果数 支持 Bash 自动补全 使用 DuckDuckGo Bangs 在浏览器中打开链接 ”手气不错“选项 基于时间、地区、文件类型等的筛选功能 极少的依赖项 你可以从 Github 的项目页面上下载支持各种系统的 ddgr：&#xA;从 Github 下载 “ddgr” 另外，在 Ubuntu 16.04 LTS 或更新版本中，你可以使用 PPA 安装 ddgr。这个仓库由 ddgr 的开发者维护。如果你想要保持在最新版本的话，推荐使用这种方式安装。&#xA;需要提醒的是，在本文创作时，这个 PPA 中的 ddgr 并不是 最新版本，而是一个稍旧的版本（缺少 -num 选项）。&#xA;使用以下命令添加 PPA：&#xA;sudo add-apt-repository ppa:twodopeshaggy/jarun sudo apt-get update 如何使用 ddgr 在命令行中搜索 DuckDuckGo 安装完毕后，你只需打开你的终端模拟器，并运行：</description>
+    </item>
+    <item>
+      <title>dircolors配置,linux目录颜色配置ls</title>
+      <link>https://anwangtanmi.github.io/posts/a6177d48d795d100cfda5037b51e77e7/</link>
+      <pubDate>Thu, 16 Nov 2017 11:17:49 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/a6177d48d795d100cfda5037b51e77e7/</guid>
+      <description>1.git clone https://github.com/seebi/dircolors-solarized.git&#xA;2.eval `dircolors dircolors.256dark` 可以看下效果&#xA;3.选个你喜欢的主题&#xA;4.ZSH朋友 :vim ~/.zshrc BASH朋友: vim ~/.bashrc&#xA;5.eval `dircolors dircolors.256dark` 追加进去 (可以考虑用绝对路径eval `dircolors ~/global_config/dir/dircolors.256dark`) 6.enjoy</description>
+    </item>
+    <item>
+      <title>ubuntu下wifi灰色的解决办法</title>
+      <link>https://anwangtanmi.github.io/posts/b8862636668391b6c040bdd7c78db04d/</link>
+      <pubDate>Mon, 23 Oct 2017 17:04:20 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/b8862636668391b6c040bdd7c78db04d/</guid>
+      <description>ubuntu上wifi是灰色的解决办法：&#xA;[解决]&#xA;rpeter@oodelang:~$ rfkill list&#xA;0: hp-wifi: Wireless LAN&#xA;Soft blocked: yes&#xA;Hard blocked: yes&#xA;1: phy0: Wireless LAN&#xA;Soft blocked: yes&#xA;Hard blocked: yes&#xA;rpeter@goodelang:~$rfkill unblock all 干掉所有软件block&#xA;rpeter@goodelang:~$ rfkill list&#xA;0: hp-wifi: Wireless LAN&#xA;Soft blocked: yes&#xA;Hard blocked: yes&#xA;1: phy0: Wireless LAN&#xA;Soft blocked: no&#xA;Hard blocked: no&#xA;Hard block 问题： Fn+F2 解决(明明laptop有wifi的硬件开关，Linux还是默认这对冤家当硬件开关)&#xA;[搞定]&#xA;rpeter@goodelang:~$ rfkill list&#xA;0: hp-wifi: Wireless LAN&#xA;Soft blocked: no&#xA;Hard blocked: no</description>
+    </item>
+    <item>
+      <title>ip 详解及子网掩码默认网关DNS的作用</title>
+      <link>https://anwangtanmi.github.io/posts/17628cb3e7e4fa7346db894b5a6172b1/</link>
+      <pubDate>Sun, 22 Oct 2017 20:40:26 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/17628cb3e7e4fa7346db894b5a6172b1/</guid>
+      <description>ip详解： IP地址的分类，a,b,c三类，d和e不对普通用户开放。网络类别的“D、E”不对民用开放。IP地址范围是根据网段来划分。“127”网段只有一个IP（127.0.0.1）可用，代表当前计算机自己。&#xA;A类：第一位代表网段, 1.0.0.0 – 126.255.255.255&#xA;B类：前两位代表网段, 128.0.0.0 – 191.255.255.255&#xA;C类：前三位代表网段, 192.0.0.0 – 223.255.255.255&#xA;剩下的位数代表不同网段内的主机。私有IP地址（内网）不能直接访问公网，也就是不同的局域网内的计算机可以使用相同的IP地址。&#xA;1.IP的取值范围为1.0.0.0-223.255.255.255。&#xA;2.公网通信使用路由器，局域网通信使用交换机。&#xA;3.A类IP第一段为网段，B类IP前两段为网段，C类IP前三段为网段，其余的是网段内的主机。&#xA;4.同一网段内的首地址为网络本身不能被使用，同一网段内的末地址为当前网络的广播地址，拿A类IP地址举例，1.0.0.0为网络本身，1.255.255.255为广播地址。&#xA;子网掩码：&#xA;用连续1的表示，例如255.0.0.0 255.255.0.0&#xA;子网掩码的作用：用来区分不同网段的IP—-子网掩码与IP相与，得到的结果相同则在同一网段.否则不在，需要经过路由器转发。&#xA;只要子网掩码是合理的（连续的1）就可以指定，不一定A类就是255.0.0.0，B类就是255.255.0.0&#xA;IP和子网掩码必须一起配合使用。&#xA;网络号=IP&amp;amp;子网掩码&#xA;广播地址：主机号全为1&#xA;常见的端口：&#xA;1、FTP（文件传输协议）：20、21；&#xA;2、SSH（安全shell协议）：22；&#xA;3、telnet（远程登录协议）：23；&#xA;4、DNS（域名系统）：53；&#xA;5、http（超文本传输协议）：80；&#xA;6、SMTP（简单邮件传输协议）：25；&#xA;7、POP3（邮局协议）：110；&#xA;查看本机启用的端口&#xA;netstat -an&#xA;选项：&#xA;-a :查看所有连接和监听端口&#xA;-n :显示IP地址和端口号，而不显示域名和服务名&#xA;1.hosts文件：做静态IP和域名对应，优先于DNS.&#xA;位置：C：\Windows\System32\drivers\etc\hosts&#xA;2.DNS服务的作用:将域名解析为IP地址&#xA;过程：客户机向DNS服务器发送查询IP请求&#xA;DNS服务器查询到web服务器的ip，告知用户&#xA;用户访问web服务器&#xA;3.域名空间结构&#xA;根域：.（13台服务器）&#xA;——&amp;gt;顶级域/一级域:包括组织域和地区域&#xA;（组织域：gov政府/edu教育部门/com商业部门/org民间团体/net网络服务机构/mil军事部门 地区域：cn 中国 hk 香港 jp 日本 Uk 英国 au 澳大利亚）&#xA;——&amp;gt;二级域：企业或个人自行购买的（imooc /microsoft/ibm/sina）&#xA;——&amp;gt;主机名/3级域：申请完二级域后自己定义的（www/news）&#xA;进行域名分级划分为了便于IP地址解析&#xA;5.客户—&amp;gt;本地域DNS服务器—&amp;gt;根服务器-&amp;gt;CN服务器-&amp;gt;COM.CN服务器-&amp;gt;IMOOC.COM.CN-&amp;gt;客户-&amp;gt;web服务器&#xA;—-递归查询(给结果)—- ————-迭代查询（其他DNS服务器）——–</description>
+    </item>
+    <item>
+      <title>安装VMware Tools时，提示“正在进行简易安装时，无法手动启动VMware tools安装”</title>
+      <link>https://anwangtanmi.github.io/posts/caf9d8483da797c0ab2edbc11eb5e5f3/</link>
+      <pubDate>Wed, 11 Oct 2017 15:21:31 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/caf9d8483da797c0ab2edbc11eb5e5f3/</guid>
+      <description>1.打开虚拟机设置， 将软盘的连接由「使用软盘映像文件 -&amp;gt; autoinst.flp」改成「使用物理驱动器 -&amp;gt; 自动检测」&#xA;2.将CD/DVD的连接，改成「使用ISO映像文件 -&amp;gt; VMware workstation安装目录下的linux.iso」.</description>
+    </item>
+    <item>
+      <title>暗影精灵3安装ubantu/deepin（linux）系统后无法wifi上网</title>
+      <link>https://anwangtanmi.github.io/posts/70ccdccedd82a7541dfe582239c60920/</link>
+      <pubDate>Wed, 23 Aug 2017 13:07:40 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/70ccdccedd82a7541dfe582239c60920/</guid>
+      <description>在暗影精灵3上安装好ubantu16.04后，发现右上角网络连接没有wifi显示，谷歌搜索，上论坛，终于发现了解决办法…&#xA;1.在终端输入lspci | grep Network查看网卡型号或者开机进入win10使用鲁大师查看网卡型号&#xA;发现网卡是RTL8168/8112,于是去网上查找相关驱动下载&#xA;2.打开终端，输入以下命令即可：&#xA;sudo apt-get install git build-essential git clone https://github.com/rtlwifi-linux/rtlwifi-next.git cd rtlwifi-next make sudo make install 3.重启后便发现wifi可以正常上网了&#xA;本文主要参考论坛帖子：https://askubuntu.com/questions/921483/no-network-device-after-installing-ubuntu-16-04</description>
+    </item>
+    <item>
+      <title>centos7安装mysql5.7.18完整实用教程（★firecat推荐★）</title>
+      <link>https://anwangtanmi.github.io/posts/bf31b196b129865b2dcdf46668b22004/</link>
+      <pubDate>Thu, 27 Jul 2017 17:35:12 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/bf31b196b129865b2dcdf46668b22004/</guid>
+      <description>CentOS 7的yum源中貌似没有正常安装mysql时的mysql-sever文件，需要去官网上下载https://downloads.mysql.com/archives/community/&#xA;1、准备工作&#xA;最简单的安装mysql-server服务，只需要准备好如下5个软件包即可，我们可以使用rpm -ivh命令进行安装&#xA;mysql-community-common-5.7.18-1.el7.x86_64.rpm&#xA;mysql-community-libs-5.7.18-1.el7.x86_64.rpm –（依赖于common）&#xA;mysql-community-client-5.7.18-1.el7.x86_64.rpm –（依赖于libs）&#xA;mysql-community-server-5.7.18-1.el7.x86_64.rpm –（依赖于client、common）&#xA;mysql-community-devel-5.7.18-1.el7.x86_64.rpm — 里面内容是c语言版本的客户端库函数和头文件&#xA;注：c语言客户端默认安装位置是&#xA;头文件 /usr/include/mysql&#xA;静态和动态库 /usr/lib64/mysql&#xA;2、按顺序逐个安装rpm&#xA;[root@localhost mysql]# rpm -ivh mysql-community-common-5.7.18-1.el7.x86_64.rpm&#xA;warning: mysql-community-common-5.7.18-1.el7.x86_64.rpm: Header V3 DSA/SHA1 Signature, key ID 5072e1f5: NOKEY&#xA;Preparing… ################################# [100%]&#xA;file /usr/share/mysql/czech/errmsg.sys from install of mysql-community-common-5.7.18-1.el7.x86_64 conflicts with file from package mariadb-libs-1:5.5.50-1.el7_2.x86_64&#xA;笔者注：提示库冲突，需要先卸载centos原有的mariadb-libs。请注意，这样会同时卸载掉谷歌浏览器。没关系，先安装完mysql，然后再把谷歌浏览器装回来。&#xA;[root@localhost mysql]# yum remove mysql-libs&#xA;笔者注：然后再正式安装，注意先后顺序&#xA;[root@localhost mysql]# rpm -ivh mysql-community-common-5.7.18-1.el7.x86_64.rpm&#xA;warning: mysql-community-common-5.7.18-1.el7.x86_64.rpm: Header V3 DSA/SHA1 Signature, key ID 5072e1f5: NOKEY</description>
+    </item>
+    <item>
+      <title>无法推送一些引用到 ‘</title>
+      <link>https://anwangtanmi.github.io/posts/117447d7f7a12998d669870e5f0c4cd4/</link>
+      <pubDate>Thu, 29 Jun 2017 21:45:15 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/117447d7f7a12998d669870e5f0c4cd4/</guid>
+      <description> 描述：向github仓库推送时(Git push originmaster)，出现如下错误：​&#xA;fatal: 当前分支 master 没有对应的上游分支。&#xA;为推送当前分支并建立与远程上游的跟踪，使用&#xA;git push –set-upstream origin master&#xA;error: 无法推送一些引用到 ‘https://github.com/yourname/youname.github.io.git’&#xA;提示：更新被拒绝，因为远程版本库包含您本地尚不存在的提交。这通常是因为另外​​​​ ​&#xA;提示：一个版本库已向该引用进行了推送。再次推送前，您可能需要先整合远程变更 ​&#xA;提示：（如 ‘git pull…’）。​​​ ​&#xA;提示：详见 ‘git push — help’ 中的 ‘Note about fast-forwards’小节。​&#xA;解决方案：​​&#xA;git push -u origin +master​&#xA;原文地址:http://blog.sina.com.cn/s/blog_677966330102vlfk.html&#xA;error: 无法推送一些引用到 ‘https://github.com/yourname/youname.github.io.git’&#xA;提示：更新被拒绝，因为远程版本库包含您本地尚不存在的提交。这通常是因为另外​​​​ ​&#xA;提示：一个版本库已向该引用进行了推送。再次推送前，您可能需要先整合远程变更 ​&#xA;提示：（如 ‘git pull…’）。​​​ ​&#xA;提示：详见 ‘git push — help’ 中的 ‘Note about fast-forwards’小节。​&#xA;解决方案：​​&#xA;git push -u origin +master​&#xA;原文地址:http://blog.sina.com.cn/s/blog_677966330102vlfk.html </description>
+    </item>
+    <item>
+      <title>暗云Ⅲ: 迄今为止最复杂的木马之一</title>
+      <link>https://anwangtanmi.github.io/posts/143b68c3dc1ded4c24274da9bf51107e/</link>
+      <pubDate>Thu, 15 Jun 2017 09:33:42 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/143b68c3dc1ded4c24274da9bf51107e/</guid>
+      <description>肆虐多年的暗云木马近日出现多个变种，会感染硬盘主引导记录(MBR)，开机启动时间比杀毒软件还要早，因此不但无法查杀，即使格式化硬盘也不能根治。&#xA;暗云木马是迄今为止最复杂的木马之一，曾经感染过数百万电脑，它用了很多复杂的新技术来长期潜伏在系统中，尤其是借助BootKit直接感染硬盘引导分区。&#xA;攻击者精心制作的这个恶意程序功能复杂，开发技巧很高，采用多种技术方案对抗安全软件，并且更新频繁。&#xA;三代暗云木马比较&#xA;暗云Ⅲ 木马启动流程&#xA;据悉，最新的木安云马变种会将攻击母体捆绑在游戏外挂或私服工具中，或者干脆假冒游戏外挂和私服工具，欺骗游戏玩家下载安装，并通过联网获得攻击指令。病毒作者可以非常灵活地控制中毒电脑，执行任意操作。&#xA;暗云病毒感染后，会立刻感染硬盘MBR(主引导记录)——这是电脑开机时最早加载的程序位置，此时Windows尚未被加载，更不用说依赖Windows的杀毒软件了，所以当电脑完成正常开机过程后，病毒已在内存运行多时了，一般方法极难清除。&#xA;就算用户将电脑硬盘格式化重装，因为暗云病毒存在于硬盘MBR，仅仅格式化硬盘不会对病毒造成任何影响。&#xA;安全专家解释说：“暗云病毒通过联网下载攻击指令，再将攻击代码在内存中运行，并不在本地硬盘上生成文件完成破坏或攻击目的。这是一种高超的攻击技巧，本地找不到完成攻击的文件，指令只在内存中，随时可以通过网络更换攻击方式。目前，我们监测到的攻击代码是刷流量牟利，以及发起DDoS攻击。”&#xA;本文转载自：http://www.linuxprobe.com/anyun3-variants-struck.html&#xA;免费提供最新Linux技术教程书籍，为开源技术爱好者努力做得更多更好，开源站点：http://www.linuxprobe.com/</description>
+    </item>
+    <item>
+      <title>Tails OS 让你实现隐形上网！</title>
+      <link>https://anwangtanmi.github.io/posts/2d28d5cee05d7c234354541fd1f4b2de/</link>
+      <pubDate>Thu, 09 Mar 2017 09:09:30 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/2d28d5cee05d7c234354541fd1f4b2de/</guid>
+      <description>导读 信息时代给我们的生活带来极大便利和好处的同时也带来了很大的风险，我们通过浏览器来了解外面世界，但我们的足迹也将会被记录，进而为我们带来安全隐患，对此我们可以采取一些手段来降低这种风险。 信息时代给我们的生活带来极大便利和好处的同时也带来了很大的风险。一方面，人们只要点击几下按钮，就能基本上访问已知存在的全部信息和知识；另一方面，要是这种权力落到个别不法分子手里，就会引起重大破坏和灾难。我在本文中将介绍保护网上私密信息的几个步骤。&#xA;一些人可能会认为这是“锡箔”思维方式，但是正如全球各地的许多情报组织的信息反馈中看到的，政府监视已从被认为一种疯狂的阴谋论变成了几乎赤裸裸的公然威胁。关注隐私、希望尽可能不被人监视的那些人会发现，如果使用得当，Linux 是一款相当有用的工具。实际上，在网上尽量保持匿名的那些人会发觉 Linux 是唯一的选择，因为众所周知，Windows 和 Mac OS X 会收集关于用户的尽可能多的信息。只要上网搜索“Windows 10监视”或“Mac OS X 隐私”，你就会有切身的体会。&#xA;在我们开始入手之前，想完全确保计算机安全、私密，唯一的办法就是从互联网上断开，并关闭电源。因为连接到互联网的设备不可能做到绝对百分百安全。总是有办法避开安全机制，就算没有，也会有人不断开发出工具，找到新的法子。所以，这里的指导原则并不是要求更改计算机上的几个设置，你就可以建立起坚不可摧的堡垒，而是说要设置尽可能多的障碍，尽量让任何潜在的攻击者或间谍很难访问你的系统或私密信息。&#xA;你可以使用几个 Linux工具，尽可能保持匿名性（同样在当下，这越来越难做到，但是如果隐私对你来说很重要，你已经知道英勇地抵抗的重要性）。&#xA;1.Tails OS 我们要介绍的第一款工具是 Tails OS ，不过说它是“工具”也许用词不当，因为 Tails 是一款完整的 Linux 发行版，而不仅仅是工具,Tails 旨在成为一款匿名、可自我销毁的操作系统，一旦你用完，它就会抹除任何存在的痕迹。很显然，它不大适合用作日常发行版，但是如果网上有你需要访问的东西，你又想保持私密，或者想匿名浏览，那么 Tails 是不错的选择。Tails 完全作为 Live 系统来运行，一旦关闭，就会清除自己，而不是永久地安装在硬盘上。&#xA;你可以下载最新的 Tails ISO 文件，把它刻录到 DVD 或拷贝到可启动 U 盘上（后者容易得多，耗时较短，浪费的空间也较少）。Linux 有几个工具来刻录 DVD，主要是 Brasero 和 DeVeDe。或者，如果你更希望制作一个可启动 U 盘，会发觉 Unetbootin 很理想（或者可以在终端使用“dd”命令）。一旦将 Tails 拷贝到可启动介质上，只要用它来启动计算机，就像安装新的操作系统或运行Live系统那样。&#xA;Tails 网站似乎只允许你用火狐或 Tor 浏览器下载 Tails。我试图通过谷歌 Chrome 下载 ISO 文件时，它告诉我浏览器不支持。它还迫使你安装火狐浏览器附件，一旦安装完毕，该附件会使用校验和验证机制，自动验证 ISO 下载软件。这实际上实施了一项很好的安全措施，因为它确保你不会得到一份损坏的 Tails，不然里面可能会有安全漏洞，就像 Linux Mint 发生的情况那样。</description>
+    </item>
+    <item>
+      <title>ubuntu中enable wifi为灰色的解决办法</title>
+      <link>https://anwangtanmi.github.io/posts/781ac422a64006fdbc7caa28c7f9ecfa/</link>
+      <pubDate>Wed, 01 Mar 2017 12:39:49 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/781ac422a64006fdbc7caa28c7f9ecfa/</guid>
+      <description>先说一下我的配置：&#xA;系统：ubuntu（14.04）&#xA;电脑：ASUS（x550v）&#xA;情况就是ubuntu下面右上角点开网络连接，enable wifi（开启wifi）选项为灰色，根本无法连接wifi。&#xA;解决办法：&#xA;控制台中输入：&#xA;echo “options asus_nb_wmi wapf=1” | sudo tee /etc/modprobe.d/asus_nb_wmi.conf&#xA;重启，就可以使用enable wifi了。具体原因我也没搞懂，求大神解释一下。&#xA;参考博文：&#xA;http://sparkandshine.net/ubuntu-enable-wifi-problem-solving-14-04-asus-f552cl/</description>
+    </item>
+    <item>
+      <title>Ubuntu16.04 LTS的Java环境配置总结</title>
+      <link>https://anwangtanmi.github.io/posts/ac8221d09bcf430ef161f5b14ea37080/</link>
+      <pubDate>Thu, 23 Feb 2017 17:57:14 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/ac8221d09bcf430ef161f5b14ea37080/</guid>
+      <description>* Linux* 这几天刚刚折腾linux(刚刚正式接触使用的linux小白)，而我安装好系统后的第一件事就是配置Java环境。此篇文章用于记录安装过程以作为备忘，如有疑问或者错误欢迎指正，一起交流，共同成长。 步骤&#xA;1.官网下载jdk http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html 本人的版本是：jdk-8u121-linux-x64.tar.gz 2.安装jdk 解压缩包 .tar.gz命令：dpkg zxvf 包名 绝对路径(不指定路径则默认为当前目录)&#xA;(比较详细，我是小白…..捂脸.jpg)当然，首先要做的是通过命令行进入该包所在目录或者通过绝对路径进行解压也行。我是在包所在目录解压： 相关命令行&#xA;dpkg zxvf jdk-8u121-linux-x64.tar.gz 得到下面的文件jdk1.8.0_121 将此文件用命令行移动到指定文件夹 我的是/usr/lib/Java ，Java文件夹需要自己建立&#xA;sudo mv jdk1.8.0_121 /usr/lib/Java 3.用/etc/profile文件配置环境变量及修改系统默认Java以解决配置好环境变量后仍显示未设置Java环境问题&#xA;命令行打开gedit编辑/etc/profile 注：去掉sudo，则为只读模式&#xA;sudo gedit /etc/profile 添加以下代码到profile文件末尾&#xA;export JAVA_HOME=/usr/lib/Java/jdk1.8.0_121 export JRE_HOME=$JAVA_HOME/jre export CLASSPATH=.:$CLASSPATH:$JAVA_HOME/lib:$JRE_HOME/lib export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin 命令行使得/etc/profile文件生效&#xA;source /etc/profile 问题来了： 到此步为止，当时我就立即测试命令java , javac 。然而，显示没有设置java环境！！！于是我网上搜资料，查明的原因是:Ubuntu下默认调用的是自带的java版本,因此需要修改默认版本设置。Ok，代码如下：&#xA;sudo update-alternatives --install /usr/bin/java java /usr/lib/Java/jdk1.8.0_121/bin/java 300 sudo update-alternatives --install /usr/bin/javac javac /usr/lib/Java/jdk1.8.0_121/bin/javac 300 sudo update-alternatives --install /usr/bin/jar jar /usr/lib/Java/jdk1.8.0_121/bin/jar 300 sudo update-alternatives --install /usr/bin/javah javah /usr/lib/Java/jdk1.</description>
+    </item>
+    <item>
+      <title>Ubuntu 16.04&#43;Gtx1050Ti&#43;cuda 8.0&#43;cudnn 5.1 tensorflow 安装</title>
+      <link>https://anwangtanmi.github.io/posts/26932ed36ff12176105479bd37c6fe2e/</link>
+      <pubDate>Fri, 17 Feb 2017 19:12:22 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/26932ed36ff12176105479bd37c6fe2e/</guid>
+      <description>现在tensorflow 终于支持高版本（cuda 8.0）一键安装了，今天尝试了一下，很爽。不用折腾那么多东西。 建议安装 anaconda ,一个特别好的Python包管理器，清华大学的源有其镜像，安装速度，更新也挺快的。 其独有的虚拟环境可以将一个个环境隔离开来，互不影响，这个特别好。 我们首先安装anaconda ，这个官网有教程，整个安装过过程傻瓜化。 首先创建虚拟环境： conda create -n tensoflow python=3.7 conda create -n tensoflow python=3.4&#xA;conda create -n tensoflow python=3.5&#xA;根据习惯选一个Python版本。 tf的gpu版本现在支持直接用pip直接安装，前提是安装好cuda8.0和cudnnv5.1（必须是8.0和5.1不然会报错），然后直接在命令行下pip install tensorflow-gpu&#xA;这里说一下cuda 的安装，官网给出的安装教程前提是没有安装官方N卡驱动的。按照官网方法一步步来可以安装成功，并且很快，不需要选择就可以安装好，然后根据CUDA 的sample进行测试。一般都会安装成功&#xA;如果之前单独安装过N卡的驱动，就不要按照官网的来进行安装了，安装的时候，后面不写参数，然后到第二步骤的时候，选择不安装驱动，如果选择安装的话，会出错。</description>
+    </item>
+    <item>
+      <title>玩转linux主机–centos设置宽带pppoe上网</title>
+      <link>https://anwangtanmi.github.io/posts/44703fab1b57333162f633f912b469d9/</link>
+      <pubDate>Mon, 09 Jan 2017 11:24:10 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/44703fab1b57333162f633f912b469d9/</guid>
+      <description> 安装好linux后拨号上网是个问题，首先我们将笔记本连接到路由器的端口上使其可以连接网络 安装 yum install rp-pppoe -y 配置PPPoE连接 pppoe-setup 输入pppoe账号 输入以太网卡号，可以用ifconfig获取 长时间连线，会被自动中断(我选了no) 配置主DNS服务器，配置次DNS服务器 我这里使用的是学校的移动，所以去网上搜了浙江移动的DNS，共有两个211.140.13.188 211.140.188.188 输入宽带密码 配置防火墙（没有特殊需求选0） 配置是否开机自动拨号连接 确认刚填写的配置信息 开启 /sbin/ifup ppp0(此处为对应的网络配置号) </description>
+    </item>
+    <item>
+      <title>路由信息</title>
+      <link>https://anwangtanmi.github.io/posts/b7371a4eaaffe8e7fd2c3e107df5a0d8/</link>
+      <pubDate>Thu, 05 Jan 2017 11:43:49 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/b7371a4eaaffe8e7fd2c3e107df5a0d8/</guid>
+      <description>网络路由信息可以帮助测试人员了解自己的主机到目标主机的网络通信路径，进而理解目标主机的网络情况。保护目标主机的防火墙信息，往往也暗藏在路由信息中。&#xA;tcptraceroute 传统的traceroute程序在其发送的UDP和ICMP echo 数据包，设置特定的TTL标志位。它吧TTL从1开始递增，直到到达目标主机为止。而tcptarceroute则是使用TCP数据包进行测试，它利用了TCP SYN 数据包进行路由信息的探测。&#xA;tcptraceroute example.com tctrace 同样可以使用tctrace 程序分析路由信息&#xA;tctrace -i&amp;lt;device&amp;gt; -d&amp;lt;targethost&amp;gt; 参数中device 是指网卡的借口,tagerhost 则是被测试的目标主机</description>
+    </item>
+    <item>
+      <title>Linux 使用rpm方式安装最新mysql（5.7.16）步骤以及常见问题解决</title>
+      <link>https://anwangtanmi.github.io/posts/3c2c8d5038cfe86bcc9b885b097a3688/</link>
+      <pubDate>Thu, 15 Dec 2016 15:19:12 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/3c2c8d5038cfe86bcc9b885b097a3688/</guid>
+      <description>前几天在阿里云买了个服务器 ，准备自己玩玩，现将最新版mysql(5.7.16)安装步骤，以及遇到问题及解决过程分享如下： 第一步：下载rpm包 mysql官网下载：http://dev.mysql.com/downloads/mysql/ 但如果你的下载网速不好的话也可以点下面的链接下载自己想要的版本 http://mirrors.sohu.com/mysql/MySQL-5.7/ 我用的是（CentOs6.5）下载的是： mysql-5.7.16-1.el6.x86_64.rpm-bundle.tar文件&#xA;第二步：进行安装 具体如下： 1. 检查系统自带的MySQL及相关RPM包，是否安装 rpm -qa | grep -i mysql 如果有安装，则移除（rpm –e 名称） yum -y remove mysql 2. 创建用户和组（如果已经创建则跳过） groupadd mysql useradd -r -g mysql mysql 3. 解压tar文件，并安装 进入文件目录 运行：tar -xf mysql-5.7.16-1.el6.x86_64.rpm-bundle.tar 解压完成,然后依次执行。 rpm -ivh mysql-community-common-5.7.16-1.el6.x86_64.rpm rpm -ivh mysql-community-libs-5.7.16-1.el6.x86_64.rpm rpm -ivh mysql-community-client-5.7.16-1.el6.x86_64.rpm rpm -ivh mysql-community-server-5.7.16-1.el6.x86_64.rpm 到此，mysql已经安装完成。 4. 基础配置&#xA;执行：service mysqld start 出现下图表示安装成功&#xA;关闭mysql服务：service mysqld stop&#xA;初始化(这里是以root身份执行的)：bin/mysqld --initialize --user=mysql&#xA;注：使用–initialize会为root账户生成一个随机的初始密码，我们可以使用命令：mysql -u root -p，然后输入密码来登录MySQL。使用–initialize-insecure不会为root账户生成一个随机的初始密码，我们可以使用命令：mysql -u root –skip-password直接登录MySQL，这里我是用的第一种。</description>
+    </item>
+    <item>
+      <title>解决Ubuntu14.04 – 16.10版本 cheese摄像头灯亮却黑屏问题</title>
+      <link>https://anwangtanmi.github.io/posts/1bd6c80e0eab4f36891fddff4165dabc/</link>
+      <pubDate>Mon, 28 Nov 2016 19:52:39 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/1bd6c80e0eab4f36891fddff4165dabc/</guid>
+      <description>目的：解决Ubuntu14.04 – 16.10版本 cheese摄像头灯亮却黑屏问题 环境： 系统：Ubuntu 环境：ubuntu14.04 - 16.10(WMware虚拟机) 步骤： 1.安装cheese&#xA;在VMware的工具栏选择虚拟机&amp;gt;可移动设备&amp;gt;摄像头&amp;gt;连接。 执行：sudo apt-get install cheese 运行：cheese（一般可以看到图像）&#xA;2.如发现cheese界面弹出后，摄像头灯亮了，但是图像是黑屏，按钮都处于不可操作状态，需要检查几个部分：&#xA;lsusb查看一下是否有找到摄像头。 ls /dev | grep video，查看是否有video0。 如以上两点都有，需要检查的部分是虚拟机设置&amp;gt;usb控制器&amp;gt;usb兼容性&amp;gt;(usb2.0/3.0)。如果当前选中的是2.0就选择3.0，如果当前选中的是3.0就选择2.0。然后确定。 在VMware的工具栏选择虚拟机&amp;gt;可移动设备&amp;gt;摄像头&amp;gt;断开连接。然后再虚拟机&amp;gt;可移动设备&amp;gt;摄像头&amp;gt;连接。然后重新打开cheese，发现已经有图像了。 ps: 由于ubuntu本身自带驱动已经非常强大，所以基本上只要可以lsusb和ls /dev到摄像头，应该就不是驱动问题了。问题本身就可以往usb兼容性或者摄像头是否连接到当前虚拟机这部分查找。</description>
+    </item>
+    <item>
+      <title>pxe无人值守安装操作系统</title>
+      <link>https://anwangtanmi.github.io/posts/5ae160409da40e1f4a9c2e49e08af486/</link>
+      <pubDate>Sun, 25 Sep 2016 20:41:28 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/5ae160409da40e1f4a9c2e49e08af486/</guid>
+      <description>实验环境&#xA;网关 classroom 172.25.8.254&#xA;workstation 172.25.8.9&#xA;server a-jeth0 172.25.8.10-外网&#xA;eth1 192.168.0.x内网&#xA;eth2 192.168.1.x备用&#xA;——————————————–&#xA;需求：自动化运维&#xA;设计：让服务器通过网络自动的安装操作系统&#xA;原理：1. dhcp 软件包&#xA;2. /etc/dhcpd.conf 配置文件&#xA;3. 例子配置文件 /usr/share/doc/dhcp­/dhcpd.conf.sample&#xA;1. 通过网卡引导计算机&#xA;2. 网卡和 BIOS 必须支持 PXE&#xA;3. 需要使用 DHCP 和 TFTP 服务&#xA;PXELINUX&#xA;1. SYSLINUX 启动工具主要用以启动 CD/DVD&#xA;2. 放入 /tftpboot 目录的 bootstrap 文件名必须保证和 dhcpd.conf 中配置的一样&#xA;(pxelinux.0)&#xA;3. Linux 安装和无盘工作站所需要的内核文件( vmlinuz 和 initrd.img) 也要放在 /tftpboot/ 目录&#xA;4. /tftpboot/pxelinux.cfg/ 目录放置网络启动配置文件&#xA;1. kickstart 文件位置由 PXELINUX 的启动配置文件告知安装内核</description>
+    </item>
+    <item>
+      <title>VMware中虚拟机网络的三种设置</title>
+      <link>https://anwangtanmi.github.io/posts/05f1edf5a50133fa769eeaeb34533782/</link>
+      <pubDate>Sat, 17 Sep 2016 01:05:42 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/05f1edf5a50133fa769eeaeb34533782/</guid>
+      <description>VMware中虚拟机网络的三种设置 NAT ：默认使用VMnet8 设置步骤： 第一步：在菜单栏 虚拟机 -&amp;gt; 设置 -&amp;gt; 硬件 -&amp;gt; 网络适配器，右侧选择NAT模式 第二步： vi /etc/network/interfaces，打开该文件，把static改为dhcp,让虚拟机以dhcp方式分配IP地址： auto lo iface lo inet loopback auto eth0 iface eth0 inet dhcp address 192.168.1.141 netmask 255.255.255.0 gateway 192.168.1.1&#xA;保存并退出。 第三步：执行/etc/init.d/networking restart 重启网卡 2. 桥接（bridged） ：默认使用VMnet0 第一步：桥接。在菜单栏 虚拟机 -&amp;gt; 设置 -&amp;gt; 硬件 -&amp;gt; 网络适配器，右侧选择桥接模式。 第二步：桥接到可以上网的网卡。在菜单栏 编辑 -&amp;gt; 虚拟网络编辑器，选择桥接到自己Windows中可以上网的网卡上（一般就是Wifi网络或者有线网络） 第三步：设置dhcp并重启网卡。 vi /etc/network/interfaces，打开该文件，将内容编辑成为： auto lo iface lo inet loopback&#xA;auto eth0 iface eth0 inet dhcp //把static改为dhcp,让虚拟机以dhcp方式分配IP地址 address 192.</description>
+    </item>
+    <item>
+      <title>服务端编程中多线程的应用</title>
+      <link>https://anwangtanmi.github.io/posts/78c4a041683ae0b60320ef49e19b5065/</link>
+      <pubDate>Thu, 11 Aug 2016 18:52:46 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/78c4a041683ae0b60320ef49e19b5065/</guid>
+      <description>本文是陈硕的《Linux多线程服务端编程 使用muduo C++网络库》一书中，第三章的读书笔记。其中暗红颜色的文字是自己的理解，鲜红颜色的文字表示原书中需要注意的地方。&#xA;一：进程和线程&#xA;每个进程有自己独立的地址空间。“在同一个进程”还是“不在同一个进程”是系统功能划分的重要决策点。《Erlang程序设计》[ERL]把进程比喻为人：&#xA;每个人有自己的记忆（内存），人与人通过谈话（消息传递）来交流，谈话既可以是面谈（同一台服务器），也可以在电话里谈（不同的服务器，有网络通信）。面谈和电话谈的区别在于，面谈可以立即知道对方是否死了（crash,SIGCHLD），而电话谈只能通过周期性的心跳来判断对方是否还活着。&#xA;有了这些比喻，设计分布式系统时可以采取“角色扮演”，团队里的几个人各自扮演一个进程，人的角色由进程的代码决定（管登录的、管消息分发的、管买卖的等等）。每个人有自己的记忆，但不知道别人的记忆，要想知道别人的看法，只能通过交谈（暂不考虑共享内存这种IPC）。然后就可以思考：&#xA;·容错：万一有人突然死了&#xA;·扩容：新人中途加进来&#xA;·负载均衡：把甲的活儿挪给乙做&#xA;·退休：甲要修复bug，先别派新任务，等他做完手上的事情就把他重启&#xA;等等各种场景，十分便利。&#xA;线程的特点是共享地址空间，从而可以高效地共享数据。一台机器上的多个进程能高效地共享代码段(操作系统可以映射为同样的物理内存)，但不能共享数据。如果多个进程大量共享内存，等于是把多进程程序当成多线程来写，掩耳盗铃。&#xA;“多线程”的价值，我认为是为了更好地发挥多核处理器(multi-cores)的效能。在单核时代，多线程没有多大价值（个人想法：如果要完成的任务是CPU密集型的，那多线程没有优势，甚至因为线程切换的开销，多线程反而更慢；如果要完成的任务既有CPU计算，又有磁盘或网络IO，则使用多线程的好处是，当某个线程因为IO而阻塞时，OS可以调度其他线程执行，虽然效率确实要比任务的顺序执行效率要高，然而，这种类型的任务，可以通过单线程的”non-blocking IO+IO multiplexing”的模型（事件驱动）来提高效率，采用多线程的方式，带来的可能仅仅是编程上的简单而已）。Alan Cox说过：”A computer is a state machine.Threads are for people who can’t program state machines.”（计算机是一台状态机。线程是给那些不能编写状态机程序的人准备的）如果只有一块CPU、一个执行单元，那么确实如Alan Cox所说，按状态机的思路去写程序是最高效的。&#xA;二：单线程服务器的常用编程模型&#xA;据我了解，在高性能的网络程序中，使用得最为广泛的恐怕要数”non-blocking IO + IO multiplexing”这种模型，即Reactor模式。&#xA;在”non-blocking IO + IO multiplexing”这种模型中，程序的基本结构是一个事件循环（event loop），以事件驱动（event-driven）和事件回调的方式实现业务逻辑：&#xA;//代码仅为示意，没有完整考虑各种情况 while(!done) { int timeout_ms = max(1000, getNextTimedCallback()); int retval = poll(fds, nfds, timeout_ms); if (retval&amp;lt;0){ 处理错误，回调用户的error handler }else{ 处理到期的timers,回调用户的timer handler if(retval&amp;gt;0){ 处理IO事件，回调用户的IO event handler } } } 这里select(2)/poll(2)有伸缩性方面的不足（描述符过多时，效率较低），Linux下可替换为epoll(4)，其他操作系统也有对应的高性能替代品。</description>
+    </item>
+    <item>
+      <title>利用casperjs和tor来隐藏自己的ip地址</title>
+      <link>https://anwangtanmi.github.io/posts/dcaab7c7501ec01e064f3f37cfb69c45/</link>
+      <pubDate>Mon, 25 Jul 2016 19:00:32 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/dcaab7c7501ec01e064f3f37cfb69c45/</guid>
+      <description>1, 首先在ubuntu上面安装tor&#xA;详情可以参考 https://www.torproject.org/docs/debian.html.en&#xA;You need to add the following entry in /etc/apt/sources.list or a new file in /etc/apt/sources.list.d/:&#xA;deb http://deb.torproject.org/torproject.org trusty main deb-src http://deb.torproject.org/torproject.org trusty main Then add the gpg key used to sign the packages by running the following commands at your command prompt:&#xA;gpg --keyserver keys.gnupg.net --recv 886DDD89 gpg --export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add - You can install it with the following commands:&#xA;$ apt-get update $ apt-get install tor deb.</description>
+    </item>
+    <item>
+      <title>SSH 7.2p2 移植到fl2440记录</title>
+      <link>https://anwangtanmi.github.io/posts/d512532b92f335332047e5299045976f/</link>
+      <pubDate>Tue, 14 Jun 2016 17:21:10 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/d512532b92f335332047e5299045976f/</guid>
+      <description>SSH简介 SSH的移植 编译条件 下载 配置安装 zlib的编译与安装 openssl的编译与安装 openssh的编译安装 sshd在开发板上的配置 现在可以启动sshd了使用全路径 密钥登录使用步骤详情 error error while loading shared libraries libzso1 sshd_config No such file or directory strip process terminated abnormally make check-config Error 2 ignored sshd re-exec requires execution with an absolute path Privilege separation user sshd does not exist Could not load host key或varempty must be owned by root ssh_exchange_identification Connection closed by remote host sshPermission denied please try again 可以SSH远程用密码验证登录开发板但无法使用秘钥对验证登录 Host key verification failed SSH简介： ssh：Secure SHell，个人理解就是一种安全的网络传输服务程序 ，由客户端和服务器组成，两者间数据传输的不再是明文，而是加密后的暗文，安全性高。安全登录验证方式有两种：基于口令的安全验证，基于密钥的安全验证。具体的网上介绍的太杂，感觉前后矛盾点大就是那个将公钥传给服务端，可明明都是将私钥放到服务端，让我费解好半天。 http://skypegnu1.</description>
+    </item>
+    <item>
+      <title>kali linux 执行update更新后不能install安装软件</title>
+      <link>https://anwangtanmi.github.io/posts/84a511f6a45aa6665ce19d67af2a845d/</link>
+      <pubDate>Fri, 27 May 2016 15:34:14 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/84a511f6a45aa6665ce19d67af2a845d/</guid>
+      <description>我的kali linux是1.0.7 目前的最新版 用的源是自带的kali源。但是执行 apt-get update之后 ，却依旧不能暗中软件，大致描述就是找不到这个包..&#xA;错误详细介绍 首先可以确定源是正确的&#xA;添加源之后 我依次执行&#xA;sudo apt-get update&#xA;sudo apt-get upgrade&#xA;sudo apt-get install pptpd //这里不管安装什么软件都出现下面这种提示..都提示不存在！&#xA;解决方法 更换下面的源 然后再update即可&#xA;deb http://http.kali.org/ /kali main contrib non-free deb http://http.kali.org/ /wheezy main contrib non-free deb http://http.kali.org/kali kali-dev main contrib non-free deb http://http.kali.org/kali kali-dev main/debian-installer deb-src http://http.kali.org/kali kali-dev main contrib non-free deb http://http.kali.org/kali kali main contrib non-free deb http://http.kali.org/kali kali main/debian-installer deb-src http://http.kali.org/kali kali main contrib non-free deb http://security.</description>
+    </item>
+    <item>
+      <title>解决新装Ubuntu14.04无法使用无线网络的问题</title>
+      <link>https://anwangtanmi.github.io/posts/2c856ac2d6414143b037e927859c5efb/</link>
+      <pubDate>Wed, 18 May 2016 11:07:03 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/2c856ac2d6414143b037e927859c5efb/</guid>
+      <description>1、笔记本新装ubuntu 14.04LTS，启动后发现不能搜索到wifi，使用如下命令：&#xA;sudo apt-get install bcmwl-kernel-source 解决了我的问题（我的笔记本电脑型号是宏碁4752G系列）。 注：此方法并不通用，我在另一款ThinkPad上没有通过。 网上的仅仅修改/etc下面的相关配置文件的方法，亲测全部不起作用。 至于下载对应型号的驱动并编译的方法，目前项目抓的有点紧，以后有时间了再试试，到时候更新这篇博文。</description>
+    </item>
+    <item>
+      <title>宏基电脑修改电脑启动项</title>
+      <link>https://anwangtanmi.github.io/posts/9f1f82e483b265fafdf26767c33a547e/</link>
+      <pubDate>Mon, 25 Apr 2016 14:23:01 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/9f1f82e483b265fafdf26767c33a547e/</guid>
+      <description>安装unbuntu之后，原来的启动项快捷键就不再管用，此时需要修改bios设置：&#xA;在开机时进入的第一个画面根据提示按住F2，修改倒数第二个菜单下的中间的所有参数为enabled（其实就一个是disenabled，所以修改着一个就OK）&#xA;这样以后在重新安装系统的时候就可以看到可以选择系统启动选项了，根据需要选择。</description>
+    </item>
+    <item>
+      <title>互联网黑市分析：社工库的传说</title>
+      <link>https://anwangtanmi.github.io/posts/f69f71ce00b4ab8b6dba08f69725b231/</link>
+      <pubDate>Thu, 24 Mar 2016 15:31:12 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/f69f71ce00b4ab8b6dba08f69725b231/</guid>
+      <description>互联网黑市分析：社工库的传说 作者：周伯爵 链接：https://www.zhihu.com/question/31533325/answer/53137495 来源：知乎 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。&#xA;任何一个行业都是一个江湖，有江湖就有故事，追名逐利的人喜欢被写入故事，踏实做事的人却希望被隐匿。久而久之，江湖上的故事越来越虚名浮利，听故事的人也越来越坐井观天。岂不见无数江湖武侠小说，开篇的人物总是让我们误以为是江湖大侠，看着看着才发现一山更比一山高，到最后才发现开篇人物简直是不入流的小啰啰。而真正的高人，反而隐匿成传说。&#xA;互联网行业也是如此，大家喜欢创造故事，故事也越来越千篇一律的浮躁：什么产品上线7天就几百万用户、什么开发阶段就上亿投资、什么90后霸道总裁颠覆行业、什么大咖的内部分享、从xx看xx的四大趋势、从xx看xx的十大价值、xx的专注力、xx的微创新、xx的平台化、xx的独家专访首次讲述xx辛酸、xx概念的深度解析加独特见解，等等。翻来覆去，好像也就是那么多东西了。&#xA;就好像有些江湖人士，是需要靠卖艺为生，请个会吆喝的帮忙吆喝吆喝，弄个猴子上蹿下跳一下，响啰使劲的敲几下，骗骗几个外行人，撒点碎银子，仅此而已。接下来大家再接着吹嘘一番，比比谁拿的碎银子多点，动口不动手。长期以往，有些人招摇撞骗，也竟然成为了一代口碑中的大侠。久而久之，如今很多江湖人士只是卖艺拿贵客的碎银子为生，如何卖艺卖的更好是大家追求的目标。那些内功心法，武功秘籍，也都成为了历史，那些大侠们，也成为了传说。&#xA;难道江湖不再是那个江湖了么？其实不然，浮躁沉沦的只是江湖白道，只是这些大内侍卫，镖局镖师，衙门捕头而已。而江湖黑道中，黑客技术、海盗精神，继续被追捧，虚浮的商业模式永远不如深度技术被重视，“铁甲依旧在”的情怀还在回荡，而地下产业链相关的进步也在不断的深入，并且潜伏起来暗自发展，为了更大的目标和黑暗梦想。&#xA;TOMsInsight继续互联网黑市的分析报告系列，今天的主角是：社工库的传说。&#xA;什么是社工库 社工库是社会工程学数据库的简称（Social Engineering Data）。&#xA;提到社工库就必须先介绍一下社会工程学（Social Engineering），这个名词最早是在2002年由传奇黑客米特尼克（Kevin David Mitnick）在提出，但其初始目的是让全球的网民们能够懂得网络安全，提高警惕，防止没必要的个人损失。由于米特尼克在黑客界的传奇地位，很快社会工程学就开始被深入研究并且发扬光大。&#xA;社会工程学，准确来说是一门艺术和窍门的集合。它利用人性的弱点、心理的缺陷，以顺从意愿、满足欲望的方式，让人们上当，或以此为入口进行攻击。社会工程学的窍门也蕴涵了各式各样的灵活的构思与变化因素，利用人的弱点如人的本能反应、好奇心、信任、贪便宜等弱点进行攻击。它集合了心理学、社会心理学、组织行为学等一系列的学科，由于其非法性和在很多国家地区都被严厉的打击，社会工程学也变成了一个见不得光的学派。&#xA;但是在黑客群体中，社会工程学就是他们的第一方法论和必修课。离开了社会工程学，黑客们运用的网络技术几乎都没有用武之地。如果我们用黑客最喜欢的海盗来比喻，各种网络技术可以比作航海、游泳、剑术、而社会工程学即是海盗们的行为准则和创新指引。&#xA;那么什么是社会工程学数据库（社工库）呢？即黑客在运用社会工程学进行攻击的时候，积累的各方面数据的结构化数据库。简单的说，社工库是黑客用来记录攻击手段和方法的数据库，这个数据库里面有大量的信息，甚至可以找到每个人各种行为记录（每个人在每个网站上的账号、密码、分享的照片、信用卡记录、订的机票记录、通话记录、短信内容、各种社交软件的聊天等等包罗万象），比如之前有很火爆的查询开房记录的数据库，就是一个典型的极简单的社工库的例子。&#xA;那么社工库又是如何产生的，在国内的互联网地下产业链中，又是什么模式的存在，发展又是什么情况呢，我们接着分析。&#xA;社工库的发展：数据盗窃 既然是传说，背后就有很多故事，说到社工库的产生和发展，我们就得先从互联网的数据窃取与交易开始说起。&#xA;互联网用户数据泄露一直是行业关注的焦点，从最近的京东用户密码泄露事件，到之前的CSDN的数据库完全爆出，再到如家酒店的用户数据泄露，网站和黑客在用户数据上一直在进行着旷日持久的攻防战。但是爆出来的数据泄露，仅仅是冰山一角，甚至也不到。而且这些信息其实对于黑客来说，根本没有什么价值。而对于用户来说的危害，也没有想象的那么大，因为大多数时候这些数据在黑市中几乎都已经是半公开的性质了。&#xA;而数据窃取与交易这个细分领域也几乎是地下产业链隐藏的最深的一部分，很多在互联网地下产业链中沉寂了多年的大佬都并不了解此道的相关信息。绝大多数被盗窃后的网站数据，并不会公开与众，只是交易后进入到地下产业链的其他环节而已。所以目前到底有多少网站的数据已经被窃取我们没法客观的进行数据分析。但在互联网黑市中，大家说起来类似的问题，常用的一个词是“十墓九空”，也许这个说法有点夸张，但是也可以参考。&#xA;我们从2009年以来，通过黑市的舆情监控和专业网络调查，对互联网每年的流量排名前100的网站（刨去没有用户账号机制的）进行调查，结果如下：&#xA;数据窃取产业虽然隐藏的非常深，但是发展历史永久，地下产业链也随之成熟，对于如何把数据变成货币，已经有了非常完整的程序的分工协作渠道。而其模式相对简单，一般只包括：脱库、洗库、撞库这几个阶段。&#xA;在地下产业术语里面，“脱库”是指入侵有价值的网络站点，把数据库全部盗走的行为，因为谐音，也经常被戏称作“脱裤”。在取得大量的用户数据之后，黑客会通过一系列的技术手段清洗数据，并在黑市上将有价值的用户数据变现交易，这通常也被称作“洗库”。最后黑客将得到的数据在其它网站上进行尝试登陆，叫做“撞库”，因为很多用户喜欢使用统一的用户名密码，“撞库”也可以是黑客收获颇丰。&#xA;在早期的数据窃取过程中，这几个阶段几乎都是由同一个团队、甚至单个人来完成的。发展到今天，已经完全细化成产业链，很少有人从脱库、洗库一起做了，而变成：定制化模式，或交易化模式。&#xA;定制化模式：就是现有下游客户指定的某一家网站，然后聘请黑客去脱库，脱库后获得佣金的模式，在定制化模式中，有很强的黑产规矩即数据属于下游客户，而黑客不可以再次出售，或者在一定的窗口期内不能再次出售。&#xA;交易化模式：黑客去某一家网站脱库，脱库后直接在黑市上寻找下家，在这种模式下一般可以反复出售，但是由于风险较大，而且数据真实度和新鲜度不一定能得到保证，又充满了骗局，越来越没落了。&#xA;而下游客户定制某特定一家网站的脱库，是怎么盈利呢？&#xA;大多数时候，都是竞争对手或者上下游企业采购，而且大多数都是主流互联网产业链中的客户，甚至是传统企业客户。其实这个模式很简单，想一想在生意场上，这家网站的数据库对谁谁有利，谁就可能是潜在的定制客户，只不过由于很多主流互联网企业或者传统行业很少了解这个地下产业，所以就会有一些中间人，来做中介促成相关的生意，而这些中间一般情况就是黑市里面的买家或者定制客户了。&#xA;我们用实际的例子说明：M哥在黑客圈小有名气，技术过硬。某互联网医疗产品最近要拿投资，深度用户不够啊，通过中间人，辗转的找到了M哥。M哥奋战了几天，直接脱裤了几家三甲医院的网络挂号系统，历史数据应有尽有，结构化分类一应俱全。M哥到手200w，中间人到手300w，而这家互联网医疗产品由于用户的激增和数据的全面性，以及对应新产品的虚假运营，多拿来1000w的投资，绝对双赢。&#xA;社工库的发展：洗库撞库 如之前分析，不管数据如何贩卖交易，卖给谁，怎么卖，最后黑客手里面还会有一份数据，由于黑市一般都采取定制化交易，黑客们不能再次出售了，所以一般情况下黑客们会用这份数据进行洗库撞库再洗库操作。&#xA;洗库主要是清洗这些数据中可以直接变现的部分，但是这样可以直接洗库的就能洗出价值的数据，其实并不多。一般都是有预存款或者虚拟物品交易的数据库才能洗出来价值，例如：游戏账号、电商账号等等。&#xA;更多的时候，黑客将得到的数据在其它网站上进行尝试登陆，叫做“撞库”，因为很多用户喜欢使用统一的用户名密码，“撞库”其实可以收获颇丰。而撞库和洗库的过程是配合的，黑客使用自己开发的工具、直接数据库匹配登录技术以及配合黑色产业链中的打码机制（之前TOMsInsight报告中有介绍）可以对很多网站进行批量撞库，一旦成功，可以进行再次洗库。&#xA;这就好比黑客们拿到了一份没什么价值的网站的全部用户名和密码，没关系，可以用这份用户名密码来尝试着登录有价值的网站嘛，如果能登录，不就可以洗出来价值了么，我们还是继续看M哥的例子。&#xA;M哥卖掉了几家三甲医院患者的挂号数据，虽然到手200w，但是也不满足。想想这几百万条数据，应该还会有别的价值吧。但是M哥又是一个传统的讲道义的黑客，不会再次出售给别的买家。只能从这些数据本身来找到价值了。&#xA;M哥尝试用这些数据登陆QQ、京东、支付宝、淘宝、各类网游，从而洗掉里面的资产，但是由于各种网络的安全策略的保护，M哥虽然有收益，但是却不多，甚至都不够自己的洗库撞库的网络成本，于是M哥继续沉寂下来，这一沉寂，开辟了一个传说。&#xA;社工库的发展：构建传说 在很多时候，社工库都是一个传说，就像海盗里面流传的那笔谁也不知道的宝藏，只有那块已经不知道转了多少手的脏兮兮的残缺的藏宝图才预示着它的存在。但是社工库却又很客观的放在那里，一直存在，一直沉寂。&#xA;除了贩卖数据本身得到金钱上的利益之外，黑客还会把得到的数据进行整理，制作成社工库。社工库是一个积累的过程，也需要大量的人力物力的去建设，同时还是一个漫长的过程。开始的时候就像M哥一样，单兵作战的去积累，今天是三甲医院的数据库，明天是旅游网站的数据库，后天的演唱会订票网站的数据库，这些数据库积累越来越多。&#xA;M哥后来遇到了V哥，V哥是同行，手里面也有很多数据库，可以和M哥互补，两人一拍即合，把双方的数据库融合起来，内容变得更丰富。而且两个人不断的进行分析维护，排除噪点数据和没有价值的数据，相互关联，刻意的去丰富一些必需的数据字段：比如QQ号和密码、比如手机号、比如身份证号。再刻意的去交换购买补充一些极其有价值的，比如征信报告。&#xA;社工库的内容越来越丰富，而M哥和V哥两个人力量还是小，两人刻意的去联合同行，组成利益联盟，把手里面的数据都放到一个社工库，组织力量去维护去分析。&#xA;这是一个放大的效应，由于社工库的日益庞大，信息的日益完善，再加上时间的沉淀，很多数据都可以慢慢地浮出水面，可以获得相当多的信息。目前有一些公开的社工库，信息全面性和对于用户隐私的了解以及让人震惊，但是这才是仅仅公开的社工库，对于黑客们来说其实已经是没有价值的信息。真正地下的社工库的数据信息丰富程度要远远更大，也绝对隐匿。&#xA;利用社工库，几乎可以暴漏出一个网络用户的全部网络行为、大量的用户隐私，和一些牵扯到个人身份财产的相关的数据信息。&#xA;首先让洗库变得更加容易：由于数据量很大信息很全，很多的账号的的虚拟财产的转移就不像之前那么困难，了解到信息之多甚至都可以伪装成这个用户去进行操作了。&#xA;其次让各种诈骗变得简单：之前大多数诈骗都是光撒网模式，而社工库的完善后，可以非常有针对性对一些特定的用户进行诈骗。利用数据技术，甚至通过木马分析一些用户QQ聊天的内容，寻找有价值的目标，和相对更信任的关系网络。这种模式风险会更小，而且由于诈骗目标相对较大，收益更大。在这种模式下，完成技术分析工作的一般是黑客，但是最后完成诈骗的却一般不是，黑客把按照客户要求去分析，最后把可以完成某种特定诈骗的目标连通相关信息出售（黑市称脚本）。&#xA;最后社工库也成为地下产业链的基础服务商：全面的社工库基础数据，也是精准的流量获取来源，成为流量获取分发的地下产业链的基础服务和大数据服务商。一些特有的黑色产业目前非常依赖社工库，例如精准定位的赌博平台、一些p2p金融类型的诈骗、或者是一些商业骗术。&#xA;社工库还可以进行网络的定向攻击，有时候一些不懂行的人进入互联网，糊里糊涂的就被骗的搞的一塌糊涂，互联网并不简单，简单的是那些幼稚的主流科技媒体，真正的中国互联网行业水很深，深到还没有外企可以成功的地步。&#xA;而社工库也在不断的扩大，丰富，并且继续沉寂。&#xA;社工库的发展：未来趋势 从2013年以后，国内互联网黑市上的数据交易产生了严重的分层：一些大的数据盗窃团伙早已经完成早期的数据积累构建非常完善的社工库，对于一般的数据定制需求都不会再接，会专注于更深度变现更强的金融诈骗；而一些小的数据盗窃团伙还在不断的相互交易、交换数据、而且相对高调的浮出水面，其实危害反而没有那么大。&#xA;而且出于用户交互方面的考虑，目前越来越多的移动终端支付或者金融产品的安全策略略浅，再加上更丰富的网络电商活动，导致沉寂在黑产中的数据危害也越来越大。这可能也会是更多的互联网产品的设计时需要考虑的问题所在。&#xA;而真正沉浸起来的社工库，一方面已经成为传说，另外还在构建着自己未来的目标，这些才是真正危害，也是对于我们最大的威胁。我们TOMsInsight分析到此很矛盾：在这个主流互联网都在炒作概念玩击鼓传花的骗术，而地下互联网都在积累的年代，也许我们真的应该沉下心去仔细的去研究去分析去洞察，而不是人云亦云。&#xA;“暴漏出来的社工库都是小孩玩的，真正有价值的社工库谁也不会暴漏，都在沉寂”， M哥对我们TOMsInsight的调研员说到“有时候真的看不懂现在主流的互联网，拿几百万投资就嘚瑟的不得了，其实就是不入流的卖艺打赏呗，小孩过家家。我们这行很多人都能一天赚出来这个投资数的现金来，反而继续去沉寂，沉下心钻研，为了未来更大的打算。“ M哥的话有些绝对了，但是在某种程度上也值得我们反思。&#xA;给我们的启示 江湖的故事会继续，传说也会继续。有些人可以选择视而不见，有些人也会选择去逃避。但是冬天始终都会到来，冷暖自知。我们不能要求每一个互联网人都踏实下来，毕竟一些浮躁的跟风卖艺求打赏也会是很多人的生存之道，但是我们应该知道，江湖并不是由他们构成，那些传说，也都和每一个故事一样的真正的存在我们的身边。&#xA;当一个行业的地下产业比主流产业更踏实，看的更长远，也更注重积累的时候，也许很值的我们所有的从业人员反思。毕竟，传说应该属于真正的英雄！</description>
+    </item>
+    <item>
+      <title>ubuntu14.04下以太网的连接n奥时候</title>
+      <link>https://anwangtanmi.github.io/posts/07ccc40b1aedad0803b3654c2358f452/</link>
+      <pubDate>Fri, 26 Feb 2016 17:03:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/07ccc40b1aedad0803b3654c2358f452/</guid>
+      <description>首先要确保网卡驱动的存在，是能联网的前提。&#xA;以下是以太网连接。&#xA;通过点击这个类似于手机上wifi信号的图标可以进行哪种网络连接，主要有以太网、wifi和DSL即拨号连接三种。如果没有这个图标可以利用命令 service network-manager start 来开启网络连接的进程，同时使此图标出现在屏幕右上角上。&#xA;点击 编辑连接，&#xA;点击添加&#xA;选择以太网连接&#xA;点击新建&#xA;选择手动，主要是在IPV4这个地方的编辑，点击添加，填写ip 子网掩码：&#xA;因为选择的时候，相当于静态ip，所以要自己给电脑分配一个ip地址，这个ip的获取要在Windows下利用cmd命令ipconfig进行查找当前主机的ip等信息，ip的非配不会根据系统的变更而改变，如下图：&#xA;DNS可以和网关一样设置。&#xA;然后既可以上网了。&#xA;附带一条修改DNS的命令：nani /etc/resoly.conf ,ctrl+o保存,ctrl+x退出。</description>
+    </item>
+    <item>
+      <title>How to install and setup Tor on Kali Linux 2.0（如何在Kali Linux 2.0 下安装 Tor）</title>
+      <link>https://anwangtanmi.github.io/posts/8e43773a4f1416c0d0650d4f6ffd6d29/</link>
+      <pubDate>Sat, 13 Feb 2016 12:42:56 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/8e43773a4f1416c0d0650d4f6ffd6d29/</guid>
+      <description>如何在Kali Linux 中安装和设置Tor&#xA;第一步：安装Tor&#xA;apt-get install tor 第二步：下载和设置Tor Bundle 前往https://www.torproject.org/projects/torbrowser.html.en下载适合你的系统的Tor Bundle&#xA;然后，进入你的下载目录并解压&#xA;cd ~/Downloads/ tar -xvJf tor-browser-* 解压完成后，运行Tor Bundle&#xA;cd tor-browser* ./start-tor-browser.desktop Tor 不能以root运行，会弹出错误：Tor Browser Should Not Be Run As Root, Exiting.&#xA;解决方法如下： 1.进入tor-browser*目录下的Browser目录，编辑start-tor-browser文件&#xA;cd Browser vi start-tor-browser 输入斜杠查找root /root 找到如下代码： if [ &#34;`id -u`&#34; -eq 0 ]; then complain &#34;The Tor Browser Bundle should not be run as root. Exiting.&#34; exit 1 fi 注释之 2.cd到上层目录，运行tor-bundle&#xA;cd .. ./start-tor-browser.desktop 出现如下或类似错误：</description>
+    </item>
+    <item>
+      <title>linux centos 6.7下屏幕亮度调节方法</title>
+      <link>https://anwangtanmi.github.io/posts/f920c3d179ad5cd790dc6ccbdc072d43/</link>
+      <pubDate>Fri, 25 Dec 2015 10:37:50 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/f920c3d179ad5cd790dc6ccbdc072d43/</guid>
+      <description> 装了centos 6.7后发现屏幕的亮度调不了，用fn+。。也调不了。于是找到电源设置里的屏幕亮度调节–还是不行。&#xA;最后用了xgamma -gamma命令调节成功，具体操作：&#xA;打开终端输入 xgamma -gamma 0.5 上网查了下这个命令也可以：setterm -background 或 -foreground来调节他的颜色，达到调节亮度的目的有8个颜色可以选择 </description>
+    </item>
+    <item>
+      <title>vim配色方案</title>
+      <link>https://anwangtanmi.github.io/posts/5f20a08e726b5b24d9a93427b9332971/</link>
+      <pubDate>Wed, 12 Aug 2015 22:02:17 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/5f20a08e726b5b24d9a93427b9332971/</guid>
+      <description>VIM Color Scheme Test – C This page really requires a modern web browser. Click here for more information. Do your friends a favor. Link to the front page instead. Thanks! Useful tip: decrease the text size to see more in each iframe. (For example, in Firefox press ctrl-minus and you will see.) Select iframe height (in pixels): 100 200 300 400 500 600 Dark Background 256-jungle&#xA;src=”http://vimcolorschemetest.googlecode.com/svn/html/256-jungle-c.html” frameborder=”0″ width=”100%” height=”100%” scrolling=”no”&amp;gt; 3dglasses</description>
+    </item>
+    <item>
+      <title>洋葱头急速浏览器–tor</title>
+      <link>https://anwangtanmi.github.io/posts/edc0e9ac34e61b339df91e8b7ccd86c1/</link>
+      <pubDate>Thu, 09 Jul 2015 13:34:04 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/edc0e9ac34e61b339df91e8b7ccd86c1/</guid>
+      <description> 我们大多数人都在上网方面花费很多时间。上网使用的应用程序主要是浏览器，更确切的说是一个Web浏览器。我们在网络上的大部分活动要以客户端/服务器的方式登录，这个过程会包括IP地址、地理信息、搜索、活动以及许多潜在的信息，这些信息如果以其他方式被故意使用，会存在潜在的危险性。&#xA;因此，我们需要的最好是一个小型、独立、可携带的应用程序，它能达到匿名的效果。Tor浏览器便是这样的一个应用，它拥有上面提到的所有功能，甚至不止于此。&#xA;什么是Tor浏览器？ Tor是一个自由分发的应用软件，以BSD许可证发布，通过其安全可靠的洋葱式的结构，允许用户匿名的进行网络浏览。从前，由于它的结构和运作机制，Tor被称为‘洋葱路由器’。这个应用是由C语言写成的。&#xA;Tor浏览器的功能 跨平台可用。例如，这个应用程序在Linux、Windows和Mac下都可用。 在发送数据到因特网前进行复杂的数据加密。 在客户端进行数据自动解密。 它是火狐浏览器和Tor工程的结合。 对服务器和网站提供匿名性。 可以访问被限制的网站。 无需暴露源IP便可以执行任务。 可以将数据路由至/从防火墙后隐藏的服务和应用程序。 便携性 – 可以直接从USB存储棒上运行一个预配置的web浏览器。无需本地安装。 在x86和x86_64平台均可用 可以配置为一个运行在“localhost”的“9050”端口上的“socks4a”代理来让FTP跑在Tor 上。 Tor拥有处理上千的中继和上百万用户的能力。 Tor浏览器如何工作？ Tor的工作方式基于洋葱路由的概念。洋葱路由的结构类似洋葱，它的每一层都嵌套在另一层里面，就像洋葱一样。这种嵌套的结构负责多次加密数据并将其通过虚拟电路进行发送。在客户端一侧每一层都在将他传递到下一层之前解密数据。最后一层在将原始数据传递到目的地前解密最里面一层的加密数据。&#xA;在这个过程里，这种解密整个层的功能设计的如此高明以至于无法追踪IP以及用户的地理位置，因此可以限制任何人观察您访问站点的网络连接。&#xA;所有这些过程看起来有些复杂，但用户使用Tor浏览器时没有必要担心。实际上，Tor浏览器的功能像其他浏览器一样（尤其是Mozilla的Firefox）&#xA;具体内容请参考：https://linux.cn/article-5778-weibo.html </description>
+    </item>
+    <item>
+      <title>ubuntu14.04 中“wifi通过硬件开关禁用”的问题解决</title>
+      <link>https://anwangtanmi.github.io/posts/664c6a3b11c60cb576fdf65723303bb3/</link>
+      <pubDate>Thu, 12 Feb 2015 10:57:34 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/664c6a3b11c60cb576fdf65723303bb3/</guid>
+      <description>今天进入老早之前装的ubuntu中做点事情，发现wifi被禁用了，在右上角中可以看到wifi设备，但是灰色，显示的是“WiFi已通过硬件设备禁用”，能够看到设备，说明驱动没有问题，应该是更新的哪个软件之后起了冲突，把我的网络给屏蔽掉了。&#xA;根据google到的方法，使用rfkill list查看了一下屏蔽，显示出四个选项，我电脑的两个无线网卡（原来的无线网卡，USB无线网卡），怎么会有4个选项呢，根据forum.ubuntu.org.cn/viewtopic.php?t=328097上面4楼和5楼说的方法去掉两个无关选项，并且把阻塞关了，但是我的右上角还是灰色，还是wifi已通过硬件设备禁用，蛋疼的ubuntu啊。&#xA;到系统设置里，发现我的无限网卡怎么也打不开，开到开启它就自动弹回关闭。&#xA;然后我就想，会不会是我的桌面环境有问题，我的无限网卡其实是可以用的，只是桌面抽风了。。。试试看装个wifi管理软件看看，sudo apt-get install wicd，装个wicd-manager，这是个网络管理软件。（装软件的时候我插了有线哦）&#xA;安装完毕打开软件，果然，在wicd-manager中我的wifi是好好的，之间选择我要连的网络输入密码，成功连接，拔掉网线。此时我右上角网络里面依然是“WIFI已通过硬件设备禁用”，依然是灰色的网卡选项。。。草蛋的ubuntu。。。感觉如果没有必要的话还是装ubuntu12好，14里面问题太多了，这种奇怪的问题已经不是第一次了，linux中各个文件的依赖真是蛋疼，一不小心新装一个软件，可能其它软件就会出问题。。。</description>
+    </item>
+    <item>
+      <title>yoga2pro 安装ubuntu wifi问题解决</title>
+      <link>https://anwangtanmi.github.io/posts/6d08ed7ba76e5c2e99d32f35c367618c/</link>
+      <pubDate>Sat, 29 Nov 2014 13:30:07 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/6d08ed7ba76e5c2e99d32f35c367618c/</guid>
+      <description>本来想安装centos的，但是下载7.0和6.6都没法安装。启动到一半就黑屏了。&#xA;只好下载ubuntu试试看，结果ubuntu可以安装上去。&#xA;结果安装之后wifi一直是硬件锁定，&#xA;用 sudo lshw -C network 查看， 结果看到 network被disabled&#xA;但是yoga2pro本本也没有什么wifi的开关啊。查到国外的论坛，有大神说是驱动的问题，要改一段代码，&#xA;又看到一个帖子，说只要把ideapad_laptop加入blacklist就可以了。于是&#xA;sudo gedit /etc/modprobe.d/myownblacklist.conf&#xA;在其中添加以下一行，保存文件后重新启动系统。&#xA;blacklist ideapad_laptop&#xA;然后，执行&#xA;sudo rfkill unblock all&#xA;然后看到&#xA;sudo rfkill list看到没有东西被block了。wifi果然通了。&#xA;0: phy0: Wireless LAN&#xA;Soft blocked: no&#xA;Hard blocked: no&#xA;1: hci0: Bluetooth&#xA;Soft blocked: no&#xA;Hard blocked: no</description>
+    </item>
+    <item>
+      <title>惠普笔记本HP m4-1009tx安装mac os 10.11 笔记（uefi&#43;clover&#43;GPT）</title>
+      <link>https://anwangtanmi.github.io/posts/45861d6e83ed58365feaf937326c78bf/</link>
+      <pubDate>Fri, 05 Sep 2014 23:42:46 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/45861d6e83ed58365feaf937326c78bf/</guid>
+      <description>学习xamarin和cocos2dx以及qt后想做一些os x或者ios的开发联系，由于短时间内买不了macbook，所以只有在自己的惠普笔记本上装个黑苹果玩玩了。我的电脑是uefi+gpt的分区和启动引导，所以一下步骤都只针对于这种格式，mbr的分区可以去远景论坛找变色龙引导的相关教程。&#xA;以下步骤参考了很多远景论坛的文字和图片，如果有侵权，请联系我。&#xA;【参考】http://bbs.pcbeta.com/viewthread-1470715-1-1.html&#xA;【参考】http://bbs.pcbeta.com/forum.php?mod=viewthread&amp;amp;tid=1443155&amp;amp;page=1#pid38306400&#xA;准备工作： 确保自己电脑可以安装Mac SATA模式设置为AHCI（enable） 下载好Win_USBTools-Fat32_Clover_v2k_r2482.zip （clover请保持更新） 下载好 OS X 的 懒人版cdr安装镜像 （去远景论坛，下载后请认真核对MD5）我初次用的是Mavericks 10.9.4版，本次已更新EI Captain 10.11版 下载好 硬盘助手（Leopard 硬盘安装助手 V0.3） 准备好 一个U盘 （用于制作U盘版Clover）（Clover的EFI文件夹默认7.9MB 自行选择U盘容量） 下载好 DiskGenius 3.80/4.30 专业版 （用于检验安装盘分区的ID） 读写Mac分区的工具 Mac PE/MacDrive/HFS+ For Windows 推荐 Mac PE 安全（此项可选） 安装步骤： 1，给硬盘分区&#xA;在windows下打开磁盘管理，压缩出一个 6GB 的 未分配空间 以及 建立好的&amp;gt;50GB 的分区（前者用于写入懒人版安装镜像 后者用于安装Mac 最小20GB 常用推荐60GB以上或更大，其中6GB的分区安装完后可以回收）以下以6GB的分区为例：&#xA;在其他分区 压缩卷–新建简单卷–分配驱动器号–不格式化卷–确定。 2，写入镜像&#xA;以管理员身份运行 磁盘助手 V0.3 选择好懒人版的CDR镜像，如图所示 取消勾选下面的 “在boot.ini中加入tboot”等3个选项 勾选上“写入” 单击“开始”&#xA;然后开始等待 过程中 程序可能无响应 但是什么都不要动 程序在写入镜像中</description>
+    </item>
+    <item>
+      <title>解决vmware上安装ubuntu不能联网的问题</title>
+      <link>https://anwangtanmi.github.io/posts/58c3e6c9cc1a64d353fe01f9230e5008/</link>
+      <pubDate>Sun, 24 Aug 2014 14:59:51 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/58c3e6c9cc1a64d353fe01f9230e5008/</guid>
+      <description>环境：&#xA;vmware10.0&#xA;Ubuntu 14&#xA;问题：&#xA;在ubuntu安装成功后，ping 物理机地址，ping 8.8.8.8外网地址都提示 network is unreachable.&#xA;使用ifconfig 发现没有eth0，说明网卡没有启动 (虚拟机上只有一块默认网卡，默认获取的是eth0的配置信息）&#xA;解决：&#xA;1.首先查看vm的网络配置管理器，不要选择自动选择，物理机是用什么网卡上网的（在网络连接里面的detail里面可以看到），VM那里就选择哪个网卡&#xA;2. 查看虚拟机的网络配置，右键点击虚拟机，setting–network adapter, 选择bridge，不用勾选与物理机一致选项。&#xA;3. 接着是ubuntu系统上的配置，一般就是3个配置点，一个是网卡配置文件/etc/network/interfaces，其次是网关配置文件(redhat里面是单独的，在ubuntu里面是合并在/etc/network/interface里），最后一次是DNS配置文件（/etc/resolv.conf)。&#xA;配置静态IP地址&#xA;sudo vi /etc/network/interfaces&#xA;内容如下：&#xA;auto lo&#xA;iface lo inet loopback&#xA;auto eth0&#xA;#iface eth1 inet dhcp&#xA;iface eth1 inet static&#xA;address 192.168.1.8&#xA;netmask 255.255.255.0&#xA;network 192.168.1.0&#xA;broadcast 192.168.1.255&#xA;geteway 192.168.1.1&#xA;配置DNS&#xA;vi /etc/resolv.conf&#xA;增加内容：&#xA;nameserver 114.114.114.114 ( 指定你的域名服务器地址，由它为你提供域名解析服务，所以如果没有配置它，ping ip可以，但是你pingwww.baidu.com就不行）&#xA;naserver 202.106.0.20 –这个选项可以不用&#xA;配置默认网关（不知道为什么，在interfaces网络里面已经配置了网关，但是不起作用，需要重新手动添加默认网关）&#xA;route add default gw 192.</description>
+    </item>
+    <item>
+      <title>vim编辑器颜色主题color scheme</title>
+      <link>https://anwangtanmi.github.io/posts/570ee8de6716c9915ee18d62e427b862/</link>
+      <pubDate>Sat, 15 Mar 2014 17:02:13 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/570ee8de6716c9915ee18d62e427b862/</guid>
+      <description>VIM Color Scheme Test – C This page really requires a modern web browser. Click here for more information. Do your friends a favor. Link to the front page instead. Thanks! Useful tip: decrease the text size to see more in each iframe. (For example, in Firefox press ctrl-minus and you will see.) Select iframe height (in pixels): 100 200 300 400 500 600 http://vimcolorschemetest.googlecode.com/svn/html/index-c.html&#xA;Dark Background 256-jungle 3dglasses adam adaryn adobe adrian advantage af aiseered anotherdark ansi_blows aqua asmanian2 asmanian_blood asmdev asmdev2 astronaut asu1dark baycomb bensday billw Black blackbeauty blackboard blackdust blacklight BlackSea black_angus blink blue Blue2 bluegreen blueprint bluez blugrine borland breeze brookstream BusyBee calmar256-dark camo campfire candy candycode caramel carvedwood carvedwoodcool charon chlordane ChocolateLiquor clarity cloudy clue coffee colorer colorful256 colorscheme_template contrasty cool corn corporation crt cthulhian custom dante Dark Dark2 darkblack darkblue darkblue2 darkbone darkburn DarkDefault darkdevel darkdot darkeclipse darker-robin darkerdesert darkocean darkrobot darkslategray darkspectrum darktango darkZ darkzen denim derefined desert desert256 desertedocean desertedoceanburnt desertEx deveiate Dim Dim2 DimBlue DimGreen DimGreens DimGrey DimRed DimSlate django doorhinge doriath dusk dw_blue dw_cyan dw_green dw_orange dw_purple dw_red dw_yellow eclm_wombat edo_sea ekvoli elflord elise elisex enzyme evening far fnaqevan freya fruity gardener gentooish golden gor gothic grayorange graywh Green greens greenvision greyblue guardian h80 herald hhazure hhdblue hhdcyan hhdgray hhdgreen hhdmagenta hhdred hhdyellow hhorange hhpink hhspring hhteal hhviolet ibmedit icansee impact impactG industrial inkpot jammy jellybeans jhdark kellys kib_darktango koehler lanzarotta leo less lettuce lilac lilydjwg_dark lucius manxome marklar maroloccio maroloccio2 maroloccio3 mars matrix metacosm midnight midnight2 miko mint molokai motus MountainDew mud murphy native nature navajo-night navajo neon neverness night nightflight nightflight2 nightshade nightshimmer nightsky nightVision nightwish night_vision northland northsky norwaytoday nour no_quarter oceanblack oceanblack256 oceandeep olive pablo pacific paintbox peppers phphaxor potts prmths ps_color putty quagmire railscasts rainbow_breeze rainbow_neon rainbow_night rainbow_sea rastafari rcg_gui rcg_term rdark Red redblack redstring refactor relaxedgreen reloaded revolutions robinhood ron rootwater sea sean seoul settlemyer shobogenzo sift skittles_dark Slate slate2 softblue soruby spectro spiderhawk stingray surveyor symfony synic tabula tango-desert tango tango2 telstar tetragrammaton thestars tibet torte transparent turbo twilight two2tango umber-green understated vanzan_color vibrantink vividchalk vj wargrey watermark widower win9xblueback wintersday wombat wombat256 wood wuye xian xoria256 xterm16 yeller zenburn zmrok Light Background ashen automation autumn autumn2 autumnleaf bandit basic bayQua beachcomber beauty256 biogoo bmichaelsen bog brown buttercream bw c c16gui calmar256-light carrot charged-256 chela_light ChocolatePapaya cleanphp codeburn colorful colorzone dawn default delek delphi DevC++ developer dual earendel earth earthburn eclipse emacs fine_blue fog fruidle fruit gobo google grape guepardo habiLight ironman jhlight kalt kaltex kate khaki kib_plastic lazarus Light lightcolors LightDefault LightDefaultGrey LightTan LightYellow lilydjwg_green lingodirector literal_tango louver martin_krischik mellow mod_tcsoft montz moria morning nedit nedit2 nicotine nightshade_print nuvola oceanlight osx_like PapayaWhip peachpuff peaksea phpx pink pleasant print_bw professional proton pspad pyte python rainbow_autumn rainbow_fine_blue rainbow_fruit reliable sand satori scite seashell sf shine sienna silent simple256 simpleandfriendly simplewhite simple_b smp softlight soso spring summerfruit summerfruit256 tango-morning taqua tcsoft textmate16 thegoodluck tidy tolerable tomatosoup toothpik trivial256 tutticolori vc vcbc vexorian void vylight warm_grey white White2 whitedust winter xemacs zellner zen New or Updated (can be empty) Total: 428 schemes</description>
+    </item>
+    <item>
+      <title>Linux-CentOS安装N卡驱动以及解决屏幕亮度不可调问题</title>
+      <link>https://anwangtanmi.github.io/posts/0438c24aaa9fd1b4e5813d6e74fa6e00/</link>
+      <pubDate>Mon, 24 Jun 2013 08:51:58 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/0438c24aaa9fd1b4e5813d6e74fa6e00/</guid>
+      <description>首先，去Nvidia官网下载相应的显卡驱动，注意语言选择英文，中文的下载不下来。&#xA;http://www.nvidia.cn/Download/index.aspx?lang=cn （使用wget下载，为了加快下载速度可以使用axel进行下载）&#xA;之后，怎么安装呢？&#xA;1.安装gcc，(显卡驱动安装时需要)&#xA;2.禁用The Nouveau kernel driver，参考http://enetq.blog.51cto.com/479739/591622&#xA;3.安装kernel-devel包&#xA;linux系统，未安装该包时会提示： error：unable to find the kernel source tree for the currently running kernel. please make sure you have installed the kernel source files for your kernel and that htey are properly configured; on red hat linux system, for example, be sure you have the ‘kernel-source’ or ‘kernel-devel’ RPM installed. if you know the correct kernel source files are installed ,you may specify the kernel source path with the ‘–kernel-source-path’ command line option.</description>
+    </item>
+    <item>
+      <title>YUV422转BGR888（海思3516平台）</title>
+      <link>https://anwangtanmi.github.io/posts/3bb21b9141514cdbf080b538b9bfe0c3/</link>
+      <pubDate>Fri, 15 Mar 2013 09:14:55 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/3bb21b9141514cdbf080b538b9bfe0c3/</guid>
+      <description>#include &#34;hi_comm_ive.h&#34; #include &#34;mpi_ive.h&#34; #pragma pack(1) typedef struct{ short type; int size; short reserved1; short reserved2; int offset; } BMPHeader; typedef struct{ int size; int width; int height; short planes; short bitsPerPixel; unsigned compression; unsigned imageSize; int xPelsPerMeter; int yPelsPerMeter; int clrUsed; int clrImportant; } BMPInfoHeader; #pragma pack() int saveBMPFile(unsigned char* src, int width, int height, const char* name){ BMPHeader hdr; BMPInfoHeader infoHdr; int ret = 0; FILE* fp = NULL; if(NULL == src) { return (-1); } fp = fopen(name,&#34;</description>
+    </item>
+    <item>
+      <title>CentOS6 安装Oracle 11g 所需要的依赖包</title>
+      <link>https://anwangtanmi.github.io/posts/ba7aecf5d81a6ae453a05c46b4c19016/</link>
+      <pubDate>Tue, 01 Jan 2013 17:45:11 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/ba7aecf5d81a6ae453a05c46b4c19016/</guid>
+      <description> 安装前所需要的依赖包：&#xA;binutils-2.17.50.0.6-2.el5&#xA;compat-libstdc++-33-3.2.3-61&#xA;elfutils-libelf-0.125-3.el5&#xA;elfutils-libelf-devel-0.125&#xA;elfutils-libelf-devel-static&#xA;glibc-2.5-12&#xA;glibc-common-2.5-12&#xA;kernel-headers&#xA;ksh&#xA;libaio-0.3.106&#xA;libaio-devel-0.3.106&#xA;libgcc-4.1.1-52&#xA;libgomp&#xA;libstdc++-4.1.1&#xA;libstdc++-devel-4.1.1-52.e15&#xA;make-3.81-1.1&#xA;mpfr-2.4.1-6.el6.i686.rpm&#xA;ppl-0.10.2-11.el6.i686.rpm&#xA;sysstat-7.0.0&#xA;unixODBC-2.2.11&#xA;unixODBC-devel-2.2.11&#xA;glibc-headers-2.5-12&#xA;glibc-devel-2.5-12&#xA;cloog-ppl-0.15.7-1.2.el6.i686.rpm&#xA;cpp-4.4.4-13.el6.i686.rpm&#xA;gcc-4.1.1-52&#xA;gcc-c++-4.1.1-52&#xA;numactl-devel-0.9.8.i386&#xA;/* rpm -ivh setarch-2.0-1.1.x86_64.rpm –nodeps–force */ </description>
+    </item>
+    <item>
+      <title>一份360的运维面试题</title>
+      <link>https://anwangtanmi.github.io/posts/a07e8799b430a34fb17ac2f8abb9d3df/</link>
+      <pubDate>Mon, 16 Apr 2012 13:46:37 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/a07e8799b430a34fb17ac2f8abb9d3df/</guid>
+      <description>公司名称：奇虎360&#xA;招聘职位：运维工程师&#xA;职位需求：&#xA;1、精通FreeBSD/Linux系统安装配置和系统参数优化设置。&#xA;2、三年以上IDC、服务器运维经验。&#xA;3、精通apache、nginx等web服务器和参数的配置优化。&#xA;4、熟悉MySQL数据库优化者佳。&#xA;5、熟悉cisco、H3C路由器和交换机配置者佳。&#xA;6、工作有条理，工作习惯良好，有一定的故障处理能力。&#xA;7、可承受较大的工作压力，对待工作认真负责，有较强的工作责任心。&#xA;以下是面试题：&#xA;1、写一个脚本查找最后创建时间是3天前，后缀是*.log的文件并删除。&#xA;2、写一个脚本将某目录下大于100k的文件移动至/tmp下。&#xA;3、写一个脚本将数据库备份并打包至远程服务器192.168.1.1 /backup目录下。&#xA;4、写一个防火墙配置脚本，只允许远程主机访问本机的80端口。&#xA;5、写一个脚本进行nginx日志统计，得到访问ip最多的前10个(nginx日志路径：/home/logs/nginx/default/access.log)。&#xA;6、写出下列命令的含义&#xA;（1）MaxKeepAliveRequests 100&#xA;（2）Options FollowSymLinks&#xA;Order Deny Allow&#xA;Deny from all&#xA;Allow from 192.168.1.1&#xA;7、写一个脚本把指定文件里的/usr/local替换为别的目录。&#xA;8、请简单阐述运维工程师的职责。&#xA;PS：此测试题是内部拿到的，我并非360的人，更不是HR，大家仅供参考。&#xA;出现几率比较高的：&#xA;1、简要描述Linux的启动过程？&#xA;2、简要叙述下列端口所运行的服务&#xA;21、22、23、25、110、143、873、3306&#xA;3、TCP断头最小长度是___字节？&#xA;4、让某普通用户能进行cp /dir1/file1 /dir2的命令时，请说明dir1 file1最小具有什么权限？&#xA;5、简述TCP三次握手的过程？&#xA;====================================================================&#xA;1、写一个脚本查找最后创建时间是3天前，后缀是*.log的文件并删除。&#xA;find / -name “*.log” -ctime +3 -exec rm -f {} \;&#xA;2、写一个脚本将某目录下大于100k的文件移动至/tmp下。&#xA;for i in `find /test -type f -size +100k`;do cd /test &amp;amp;&amp;amp; mv $i /tmp;done</description>
+    </item>
+    <item>
+      <title>虚拟机linux环境下安装weblogic，创建域，配置数据源和部署环境</title>
+      <link>https://anwangtanmi.github.io/posts/9612e689d99314ca0dc172bd732f0585/</link>
+      <pubDate>Sat, 31 Mar 2012 11:54:44 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/9612e689d99314ca0dc172bd732f0585/</guid>
+      <description>1、准备weblogic的安装介质，可以到官网http://www.oracle.com/technetwork/middleware/fusion-middleware/downloads/index.html下载weblogic用于linux的版本，通常后缀为bin（这种类型中包含jre从而不需要在虚拟机上安装jre并且进行路径的配置）&#xA;2、将安装文件通过共享的方式拷贝到虚拟机的具体目录下，如：/home中，文件名称为：wsl-linux32.bin&#xA;3、修改wsl-linux32.bin 的执行方式：在终端中执行命令 chmod a+x wsl-linux32.bin&#xA;4. 在终端中输入命令：./wsl-linux32.bin，该文件运行后，可以看到“Extracting 0%……”字样，说明开始在解压了，然后按弹出的窗口提示进行操作（与windows下图形界面安装相同）&#xA;5. 安装完成weblogic之后，可以紧接着在弹出的窗口中创建域，也可以通过命令的方式打开创建域的窗口：在安装的weblogic路径下找到utils\quickstart，运行quickstart.sh （在终端中执行的命令为：sh quickstart.sh）,然后根据提示创建域（与windows图形界面操作相同）&#xA;6.启动weblogic：运行user_projects\domains\base_domain 下的startWeblogic.sh （终端中运行的命令为：sh startWeblogic.sh）&#xA;7. 进入weblogic的控制台：http:127.0.0.1:7001/console ,配置数据源（与windows相同），启动服务&#xA;8. 访问环境，此时若在主机中不能访问系统时，将虚拟机上的访问强关闭，执行命令为：service iptables stop 关闭防火墙</description>
+    </item>
+    <item>
+      <title>Ubuntu安装tor</title>
+      <link>https://anwangtanmi.github.io/posts/a5b3286aff88001510f03618ead90782/</link>
+      <pubDate>Mon, 25 Jul 2011 09:47:39 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/a5b3286aff88001510f03618ead90782/</guid>
+      <description> 我已经放弃tor了，速度太慢，而且三天两头bridges被封，要重新更新，好东西，可惜，不适合国情。 1、在/etc/apt/sources.list中添加以下2行 deb http://mirror.noreply.org/pub/tor etch main deb-src http://mirror.noreply.org/pub/tor etch main 2、命令行键入 gpg –keyserver keys.gnupg.net –recv 94C09C7F gpg –export 94C09C7F | sudo apt-key add – 3、从http://mirror.lupaworld.com/ubuntu/pool/main/libe/libevent/libevent1_1.3e-3_i386.deb 下载并安装 4、sudo apt-get install tor privoxy 5、修改 sudo gedit /etc/privoxy/config 在最后添加 forward-socks4a / localhost:9050 . （注意后面的点） 6、重启privoxy sudo /etc/init.d/privoxy restart 7、sudo apt-get install vidalia 8、给 [email protected] 发邮件，题目和内容都为纯文本的 get bridges 在回信中可以获取网桥地址 9、在validia中，点”设定-&amp;gt;网络”，选择我的ISP阻挡了对Tor的连接，然后在下面将邮件里面的数据一条条复制进去。只需IP:端口。 成功后validia图标会变成绿色 10、在Firefox中安装torbutton 不清楚什么原因，tor会随系统一起启动，但是privoxy不会随系统一起启动 开启validia时, 由于tor已经启动并且占据了9050端口，因此无法随validia再启动一个tor，但是validia会无法连接到已经启动的那个tor。 解决办法目前只有手动启动privoxy，然后即可直接在firefox里面用torbutton连接了 </description>
+    </item>
+    <item>
+      <title>10.04中 tor和FoxProxy的安装和设置</title>
+      <link>https://anwangtanmi.github.io/posts/893ee593cee19e58f1e9a0c1631f2930/</link>
+      <pubDate>Mon, 06 Sep 2010 21:14:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/893ee593cee19e58f1e9a0c1631f2930/</guid>
+      <description>[转]http://keepee.blog.sohu.com/154777865.html#&#xA;10.04中 tor和FoxProxy的安装和设置&#xA;先说tor的安装&#xA;1.需要添加tor的源&#xA;$sudo gedit /etc/apt/sources.list 打开以后在最下面添加：&#xA;deb http://mirror.noreply.org/pub/tor etch main&#xA;deb-src http://mirror.noreply.org/pub/tor etch main&#xA;$ sudo apt-get update&#xA;W: GPG签名验证错误： http://mirror.noreply.org etch Release: 由于没有公钥，下列签名无法进行验证： NO_PUBKEY CFF71CB3AFA44BDD&#xA;注意： NO_PUBKEY后面时数字时随机的，下一步就需要这个的最后8位，别搞错&#xA;2.添加公钥&#xA;$ gpg –keyserver subkeys.pgp.net –recv AFA44BDD&#xA;（AFA44BDD就是最后那8位数字）&#xA;$ gpg –export –armor AFA44BDD | sudo apt-key add –&#xA;应该提示OK了&#xA;3.更新源，安装tor&#xA;$ sudo apt-get update&#xA;这次应该正常完成了&#xA;不过现在还不能直接install tor，因为还缺少一个包&#xA;从http://mirror.lupaworld.com/ubuntu/pool/main/libe/libevent/libevent1_1.3e-3_i386.deb 手动下载并安装&#xA;然后&#xA;$ sudo apt-get install tor privoxy $ sudo apt-get install vidalia vidalia是tor图形控制工具，很方便，该软件就在10.</description>
+    </item>
+    <item>
+      <title>vidalia启动时, Tor已经启动的解决方法</title>
+      <link>https://anwangtanmi.github.io/posts/44c1a7d3491fe64133f3b91d44087999/</link>
+      <pubDate>Sat, 15 May 2010 12:39:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/44c1a7d3491fe64133f3b91d44087999/</guid>
+      <description>################################&#xA;# 如果出现 Could not bind to 127.0.0.1:9050: Address already in use. Is Tor already running?&#xA;################################ 在启动 vidalia 时，出现如下错误 log ： Opening Socks listener on 127.0.0.1:9050 Could not bind to 127.0.0.1:9050: Address already in use. Is Tor already running? Failed to parse/validate config: Failed to bind one of the listener ports. Reading config failed–see warnings above. 这是由于系统启动时 tor 服务自动起来了，而 vidalia 在启动时再次尝试启动 tor，则发现端口已经被占用了，如何解决呢？ 临时解决的方法：&#xA;$ sudo service tor stop # 或者 sudo /etc/init.</description>
+    </item>
+    <item>
+      <title>在ubuntu 9.10下安装Tor</title>
+      <link>https://anwangtanmi.github.io/posts/2549f13ea195df9d1e612fb3194f7e3b/</link>
+      <pubDate>Sun, 06 Dec 2009 23:47:04 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/2549f13ea195df9d1e612fb3194f7e3b/</guid>
+      <description> [color=red]我已经放弃tor了，速度太慢，而且三天两头bridges被封，要重新更新，好东西，可惜，不适合国情。[/color] 1、在/etc/apt/sources.list中添加以下2行&#xA;deb http://mirror.noreply.org/pub/tor etch main&#xA;deb-src http://mirror.noreply.org/pub/tor etch main&#xA;2、命令行键入&#xA;gpg –keyserver keys.gnupg.net –recv 94C09C7F&#xA;gpg –export 94C09C7F | sudo apt-key add –&#xA;3、从http://mirror.lupaworld.com/ubuntu/pool/main/libe/libevent/libevent1_1.3e-3_i386.deb 下载并安装&#xA;4、sudo apt-get install tor privoxy&#xA;5、修改 sudo gedit /etc/privoxy/config&#xA;在最后添加&#xA;forward-socks4a / localhost:9050 .&#xA;（注意后面的点）&#xA;6、重启privoxy&#xA;sudo /etc/init.d/privoxy restart&#xA;7、sudo apt-get install vidalia&#xA;8、给 [email protected]&#xA;发邮件，题目和内容都为纯文本的 get bridges&#xA;在回信中可以获取网桥地址&#xA;9、在validia中，点”设定-&amp;gt;网络”，选择我的ISP阻挡了对Tor的连接，然后在下面将邮件里面的数据一条条复制进去。只需IP:端口。&#xA;成功后validia图标会变成绿色&#xA;10、在Firefox中安装torbutton&#xA;[color=red]不清楚什么原因，tor会随系统一起启动，但是privoxy不会随系统一起启动&#xA;开启validia时, 由于tor已经启动并且占据了9050端口，因此无法随validia再启动一个tor，但是validia会无法连接到已经启动的那个tor。&#xA;解决办法目前只有手动启动privoxy，然后即可直接在firefox里面用torbutton连接了&#xA;[/color] </description>
+    </item>
+    <item>
+      <title>Android电源管理</title>
+      <link>https://anwangtanmi.github.io/posts/c6dff486ce0787bb7e75e52381634b6a/</link>
+      <pubDate>Thu, 19 Nov 2009 18:36:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/c6dff486ce0787bb7e75e52381634b6a/</guid>
+      <description>Android电源管理&#xA;一、 相关概念&#xA;1. 出于节电的需要，一般应用在用户一段时间无操作的情况下屏幕变暗，然后进后休眠状态&#xA;2. 用户只能在”设置-&amp;gt;声音和显示”中设置所有应用默认的屏幕亮度和进行待机的时间&#xA;3. 电源管理的实现分内核应用两部分，通过下面介绍的接口，我们可以设置应用程序的电源管理，以控制与其休眠相关的状态（是否需要进入休眠，调整cpu频率，键盘灯的开关，屏幕的亮暗等）&#xA;二、 设置电源管理常用的几种状态&#xA;PARTIAL_WAKE_LOCK 屏幕关，键盘灯关，不休眠&#xA;SCREEN_MID_WAKE_LOCK 屏幕灰，键盘灯关，不休眠&#xA;SCREEN_BRIGHT_WEEK_LOCK 屏幕亮，键盘灯关，不休眠&#xA;FULL_WAKE_LOCK 屏幕亮，键盘灯亮，不休眠&#xA;三、 使用电源管理注意事项&#xA;1. 可在onCreate时设置该界面的电源管理，在onDestroy时取消设置&#xA;2. 可在onResume时设置该界面的电源管理，在onPause时取消设置&#xA;3. 注意设置是以Activity为单位，不是以应用为单位&#xA;4. 注意在AndroidManifest.xml中声明该应用有设置电源管理的权限&#xA;5. 注意加锁解锁要成对出现&#xA;6. 注意多个用途最好用多个锁，不要一锁多用，以免出错&#xA;7. 注意对运行在后台和异常时对锁的处理&#xA;8. 注意在网络连接或传输时最好加锁，以免传输被中断&#xA;9. 注意加锁以保证程序逻辑&#xA;四、 代码举例&#xA;1. 源码修改&#xA;1) 引入电源管理包，以使用相关类&#xA;import android.os.PowerManager;&#xA;2) 类中加入变量&#xA;PowerManager.WakeLock mWakeLock;&#xA;3) 修改onCreate&#xA;public void onCreate(Bundle savedInstanceState) {&#xA;super.onCreate(savedInstanceState);&#xA;PowerManager pm =&#xA;(PowerManager) getSystemService(Context.POWER_SERVICE); mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, “XYTEST”); mWakeLock.acquire(); }</description>
+    </item>
+    <item>
+      <title>［经验总结］Ubuntu 9.10初用手记</title>
+      <link>https://anwangtanmi.github.io/posts/c8597a6357455ef0a2b06f9ba22397e2/</link>
+      <pubDate>Sun, 08 Nov 2009 21:13:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/c8597a6357455ef0a2b06f9ba22397e2/</guid>
+      <description>• 界面更好看，边缘处理更圆滑，图标显示更清晰。&#xA;• 输入法花哨了，但还看不出ibus在输入方面比scim明显好在哪？ 可能是与其它系统配合得更好，反正用了一天也没有像SCIM 那样出现输不出字的现象。&#xA;• 号称的启动加速，我没感觉，反而觉得启动和关闭时渐明渐暗的Ubuntu图标有点后现代。&#xA;• Ubuntu One注册了还没用上，希望下一版本将这个功能交给google。&#xA;• 汉化之后不能连网 ，卸载network-manager，将wicd_1.6.1-3ubuntu1_all（依赖python-urwid_0.9.8.4-1_i386）安装了之后才能上网，这个问题用了半天才搞定！ 但桌面上网络提示，一直没看到。&#xA;• Tomboy、FireFox、OpenOffice等常用软件都升级了，功能略有增加。&#xA;• 在新立德中安装了nofree-flash之后，能在Firefox中正常播放flash，但flash页面的中文显示为乱码。&#xA;• fqterm中文字体更好看了。&#xA;• 应用程序菜单中加了个Ubuntu软件中心，卸载软件更方便了。&#xA;• 机器上原来安装的Ubuntu 8.10，从光盘全新安装Ubuntu 9.10时没有提示保留原有系统的/home文件夹和常用软件个性化配置，安装之前只得备份了一份home目录，虽然后来证明这个担心是多余的，但相对于以前版本的贴心提示，这一版的处理模式算是退步了。</description>
+    </item>
+  </channel>
+</rss>

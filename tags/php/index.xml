@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PHP on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/php/</link>
+    <description>Recent content in PHP on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 04 Feb 2020 15:26:02 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/php/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>如何获取暗网服务器的真实ip地址</title>
+      <link>https://anwangtanmi.github.io/posts/4c262a576dbb329f62002f0772db8149/</link>
+      <pubDate>Tue, 04 Feb 2020 15:26:02 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/4c262a576dbb329f62002f0772db8149/</guid>
+      <description> 如何获取暗网服务器的真实ip地址教程(基于漏洞) 暗网介绍 暗网（英語：Dark web）是存在于黑暗网络、覆盖网络上的万维网内容，只能用特殊軟體、特殊授權、或對電腦做特殊設定才能访问。 暗网是由深网的一小部分所構成的。 而深网的网络不能夠被正常网络搜索引擎（如google,yahoo等各種知名有效的瀏覽軟件）索引，有时“深网”这一术语被错误地用于指代暗网。&#xA;获取ip地址过程 打开暗网网站&#xA;发现其为一个论坛网站，搭建程序为vbulletin（vBulletin 是一个强大，灵活并可完全根据自己的需要定制的论坛程序套件。它使用发展速度最快的 Web 脚本语言编写： PHP，并且基于以高效和疾速著称的数据库引擎 MySQL。），编程语言为php&#xA;经过信息搜集发现，注册后有一个头像上传功能并可以从远程程序获取头像图片&#xA;因为所有的暗网网站都为在本地嵌套一层本地代理，将本地的正常web端口转发到暗网服务器上的网站端口，并且随机分配.onion域名&#xA;此时猜想会不会，论坛程序在后台使用php进行curl获取头像图片的时候，会不经过暗网代理，而是直接本机发送http请求呢？&#xA;在服务器上上传一张头像照片&#xA;我们遂在vps上搭建一个web服务器并上传一个图片文件&#xA;本地测试访问可以发现，apache的log功能能记录访问者访问信息，包括ip、user_agent、time等信息&#xA;在暗网网站进行上传图片测试&#xA;查看vps服务器上的apache的log信息，发现新增一条请求信息，并存有ip信息，对于ip我们进行whois查询为美国加利福尼亚的vultr.com服务器的ip信息.&#xA;（Vultr 官网是一家提供日本、美国、欧洲等多个国家和地区机房的VPS主机商，硬盘都是采用SSD，VPS主机都是KVM架构，VPS配置最少的内存512MB、硬盘为15GB）&#xA;扫描存活端口&#xA;经过对于此ip的扫描擦先其存在8个开放端口，对于8081端口进行测试之后，发现其端口上的网站与暗网网站上的论坛程序一致，并且我们所注册的用户数据也存在，至此，此ip为暗网网站的真实ip！&#xA;新年快乐，武汉加油！！！ ：） 点赞 1 收藏 分享 文章举报 偷一个月亮 发布了76 篇原创文章 ·&#xA;获赞 34 ·&#xA;访问量 1万+ 私信 关注 </description>
+    </item>
+  </channel>
+</rss>

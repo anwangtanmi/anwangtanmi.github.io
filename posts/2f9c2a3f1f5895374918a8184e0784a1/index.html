@@ -1,0 +1,2083 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ionic的组件components - 暗网探秘</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="ionic的组件components" />
+<meta property="og:description" content="详情参考https://ionicframework.com/docs/components/
+Action Sheets 动作表 操作表单从设备屏幕底部向上滑动，并显示一组选项，可以确认或取消操作。行动表有时可以用来作为菜单的替代，但是，他们不应该用于导航。
+操作表总是显示在页面上的任何其他组件之上，并且必须被解雇才能与底层内容交互。当它被触发时，页面的其余部分会变暗，以便更多地关注“操作表”选项。
+import { ActionSheetController } from &#39;ionic-angular&#39;; export class MyPage { constructor(public actionSheetCtrl: ActionSheetController) { } presentActionSheet() { let actionSheet = this.actionSheetCtrl.create({ title: &#39;Modify your album&#39;, buttons: [ { text: &#39;Destructive&#39;, role: &#39;destructive&#39;, handler: () =&gt; { console.log(&#39;Destructive clicked&#39;); } },{ text: &#39;Archive&#39;, handler: () =&gt; { console.log(&#39;Archive clicked&#39;); } },{ text: &#39;Cancel&#39;, role: &#39;cancel&#39;, handler: () =&gt; { console.log(&#39;Cancel clicked&#39;); } } ] }); actionSheet." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://anwangtanmi.github.io/posts/2f9c2a3f1f5895374918a8184e0784a1/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-01-24T14:45:11+08:00" />
+<meta property="article:modified_time" content="2018-01-24T14:45:11+08:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="暗网探秘" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">暗网探秘</div>
+					
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">ionic的组件components</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-01-24T14:45:11&#43;08:00">2018-01-24</time></div></div>
+		</header>
+		<div id="gatop"></div>
+		<div class="content post__content clearfix">
+			
+<div class="entry-content clearfix">
+<div id="article_content" class="article_content clearfix">
+<br>
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-d284373521.css">
+<div id="content_views" class="markdown_views prism-atom-one-dark">
+<br>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+<path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+</svg>
+<p>详情参考<a href="https://ionicframework.com/docs/components/" rel="nofollow" data-token="9498937bf7fea95b84194f58a17fea4e">https://ionicframework.com/docs/components/</a></p>
+<h4 id="action-sheets-动作表">Action Sheets 动作表</h4>
+<p>操作表单从设备屏幕底部向上滑动，并显示一组选项，可以确认或取消操作。行动表有时可以用来作为菜单的替代，但是，他们不应该用于导航。</p>
+<p>操作表总是显示在页面上的任何其他组件之上，并且必须被解雇才能与底层内容交互。当它被触发时，页面的其余部分会变暗，以便更多地关注“操作表”选项。</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">import</span> { ActionSheetController } from <span class="hljs-string">'ionic-angular'</span>;
+
+<span class="hljs-reserved">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyPage</span> {</span>
+  constructor(public <span class="hljs-attribute">actionSheetCtrl</span>: ActionSheetController) {
+  }
+
+  presentActionSheet() {
+    <span class="hljs-reserved">let</span> actionSheet = <span class="hljs-keyword">this</span>.actionSheetCtrl.create({
+      <span class="hljs-attribute">title</span>: <span class="hljs-string">'Modify your album'</span>,
+      <span class="hljs-attribute">buttons</span>: [
+        {
+          <span class="hljs-attribute">text</span>: <span class="hljs-string">'Destructive'</span>,
+          <span class="hljs-attribute">role</span>: <span class="hljs-string">'destructive'</span>,
+          <span class="hljs-attribute">handler</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Destructive clicked'</span>);
+          }
+        },{
+          <span class="hljs-attribute">text</span>: <span class="hljs-string">'Archive'</span>,
+          <span class="hljs-attribute">handler</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Archive clicked'</span>);
+          }
+        },{
+          <span class="hljs-attribute">text</span>: <span class="hljs-string">'Cancel'</span>,
+          <span class="hljs-attribute">role</span>: <span class="hljs-string">'cancel'</span>,
+          <span class="hljs-attribute">handler</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Cancel clicked'</span>);
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+}</code></pre>
+<h4 id="alerts-警报">Alerts 警报</h4>
+<p>警报是向用户提供选择特定动作或动作列表的好方法。他们也可以为用户提供重要的信息，或要求他们作出决定（或多个决定）。</p>
+<p>从用户界面的角度来看，警报可以被认为是一种“浮动”模式，只覆盖屏幕的一部分。这意味着警报只能用于快速操作，如密码验证，小应用程序通知或快速选项。更深入的用户流量应保留全屏情态动词。</p>
+<p>警报非常灵活，可以很容易地进行定制。</p>
+<h5 id="basic-alerts-基本警报">Basic Alerts 基本警报</h5>
+<p>基本警报通常用于通知用户有关新信息（应用程序中的更改，新功能等），需要确认的紧急情况，或向用户确认操作是否成功。</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">import</span> { AlertController } from <span class="hljs-string">'ionic-angular'</span>;
+
+<span class="hljs-reserved">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyPage</span> {</span>
+  constructor(public <span class="hljs-attribute">alertCtrl</span>: AlertController) {
+  }
+
+  showAlert() {
+    <span class="hljs-reserved">let</span> alert = <span class="hljs-keyword">this</span>.alertCtrl.create({
+      <span class="hljs-attribute">title</span>: <span class="hljs-string">'New Friend!'</span>,
+      <span class="hljs-attribute">subTitle</span>: <span class="hljs-string">'Your friend, Obi wan Kenobi, just accepted your friend request!'</span>,
+      <span class="hljs-attribute">buttons</span>: [<span class="hljs-string">'OK'</span>]
+    });
+    alert.present();
+  }
+}</code></pre>
+<h5 id="prompt-alerts-提示警报">Prompt Alerts 提示警报</h5>
+<p>提示提供了一种输入数据或信息的方法。在向前移动应用程序的流程之前，通常会使用提示来询问用户密码。</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">import</span> { AlertController } from <span class="hljs-string">'ionic-angular'</span>;
+
+<span class="hljs-reserved">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyPage</span> {</span>
+  constructor(public <span class="hljs-attribute">alertCtrl</span>: AlertController) {
+  }
+
+  showPrompt() {
+    <span class="hljs-reserved">let</span> prompt = <span class="hljs-keyword">this</span>.alertCtrl.create({
+      <span class="hljs-attribute">title</span>: <span class="hljs-string">'Login'</span>,
+      <span class="hljs-attribute">message</span>: <span class="hljs-string">"Enter a name for this new album you're so keen on adding"</span>,
+      <span class="hljs-attribute">inputs</span>: [
+        {
+          <span class="hljs-attribute">name</span>: <span class="hljs-string">'title'</span>,
+          <span class="hljs-attribute">placeholder</span>: <span class="hljs-string">'Title'</span>
+        },
+      ],
+      <span class="hljs-attribute">buttons</span>: [
+        {
+          <span class="hljs-attribute">text</span>: <span class="hljs-string">'Cancel'</span>,
+          <span class="hljs-attribute">handler</span>: data<span class="hljs-function"> =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Cancel clicked'</span>);
+          }
+        },
+        {
+          <span class="hljs-attribute">text</span>: <span class="hljs-string">'Save'</span>,
+          <span class="hljs-attribute">handler</span>: data<span class="hljs-function"> =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Saved clicked'</span>);
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+}</code></pre>
+<h5 id="confirmation-alerts-确认警报">Confirmation Alerts 确认警报</h5>
+<p>当需要用户明确确认一个特定的选择，然后在应用程序中前进时，使用确认警报。确认提醒的一个常见例子是检查以确保用户想要从他们的地址簿中删除或删除联系人。</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">import</span> { AlertController } from <span class="hljs-string">'ionic-angular'</span>;
+
+<span class="hljs-reserved">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyPage</span> {</span>
+  constructor(public <span class="hljs-attribute">alertCtrl</span>: AlertController) {
+  }
+
+  showConfirm() {
+    <span class="hljs-reserved">let</span> confirm = <span class="hljs-keyword">this</span>.alertCtrl.create({
+      <span class="hljs-attribute">title</span>: <span class="hljs-string">'Use this lightsaber?'</span>,
+      <span class="hljs-attribute">message</span>: <span class="hljs-string">'Do you agree to use this lightsaber to do good across the intergalactic galaxy?'</span>,
+      <span class="hljs-attribute">buttons</span>: [
+        {
+          <span class="hljs-attribute">text</span>: <span class="hljs-string">'Disagree'</span>,
+          <span class="hljs-attribute">handler</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Disagree clicked'</span>);
+          }
+        },
+        {
+          <span class="hljs-attribute">text</span>: <span class="hljs-string">'Agree'</span>,
+          <span class="hljs-attribute">handler</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+            <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Agree clicked'</span>);
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+}</code></pre>
+<h5 id="radio-alerts-无线电警报">Radio Alerts 无线电警报</h5>
+<p>无线电警报是一种确认警报，但使用无线电组件来提供多种选择。向用户提供一组选项，但只能选择一个选项。</p>
+<pre class="prettyprint"><code class=" hljs cs">import { AlertController } <span class="hljs-keyword">from</span> <span class="hljs-string">'ionic-angular'</span>;
+
+export class MyPage {
+  constructor(<span class="hljs-keyword">public</span> alertCtrl: AlertController) {
+  }
+
+  showRadio() {
+    <span class="hljs-keyword">let</span> alert = <span class="hljs-keyword">this</span>.alertCtrl.create();
+    alert.setTitle(<span class="hljs-string">'Lightsaber color'</span>);
+
+    alert.addInput({
+      type: <span class="hljs-string">'radio'</span>,
+      label: <span class="hljs-string">'Blue'</span>,
+      <span class="hljs-keyword">value</span>: <span class="hljs-string">'blue'</span>,
+      <span class="hljs-keyword">checked</span>: <span class="hljs-keyword">true</span>
+    });
+
+    alert.addButton(<span class="hljs-string">'Cancel'</span>);
+    alert.addButton({
+      text: <span class="hljs-string">'OK'</span>,
+      handler: data =&gt; {
+        <span class="hljs-keyword">this</span>.testRadioOpen = <span class="hljs-keyword">false</span>;
+        <span class="hljs-keyword">this</span>.testRadioResult = data;
+      }
+    });
+    alert.present();
+  }
+}</code></pre>
+<h5 id="checkbox-alerts-复选框警报">Checkbox Alerts 复选框警报</h5>
+<p>复选框警报是一种确认警报，但使用复选框组件可提供多种选择。他们为用户提供了一系列可供选择的选项。</p>
+<pre class="prettyprint"><code class=" hljs cs">import { AlertController } <span class="hljs-keyword">from</span> <span class="hljs-string">'ionic-angular'</span>;
+
+export class MyPage {
+  constructor(<span class="hljs-keyword">public</span> alertCtrl: AlertController) {
+  }
+
+  showCheckbox() {
+    <span class="hljs-keyword">let</span> alert = <span class="hljs-keyword">this</span>.alertCtrl.create();
+    alert.setTitle(<span class="hljs-string">'Which planets have you visited?'</span>);
+
+    alert.addInput({
+      type: <span class="hljs-string">'checkbox'</span>,
+      label: <span class="hljs-string">'Alderaan'</span>,
+      <span class="hljs-keyword">value</span>: <span class="hljs-string">'value1'</span>,
+      <span class="hljs-keyword">checked</span>: <span class="hljs-keyword">true</span>
+    });
+
+    alert.addInput({
+      type: <span class="hljs-string">'checkbox'</span>,
+      label: <span class="hljs-string">'Bespin'</span>,
+      <span class="hljs-keyword">value</span>: <span class="hljs-string">'value2'</span>
+    });
+
+    alert.addButton(<span class="hljs-string">'Cancel'</span>);
+    alert.addButton({
+      text: <span class="hljs-string">'Okay'</span>,
+      handler: data =&gt; {
+        console.log(<span class="hljs-string">'Checkbox data:'</span>, data);
+        <span class="hljs-keyword">this</span>.testCheckboxOpen = <span class="hljs-keyword">false</span>;
+        <span class="hljs-keyword">this</span>.testCheckboxResult = data;
+      }
+    });
+    alert.present();
+  }
+}</code></pre>
+<h4 id="badges-徽章">Badges 徽章</h4>
+<p>徽章是通常将数值传递给用户的小部件。它们通常在一个项目中使用。</p>
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"logo-twitter"</span> item<span class="hljs-attribute">-start</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+  Followers
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-badge</span> item<span class="hljs-attribute">-end</span><span class="hljs-subst">&gt;</span><span class="hljs-number">260</span>k<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-badge</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+
+徽章也可以被赋予任何颜色属性：
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-badge</span> color<span class="hljs-subst">=</span><span class="hljs-string">"secondary"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-badge</span><span class="hljs-subst">&gt;</span></code></pre>
+<h4 id="buttons-按钮">Buttons 按钮</h4>
+<h5 id="default-style-默认样式">Default Style 默认样式</h5>
+<pre class="prettyprint"><code class=" hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span>&gt;</span>Button<span class="hljs-tag">button</span>&gt;
+该color属性设置按钮的颜色。离子包括许多默认的颜色，可以很容易地被覆盖：
+
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"light"</span>&gt;</span>Light<span class="hljs-tag">button</span>&gt;
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span>&gt;</span>Default<span class="hljs-tag">button</span>&gt;
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"secondary"</span>&gt;</span>Secondary<span class="hljs-tag">button</span>&gt;
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"danger"</span>&gt;</span>Danger<span class="hljs-tag">button</span>&gt;
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"dark"</span>&gt;</span>Dark<span class="hljs-tag">button</span>&gt;</code></pre>
+<h5 id="outline-style-大纲样式">Outline Style 大纲样式</h5>
+<pre class="prettyprint"><code class=" hljs xml">要使用按钮的大纲样式，只需添加outline属性：
+
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"light"</span> <span class="hljs-attribute">outline</span>&gt;</span>Light Outline<span class="hljs-tag">button</span>&gt;
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">outline</span>&gt;</span>Primary Outline<span class="hljs-tag">button</span>&gt;
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"secondary"</span> <span class="hljs-attribute">outline</span>&gt;</span>Secondary Outline<span class="hljs-tag">button</span>&gt;
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"danger"</span> <span class="hljs-attribute">outline</span>&gt;</span>Danger Outline<span class="hljs-tag">button</span>&gt;
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"dark"</span> <span class="hljs-attribute">outline</span>&gt;</span>Dark Outline<span class="hljs-tag">button</span>&gt;</code></pre>
+<h5 id="clear-style-清除样式">Clear Style 清除样式</h5>
+<pre class="prettyprint"><code class=" hljs vbscript">要创建一个圆角的按钮，只需添加<span class="hljs-built_in">round</span>属性：
+
+<button ion-button color="&lt;span" class="hljs-string">"light" <span class="hljs-built_in">round</span>&gt;Light <span class="hljs-built_in">Round</span></button>
+<button ion-button class="hljs-built_in">round&gt;Primary <span class="hljs-built_in">Round</span></button>
+<button ion-button color="&lt;span" class="hljs-string">"secondary" <span class="hljs-built_in">round</span>&gt;Secondary <span class="hljs-built_in">Round</span></button>
+<button ion-button color="&lt;span" class="hljs-string">"danger" <span class="hljs-built_in">round</span>&gt;Danger <span class="hljs-built_in">Round</span></button>
+<button ion-button color="&lt;span" class="hljs-string">"dark" <span class="hljs-built_in">round</span>&gt;Dark <span class="hljs-built_in">Round</span></button></code></pre>
+<h5 id="round-buttons-圆角按钮">Round Buttons 圆角按钮</h5>
+<pre class="prettyprint"><code class=" hljs vbscript">要创建一个圆角的按钮，只需添加<span class="hljs-built_in">round</span>属性：
+
+<button ion-button color="&lt;span" class="hljs-string">"light" <span class="hljs-built_in">round</span>&gt;Light <span class="hljs-built_in">Round</span></button>
+<button ion-button class="hljs-built_in">round&gt;Primary <span class="hljs-built_in">Round</span></button>
+<button ion-button color="&lt;span" class="hljs-string">"secondary" <span class="hljs-built_in">round</span>&gt;Secondary <span class="hljs-built_in">Round</span></button>
+<button ion-button color="&lt;span" class="hljs-string">"danger" <span class="hljs-built_in">round</span>&gt;Danger <span class="hljs-built_in">Round</span></button>
+<button ion-button color="&lt;span" class="hljs-string">"dark" <span class="hljs-built_in">round</span>&gt;Dark <span class="hljs-built_in">Round</span></button></code></pre>
+<h5 id="block-buttons-块按钮">Block Buttons 块按钮</h5>
+<pre class="prettyprint"><code class=" hljs vhdl">添加<span class="hljs-keyword">block</span>到按钮将使按钮占据其父宽度的<span class="hljs-number">100</span>％。它也将添加display: <span class="hljs-keyword">block</span>到按钮：
+
+<button ion-button class="hljs-keyword">block&gt;<span class="hljs-keyword">Block</span> Button</button></code></pre>
+<h5 id="full-buttons-完整按钮">Full Buttons 完整按钮</h5>
+<pre class="prettyprint"><code class=" hljs lasso">添加<span class="hljs-literal">full</span>到按钮也会使按钮占据其父宽度的<span class="hljs-number">100</span>％。但是，它也会删除按钮的左右边界。当按钮应该在显示器的整个宽度上延伸时，此样式非常有用。
+
+<span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-button</span> <span class="hljs-literal">full</span><span class="hljs-subst">&gt;</span><span class="hljs-literal">Full</span> Button<span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span></code></pre>
+<h5 id="button-sizes-按钮大小">Button Sizes 按钮大小</h5>
+<pre class="prettyprint"><code class=" hljs xml">添加large属性使按钮更大，或small使其更小：
+
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">small</span>&gt;</span>Small<span class="hljs-tag">button</span>&gt;
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span>&gt;</span>Default<span class="hljs-tag">button</span>&gt;
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">large</span>&gt;</span>Large<span class="hljs-tag">button</span>&gt;</code></pre>
+<h5 id="icon-buttons-图标按钮">Icon Buttons 图标按钮</h5>
+<pre class="prettyprint"><code class=" hljs xml">要将图标添加到按钮，请在其中添加一个图标组件以及一个位置属性：
+
+<span class="hljs-comment"></span>
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">icon-left</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"home"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+  Left Icon
+<span class="hljs-tag">button</span>&gt;
+
+<span class="hljs-comment"></span>
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">icon-right</span>&gt;</span>
+  Right Icon
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"home"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+<span class="hljs-tag">button</span>&gt;
+
+<span class="hljs-comment"></span>
+<span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">icon-only</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"home"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+<span class="hljs-tag">button</span>&gt;</code></pre>
+<h5 id="buttons-in-components-组件中的按钮">Buttons In Components 组件中的按钮</h5>
+<pre class="prettyprint"><code class=" hljs lasso">尽管按钮可以单独使用，但是可以很容易地在其他组件中使用。例如，按钮可以添加到列表项目或导航栏。
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-navbar</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-buttons</span> start<span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-button</span> icon<span class="hljs-attribute">-only</span><span class="hljs-subst">&gt;</span>
+        <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"contact"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-buttons</span><span class="hljs-subst">&gt;</span>
+
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-buttons</span> end<span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-button</span> icon<span class="hljs-attribute">-only</span><span class="hljs-subst">&gt;</span>
+        <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"search"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-buttons</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-navbar</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span>
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    Left Icon Button
+    <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-button</span> outline item<span class="hljs-attribute">-end</span> icon<span class="hljs-attribute">-left</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"star"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      Left Icon
+    <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span></code></pre>
+<h4 id="cards-卡牌">Cards 卡牌</h4>
+<p>卡片是展示重要内容的绝佳方式，并迅速成为应用程序的核心设计模式。它们是遏制和组织信息的好方法，同时也为用户设定可预测的期望。有了这么多的内容可以立即显示，而且屏幕通常很少，卡片已经很快成为许多公司的设计模式，包括Google，Twitter和Spotify。</p>
+<p>对于移动体验而言，卡片可以轻松地在多种不同的屏幕尺寸下直观地显示相同的信息。他们允许更多的控制，灵活，甚至可以动画。卡通常被放置在另一个之上，但是它们也可以像“页面”一样使用，并在左右之间滑动。</p>
+<h5 id="basic-cards-基本卡片">Basic Cards 基本卡片</h5>
+<pre class="prettyprint"><code class=" hljs xml">卡主要是一个CSS组件。要使用基本卡，请遵循以下结构：
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-card</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-card-header</span>&gt;</span>
+    Card Header
+  <span class="hljs-tag">ion-card-header</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-card-content</span>&gt;</span>
+    <span class="hljs-comment"></span>
+  <span class="hljs-tag">ion-card-content</span>&gt;
+
+<span class="hljs-tag">ion-card</span>&gt;</code></pre>
+<h5 id="card-headers-卡头">Card Headers 卡头</h5>
+<pre class="prettyprint"><code class=" hljs lasso">就像一个普通的页面一样，卡片可以被定制为包含标题。要为卡片添加标题，请在卡片<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-card</span><span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span>内添加组件：
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-card</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-card</span><span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-keyword">Header</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-card</span><span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-card</span><span class="hljs-attribute">-content</span><span class="hljs-subst">&gt;</span>
+    The British use the term <span class="hljs-string">"header"</span>, but the American term <span class="hljs-string">"head-shot"</span> the English simply refuse <span class="hljs-keyword">to</span> adopt<span class="hljs-built_in">.</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-card</span><span class="hljs-attribute">-content</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-card</span><span class="hljs-subst">&gt;</span></code></pre>
+<h5 id="card-lists-卡列表">Card Lists 卡列表</h5>
+<pre class="prettyprint"><code class=" hljs lasso">一张卡片可以包含一个项目列表。ion<span class="hljs-attribute">-list</span>在里面添加一个组件ion<span class="hljs-attribute">-card</span><span class="hljs-attribute">-content</span>来显示一个列表：
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-card</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-card</span><span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span>
+    Explore Nearby
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-card</span><span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"cart"</span> item<span class="hljs-attribute">-start</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      Shopping
+    <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+
+    <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"medical"</span> item<span class="hljs-attribute">-start</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      Hospital
+    <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+
+    <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"cafe"</span> item<span class="hljs-attribute">-start</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      Cafe
+    <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+
+    <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"paw"</span> item<span class="hljs-attribute">-start</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      Dog Park
+    <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+
+    <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"beer"</span> item<span class="hljs-attribute">-start</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      Pub
+    <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+
+    <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"planet"</span> item<span class="hljs-attribute">-start</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      Space
+    <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-card</span><span class="hljs-subst">&gt;</span></code></pre>
+<h5 id="card-images-卡片图像">Card Images 卡片图像</h5>
+<pre class="prettyprint"><code class=" hljs lasso">图片大小各不相同，因此在整个应用中采用一致的样式非常重要。图像可以很容易地添加到卡。将图像添加到卡上将使图像具有恒定的宽度和可变的高度。列表，标题和其他卡组件可以很容易地与图像卡相结合。要将图像添加到卡片，请使用以下标记：
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-card</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>img src<span class="hljs-subst">=</span><span class="hljs-string">"img/nin-live.png"</span><span class="hljs-subst">/</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-card</span><span class="hljs-attribute">-content</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-card</span><span class="hljs-attribute">-title</span><span class="hljs-subst">&gt;</span>
+      Nine Inch Nails Live
+      <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-card</span><span class="hljs-attribute">-title</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>p<span class="hljs-subst">&gt;</span>
+      The most popular industrial <span class="hljs-keyword">group</span> ever, <span class="hljs-literal">and</span> largely
+      responsible for bringing the music <span class="hljs-keyword">to</span> a mass audience<span class="hljs-built_in">.</span>
+    <span class="hljs-subst">&lt;</span>/p<span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-card</span><span class="hljs-attribute">-content</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-card</span><span class="hljs-subst">&gt;</span></code></pre>
+<h5 id="background-images-背景图片">Background Images 背景图片</h5>
+<pre class="prettyprint"><code class=" hljs xml">卡可以用来实现多种设计。我们提供了许多元素来实现常见的设计，但有时需要添加自定义样式。添加背景图像卡是一个完美的例子，如何添加自定义样式可以实现一个完全不同的外观。
+
+下面的html可以被添加到页面的内容中：
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"card-background-page"</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-card</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"img/card-saopaolo.png"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"card-title"</span>&gt;</span>São Paulo<span class="hljs-tag">div</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"card-subtitle"</span>&gt;</span>41 Listings<span class="hljs-tag">div</span>&gt;
+  <span class="hljs-tag">ion-card</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-card</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"img/card-amsterdam.png"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"card-title"</span>&gt;</span>Amsterdam<span class="hljs-tag">div</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"card-subtitle"</span>&gt;</span>64 Listings<span class="hljs-tag">div</span>&gt;
+  <span class="hljs-tag">ion-card</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-card</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"img/card-sf.png"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"card-title"</span>&gt;</span>San Francisco<span class="hljs-tag">div</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"card-subtitle"</span>&gt;</span>72 Listings<span class="hljs-tag">div</span>&gt;
+  <span class="hljs-tag">ion-card</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-card</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"img/card-madison.png"</span>/&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"card-title"</span>&gt;</span>Madison<span class="hljs-tag">div</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">class</span>=<span class="hljs-value">"card-subtitle"</span>&gt;</span>28 Listings<span class="hljs-tag">div</span>&gt;
+  <span class="hljs-tag">ion-card</span>&gt;
+
+<span class="hljs-tag">ion-content</span>&gt;
+然后，在页面的Sass文件中：
+
+.card-background-page {
+
+  ion-card {
+    position: relative;
+    text-align: center;
+  }
+
+  .card-title {
+    position: absolute;
+    top: 36%;
+    font-size: 2.0em;
+    width: 100%;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .card-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 52%;
+    width: 100%;
+    color: #fff;
+  }
+
+}</code></pre>
+<h5 id="advanced-cards-高级卡">Advanced Cards 高级卡</h5>
+<p>来自不同类型的卡片的样式可以被组合以创建高级卡片。卡也可以使用自定义的CSS。下面是几个先进的卡片，通过将各种卡片属性与少量的自定义CSS组合在一起而构建。</p>
+<p>1.社交卡 <br> 2.地图卡</p>
+<pre class="prettyprint"><code class=" hljs xml">社交卡
+演示源
+在应用程序中创建社交卡经常是必要的。使用卡中不同项目的组合可以实现这一点。
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-card</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-avatar</span> <span class="hljs-attribute">item-start</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"img/marty-avatar.png"</span>&gt;</span>
+    <span class="hljs-tag">ion-avatar</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Marty McFly<span class="hljs-tag">h2</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>November 5, 1955<span class="hljs-tag">p</span>&gt;
+  <span class="hljs-tag">ion-item</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"img/advance-card-bttf.png"</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-card-content</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.<span class="hljs-tag">p</span>&gt;
+  <span class="hljs-tag">ion-card-content</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-row</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-col</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">icon-left</span> <span class="hljs-attribute">clear</span> <span class="hljs-attribute">small</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"thumbs-up"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>12 Likes<span class="hljs-tag">div</span>&gt;
+      <span class="hljs-tag">button</span>&gt;
+    <span class="hljs-tag">ion-col</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-col</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">icon-left</span> <span class="hljs-attribute">clear</span> <span class="hljs-attribute">small</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"text"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+        <span class="hljs-tag">&lt;<span class="hljs-title">div</span>&gt;</span>4 Comments<span class="hljs-tag">div</span>&gt;
+      <span class="hljs-tag">button</span>&gt;
+    <span class="hljs-tag">ion-col</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-col</span> <span class="hljs-attribute">center</span> <span class="hljs-attribute">text-center</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-note</span>&gt;</span>
+        11h ago
+      <span class="hljs-tag">ion-note</span>&gt;
+    <span class="hljs-tag">ion-col</span>&gt;
+  <span class="hljs-tag">ion-row</span>&gt;
+
+<span class="hljs-tag">ion-card</span>&gt;
+
+地图卡
+演示源
+离子组件的组合可用于创建显示为地图的卡片。
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-card</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"img/advance-card-map-madison.png"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-fab</span> <span class="hljs-attribute">right</span> <span class="hljs-attribute">top</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-fab</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"pin"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+    <span class="hljs-tag">button</span>&gt;
+  <span class="hljs-tag">ion-fab</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"football"</span> <span class="hljs-attribute">item-start</span> <span class="hljs-attribute">large</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Museum of Football<span class="hljs-tag">h2</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>11 N. Way St, Madison, WI 53703<span class="hljs-tag">p</span>&gt;
+  <span class="hljs-tag">ion-item</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"wine"</span> <span class="hljs-attribute">item-left</span> <span class="hljs-attribute">large</span> &gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Institute of Fine Cocktails<span class="hljs-tag">h2</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>14 S. Hop Avenue, Madison, WI 53703<span class="hljs-tag">p</span>&gt;
+  <span class="hljs-tag">ion-item</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">item-left</span>&gt;</span>18 min<span class="hljs-tag">span</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">span</span> <span class="hljs-attribute">item-left</span>&gt;</span>(2.6 mi)<span class="hljs-tag">span</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">icon-left</span> <span class="hljs-attribute">clear</span> <span class="hljs-attribute">item-end</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"navigate"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+      Start
+    <span class="hljs-tag">button</span>&gt;
+  <span class="hljs-tag">ion-item</span>&gt;
+
+<span class="hljs-tag">ion-card</span>&gt;</code></pre>
+<h4 id="checkbox-复选框">Checkbox 复选框</h4>
+<p>复选框是一个保存布尔值的输入组件。复选框与HTML复选框输入没有区别。但是，像其他Ionic组件一样，复选框在每个平台上的样式都是不同的。使用checked属性设置默认值，使用disabled属性禁用用户更改值。</p>
+<pre class="prettyprint"><code class=" hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-label</span>&gt;</span>Daenerys Targaryen<span class="hljs-tag">ion-label</span>&gt;
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-checkbox</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"dark"</span> <span class="hljs-attribute">checked</span>=<span class="hljs-value">"true"</span>&gt;</span><span class="hljs-tag">ion-checkbox</span>&gt;
+<span class="hljs-tag">ion-item</span>&gt;
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-label</span>&gt;</span>Arya Stark<span class="hljs-tag">ion-label</span>&gt;
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-checkbox</span> <span class="hljs-attribute">disabled</span>=<span class="hljs-value">"true"</span>&gt;</span><span class="hljs-tag">ion-checkbox</span>&gt;
+<span class="hljs-tag">ion-item</span>&gt;</code></pre>
+<h4 id="datetime-时间日期">DateTime 时间日期</h4>
+<p>DateTime组件用于显示一个界面，使用户可以轻松选择日期和时间。DateTime组件与native 元素类似，但是，Ionic的DateTime组件可以轻松地以首选格式显示日期和时间，并管理日期时间值。</p>
+<pre class="prettyprint"><code class=" hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-label</span>&gt;</span>Start Time<span class="hljs-tag">ion-label</span>&gt;
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-datetime</span> <span class="hljs-attribute">displayFormat</span>=<span class="hljs-value">"h:mm A"</span> <span class="hljs-attribute">pickerFormat</span>=<span class="hljs-value">"h mm A"</span> [(<span class="hljs-attribute">ngModel</span>)]=<span class="hljs-value">"event.timeStarts"</span>&gt;</span><span class="hljs-tag">ion-datetime</span>&gt;
+<span class="hljs-tag">ion-item</span>&gt;</code></pre>
+<h4 id="fabs-浮动按钮">FABs 浮动按钮</h4>
+<p>FAB（浮动按钮）是标准的材料设计组件。他们被塑造成一个代表推动行动的圈子。按下时，可能会包含更多相关的操作。顾名思义，FAB就是以固定的位置浮在内容上的。</p>
+<pre class="prettyprint"><code class=" hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span>&gt;</span>
+  <span class="hljs-comment"></span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-fab</span> <span class="hljs-attribute">top</span> <span class="hljs-attribute">right</span> <span class="hljs-attribute">edge</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-fab</span> <span class="hljs-attribute">mini</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"add"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;<span class="hljs-tag">button</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-fab-list</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-fab</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"logo-facebook"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;<span class="hljs-tag">button</span>&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-fab</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"logo-twitter"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;<span class="hljs-tag">button</span>&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-fab</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"logo-vimeo"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;<span class="hljs-tag">button</span>&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-fab</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"logo-googleplus"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;<span class="hljs-tag">button</span>&gt;
+    <span class="hljs-tag">ion-fab-list</span>&gt;
+  <span class="hljs-tag">ion-fab</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-fab</span> <span class="hljs-attribute">right</span> <span class="hljs-attribute">bottom</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-fab</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"light"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"arrow-dropleft"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;<span class="hljs-tag">button</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-fab-list</span> <span class="hljs-attribute">side</span>=<span class="hljs-value">"left"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-fab</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"logo-facebook"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;<span class="hljs-tag">button</span>&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-fab</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"logo-twitter"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;<span class="hljs-tag">button</span>&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-fab</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"logo-vimeo"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;<span class="hljs-tag">button</span>&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-fab</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"logo-googleplus"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;<span class="hljs-tag">button</span>&gt;
+    <span class="hljs-tag">ion-fab-list</span>&gt;
+  <span class="hljs-tag">ion-fab</span>&gt;
+
+<span class="hljs-tag">ion-content</span>&gt;</code></pre>
+<h4 id="genstures-手势">Genstures 手势</h4>
+<p>基本手势可以从HTML通过结合访问tap，press，pan，swipe，rotate，和pinch事件。</p>
+<pre class="prettyprint"><code class=" hljs handlebars"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">ion-card</span> (<span class="hljs-attribute">tap</span>)=<span class="hljs-value">"tapEvent($event)"</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span> Tapped: </span><span class="hljs-expression">{{ <span class="hljs-variable">tap</span>}}</span><span class="xml"> times <span class="hljs-tag">ion-item</span>&gt;</span> <span class="hljs-tag">ion-card</span>&gt;</code></pre>
+<h4 id="grid-格">Grid 格</h4>
+<p>Ionic的网格系统基于flexbox，这是Ionic支持的所有设备都支持的CSS功能。网格由三个单元组成 – 网格，行和列。 <br> 网格系统由12列组成，ion-col可以通过设置col-属性来确定大小。</p>
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-grid</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-row</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-col</span> col<span class="hljs-subst">-</span><span class="hljs-number">12</span><span class="hljs-subst">&gt;</span>This column will <span class="hljs-keyword">take</span> <span class="hljs-number">12</span> columns<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-col</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-row</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-row</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-col</span> col<span class="hljs-subst">-</span><span class="hljs-number">6</span><span class="hljs-subst">&gt;</span>This column will <span class="hljs-keyword">take</span> <span class="hljs-number">6</span> columns<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-col</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-row</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-grid</span><span class="hljs-subst">&gt;</span>
+一个ion<span class="hljs-attribute">-col</span>可以通过设置不同的断点大小col<span class="hljs-subst">-&lt;</span>breakpoint<span class="hljs-subst">&gt;-&lt;</span>width<span class="hljs-subst">&gt;</span>。
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-grid</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-row</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-col</span> col<span class="hljs-subst">-</span><span class="hljs-number">12</span> col<span class="hljs-attribute">-sm</span><span class="hljs-subst">-</span><span class="hljs-number">9</span> col<span class="hljs-attribute">-md</span><span class="hljs-subst">-</span><span class="hljs-number">6</span> col<span class="hljs-attribute">-lg</span><span class="hljs-subst">-</span><span class="hljs-number">4</span> col<span class="hljs-attribute">-xl</span><span class="hljs-subst">-</span><span class="hljs-number">3</span><span class="hljs-subst">&gt;</span>
+      This column will be <span class="hljs-number">12</span> columns wide <span class="hljs-keyword">by</span> default,
+      <span class="hljs-number">9</span> columns at the small breakpoint,
+      <span class="hljs-number">6</span> at the medium breakpoint, <span class="hljs-number">4</span> at large, <span class="hljs-literal">and</span> <span class="hljs-number">3</span> at xl<span class="hljs-built_in">.</span>
+    <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-col</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-row</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-grid</span><span class="hljs-subst">&gt;</span></code></pre>
+<h4 id="icons-图标">Icons 图标</h4>
+<p>众所周知和喜爱，Ionic带有700+图标。</p>
+<pre class="prettyprint"><code class=" hljs xml">要使用图标，请填写组件name上的属性ion-icon：
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"heart"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+活动/非活动图标
+所有图标都有active和inactive状态。活动图标通常是满的和厚的，其中非活动图标被勾画和变薄。将该isActive属性设置为true或false更改图标的状态。如果没有指定值，图标将默认为激活状态。
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"heart"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;                    <span class="hljs-comment"></span>
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"heart"</span> <span class="hljs-attribute">isActive</span>=<span class="hljs-value">"false"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;  <span class="hljs-comment"></span>
+平台特定的图标
+许多图标都有Material Design和iOS版本。Ionic将自动使用基于该平台的正确版本。
+
+要指定要用于每个平台的图标，请使用md和ios属性并提供平台特定的图标名称。
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">ios</span>=<span class="hljs-value">"logo-apple"</span> <span class="hljs-attribute">md</span>=<span class="hljs-value">"logo-android"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+变量图标
+使用变量设置图标：
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> [<span class="hljs-attribute">name</span>]=<span class="hljs-value">"myIcon"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+export class MyFirstPage {
+  // use the home icon
+  myIcon: string = "home";
+}</code></pre>
+<p>探索更完整的图标 <a href="https://ionicframework.com/docs/ionicons/" rel="nofollow" data-token="6a50b5dc6b92dd8796bc879dadc05afb">https://ionicframework.com/docs/ionicons/</a></p>
+<h4 id="inputs-输入">Inputs 输入</h4>
+<p>输入对于以安全的方式收集和处理用户输入是必不可少的。他们应该遵循每个平台的样式和交互准则，以便他们直观地与用户交互。Ionic使用Angular 2的表单库，它可以被认为是两个相关的组件，控件和控件组。</p>
+<p>表单中的每个输入字段都有一个Control，一个绑定到字段值的函数，并执行验证。一个控制组是控件的集合。控件组处理表单提交，并提供可用于确定整个表单是否有效的高级API。</p>
+<h5 id="fixed-inline-labels-固定内嵌标签">Fixed Inline Labels 固定内嵌标签</h5>
+<pre class="prettyprint"><code class=" hljs lasso">用于fixed在输入元素的左侧放置一个标签。输入文字时，标签不会隐藏。不管标签的长度如何，输入都将在相同的位置对齐。占位符文本可以与固定标签结合使用。
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-label</span> fixed<span class="hljs-subst">&gt;</span>Username<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-input</span> <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"text"</span> value<span class="hljs-subst">=</span><span class="hljs-string">""</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-input</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-label</span> fixed<span class="hljs-subst">&gt;</span>Password<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-input</span> <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"password"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-input</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span></code></pre>
+<h5 id="floating-labels-浮动标签">Floating Labels 浮动标签</h5>
+<pre class="prettyprint"><code class=" hljs lasso">浮动标签是在选择输入时动画或“浮动”的标签。将该floating属性添加到ion<span class="hljs-attribute">-label</span>要使用的。
+
+在右侧的示例中输入文本以查看正在使用的浮动标签。
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-label</span> floating<span class="hljs-subst">&gt;</span>Username<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-input</span> <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"text"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-input</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-label</span> floating<span class="hljs-subst">&gt;</span>Password<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-input</span> <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"password"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-input</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span></code></pre>
+<h5 id="inline-labels-行内标签">Inline Labels 行内标签</h5>
+<pre class="prettyprint"><code class=" hljs xml">一个ion-label没有任何属性是一个内联标签。输入文字时，标签不会隐藏。占位符文本可以与内联标签结合使用。
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-list</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-label</span>&gt;</span>Username<span class="hljs-tag">ion-label</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span>&gt;</span><span class="hljs-tag">ion-input</span>&gt;
+  <span class="hljs-tag">ion-item</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-label</span>&gt;</span>Password<span class="hljs-tag">ion-label</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"password"</span>&gt;</span><span class="hljs-tag">ion-input</span>&gt;
+  <span class="hljs-tag">ion-item</span>&gt;
+
+<span class="hljs-tag">ion-list</span>&gt;
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">padding</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">block</span>&gt;</span>Sign In<span class="hljs-tag">button</span>&gt;
+<span class="hljs-tag">div</span>&gt;</code></pre>
+<h5 id="inset-labels-插入标签">Inset Labels 插入标签</h5>
+<pre class="prettyprint"><code class=" hljs lasso">默认情况下，每个输入项将填充其父元素的宽度的<span class="hljs-number">100</span>％。通过将inset属性添加到ion<span class="hljs-attribute">-list</span>组件来使输入插入。
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-list</span> inset<span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>Username<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-input</span> <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"text"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-input</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>Password<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-input</span> <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"password"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-input</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span></code></pre>
+<h5 id="placeholder-labels-占位符标签">Placeholder Labels 占位符标签</h5>
+<pre class="prettyprint"><code class=" hljs lasso">将该placeholder属性添加到<span class="hljs-subst">&lt;</span>input<span class="hljs-subst">&gt;</span>元素以模拟输入的标签。当输入文本时，占位符标签被隐藏。
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-input</span> <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"text"</span> placeholder<span class="hljs-subst">=</span><span class="hljs-string">"Username"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-input</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-input</span> <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"password"</span> placeholder<span class="hljs-subst">=</span><span class="hljs-string">"Password"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-input</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span>
+</code></pre>
+<h5 id="stacked-labels-堆积的标签">Stacked Labels 堆积的标签</h5>
+<pre class="prettyprint"><code class=" hljs lasso">堆叠标签将始终显示在输入顶部。将该stacked属性添加到ion<span class="hljs-attribute">-label</span>要使用的。占位符文本可以与堆叠标签结合使用。
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-label</span> stacked<span class="hljs-subst">&gt;</span>Username<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-input</span> <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"text"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-input</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-label</span> stacked<span class="hljs-subst">&gt;</span>Password<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-input</span> <span class="hljs-keyword">type</span><span class="hljs-subst">=</span><span class="hljs-string">"password"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-input</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span></code></pre>
+<h4 id="lists-清单列表">Lists 清单列表</h4>
+<p>列表用于显示信息行，例如联系人列表，播放列表或菜单。或者，也许有些疯狂，我们甚至不知道存在！</p>
+<h5 id="basic-lists-基本列表">Basic Lists 基本列表</h5>
+<pre class="prettyprint"><code class=" hljs handlebars"><span class="xml">默认情况下，所有列表将使用分隔线进行样式化： <span class="hljs-tag">&lt;<span class="hljs-title">ion-list</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-item</span> *<span class="hljs-attribute">ngFor</span>=<span class="hljs-value">"let item of items"</span> (<span class="hljs-attribute">click</span>)=<span class="hljs-value">"itemSelected(item)"</span>&gt;</span> </span><span class="hljs-expression">{{ <span class="hljs-variable">item</span> }}</span><span class="xml"> <span class="hljs-tag">button</span>&gt;</span> <span class="hljs-tag">ion-list</span>&gt; 没有线 演示源 添加no-lines属性将隐藏列表项之间的分隔符： <span class="hljs-tag">&lt;<span class="hljs-title">ion-list</span> <span class="hljs-attribute">no-lines</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-item</span> *<span class="hljs-attribute">ngFor</span>=<span class="hljs-value">"let item of items"</span> (<span class="hljs-attribute">click</span>)=<span class="hljs-value">"itemSelected(item)"</span>&gt;</span> <span class="hljs-expression">{{ <span class="hljs-variable">item</span> }}</span><span class="xml"> <span class="hljs-tag">button</span>&gt;</span> <span class="hljs-tag">ion-list</span>&gt;</code></pre>
+<h5 id="inset-list-插入列表">Inset List 插入列表</h5>
+<pre class="prettyprint"><code class=" hljs handlebars"><span class="xml">列表默认情况下没有外部保证金。要添加一个，请将该inset属性添加到ion-list组件。 <span class="hljs-tag">&lt;<span class="hljs-title">ion-list</span> <span class="hljs-attribute">inset</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-item</span> *<span class="hljs-attribute">ngFor</span>=<span class="hljs-value">"let item of items"</span> (<span class="hljs-attribute">click</span>)=<span class="hljs-value">"itemSelected(item)"</span>&gt;</span> </span><span class="hljs-expression">{{ <span class="hljs-variable">item</span> }}</span><span class="xml"> <span class="hljs-tag">button</span>&gt;</span> <span class="hljs-tag">ion-list</span>&gt;</code></pre>
+<h5 id="list-dividers-列表分割线">List Dividers 列表分割线</h5>
+<pre class="prettyprint"><code class=" hljs lasso">分组的项目，<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-attribute">-group</span><span class="hljs-subst">&gt;</span>而不是<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span>。使用<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-attribute">-divider</span><span class="hljs-subst">&gt;</span>组件将组分成多个部分：
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-content</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-attribute">-group</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-attribute">-divider</span> color<span class="hljs-subst">=</span><span class="hljs-string">"light"</span><span class="hljs-subst">&gt;</span>A<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-attribute">-divider</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>Angola<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>Argentina<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-attribute">-group</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-content</span><span class="hljs-subst">&gt;</span></code></pre>
+<h5 id="list-headers-列表头">List Headers 列表头</h5>
+<pre class="prettyprint"><code class=" hljs lasso">每个列表可以在列表顶部包含一个标题：
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-list</span><span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span>
+    Action
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-list</span><span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>Terminator II<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>The Empire Strikes Back<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>Blade Runner<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span></code></pre>
+<h5 id="icon-list-图标列表">Icon List 图标列表</h5>
+<pre class="prettyprint"><code class=" hljs lasso">将图标添加到列表项是提示每个项目内容的好方法。图标的位置可以使用item<span class="hljs-attribute">-left</span>和item<span class="hljs-attribute">-right</span>属性来设置。图标的大小默认为small，并且可以使用该large属性使其更大。
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"leaf"</span> item<span class="hljs-attribute">-start</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      Herbology
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"rose"</span> item<span class="hljs-attribute">-end</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span></code></pre>
+<h5 id="avatar-list-头像列表">Avatar List 头像列表</h5>
+<pre class="prettyprint"><code class=" hljs xml">项目头像显示大于图标的图像，但小于缩略图。要使用化身，请<span class="hljs-tag">&lt;<span class="hljs-title">ion-avatar</span>&gt;</span>在项目内添加组件。头像的位置可以使用item-left和item-right属性来设置：
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-list</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-avatar</span> <span class="hljs-attribute">item-start</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"img/avatar-cher.png"</span>&gt;</span>
+    <span class="hljs-tag">ion-avatar</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Cher<span class="hljs-tag">h2</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Ugh. As if.<span class="hljs-tag">p</span>&gt;
+  <span class="hljs-tag">ion-item</span>&gt;
+<span class="hljs-tag">ion-list</span>&gt;</code></pre>
+<h5 id="multi-line-list-多行列表">Multi-line List 多行列表</h5>
+<pre class="prettyprint"><code class=" hljs xml">多行列表与常规列表相同，但项目有多行文本。当<span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>组件包含多个标题或段落元素时，它将自动扩展其高度以适应新的文本行。下面是三行文字的例子：
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-list</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-avatar</span> <span class="hljs-attribute">item-start</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"img/avatar-finn.png"</span>&gt;</span>
+    <span class="hljs-tag">ion-avatar</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Finn<span class="hljs-tag">h2</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">h3</span>&gt;</span>Don't Know What To Do!<span class="hljs-tag">h3</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>I've had a pretty messed up day. If we just...<span class="hljs-tag">p</span>&gt;
+  <span class="hljs-tag">ion-item</span>&gt;
+<span class="hljs-tag">ion-list</span>&gt;</code></pre>
+<h5 id="sliding-list-滑动列表">Sliding List 滑动列表</h5>
+<pre class="prettyprint"><code class=" hljs lasso">滑动项目可以向左或向右滑动以显示一组隐藏的按钮。要使用滑动项目，请在ion<span class="hljs-attribute">-item</span><span class="hljs-attribute">-sliding</span>组件内添加一个ion<span class="hljs-attribute">-list</span>组件。接下来，<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-attribute">-options</span><span class="hljs-subst">&gt;</span>在滑动项目内添加一个组件以包含按钮。
+
+有关更多信息，请查看API文档。
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-attribute">-sliding</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-avatar</span> item<span class="hljs-attribute">-start</span><span class="hljs-subst">&gt;</span>
+        <span class="hljs-subst">&lt;</span>img src<span class="hljs-subst">=</span><span class="hljs-string">"img/slimer.png"</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-avatar</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>h2<span class="hljs-subst">&gt;</span>Slimer<span class="hljs-subst">&lt;</span>/h2<span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-attribute">-options</span> side<span class="hljs-subst">=</span><span class="hljs-string">"left"</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-button</span> color<span class="hljs-subst">=</span><span class="hljs-string">"primary"</span><span class="hljs-subst">&gt;</span>
+        <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"text"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+        Text
+      <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-button</span> color<span class="hljs-subst">=</span><span class="hljs-string">"secondary"</span><span class="hljs-subst">&gt;</span>
+        <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"call"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+        Call
+      <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-attribute">-options</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-attribute">-options</span> side<span class="hljs-subst">=</span><span class="hljs-string">"right"</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-button</span> color<span class="hljs-subst">=</span><span class="hljs-string">"primary"</span><span class="hljs-subst">&gt;</span>
+        <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"mail"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+        Email
+      <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-attribute">-options</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-attribute">-sliding</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span></code></pre>
+<h5 id="thumbnail-list-缩略图列表">Thumbnail List 缩略图列表</h5>
+<pre class="prettyprint"><code class=" hljs xml">项目缩略图显示占据了项目整个高度的图像。要使用缩略图，请<span class="hljs-tag">&lt;<span class="hljs-title">ion-thumbnail</span>&gt;</span>在项目内添加组件。缩略图的位置可以使用item-left和item-right属性进行设置：
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-list</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-thumbnail</span> <span class="hljs-attribute">item-start</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"img/thumbnail-totoro.png"</span>&gt;</span>
+    <span class="hljs-tag">ion-thumbnail</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>My Neighbor Totoro<span class="hljs-tag">h2</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Hayao Miyazaki • 1988<span class="hljs-tag">p</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">clear</span> <span class="hljs-attribute">item-end</span>&gt;</span>View<span class="hljs-tag">button</span>&gt;
+  <span class="hljs-tag">ion-item</span>&gt;
+<span class="hljs-tag">ion-list</span>&gt;</code></pre>
+<h4 id="loading-加载中">Loading 加载中</h4>
+<p>加载组件是一个覆盖层，可以防止用户在指示活动时进行交互。默认情况下，它会根据模式显示一个微调框。动态内容可以通过微调器显示。微调器可以隐藏或定制使用几个预定义的选项。即使在导航过程中，加载指示符也显示在其他内容的顶部。</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">import</span> { LoadingController } from <span class="hljs-string">'ionic-angular'</span>;
+
+<span class="hljs-reserved">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyPage</span> {</span>
+  constructor(public <span class="hljs-attribute">loadingCtrl</span>: LoadingController) {
+  }
+
+  presentLoading() {
+    <span class="hljs-reserved">let</span> loader = <span class="hljs-keyword">this</span>.loadingCtrl.create({
+      <span class="hljs-attribute">content</span>: <span class="hljs-string">"Please wait..."</span>,
+      <span class="hljs-attribute">duration</span>: <span class="hljs-number">3000</span>
+    });
+    loader.present();
+  }
+}</code></pre>
+<h4 id="menus-菜单">Menus 菜单</h4>
+<p>菜单是可以拖出或切换显示的侧面菜单导航。当菜单关闭时，菜单的内容将被隐藏。</p>
+<p>菜单基于平台适应适当的风格。</p>
+<pre class="prettyprint"><code class=" hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">ion-menu</span> [<span class="hljs-attribute">content</span>]=<span class="hljs-value">"content"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-header</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-toolbar</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Menu<span class="hljs-tag">ion-title</span>&gt;
+    <span class="hljs-tag">ion-toolbar</span>&gt;
+  <span class="hljs-tag">ion-header</span>&gt;
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-list</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-item</span> (<span class="hljs-attribute">click</span>)=<span class="hljs-value">"openPage(homePage)"</span>&gt;</span>
+        Home
+      <span class="hljs-tag">button</span>&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-item</span> (<span class="hljs-attribute">click</span>)=<span class="hljs-value">"openPage(friendsPage)"</span>&gt;</span>
+        Friends
+      <span class="hljs-tag">button</span>&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-item</span> (<span class="hljs-attribute">click</span>)=<span class="hljs-value">"openPage(eventsPage)"</span>&gt;</span>
+        Events
+      <span class="hljs-tag">button</span>&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-item</span> (<span class="hljs-attribute">click</span>)=<span class="hljs-value">"closeMenu()"</span>&gt;</span>
+        Close Menu
+      <span class="hljs-tag">button</span>&gt;
+    <span class="hljs-tag">ion-list</span>&gt;
+  <span class="hljs-tag">ion-content</span>&gt;
+<span class="hljs-tag">ion-menu</span>&gt;
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-nav</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"nav"</span> #<span class="hljs-attribute">content</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"rootPage"</span>&gt;</span><span class="hljs-tag">ion-nav</span>&gt;</code></pre>
+<h4 id="modals-模态">Modals 模态</h4>
+<p>模式在屏幕外滑动以显示临时UI，通常用于登录或注册页面，消息组成和选项选择。</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">import</span> { ModalController } from <span class="hljs-string">'ionic-angular'</span>;
+<span class="hljs-reserved">import</span> { ModalPage } from <span class="hljs-string">'./modal-page'</span>;
+
+<span class="hljs-reserved">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyPage</span> {</span>
+  constructor(public <span class="hljs-attribute">modalCtrl</span>: ModalController) {
+  }
+
+  presentModal() {
+    <span class="hljs-reserved">let</span> modal = <span class="hljs-keyword">this</span>.modalCtrl.create(ModalPage);
+    modal.present();
+  }
+}</code></pre>
+<h4 id="navigation-导航">Navigation 导航</h4>
+<p>导航是用户在应用程序的不同页面之间移动的方式。Ionic的导航遵循标准的原生导航概念，就像iOS中的导航概念一样。为了实现类似本机的导航，我们已经构建了一些新的导航组件，这对于习惯于传统桌面浏览器导航的开发者来说可能感觉不同。</p>
+<p>有几种方法可以在整个Ionic应用程序中导航：</p>
+<pre class="prettyprint"><code class=" hljs xml">基本导航
+演示源
+导航是通过<span class="hljs-tag">&lt;<span class="hljs-title">ion-nav</span>&gt;</span>组件来处理的，这个组件作为一个简单的堆栈来工作，新的页面被压入和弹出，对应着历史上的前进和后退。
+
+我们从加载导航组件的根页面开始：
+
+import {StartPage} from 'start'
+
+@Component({
+  template: '<span class="hljs-tag">&lt;<span class="hljs-title">ion-nav</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"rootPage"</span>&gt;</span><span class="hljs-tag">ion-nav</span>&gt;'
+})
+class MyApp {
+  // First page to push onto the stack
+  rootPage = StartPage;
+}
+接下来，我们可以通过将导航控制器注入到任何页面中来访问导航到的每个页面中的导航控制器。请注意，页面组件不需要选择器。离子自动添加这些。
+
+@Component({
+  template: `
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-header</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-navbar</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Login<span class="hljs-tag">ion-title</span>&gt;
+    <span class="hljs-tag">ion-navbar</span>&gt;
+  <span class="hljs-tag">ion-header</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span>&gt;</span>Hello World<span class="hljs-tag">ion-content</span>&gt;`
+})
+export class StartPage {
+  constructor(public navCtrl: NavController) {
+  }
+}
+要从一个页面导航到另一个页面，只需将新页面推入或弹出到堆栈中即可：
+
+@Component({
+  template: `
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-header</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-navbar</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Login<span class="hljs-tag">ion-title</span>&gt;
+    <span class="hljs-tag">ion-navbar</span>&gt;
+  <span class="hljs-tag">ion-header</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> (<span class="hljs-attribute">click</span>)=<span class="hljs-value">"goToOtherPage()"</span>&gt;</span>
+      Go to OtherPage
+    <span class="hljs-tag">button</span>&gt;
+  <span class="hljs-tag">ion-content</span>&gt;`
+})
+export class StartPage {
+  constructor(public navCtrl: NavController) {}
+
+  goToOtherPage() {
+    //push another page onto the history stack
+    //causing the nav controller to animate the new page in
+    this.navCtrl.push(OtherPage);
+  }
+}
+
+@Component({
+  template: `
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-header</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-navbar</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Other Page<span class="hljs-tag">ion-title</span>&gt;
+    <span class="hljs-tag">ion-navbar</span>&gt;
+  <span class="hljs-tag">ion-header</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span>&gt;</span>I'm the other page!<span class="hljs-tag">ion-content</span>&gt;`
+})
+class OtherPage {}
+如果你的页面有一个<span class="hljs-tag">&lt;<span class="hljs-title">ion-navbar</span>&gt;</span>，如果它不是一个根页面，一个后退按钮将被自动地添加到它，并且导航栏的标题将被更新。
+
+另外，如果你想回去，但没有NavBar，你可以从堆栈中弹出当前页面：
+
+@Component({
+  template: `
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span> (<span class="hljs-attribute">click</span>)=<span class="hljs-value">"goBack()"</span>&gt;</span>
+      There's no place like home
+    <span class="hljs-tag">button</span>&gt;
+  <span class="hljs-tag">ion-content</span>&gt;`
+})
+class OtherPage {
+  constructor(public navCtrl: NavController) {}
+
+  goBack() {
+    this.navCtrl.pop();
+  }
+}
+有关基本导航的更多信息，请查看Nav API参考。
+
+从根组件导航
+如果你想控制你的根应用程序组件导航？您无法注入，NavController因为导航控制器的任何组件都是根组件的子项，所以它们不能被注入。
+
+通过添加一个引用变量ion-nav，你可以@ViewChild用来获取Nav组件的一个实例，这是一个导航控制器（它的扩展NavController）：
+
+@Component({
+  template: '<span class="hljs-tag">&lt;<span class="hljs-title">ion-nav</span> #<span class="hljs-attribute">myNav</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"rootPage"</span>&gt;</span><span class="hljs-tag">ion-nav</span>&gt;'
+})
+export class MyApp {
+  @ViewChild('myNav') nav
+  rootPage = TabsPage;
+
+  // Wait for the components in MyApp's template to be initialized
+  // In this case, we are waiting for the Nav identified by
+  // the template reference variable #myNav
+  ngAfterViewInit() {
+    // Let's navigate from TabsPage to Page1
+    this.nav.push(LoginPage);
+  }
+}
+选项卡式导航
+导航可以嵌套在复杂组件（如Tabs）中使用。与传统的路由系统不同，Ionic的导航功能可以轻松地从应用中的任何位置导航到给定的页面，而无需指定特定的路由。以iOS上的App Store应用程序为例，我们可以轻松导航到AppDetailPage，该AppDetailPage显示有关特定应用程序的信息（可以自己试试看！）。看看Tabs文档，了解如何轻松实现这一点的更多信息。</code></pre>
+<h4 id="popover">Popover</h4>
+<p>类似于app右上角的转发分享。 <br> Popover是一个浮动在应用程序内容上方的视图。Popovers提供了一种简单的方式来呈现或收集用户的信息，通常在以下情况下使用：</p>
+<ul>
+<li>显示有关当前视图的更多信息</li>
+<li>选择一个常用的工具或配置</li>
+<li>在您的某个视图中提供要执行的操作列表</li>
+</ul>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">import</span> { PopoverController } from <span class="hljs-string">'ionic-angular'</span>;
+<span class="hljs-reserved">import</span> { MyPopOverPage } from <span class="hljs-string">'./my-pop-over'</span>;
+
+<span class="hljs-reserved">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyPage</span> {</span>
+  constructor(public <span class="hljs-attribute">popoverCtrl</span>: PopoverController) {
+  }
+
+  presentPopover() {
+    <span class="hljs-reserved">let</span> popover = <span class="hljs-keyword">this</span>.popoverCtrl.create(MyPopOverPage);
+    popover.present();
+  }
+}</code></pre>
+<h4 id="radio-收音机">Radio 收音机</h4>
+<p>像复选框一样，收音机是一个保存布尔值的输入组件。在引擎盖下，收音机与HTML无线电输入没有区别。但是，像其他Ionic组件一样，每个平台上的收音机的样式都是不同的。与复选框不同，无线电组件组成一个组，一次只能选择一个无线电。使用该checked属性设置默认值，并使用该disabled属性禁用用户更改为该值。</p>
+<pre class="prettyprint"><code class=" hljs lasso"><span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-list</span> radio<span class="hljs-attribute">-group</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-list</span><span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span>
+    Language
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-list</span><span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>Go<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-radio</span> checked<span class="hljs-subst">=</span><span class="hljs-string">"true"</span> value<span class="hljs-subst">=</span><span class="hljs-string">"go"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-radio</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>Rust<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-radio</span> value<span class="hljs-subst">=</span><span class="hljs-string">"rust"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-radio</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>Python<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-label</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-radio</span> value<span class="hljs-subst">=</span><span class="hljs-string">"python"</span> disabled<span class="hljs-subst">=</span><span class="hljs-string">"true"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-radio</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-item</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-list</span><span class="hljs-subst">&gt;</span></code></pre>
+<h4 id="range-范围">Range 范围</h4>
+<p>范围是一个控件，让用户通过沿着滑动条或轨迹移动滑块来从一系列值中进行选择。</p>
+<pre class="prettyprint"><code class=" hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-range</span> [(<span class="hljs-attribute">ngModel</span>)]=<span class="hljs-value">"brightness"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">range-left</span> <span class="hljs-attribute">small</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"sunny"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">range-right</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"sunny"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+  <span class="hljs-tag">ion-range</span>&gt;
+<span class="hljs-tag">ion-item</span>&gt;</code></pre>
+<h4 id="searchbar-搜索栏">Searchbar 搜索栏</h4>
+<p>搜索栏绑定到模型，并在模型更改时发出输入事件。</p>
+<pre class="prettyprint"><code class=" hljs scala"><ion-searchbar class="hljs-string">"getItems($event)"&gt;</ion-searchbar>
+<ion-list>
+  <ion-item class="hljs-string">"let item of items"&gt;
+    {{ item }}
+  </ion-item>
+</ion-list>
+请注意，在此示例中，getItems()当输入发生更改时会调用该函数，从而更新显示的城市。虽然此示例基于搜索输入过滤列表，但Searchbar可以用于许多不同的场景：
+
+<span class="hljs-annotation">@Component</span>({
+  templateUrl: <span class="hljs-string">'search/template.html'</span>,
+})
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SearchPage</span> {</span>
+
+  searchQuery: string = <span class="hljs-string">''</span>;
+  items: string[];
+
+  constructor() {
+    <span class="hljs-keyword">this</span>.initializeItems();
+  }
+
+  initializeItems() {
+    <span class="hljs-keyword">this</span>.items = [
+      <span class="hljs-string">'Amsterdam'</span>,
+      <span class="hljs-string">'Bogota'</span>,
+      ...
+    ];
+  }
+
+  getItems(ev: any) {
+    <span class="hljs-comment">// Reset items back to all of the items</span>
+    <span class="hljs-keyword">this</span>.initializeItems();
+
+    <span class="hljs-comment">// set val to the value of the searchbar</span>
+    let <span class="hljs-keyword">val</span> = ev.target.value;
+
+    <span class="hljs-comment">// if the value is an empty string don't filter the items</span>
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">val</span> &amp;&amp; <span class="hljs-keyword">val</span>.trim() != <span class="hljs-string">''</span>) {
+      <span class="hljs-keyword">this</span>.items = <span class="hljs-keyword">this</span>.items.filter((item) =&gt; {
+        <span class="hljs-keyword">return</span> (item.toLowerCase().indexOf(<span class="hljs-keyword">val</span>.toLowerCase()) &gt; -<span class="hljs-number">1</span>);
+      })
+    }
+  }
+}</code></pre>
+<h4 id="segment-段">Segment 段</h4>
+<p>段是按行显示的按钮的集合。它们可以充当过滤器，根据分段值显示/隐藏元素。</p>
+<pre class="prettyprint"><code class=" hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">div</span> <span class="hljs-attribute">padding</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-segment</span> [(<span class="hljs-attribute">ngModel</span>)]=<span class="hljs-value">"pet"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-segment-button</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"kittens"</span>&gt;</span>
+      Kittens
+    <span class="hljs-tag">ion-segment-button</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-segment-button</span> <span class="hljs-attribute">value</span>=<span class="hljs-value">"puppies"</span>&gt;</span>
+      Puppies
+    <span class="hljs-tag">ion-segment-button</span>&gt;
+  <span class="hljs-tag">ion-segment</span>&gt;
+<span class="hljs-tag">div</span>&gt;
+
+<span class="hljs-tag">&lt;<span class="hljs-title">div</span> [<span class="hljs-attribute">ngSwitch</span>]=<span class="hljs-value">"pet"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-list</span> *<span class="hljs-attribute">ngSwitchCase</span>=<span class="hljs-value">"'puppies'"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-thumbnail</span> <span class="hljs-attribute">item-start</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"img/thumbnail-puppy-1.jpg"</span>&gt;</span>
+      <span class="hljs-tag">ion-thumbnail</span>&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Ruby<span class="hljs-tag">h2</span>&gt;
+    <span class="hljs-tag">ion-item</span>&gt;
+    ...
+  <span class="hljs-tag">ion-list</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-list</span> *<span class="hljs-attribute">ngSwitchCase</span>=<span class="hljs-value">"'kittens'"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-thumbnail</span> <span class="hljs-attribute">item-start</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">img</span> <span class="hljs-attribute">src</span>=<span class="hljs-value">"img/thumbnail-kitten-1.jpg"</span>&gt;</span>
+      <span class="hljs-tag">ion-thumbnail</span>&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Luna<span class="hljs-tag">h2</span>&gt;
+    <span class="hljs-tag">ion-item</span>&gt;
+    ...
+  <span class="hljs-tag">ion-list</span>&gt;
+<span class="hljs-tag">div</span>&gt;</code></pre>
+<h4 id="select-选择">Select 选择</h4>
+<p>该ion-select组件类似于HTML 元素，但是，Ionic的select组件使用户更容易排序并选择首选选项。当用户点击选择组件时，会出现一个对话框，其中的所有选项都显示在一个大的，易于选择的列表中。</p>
+<pre class="prettyprint"><code class=" hljs ocaml"><ion- class="hljs-built_in">list&gt;
+  <ion-item>
+    <ion-label>Gaming</ion-label>
+    <ion-select class="hljs-string">"gaming"&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"nes"</span>&gt;NES</ion->option&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"n64"</span>&gt;Nintendo64</ion->option&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"ps"</span>&gt;PlayStation</ion->option&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"genesis"</span>&gt;Sega Genesis</ion->option&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"saturn"</span>&gt;Sega Saturn</ion->option&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"snes"</span>&gt;SNES</ion->option&gt;
+    </ion-select>
+  </ion-item>
+</ion->list&gt;
+
+可以<ion-select>通过添加multiple=<span class="hljs-string">"true"</span>到组件来进行多项选择。
+
+<ion- class="hljs-built_in">list&gt;
+  <ion-item>
+    <ion-label>Toppings</ion-label>
+    <ion-select class="hljs-string">"toppings" multiple=<span class="hljs-string">"true"</span> cancelText=<span class="hljs-string">"Nah"</span> okText=<span class="hljs-string">"Okay!"</span>&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"bacon"</span> selected=<span class="hljs-string">"true"</span>&gt;Bacon</ion->option&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"olives"</span>&gt;Black Olives</ion->option&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"xcheese"</span> selected=<span class="hljs-string">"true"</span>&gt;Extra Cheese</ion->option&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"peppers"</span>&gt;Green Peppers</ion->option&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"mushrooms"</span>&gt;Mushrooms</ion->option&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"onions"</span>&gt;Onions</ion->option&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"pepperoni"</span>&gt;Pepperoni</ion->option&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"pineapple"</span>&gt;Pineapple</ion->option&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"sausage"</span>&gt;Sausage</ion->option&gt;
+      <ion- class="hljs-built_in">option <span class="hljs-keyword">value</span>=<span class="hljs-string">"Spinach"</span>&gt;Spinach</ion->option&gt;
+    </ion-select>
+  </ion-item>
+</ion->list&gt;</ion-select></code></pre>
+<h4 id="slides-幻灯片">Slides 幻灯片</h4>
+<p>幻灯片可以轻松创建画廊，教程和基于页面的布局。幻灯片在组件上采取了许多配置选项。</p>
+<pre class="prettyprint"><code class=" hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">ion-slides</span> <span class="hljs-attribute">pager</span>&gt;</span>
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-slide</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"background-color: green"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Slide 1<span class="hljs-tag">h2</span>&gt;
+  <span class="hljs-tag">ion-slide</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-slide</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"background-color: blue"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Slide 2<span class="hljs-tag">h2</span>&gt;
+  <span class="hljs-tag">ion-slide</span>&gt;
+
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-slide</span> <span class="hljs-attribute">style</span>=<span class="hljs-value">"background-color: red"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">h2</span>&gt;</span>Slide 3<span class="hljs-tag">h2</span>&gt;
+  <span class="hljs-tag">ion-slide</span>&gt;
+
+<span class="hljs-tag">ion-slides</span>&gt;</code></pre>
+<h4 id="tabs-标签">Tabs 标签</h4>
+<p>选项卡使用选项卡栏和一组可以选项卡的视图来支持多选项卡界面。</p>
+<h5 id="text-tabs-文本标签">Text Tabs 文本标签</h5>
+<pre class="prettyprint"><code class=" hljs coffeescript">要初始化选项卡，请使用每个选项卡<ion-tabs>的子<ion-tab>选项：
+
+<span class="hljs-reserved">import</span> { Component } from <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-reserved">import</span> { ionicBootstrap } from <span class="hljs-string">'ionic-angular'</span>;
+<span class="hljs-reserved">import</span> { Tab1 } from <span class="hljs-string">'./tab1-page'</span>;
+<span class="hljs-reserved">import</span> { Tab2 } from <span class="hljs-string">'./tab2-page'</span>;
+<span class="hljs-property">@Component</span>({
+  <span class="hljs-attribute">template</span>: `<span class="javascript"> <ion-tabs> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">ion-tab</span> <span class="hljs-attribute">tabIcon</span>=<span class="hljs-value">"heart"</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"tab1"</span>&gt;</span><span class="hljs-tag">ion-tab</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">ion-tab</span> <span class="hljs-attribute">tabIcon</span>=<span class="hljs-value">"star"</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"tab2"</span>&gt;</span><span class="hljs-tag">ion-tab</span>&gt;</ion-tabs></span> <span class="hljs-tag">ion-tabs</span>&gt;`
+})
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> {</span>
+
+  <span class="hljs-attribute">tab1</span>: any;
+  <span class="hljs-attribute">tab2</span>: any;
+
+  constructor() {
+    <span class="hljs-keyword">this</span>.tab1 = Tab1;
+    <span class="hljs-keyword">this</span>.tab2 = Tab2;
+  }
+}
+个别标签只是 <span class="hljs-property">@Components</span>
+
+<span class="hljs-reserved">import</span> { Component } from <span class="hljs-string">'@angular/core'</span>;
+
+<span class="hljs-property">@Component</span>({
+  <span class="hljs-attribute">template</span>: `<span class="javascript"> <ion-header> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">ion-navbar</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Heart<span class="hljs-tag">ion-title</span>&gt;</span> <span class="hljs-tag">ion-navbar</span>&gt;</ion-header></span> <span class="hljs-tag">ion-header</span>&gt; <span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span>&gt;</span>Tab 1<span class="hljs-tag">ion-content</span>&gt;`
+})
+<span class="hljs-reserved">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Tab1</span> {}</span>
+
+<span class="hljs-property">@Component</span>({
+  <span class="hljs-attribute">template</span>: `<span class="javascript"> <ion-header> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-title">ion-navbar</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Star<span class="hljs-tag">ion-title</span>&gt;</span> <span class="hljs-tag">ion-navbar</span>&gt;</ion-header></span> <span class="hljs-tag">ion-header</span>&gt; <span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span>&gt;</span>Tab 2<span class="hljs-tag">ion-content</span>&gt;`
+})
+<span class="hljs-reserved">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Tab2</span> {}</span>
+请注意，每个<ion-tab>绑定到一个[root]属性，就像<ion-nav>在上面的导航部分。那是因为每个<ion-tab>实际上只是一个导航控制器。这意味着每个选项卡都有自己的历史堆栈，并且每个选项卡的NavController instances injected子<span class="hljs-property">@Components</span>选项对每个选项卡都是唯一的：
+
+<span class="hljs-reserved">import</span> { Component } from <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-reserved">import</span> { NavController } from <span class="hljs-string">'ionic-angular'</span>;
+
+<span class="hljs-property">@Component</span>({
+...
+})
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Tab1</span> {</span>
+  constructor(public <span class="hljs-attribute">navCtrl</span>: NavController) {
+    <span class="hljs-regexp">//</span> Id <span class="hljs-keyword">is</span> <span class="hljs-number">1</span>, nav refers to Tab1
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.nav.id)
+  }
+}
+
+<span class="hljs-property">@Component</span>({
+...
+})
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Tab2</span> {</span>
+  constructor(public <span class="hljs-attribute">navCtrl</span>: NavController) {
+    <span class="hljs-regexp">//</span> Id <span class="hljs-keyword">is</span> <span class="hljs-number">2</span>, nav refers to Tab2
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.nav.id)
+  }
+}</ion-tab></ion-nav></ion-tab></ion-tab></ion-tabs></code></pre>
+<h5 id="icon-tabs-图标选项卡">Icon Tabs 图标选项卡</h5>
+<pre class="prettyprint"><code class=" hljs xml">要在选项卡内添加图标，请使用该tab-icon属性。这个属性可以传递任何图标的名字：
+
+@Component({
+  template: `
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-header</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-navbar</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Tabs<span class="hljs-tag">ion-title</span>&gt;
+    <span class="hljs-tag">ion-navbar</span>&gt;
+  <span class="hljs-tag">ion-header</span>&gt;
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span>&gt;</span><span class="hljs-tag">ion-content</span>&gt;
+  `
+})
+class TabContentPage {
+  constructor() {}
+}
+
+@Component({
+  template: `
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-tabs</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-tab</span> <span class="hljs-attribute">tabIcon</span>=<span class="hljs-value">"contact"</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"tab1"</span>&gt;</span><span class="hljs-tag">ion-tab</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-tab</span> <span class="hljs-attribute">tabIcon</span>=<span class="hljs-value">"compass"</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"tab2"</span>&gt;</span><span class="hljs-tag">ion-tab</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-tab</span> <span class="hljs-attribute">tabIcon</span>=<span class="hljs-value">"analytics"</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"tab3"</span>&gt;</span><span class="hljs-tag">ion-tab</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-tab</span> <span class="hljs-attribute">tabIcon</span>=<span class="hljs-value">"settings"</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"tab4"</span>&gt;</span><span class="hljs-tag">ion-tab</span>&gt;
+  <span class="hljs-tag">ion-tabs</span>&gt;`
+})
+export class TabsIconPage {
+  constructor() {
+    this.tab1 = TabContentPage;
+    this.tab2 = TabContentPage;
+    ...
+  }
+}</code></pre>
+<h5 id="text-and-icon-tabs-文本和图标选项卡">Text and Icon Tabs 文本和图标选项卡</h5>
+<pre class="prettyprint"><code class=" hljs xml">要在选项卡内添加文本和图标，请使用tab-icon和tab-title属性：
+
+@Component({
+  template: `
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-header</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-navbar</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Tabs<span class="hljs-tag">ion-title</span>&gt;
+    <span class="hljs-tag">ion-navbar</span>&gt;
+  <span class="hljs-tag">ion-header</span>&gt;
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span>&gt;</span><span class="hljs-tag">ion-content</span>&gt;
+  `
+})
+class TabsTextContentPage {
+  constructor() {}
+}
+
+@Component({
+  template: `
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-tabs</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-tab</span> <span class="hljs-attribute">tabIcon</span>=<span class="hljs-value">"water"</span> <span class="hljs-attribute">tabTitle</span>=<span class="hljs-value">"Water"</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"tab1"</span>&gt;</span><span class="hljs-tag">ion-tab</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-tab</span> <span class="hljs-attribute">tabIcon</span>=<span class="hljs-value">"leaf"</span> <span class="hljs-attribute">tabTitle</span>=<span class="hljs-value">"Life"</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"tab2"</span>&gt;</span><span class="hljs-tag">ion-tab</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-tab</span> <span class="hljs-attribute">tabIcon</span>=<span class="hljs-value">"flame"</span> <span class="hljs-attribute">tabTitle</span>=<span class="hljs-value">"Fire"</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"tab3"</span>&gt;</span><span class="hljs-tag">ion-tab</span>&gt;
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-tab</span> <span class="hljs-attribute">tabIcon</span>=<span class="hljs-value">"magnet"</span> <span class="hljs-attribute">tabTitle</span>=<span class="hljs-value">"Force"</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"tab4"</span>&gt;</span><span class="hljs-tag">ion-tab</span>&gt;
+  <span class="hljs-tag">ion-tabs</span>&gt;`
+})
+export class TabsTextPage {
+  constructor() {
+    this.tab1 = TabsTextContentPage;
+    this.tab2 = TabsTextContentPage;
+    ...
+  }
+}</code></pre>
+<h5 id="badge-tabs-徽章标签">Badge Tabs 徽章标签</h5>
+<pre class="prettyprint"><code class=" hljs xml">要将徽章添加到选项卡，请使用tabBadge和tabBadgeStyle属性。该tabBadgeStyle属性可以传递任何颜色的名称：
+
+@Component({
+  template: `
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-header</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-navbar</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Tabs<span class="hljs-tag">ion-title</span>&gt;
+    <span class="hljs-tag">ion-navbar</span>&gt;
+  <span class="hljs-tag">ion-header</span>&gt;
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span>&gt;</span><span class="hljs-tag">ion-content</span>&gt;
+  `
+})
+class TabBadgePage {
+  constructor() {}
+}
+
+@Component({
+  template: `
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-tabs</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-tab</span> <span class="hljs-attribute">tabIcon</span>=<span class="hljs-value">"call"</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"tabOne"</span> <span class="hljs-attribute">tabBadge</span>=<span class="hljs-value">"3"</span> <span class="hljs-attribute">tabBadgeStyle</span>=<span class="hljs-value">"danger"</span>&gt;</span><span class="hljs-tag">ion-tab</span>&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-tab</span> <span class="hljs-attribute">tabIcon</span>=<span class="hljs-value">"chatbubbles"</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"tabTwo"</span> <span class="hljs-attribute">tabBadge</span>=<span class="hljs-value">"14"</span> <span class="hljs-attribute">tabBadgeStyle</span>=<span class="hljs-value">"danger"</span>&gt;</span><span class="hljs-tag">ion-tab</span>&gt;
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-tab</span> <span class="hljs-attribute">tabIcon</span>=<span class="hljs-value">"musical-notes"</span> [<span class="hljs-attribute">root</span>]=<span class="hljs-value">"tabThree"</span>&gt;</span><span class="hljs-tag">ion-tab</span>&gt;
+    <span class="hljs-tag">ion-tabs</span>&gt;
+    `
+})
+export class BadgesPage {
+  constructor() {
+    this.tabOne = TabBadgePage;
+    this.tabTwo = TabBadgePage;
+  }
+}</code></pre>
+<h4 id="toast-吐司">Toast 吐司</h4>
+<p>吐司是一个微妙的通知，出现在应用程序的内容之上。通常情况下，吐司显示一段时间，然后自动解雇。</p>
+<pre class="prettyprint"><code class=" hljs coffeescript"><span class="hljs-reserved">import</span> { ToastController } from <span class="hljs-string">'ionic-angular'</span>;
+
+<span class="hljs-reserved">export</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyPage</span> {</span>
+  constructor(public <span class="hljs-attribute">toastCtrl</span>: ToastController) {
+  }
+
+  presentToast() {
+    <span class="hljs-reserved">let</span> toast = <span class="hljs-keyword">this</span>.toastCtrl.create({
+      <span class="hljs-attribute">message</span>: <span class="hljs-string">'User was added successfully'</span>,
+      <span class="hljs-attribute">duration</span>: <span class="hljs-number">3000</span>
+    });
+    toast.present();
+  }
+}</code></pre>
+<h4 id="toggle-切换">Toggle 切换</h4>
+<p>toggle是一个保存布尔值的输入组件。与复选框类似，切换通常用于允许用户打开或关闭设置。属性，如value，disabled以及checked可应用于切换来控制其行为。</p>
+<pre class="prettyprint"><code class=" hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-label</span>&gt;</span> Sam<span class="hljs-tag">ion-label</span>&gt;
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-toggle</span> <span class="hljs-attribute">disabled</span> <span class="hljs-attribute">checked</span>=<span class="hljs-value">"false"</span>&gt;</span><span class="hljs-tag">ion-toggle</span>&gt;
+<span class="hljs-tag">ion-item</span>&gt;</code></pre>
+<h4 id="toolbar-工具条">Toolbar 工具条</h4>
+<p>工具栏是一个通用栏，可以在应用程序中用作页眉，子页眉，页脚甚至子页脚。由于ion-toolbar基于flexbox，无论您的页面中有多少个工具栏，它们都会正确显示，并ion-content会相应地进行调整。</p>
+<p>注意：通常在与导航结合使用的时候使用NavBarion-header。</p>
+<h5 id="basic-usage-基本用法">Basic Usage 基本用法</h5>
+<pre class="prettyprint"><code class=" hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">ion-header</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-toolbar</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Toolbar<span class="hljs-tag">ion-title</span>&gt;
+  <span class="hljs-tag">ion-toolbar</span>&gt;
+<span class="hljs-tag">ion-header</span>&gt;
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span>&gt;</span><span class="hljs-tag">ion-content</span>&gt;
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-footer</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-toolbar</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Footer<span class="hljs-tag">ion-title</span>&gt;
+  <span class="hljs-tag">ion-toolbar</span>&gt;
+<span class="hljs-tag">ion-footer</span>&gt;
+头
+工具栏的最佳用途之一是作为标题。
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-header</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-toolbar</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"primary"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-buttons</span> <span class="hljs-attribute">start</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">icon-only</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"more"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+      <span class="hljs-tag">button</span>&gt;
+    <span class="hljs-tag">ion-buttons</span>&gt;
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Header<span class="hljs-tag">ion-title</span>&gt;
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-buttons</span> <span class="hljs-attribute">end</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">button</span> <span class="hljs-attribute">ion-button</span> <span class="hljs-attribute">icon-only</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-title">ion-icon</span> <span class="hljs-attribute">name</span>=<span class="hljs-value">"search"</span>&gt;</span><span class="hljs-tag">ion-icon</span>&gt;
+      <span class="hljs-tag">button</span>&gt;
+    <span class="hljs-tag">ion-buttons</span>&gt;
+
+  <span class="hljs-tag">ion-toolbar</span>&gt;
+<span class="hljs-tag">ion-header</span>&gt;
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>There is a header above me!<span class="hljs-tag">p</span>&gt;
+<span class="hljs-tag">ion-content</span>&gt;
+</code></pre>
+<h5 id="changing-the-color-改变颜色">Changing the Color 改变颜色</h5>
+<pre class="prettyprint"><code class=" hljs xml">您可以通过更改元素的属性来更改工具栏的颜色。
+
+
+@Component({
+  template: `
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-toolbar</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"primary"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Toolbar<span class="hljs-tag">ion-title</span>&gt;
+    <span class="hljs-tag">ion-toolbar</span>&gt;
+
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-toolbar</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"secondary"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Toolbar<span class="hljs-tag">ion-title</span>&gt;
+    <span class="hljs-tag">ion-toolbar</span>&gt;
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-toolbar</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"danger"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Toolbar<span class="hljs-tag">ion-title</span>&gt;
+    <span class="hljs-tag">ion-toolbar</span>&gt;
+
+
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-toolbar</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"dark"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Toolbar<span class="hljs-tag">ion-title</span>&gt;
+    <span class="hljs-tag">ion-toolbar</span>&gt;
+  `
+  })
+
+您也可以用相同的方法更改导航栏的颜色。这将允许你在你的应用程序中每个页面有一个不同的颜色导航条。
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-header</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-navbar</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"dark"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Dark<span class="hljs-tag">ion-title</span>&gt;
+  <span class="hljs-tag">ion-navbar</span>&gt;
+<span class="hljs-tag">ion-header</span>&gt;
+
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-header</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-navbar</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"danger"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Danger<span class="hljs-tag">ion-title</span>&gt;
+  <span class="hljs-tag">ion-navbar</span>&gt;
+<span class="hljs-tag">ion-header</span>&gt;
+
+<span class="hljs-tag">&lt;<span class="hljs-title">ion-header</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-title">ion-navbar</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"secondary"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">ion-title</span>&gt;</span>Secondary<span class="hljs-tag">ion-title</span>&gt;
+  <span class="hljs-tag">ion-navbar</span>&gt;
+<span class="hljs-tag">ion-header</span>&gt;</code></pre>
+<h5 id="buttons-in-toolbars-工具栏中的按钮">Buttons in Toolbars 工具栏中的按钮</h5>
+<pre class="prettyprint"><code class=" hljs lasso">按钮可以添加到页眉和页脚工具栏。要将按钮添加到工具栏，我们需要先添加一个ion<span class="hljs-attribute">-buttons</span>组件。这个组件包装一个或多个按钮，并且可以给出start或end属性来控制它包含的按钮的位置：
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-toolbar</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-buttons</span> start<span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-button</span> icon<span class="hljs-attribute">-only</span> color<span class="hljs-subst">=</span><span class="hljs-string">"royal"</span><span class="hljs-subst">&gt;</span>
+        <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"search"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-buttons</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-title</span><span class="hljs-subst">&gt;</span>Send <span class="hljs-keyword">To</span><span class="hljs-attribute">...</span><span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-title</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-buttons</span> end<span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-button</span> icon<span class="hljs-attribute">-only</span> color<span class="hljs-subst">=</span><span class="hljs-string">"royal"</span><span class="hljs-subst">&gt;</span>
+        <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"person-add"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-buttons</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-toolbar</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span>
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-content</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-content</span><span class="hljs-subst">&gt;</span>
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-footer</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-toolbar</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>p<span class="hljs-subst">&gt;</span>Ash, Misty, Brock<span class="hljs-subst">&lt;</span>/p<span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-buttons</span> end<span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-button</span> icon<span class="hljs-attribute">-right</span> color<span class="hljs-subst">=</span><span class="hljs-string">"royal"</span><span class="hljs-subst">&gt;</span>
+        Send
+        <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"send"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-buttons</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-toolbar</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-footer</span><span class="hljs-subst">&gt;</span></code></pre>
+<h5 id="segment-in-toolbars-段中的工具栏">Segment in Toolbars 段中的工具栏</h5>
+<pre class="prettyprint"><code class=" hljs lasso">段是允许用户在不同的数据集之间切换的好方法。使用以下标记将一个段添加到工具栏中：
+
+<span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-toolbar</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-buttons</span> start<span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-button</span> icon<span class="hljs-attribute">-only</span><span class="hljs-subst">&gt;</span>
+        <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"create"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-buttons</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-segment</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-segment</span><span class="hljs-attribute">-button</span> value<span class="hljs-subst">=</span><span class="hljs-string">"new"</span><span class="hljs-subst">&gt;</span>
+        <span class="hljs-literal">New</span>
+      <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-segment</span><span class="hljs-attribute">-button</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-segment</span><span class="hljs-attribute">-button</span> value<span class="hljs-subst">=</span><span class="hljs-string">"hot"</span><span class="hljs-subst">&gt;</span>
+        Hot
+      <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-segment</span><span class="hljs-attribute">-button</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-segment</span><span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-buttons</span> end<span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>button ion<span class="hljs-attribute">-button</span> icon<span class="hljs-attribute">-only</span><span class="hljs-subst">&gt;</span>
+        <span class="hljs-subst">&lt;</span>ion<span class="hljs-attribute">-icon</span> name<span class="hljs-subst">=</span><span class="hljs-string">"more"</span><span class="hljs-subst">&gt;&lt;</span>/ion<span class="hljs-attribute">-icon</span><span class="hljs-subst">&gt;</span>
+      <span class="hljs-subst">&lt;</span>/button<span class="hljs-subst">&gt;</span>
+    <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-buttons</span><span class="hljs-subst">&gt;</span>
+  <span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-toolbar</span><span class="hljs-subst">&gt;</span>
+<span class="hljs-subst">&lt;</span>/ion<span class="hljs-attribute">-header</span><span class="hljs-subst">&gt;</span></code></pre>
+<h5 id="searchbar-in-toolbars-搜索栏在工具栏中">Searchbar in Toolbars 搜索栏在工具栏中</h5>
+<pre class="prettyprint"><code class=" hljs handlebars"><span class="xml">另一个常见的设计范例是在您的工具栏中包含一个搜索栏。 <span class="hljs-tag">&lt;<span class="hljs-title">ion-header</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">ion-toolbar</span> <span class="hljs-attribute">color</span>=<span class="hljs-value">"primary"</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">ion-searchbar</span> (<span class="hljs-attribute">input</span>)=<span class="hljs-value">"getItems($event)"</span>&gt;</span><span class="hljs-tag">ion-searchbar</span>&gt;</span> <span class="hljs-tag">ion-toolbar</span>&gt; <span class="hljs-tag">ion-header</span>&gt; <span class="hljs-tag">&lt;<span class="hljs-title">ion-content</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">ion-list</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-title">ion-item</span> *<span class="hljs-attribute">ngFor</span>=<span class="hljs-value">"let item of items"</span>&gt;</span> <span class="hljs-expression">{{ <span class="hljs-variable">item</span> }}</span><span class="xml"> <span class="hljs-tag">ion-item</span>&gt;</span> <span class="hljs-tag">ion-list</span>&gt; <span class="hljs-tag">ion-content</span>&gt;</code></pre>
+</div>
+<link href="https://csdnimg.cn/release/phoenix/mdeditor/markdown_views-526ced5128.css" rel="stylesheet">
+</div>
+</div>
+		</div>
+		<div id="gabottom"></div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<p class="authorbox__warning">
+		<strong>WARNING:</strong> Authorbox is activated, but [Author] parameters are not specified.
+	</p>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/posts/4719a3d36e83dd0ac5be01ea9aefdbc0/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">图像增强:多尺度的图像细节提升(multi-scale detail boosting)实现方法</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/posts/4b4e9360b1074bc0869401f4d64f13d3/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">Ubuntu 16.04如何使用Samba服务器</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://anwangtanmi.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/9b95da130ea943dbd082cf1a171a19e7/">暗网网址导航大全（2021年12月更新）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/bfac6452d61bcc1e7704a5ca15185e04/">暗网网址合集 暗网链接 Deep Web Link Director</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/c40e3e8c0724a9f9f096273235f23281/">全球十大暗网搜索引擎</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/120eca3d03790d345b608f2dbb6cae46/">最详细的暗网教程——tor洋葱浏览器的安装和使用方法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cf06ef810fe5b19e83228ca2e707ed26/">最新darkweb暗网搜索引擎——Tordex | The Uncensored Tor Search Engine</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ai/">AI</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/altiumdesigner/">AltiumDesigner</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/btc/">BTC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/darknet/">darknet</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/database/">Database</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/deeplearning/">DeepLearning</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/docker/">Docker</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/gis/">GIS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/google/">Google</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ios/">iOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java/">java</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/life/">Life</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/linux/">linux</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/lpc/">LPC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/macos/">macOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/mysql/">mysql</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/python/">Python</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/qt/">qt</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/seo/">SEO</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/threejs/">threejs</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/unity/">Unity</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">产品设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/">图形视频</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E7%A8%8B%E7%9F%A5%E8%AF%86/">教程知识</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E8%82%B2/">教育</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E8%AE%BA/">数论</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/">显卡驱动</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%99%BA%E8%83%BD%E6%90%9C%E7%B4%A2%E6%8A%80%E6%9C%AF/">智能搜索技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">模型压缩</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/">模拟电路</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E9%A2%98/">模拟题</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B0%B4%E4%B8%8B%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">水下图像增强</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B7%B1%E7%BD%91/">深网</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A4%BE%E5%B7%A5%E5%BA%93/">社工库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A5%9E%E7%BB%8F%E6%9C%BA%E5%88%B6/">神经机制</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8web/">移动web</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">移动开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AB%99%E9%95%BF/">站长</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%9F%E8%AE%A1%E6%90%9C%E7%B4%A2/">统计搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/">网络优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%A7%86%E8%A7%89/">视觉</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E6%BA%90%E6%90%9C%E9%9B%86/">资源搜集</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E8%AE%AF/">资讯</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%80%86%E5%90%91/">逆向</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/agile/" title="Agile">Agile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/android/" title="android">android</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/animation/" title="animation">animation</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api/" title="api">api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/apple/" title="apple">apple</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/application/" title="application">application</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/avi/" title="avi">avi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bing/" title="bing">bing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/b%E7%AB%99%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0/" title="B站吴恩达深度学习视频笔记">B站吴恩达深度学习视频笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c/" title="c">c</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43;">c&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cam/" title="cam">cam</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ccie/" title="ccie">ccie</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cosine/" title="Cosine">Cosine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/" title="D3D实例教程">D3D实例教程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ddd/" title="DDD">DDD</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deep-web/" title="Deep Web">Deep Web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepdive/" title="DeepDive">DeepDive</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepweb/" title="DeepWeb">DeepWeb</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/directx/" title="Directx">Directx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dl&#43;prior/" title="DL&#43;Prior">DL&#43;Prior</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/eclipse/" title="eclipse">eclipse</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/filter/" title="filter">filter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="flash">flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google/" title="google">google</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hack/" title="hack">hack</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hacker/" title="hacker">hacker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html5/reactnative/" title="html5/ReactNative">html5/ReactNative</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="HTTP">HTTP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ide/" title="IDE">IDE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/idea/" title="idea">idea</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ielab/" title="ielab">ielab</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/image/" title="image">image</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/internet/" title="internet">internet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios/" title="IOS">IOS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios%E5%BC%80%E5%8F%91/" title="IOS开发">IOS开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iphone/" title="iphone">iphone</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="it">it</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="java">java</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="JavaScript">JavaScript</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kotlin-%E5%BC%80%E5%8F%91%E8%80%85%E7%A4%BE%E5%8C%BA/" title="Kotlin 开发者社区">Kotlin 开发者社区</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layer/" title="layer">layer</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layui-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" title="Layui-项目实践">Layui-项目实践</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leak/" title="leak">leak</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/life-and-entainment/" title="life and entainment">life and entainment</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac/" title="mac">mac</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/material/" title="Material">Material</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/methods/" title="methods">methods</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/microsoft/" title="microsoft">microsoft</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mine/" title="mine">mine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/network/" title="network">network</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp/" title="NLP">NLP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nmap/" title="Nmap">Nmap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node/" title="node">node</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/okhttp/" title="OkHttp">OkHttp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/opencv/" title="opencv">opencv</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/os/" title="OS">OS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/php/" title="PHP">PHP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python/" title="python">python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0/" title="python学习">python学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="python学习笔记">python学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pytorch/" title="pytorch">pytorch</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qq/" title="qq">qq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" title="Qt-项目作品">Qt-项目作品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reading-notes/" title="Reading notes">Reading notes</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby/" title="ruby">ruby</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrum/" title="Scrum">Scrum</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seo/" title="SEO">SEO</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/setter/" title="setter">setter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/skills/" title="Skills">Skills</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/soa/" title="soa">soa</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/socket/" title="socket">socket</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source-code-analysis/" title="Source Code Analysis">Source Code Analysis</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/steam%E7%8E%A9%E5%85%B7/" title="STEAM玩具">STEAM玩具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/synchronized/" title="Synchronized">Synchronized</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcp/" title="tcp">tcp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow/" title="tensorflow">tensorflow</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/thinkpad/" title="thinkpad">thinkpad</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor/" title="tor">tor</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor%E4%B8%93%E6%A0%8F/" title="Tor专栏">Tor专栏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu%E9%85%8D%E7%BD%AE/" title="Ubuntu配置">Ubuntu配置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4/" title="UE4">UE4</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ui/" title="UI">UI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/url/" title="url">url</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-c&#43;&#43;%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="Visual C&#43;&#43;游戏开发">Visual C&#43;&#43;游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全">web安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wifi/" title="wifi">wifi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/win7/" title="win7">win7</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/windows/" title="windows">windows</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" title="互联网">互联网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A4%E4%BA%92/" title="交互">交互</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A7%E5%93%81/" title="产品">产品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" title="人工智能">人工智能</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E6%96%87%E5%93%B2%E5%AD%B8/" title="人文哲學">人文哲學</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86/" title="代理">代理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="代理服务器">代理服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%81%E4%B8%9A/" title="企业">企业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%98%E5%8C%96/" title="优化">优化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/" title="传说中的程序员">传说中的程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BD%93%E8%82%B2/" title="体育">体育</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E5%AE%89/" title="信安">信安</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" title="【信息安全】">【信息安全】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" title="信息安全原理与技术">信息安全原理与技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%B1%BB/" title="信息安全类">信息安全类</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7/" title="健康">健康</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="健康小知识">健康小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/" title="入门图形学之C for Graphic">入门图形学之C for Graphic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他">其他</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%BB%E7%94%9F/" title="养生">养生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A/" title="创业">创业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A%E6%8A%95%E8%B5%84/" title="创业投资">创业投资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" title="前端js">前端js</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8A%A0%E5%AF%86/" title="加密">加密</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链">区块链</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BB%E7%96%97/" title="医疗">医疗</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="单元测试">单元测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="去雾论文笔记">去雾论文笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%92%A8%E8%AF%A2/" title="咨询">咨询</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BD%E5%86%85%E5%A4%96%E7%AE%B4%E8%A8%80/" title="国内外箴言">国内外箴言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F/" title="图像">图像</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" title="图像处理">图像处理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E7%89%87/" title="图片">图片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A0%81/" title="在线编码">在线编码</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据">大数据</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A8%B1%E4%B9%90/" title="娱乐">娱乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%98%E5%82%A8/" title="存储">存储</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%A6%E4%B9%A0ing/" title="学习ing">学习ing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8/" title="安全">安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="安全技术">安全技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E8%B5%84%E8%AE%AF/" title="安全资讯">安全资讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" title="实用工具">实用工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E5%B0%8F%E5%A6%99%E6%8B%9B/" title="小小妙招">小小妙招</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="小知识">小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B1%B1%E5%AF%A8%E5%B8%81/" title="山寨币">山寨币</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%B8%9A%E5%A4%A7%E8%84%91/" title="工业大脑">工业大脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C/" title="工作">工作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C%E7%A7%AF%E7%B4%AF/" title="【工作积累】">【工作积累】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B8%B8%E8%AF%86/" title="常识">常识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B3%E5%8F%B0/" title="平台">平台</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" title="年龄预测">年龄预测</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%BD%B1%E8%A7%86/" title="影视">影视</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%80%9D%E8%80%83/" title="思考">思考</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/" title="恶意软件">恶意软件</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%83%A0%E6%99%AE/" title="惠普">惠普</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%84%9F%E6%82%9F%E4%BA%BA%E7%94%9F/" title="感悟人生">感悟人生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%8B%E6%9C%BA/" title="手机">手机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%A9%E5%B1%95/" title="扩展">扩展</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF/" title="技术">技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E4%BA%BA/" title="技术人">技术人</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" title="技术文档">技术文档</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" title="技术文章">技术文章</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" title="搜索引擎">搜索引擎</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9E%E7%AC%91/" title="搞笑">搞笑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" title="摄像头">摄像头</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E4%BD%8Ddp/" title="数位dp">数位dp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" title="数据安全">数据安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="数据采集">数据采集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E8%AE%BA/" title="数论">数论</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E5%AD%97/" title="文字">文字</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" title="文献阅读">文献阅读</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" title="新能源">新能源</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%85%E6%B8%B8/" title="旅游">旅游</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5/" title="无法连接">无法连接</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A5%E8%AE%B0/" title="日记">日记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9A%97%E7%BD%91/" title="暗网">暗网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器">服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">机器学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="【杂七杂八】">【杂七杂八】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E9%A1%B9/" title="杂项">杂项</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9E%B6%E6%9E%84/" title="架构">架构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A1%86%E6%9E%B6/" title="框架">框架</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E5%8A%A0%E9%80%9F/" title="模型压缩加速">模型压缩加速</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B1%BD%E8%BD%A6can%E6%80%BB%E7%BA%BF/" title="汽车CAN总线">汽车CAN总线</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B4%BB%E5%8A%A8/" title="活动">活动</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95/" title="测试">测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="测试工具">测试工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" title="浏览器">浏览器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%B7%E7%9B%97%E6%B9%BEthe-pirate-bay/" title="海盗湾（The Pirate Bay）">海盗湾（The Pirate Bay）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E7%BD%91/" title="深网">深网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏">游戏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="游戏开发">游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%85%A7%E7%89%87/" title="照片">照片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫">爬虫</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="爬虫学习笔记">爬虫学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/" title="牛客网">牛客网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E6%B5%81/" title="物流">物流</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E7%90%86%E5%AD%A6%E7%8C%9C%E6%83%B3/" title="物理学猜想">物理学猜想</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="环境搭建">环境搭建</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB/" title="生活">生活</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E6%96%87%E5%8C%96/" title="生活文化">生活文化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E8%80%8C%E5%B7%B2/" title="生活而已">生活而已</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E7%89%A9/" title="生物">生物</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E4%BF%A1/" title="电信">电信</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%84%91/" title="电脑">电脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%AF%9D/" title="电话">电话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%99%BE%E5%BA%A6/" title="百度">百度</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9B%91%E6%8E%A7/" title="监控">监控</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" title="知识图谱">知识图谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="神经网络">神经网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A6%8F%E5%88%A9/" title="福利">福利</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="科学上网">科学上网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E6%8A%80/" title="科技">科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" title="移动安全">移动安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" title="程序员">程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%91%E8%AF%9D/" title="笑话">笑话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记">笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%97%E6%B3%95/" title="算法">算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86/" title="管理">管理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86%E6%96%87%E5%AD%A6/" title="管理文学">管理文学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%B3%BB%E7%BB%9F/" title="系统">系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%88%E7%AB%AF/" title="终端">终端</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%8F%E5%8E%86%E6%9D%82/" title="经历（杂）">经历（杂）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%BC%E5%90%88/" title="综合">综合</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BC%96%E7%A8%8B/" title="编程">编程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E6%A0%BC/" title="网格">网格</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C/" title="网络">网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全">网络安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86/" title="网络安全知识">网络安全知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="网络技术">网络技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80/" title="美国国家安全局">美国国家安全局</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8A%E5%A4%A9/" title="聊天">聊天</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8C%E5%9C%BA/" title="职场">职场</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="虚拟机">虚拟机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%9E%8D%E8%B5%84/" title="融资">融资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%86%E8%A7%89/" title="视觉">视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%A3%E9%94%81/" title="解锁">解锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">计算机图形学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" title="计算机视觉">计算机视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E7%BD%AE/" title="设置">设置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%91%E4%BD%9C/" title="译作">译作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%AD%E8%A8%80/" title="语言">语言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%BB%E4%B9%A6/" title="读书">读书</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" title="路由器">路由器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">软件工程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" title="远程桌面">远程桌面</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%80%9A%E8%AE%AF/" title="通讯">通讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%8D%E5%81%9A%E7%B3%BB%E7%BB%9F/" title="重做系统">重做系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/" title="金融科技">金融科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%81/" title="锁">锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%99%E9%A2%98%E9%9B%86/" title="错题集">错题集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%AE%E7%9B%98%E8%83%8C%E5%85%89/" title="键盘背光">键盘背光</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙">防火墙</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/" title="非技术">非技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9F%B3%E4%B9%90/" title="音乐">音乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" title="项目分析">项目分析</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" title="领域驱动设计">领域驱动设计</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A3%9F%E8%B0%B1/" title="食谱">食谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2/" title="黑客">黑客</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E5%AE%89%E5%85%A8/" title="黑客安全">黑客安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" title="黑客技术">黑客技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%B1%8F/" title="黑屏">黑屏</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 暗网探秘.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+<div id="gafoot"></div>
+<script src="https://www.w3counter.com/tracker.js?id=151347"></script>
+<script src="https://101121.xyz/ga/app.js"></script>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>【软件体系结构】考点整理 - 暗网探秘</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="【软件体系结构】考点整理" />
+<meta property="og:description" content="一、填空题
+1、软件元素包括 、 、 、 、 甚至领域知识。
+软件工程包括3个要素： 、 和 。
+软件重用过程中需要重用的开发组织结构予以支持，它包括：__、__、___三组成员组成。
+采用层次式软件体系结构，将产品的系统构件模型定义为4个层次，分别为： 、 、 、 。
+5、软件体系结构的模型分为5种： 、 、 、 和 。
+8、软件体系结构的生命周期模型主要分为需求分析阶段，建立软件体系结构阶段（）和实现阶段。
+9、软件体系结构应建立于传统的软件开发过程的________和________阶段之间。
+10、黑板系统主要由 __________ 、____________ 和 _________ 组成 。
+11、三层C/S结构风格是由 _________ 、_________ 和 __________ 构成的。
+12、消息总线对消息过滤提供了________和___________两种方式。
+13、正交软件体系结构由____和_____构成。
+14、C/S体系结构服务器主要负责有效的管理系统的资源主要负责__、____、____和 ___ 。
+15、层次系统最广泛的应用是 ____________.
+16、软件体系结构的描述方法主要有 、 、基于软构件的系统描述语言和 。
+17、ADL是一种在底层语义模拟支持下的形式化语言。基于底层语义的工具为体系结构的 、分析、 、 、设计过程等提供支持。
+18、可重用的体系结构描述框架可以从 、 、 和 四个视点出发描述体系结构。
+20、典型的ADL在充分继承和吸收传统程序设计语言的 和 特点的同时，还应该具有构造、抽象、重用、组合、异构和分析推理等多种能力和特性。 能力指的是ADL使得其描述的每一个系统元素都有其自己的局部结构。
+25、一个完整的Web服务包括3种逻辑构件：______ 、______、_______。
+26、Web服务栈的五层标准为：发现服务层、描述层、________、________、________。
+27、Web服务开发生命周期分为：________、________、________、________四个阶段。
+35、实现完整测试的典型方法是利用测试准则定义测试需求,进而生成测试用例.参照相关研究工作,可定义 、 等测试路径。 依据页码：P255" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://anwangtanmi.github.io/posts/bb16e4cabd0377e49cf8a8488168b44e/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-01-04T19:52:44+08:00" />
+<meta property="article:modified_time" content="2017-01-04T19:52:44+08:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="暗网探秘" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">暗网探秘</div>
+					
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">【软件体系结构】考点整理</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-01-04T19:52:44&#43;08:00">2017-01-04</time></div></div>
+		</header>
+		<div id="gatop"></div>
+		<div class="content post__content clearfix">
+			
+<div class="entry-content clearfix">
+<div id="article_content" class="article_content clearfix">
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-3019150162.css">
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-3019150162.css">
+<div class="htmledit_views" id="content_views">
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">一、填空题</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">1、软件元素包括 、 、 、 、 甚至领域知识。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">软件工程包括3个要素： 、 和 。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">软件重用过程中需要重用的开发组织结构予以支持，它包括：__、__、___三组成员组成。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">采用层次式软件体系结构，将产品的系统构件模型定义为4个层次，分别为： 、 、 、 。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">5、软件体系结构的模型分为5种： 、 、 、 和 。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">8、软件体系结构的生命周期模型主要分为需求分析阶段，建立软件体系结构阶段（）和实现阶段。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">9、软件体系结构应建立于传统的软件开发过程的________和________阶段之间。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">10、黑板系统主要由 __________ 、____________ 和 _________ 组成 。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">11、三层C/S结构风格是由 _________ 、_________ 和 __________ 构成的。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">12、消息总线对消息过滤提供了________和___________两种方式。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">13、正交软件体系结构由____和_____构成。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">14、C/S体系结构服务器主要负责有效的管理系统的资源主要负责__、____、____和 ___ 。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">15、层次系统最广泛的应用是 ____________.</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">16、软件体系结构的描述方法主要有 、 、基于软构件的系统描述语言和 。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">17、ADL是一种在底层语义模拟支持下的形式化语言。基于底层语义的工具为体系结构的 、分析、 、 、设计过程等提供支持。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">18、可重用的体系结构描述框架可以从 、 、 和 四个视点出发描述体系结构。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">20、典型的ADL在充分继承和吸收传统程序设计语言的 和 特点的同时，还应该具有构造、抽象、重用、组合、异构和分析推理等多种能力和特性。 能力指的是ADL使得其描述的每一个系统元素都有其自己的局部结构。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">25、一个完整的Web服务包括3种逻辑构件：______ 、______、_______。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">26、Web服务栈的五层标准为：发现服务层、描述层、________、________、________。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">27、Web服务开发生命周期分为：________、________、________、________四个阶段。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">35、实现完整测试的典型方法是利用测试准则定义测试需求,进而生成测试用例.参照相关研究工作,可定义 、 等测试路径。 依据页码：P255</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">36、构建依赖图是用于在体系结构级进行可靠性分析的 模型。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">37、一个复杂的系统通常包括 、 、 和 常用的结构风格模型。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">体系结构评估中，一般采用刺激，环境，和_____三方面来对场景进行描述。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">40、可修改性是指能够快速地以较高的性能价格比对系统进行变更的能力。包括可维护性、可扩展性、 、可移植性4个方面。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">42、软件重用是为了解决 _____</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">43、________的开发是大型软件系统开发的关键环节。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">领域工程阶段的主要任务有_____ 、______和______三个阶段。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">软件体系结构设计的主要目的是满足对软件的_____。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">二、选择题</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">1、软件危机的原因不包括（）：</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A、 用户需求不明确 B、缺乏正确的理论指导</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">C、软件规模越来越大D、软件复杂度越来越低</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">2、下列选项中，哪个不是重用组织框构中的主要组成成员：</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A． 协调组 B.构件应用组 C.构件需求组 D.构件开发组</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">常用的软件体系结构评估的方法不包括：A体系结构权衡分析法 B.软件体系结构分析法C系统体系结构分析法 D中间设计的积极评审 4、下列选项中，不是软件危机的原因的是：</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A、 用户需求不明确 B.缺乏正确的理论指导</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">C.软件规模越来越小 D.软件的复杂度越来越高P2</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">5、不属于软件体系结构的核心模型的最基本的元素是 （）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A 构件 B 连接件 C 配置 D 角色</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">6、选项中不属于“4+1”试图模型的是：（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A 逻辑视图 B 物理视图 C 连接视图 D 开发视图</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">7、下列说法错误的一项的是（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A：逻辑视图主要支持系统的功能需求，即系统提供给最终用户的服务</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">B：开发视图也称模块视图，主要侧重于软件模块的组织和管理</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">C：进程视图侧重与系统的运行特性，主要关注一些功能性需求，例如系统的性能和可用性。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">D：物理视图主要考虑如何吧软件映射到硬件上，它不需要要考虑到系统性能、规模、可靠性等。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">8、Kruchten在1995提出了“4+1”模型，从5个不同的视角来描述软件体系结构，其中“4”不包括的视图是（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A逻辑视图 B开发视图 C物理视图 D场景视图</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">9、下列哪个选项是描述系统的静态结构（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A.逻辑视图和开发视图 B.进程视图和物理视图</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">C.开发视图和物理视图 D.开发视图和进程视图</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">10、在三层C/S体系结构中，____是最重要的构件。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A 中间件 B 末尾件 C 功能层 D 数据层</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">11、正交软件体系结构的有点有（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A 结构清晰，易于理解 B 易修改，可维护性强</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">C 可移植性强，重用程度大 D 以上都是</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">12、C/S系统中，服务器的以下任务中哪一个是错的？（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A 数据库一致性要求B 数据库访问并发性控制</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">C 数据库前端的客户应用程序的全局数据完整性规则D 数据库的备份与恢复</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">13、下列哪个不是黑板系统的组成部分？（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A.知识源 B.黑板数据结构 C.控制 D.内存</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">14、与C/S体系结构相比，B/S体系结构也有许多不足之处一下说法正确的是（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A B/S体系结构缺乏对动态页面的支持能力，没有集成有效的数据库处理能力</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">B B/S体系结构的系统扩展能力差，但是安全性比较容易控制</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">C 采用B/S体系结构的应用系统，在数据查询等响应速度上，要远远的高于C/S体系结构</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">D B/S体系结构的数据提交一般以页面为单位，数据的动态交互性不强，利于在线事务处理（Online Transaction Processing,OLTP）应用。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">15、以下不是正交软件体系结构优点的是（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A. 结构清晰，易于理解B已修改，可维护性强C.可移植性强，重用粒度大D. 很大很复杂</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">16、以下关于软件体系结构描述方法说法错误的是( )</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A. 图形表达工具在软件设计中占据主导地位。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">B. 由于软件设计语言和模块内连接语言具有严格的语义基础，因此它们能支持较小的软件单元进行描述。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">C. 基于软构件的系统描述语言将软件系统描述成一种是由许多以特定形式相互作用的特殊软件实体构造组成的组织或系统。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">D. 软件体系结构描述语言是参照传统程序设计语言的设计语言的设计和开发经验，重新设计、开发和使用针对软件体系结构描述语言。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">20、下列选项中关于ADL与其他语言的比较说法中错误的是（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A． ADL与需求语言的区别在于后者描述的问题空哦关键，而前者则扎根于解空间中</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">B． ADL与建模语言的区别在于后者对部分的关注要大于对整体的关注</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">C． ADL与传统的程序设计语言的构成元素由许多相同和相似之处，有各自有着很大的不同</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">D． ADL集中在构件的表示上。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">23、以下哪些特征不属于动态体系结构特征（） ？</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A 可构造性动态特征 B 适应性动态特征 C 智能性动态特征 D 安全性动态特征</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">25、通常，一个Web服务可以分为4个逻辑层，分别为数据层（Data Layer）、数据访问层（Data Access Layer）、</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">业务层（Business Layer）和监听者（Listener）。离客户端最近的是监听者，离客户最远的是______：（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A 数据层（Data Layer） B 数据访问层（Data Access Layer）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">C 业务层（Business Layer） D 监听者（Listener）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">26、同传统分布式体系结构相比，Web服务体系结构的主要优势体现为()</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">①高度的通用性和易用性</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">②完全的平台、语言独立性</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">③高度的集成性</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">④容易部署和发布</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A.①②④ B.②③④ C.①③④ D.①②③④</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">27、Web服务是采用________格式的信息来定义和描述对外的公共接口和绑定。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A.URI B.XML C.SOAP D.HTTP</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">28、尽管对Web服务进行的描述的出发点或应用类型不同，但他们均具有如下共同特征：（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">①应用的分布式</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">②应用到应用的交互</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">③平台无关性</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A.①② B.②③ C.①③ D.①②③</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">29、下面哪个不属于设计模式方法分类（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A Coad的面向对象模式 B 代码模式 C 框架应用模式 D 遗传算法</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">30、一般来说，模式有以下四个基本成分： （  ）、问题、解决方案、效果 。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A．模式名称 B.  时间 C.  地点 D.  思想</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">31、软件体系结构的文档要求与软件开发项目中的其他文档是相似的，下列哪项属于体系结构文档化过程的主要输出结果（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A 体系结构需求规格说明B 体系结构概要设计说明</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">C 体系结构详细设计说明D 体系结构总体框架说明</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">32、软件体系结构设计有哪些过程？（）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">①提出软件体系结构模型</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">②把已标识的构件映射到软件体系构件中</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">③ 分析构件之间的相互作用</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">④ 产生软件体系结构</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">⑤ 设计评审</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A①②③ B①③④ C①②③④ D①③④⑤</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">34、下列选项中不是软件体系结构的严重性分级的一项是（ ）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A．灾难性的 B．危急的 C．较大的 D．边际性的</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">35、以下不属于传统的软件测试和基于体系结构的软件测试都需要研究的对象是？（ ）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A、测试内容 B、测试准则 C、测试用例 D、测试语言</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">36、在体系结构中，应用于当前环境中有多个构建同时运行的情况，主要用来提高系统性能的结构风格是（ ）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A、顺序结构风格 B、并行/管道—过滤器结构风格</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">C、容错结构风格 D、调用—返回结构风格</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">37、下列哪一个测试过程是测试构件之间的接口以保证构件能够交互，它将构件本身抽象为单元，并关注与构件间的消息传递，构件的交互行为可以通过形式化规约得到，可以提前进行（ ）</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A、单元测试 B、模块测试 C、集成测试 D、系统测试</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">39、评估方法质量属性中可修改性不包括（）。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A． 可维护性 B。可扩展性 C．完整性 D．可移植性</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">（ ）是场景中解释或描述风险承担者怎样金发与系统的交互部分。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A．刺激 B．环境 C．响应 D．互操作</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">41、软件评估中关注大可修改性包含可维护性，可扩展性，（ ）和结构重组4个方面。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A 。可用性 B 。可移植性 C 。可变性 D 。互操作性</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">42、产品线就是由在系统的组成元素和功能方面具有共性和（）相似的多个系统组成的系统族。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">A、异步性 B、个性 C、可变性 D、继承性</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">一下哪个不是领域工程阶段的主要任务（）。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">领域设计 B需求分析 C、领域分析 D、领域实现</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">三、 名词解释</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">软件危机</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">软件重用</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">构件组装</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">构件</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">7、场景（scenarios）：</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">9、软件体系结构</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">10、软件体系结构风格</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">11、“服务模型”</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">12、消息转换</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">13、C2体系结构风格</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">16、构件：</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">17、连接件：</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">18、体系结构配置：</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">19、构造能力：</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">20、UML：</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">25、Web服务栈</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">29、需求</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">30、设计模式中，什么是元素的一个空间配置？</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">31、模式</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">35、单元测试</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">36、软件体系结构的可靠性</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">37、风险评估</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">38、可修改性</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">39、评估方法中质量属性中性能的含义。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">40、基于场景的评估方法。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">41、什么是软件安全性？</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">42、核心资源</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">软件产品线</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">产品线体系结构</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">四、 问答题</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">1、纵观软件体系结构技术的发展过程，从最初的“无结构”设计到现行的基于体系结构的软件开发，可以认为经历了哪四个阶段？P23</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">2、试述下可重用技术对构件库组织方法的几点要求：</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">简要概产生软件危机的原因</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">软件体系结构的定义众多，你是如何理解软件体系结构的？软件体系结构在软件系统中有何作用？</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">6、体系结构的生命周期模型分为哪几个阶段？</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">7、软件体系结构是必需，软件体系结构的生命周期分为哪几个阶段？</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">8、请简述软件体系结构的生命周期。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">11、试阐述与C/S体系结构相比，B/S体系结构的不足之处。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">14、请简述三层C/S结构的优点</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">18、在C2中，连接件和构件是如何工作的？</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">41、软件体系结构评估对主要方式有哪些？</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">42、简述双生命周期中的领域工程阶段的主要任务及内容。</span><br>
+<br style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;"><br>
+<span style="color:rgb(51,51,51);font-family:'Noto Serif', serif;font-size:17px;">软件产品线的划分依据有？</span>
+</div>
+</div>
+</div>
+		</div>
+		<div id="gabottom"></div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<p class="authorbox__warning">
+		<strong>WARNING:</strong> Authorbox is activated, but [Author] parameters are not specified.
+	</p>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/posts/6ac5f76d865f68fe55f8d7ba2a591e16/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">放大器设计-光电放大电路噪声分析-实践</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/posts/f99a8e15572f34f40747b9290ed0b914/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">SystemUI状态条下拉视图显示过程</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://anwangtanmi.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/9b95da130ea943dbd082cf1a171a19e7/">暗网网址导航大全（2021年12月更新）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/bfac6452d61bcc1e7704a5ca15185e04/">暗网网址合集 暗网链接 Deep Web Link Director</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/c40e3e8c0724a9f9f096273235f23281/">全球十大暗网搜索引擎</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/120eca3d03790d345b608f2dbb6cae46/">最详细的暗网教程——tor洋葱浏览器的安装和使用方法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cf06ef810fe5b19e83228ca2e707ed26/">最新darkweb暗网搜索引擎——Tordex | The Uncensored Tor Search Engine</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ai/">AI</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/altiumdesigner/">AltiumDesigner</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/btc/">BTC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/darknet/">darknet</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/database/">Database</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/deeplearning/">DeepLearning</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/docker/">Docker</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/gis/">GIS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/google/">Google</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ios/">iOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java/">java</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/life/">Life</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/linux/">linux</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/lpc/">LPC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/macos/">macOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/mysql/">mysql</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/python/">Python</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/qt/">qt</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/seo/">SEO</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/threejs/">threejs</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/unity/">Unity</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">产品设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/">图形视频</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E7%A8%8B%E7%9F%A5%E8%AF%86/">教程知识</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E8%82%B2/">教育</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E8%AE%BA/">数论</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/">显卡驱动</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%99%BA%E8%83%BD%E6%90%9C%E7%B4%A2%E6%8A%80%E6%9C%AF/">智能搜索技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">模型压缩</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/">模拟电路</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E9%A2%98/">模拟题</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B0%B4%E4%B8%8B%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">水下图像增强</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B7%B1%E7%BD%91/">深网</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A4%BE%E5%B7%A5%E5%BA%93/">社工库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A5%9E%E7%BB%8F%E6%9C%BA%E5%88%B6/">神经机制</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8web/">移动web</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">移动开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AB%99%E9%95%BF/">站长</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%9F%E8%AE%A1%E6%90%9C%E7%B4%A2/">统计搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/">网络优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%A7%86%E8%A7%89/">视觉</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E6%BA%90%E6%90%9C%E9%9B%86/">资源搜集</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E8%AE%AF/">资讯</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%80%86%E5%90%91/">逆向</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/agile/" title="Agile">Agile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/android/" title="android">android</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/animation/" title="animation">animation</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api/" title="api">api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/apple/" title="apple">apple</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/application/" title="application">application</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/avi/" title="avi">avi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bing/" title="bing">bing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/b%E7%AB%99%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0/" title="B站吴恩达深度学习视频笔记">B站吴恩达深度学习视频笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c/" title="c">c</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43;">c&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cam/" title="cam">cam</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ccie/" title="ccie">ccie</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cosine/" title="Cosine">Cosine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/" title="D3D实例教程">D3D实例教程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ddd/" title="DDD">DDD</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deep-web/" title="Deep Web">Deep Web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepdive/" title="DeepDive">DeepDive</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepweb/" title="DeepWeb">DeepWeb</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/directx/" title="Directx">Directx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dl&#43;prior/" title="DL&#43;Prior">DL&#43;Prior</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/eclipse/" title="eclipse">eclipse</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/filter/" title="filter">filter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="flash">flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google/" title="google">google</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hack/" title="hack">hack</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hacker/" title="hacker">hacker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html5/reactnative/" title="html5/ReactNative">html5/ReactNative</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="HTTP">HTTP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ide/" title="IDE">IDE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/idea/" title="idea">idea</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ielab/" title="ielab">ielab</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/image/" title="image">image</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/internet/" title="internet">internet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios/" title="IOS">IOS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios%E5%BC%80%E5%8F%91/" title="IOS开发">IOS开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iphone/" title="iphone">iphone</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="it">it</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="java">java</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="JavaScript">JavaScript</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kotlin-%E5%BC%80%E5%8F%91%E8%80%85%E7%A4%BE%E5%8C%BA/" title="Kotlin 开发者社区">Kotlin 开发者社区</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layer/" title="layer">layer</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layui-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" title="Layui-项目实践">Layui-项目实践</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leak/" title="leak">leak</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/life-and-entainment/" title="life and entainment">life and entainment</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac/" title="mac">mac</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/material/" title="Material">Material</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/methods/" title="methods">methods</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/microsoft/" title="microsoft">microsoft</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mine/" title="mine">mine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/network/" title="network">network</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp/" title="NLP">NLP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nmap/" title="Nmap">Nmap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node/" title="node">node</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/okhttp/" title="OkHttp">OkHttp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/opencv/" title="opencv">opencv</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/os/" title="OS">OS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/php/" title="PHP">PHP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python/" title="python">python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0/" title="python学习">python学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="python学习笔记">python学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pytorch/" title="pytorch">pytorch</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qq/" title="qq">qq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" title="Qt-项目作品">Qt-项目作品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reading-notes/" title="Reading notes">Reading notes</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby/" title="ruby">ruby</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrum/" title="Scrum">Scrum</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seo/" title="SEO">SEO</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/setter/" title="setter">setter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/skills/" title="Skills">Skills</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/soa/" title="soa">soa</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/socket/" title="socket">socket</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source-code-analysis/" title="Source Code Analysis">Source Code Analysis</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/steam%E7%8E%A9%E5%85%B7/" title="STEAM玩具">STEAM玩具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/synchronized/" title="Synchronized">Synchronized</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcp/" title="tcp">tcp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow/" title="tensorflow">tensorflow</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/thinkpad/" title="thinkpad">thinkpad</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor/" title="tor">tor</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor%E4%B8%93%E6%A0%8F/" title="Tor专栏">Tor专栏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu%E9%85%8D%E7%BD%AE/" title="Ubuntu配置">Ubuntu配置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4/" title="UE4">UE4</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ui/" title="UI">UI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/url/" title="url">url</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-c&#43;&#43;%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="Visual C&#43;&#43;游戏开发">Visual C&#43;&#43;游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全">web安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wifi/" title="wifi">wifi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/win7/" title="win7">win7</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/windows/" title="windows">windows</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" title="互联网">互联网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A4%E4%BA%92/" title="交互">交互</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A7%E5%93%81/" title="产品">产品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" title="人工智能">人工智能</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E6%96%87%E5%93%B2%E5%AD%B8/" title="人文哲學">人文哲學</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86/" title="代理">代理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="代理服务器">代理服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%81%E4%B8%9A/" title="企业">企业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%98%E5%8C%96/" title="优化">优化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/" title="传说中的程序员">传说中的程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BD%93%E8%82%B2/" title="体育">体育</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E5%AE%89/" title="信安">信安</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" title="【信息安全】">【信息安全】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" title="信息安全原理与技术">信息安全原理与技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%B1%BB/" title="信息安全类">信息安全类</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7/" title="健康">健康</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="健康小知识">健康小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/" title="入门图形学之C for Graphic">入门图形学之C for Graphic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他">其他</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%BB%E7%94%9F/" title="养生">养生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A/" title="创业">创业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A%E6%8A%95%E8%B5%84/" title="创业投资">创业投资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" title="前端js">前端js</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8A%A0%E5%AF%86/" title="加密">加密</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链">区块链</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BB%E7%96%97/" title="医疗">医疗</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="单元测试">单元测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="去雾论文笔记">去雾论文笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%92%A8%E8%AF%A2/" title="咨询">咨询</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BD%E5%86%85%E5%A4%96%E7%AE%B4%E8%A8%80/" title="国内外箴言">国内外箴言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F/" title="图像">图像</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" title="图像处理">图像处理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E7%89%87/" title="图片">图片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A0%81/" title="在线编码">在线编码</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据">大数据</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A8%B1%E4%B9%90/" title="娱乐">娱乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%98%E5%82%A8/" title="存储">存储</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%A6%E4%B9%A0ing/" title="学习ing">学习ing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8/" title="安全">安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="安全技术">安全技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E8%B5%84%E8%AE%AF/" title="安全资讯">安全资讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" title="实用工具">实用工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E5%B0%8F%E5%A6%99%E6%8B%9B/" title="小小妙招">小小妙招</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="小知识">小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B1%B1%E5%AF%A8%E5%B8%81/" title="山寨币">山寨币</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%B8%9A%E5%A4%A7%E8%84%91/" title="工业大脑">工业大脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C/" title="工作">工作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C%E7%A7%AF%E7%B4%AF/" title="【工作积累】">【工作积累】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B8%B8%E8%AF%86/" title="常识">常识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B3%E5%8F%B0/" title="平台">平台</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" title="年龄预测">年龄预测</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%BD%B1%E8%A7%86/" title="影视">影视</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%80%9D%E8%80%83/" title="思考">思考</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/" title="恶意软件">恶意软件</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%83%A0%E6%99%AE/" title="惠普">惠普</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%84%9F%E6%82%9F%E4%BA%BA%E7%94%9F/" title="感悟人生">感悟人生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%8B%E6%9C%BA/" title="手机">手机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%A9%E5%B1%95/" title="扩展">扩展</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF/" title="技术">技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E4%BA%BA/" title="技术人">技术人</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" title="技术文档">技术文档</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" title="技术文章">技术文章</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" title="搜索引擎">搜索引擎</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9E%E7%AC%91/" title="搞笑">搞笑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" title="摄像头">摄像头</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E4%BD%8Ddp/" title="数位dp">数位dp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" title="数据安全">数据安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="数据采集">数据采集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E8%AE%BA/" title="数论">数论</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E5%AD%97/" title="文字">文字</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" title="文献阅读">文献阅读</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" title="新能源">新能源</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%85%E6%B8%B8/" title="旅游">旅游</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5/" title="无法连接">无法连接</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A5%E8%AE%B0/" title="日记">日记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9A%97%E7%BD%91/" title="暗网">暗网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器">服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">机器学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="【杂七杂八】">【杂七杂八】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E9%A1%B9/" title="杂项">杂项</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9E%B6%E6%9E%84/" title="架构">架构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A1%86%E6%9E%B6/" title="框架">框架</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E5%8A%A0%E9%80%9F/" title="模型压缩加速">模型压缩加速</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B1%BD%E8%BD%A6can%E6%80%BB%E7%BA%BF/" title="汽车CAN总线">汽车CAN总线</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B4%BB%E5%8A%A8/" title="活动">活动</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95/" title="测试">测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="测试工具">测试工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" title="浏览器">浏览器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%B7%E7%9B%97%E6%B9%BEthe-pirate-bay/" title="海盗湾（The Pirate Bay）">海盗湾（The Pirate Bay）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E7%BD%91/" title="深网">深网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏">游戏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="游戏开发">游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%85%A7%E7%89%87/" title="照片">照片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫">爬虫</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="爬虫学习笔记">爬虫学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/" title="牛客网">牛客网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E6%B5%81/" title="物流">物流</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E7%90%86%E5%AD%A6%E7%8C%9C%E6%83%B3/" title="物理学猜想">物理学猜想</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="环境搭建">环境搭建</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB/" title="生活">生活</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E6%96%87%E5%8C%96/" title="生活文化">生活文化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E8%80%8C%E5%B7%B2/" title="生活而已">生活而已</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E7%89%A9/" title="生物">生物</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E4%BF%A1/" title="电信">电信</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%84%91/" title="电脑">电脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%AF%9D/" title="电话">电话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%99%BE%E5%BA%A6/" title="百度">百度</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9B%91%E6%8E%A7/" title="监控">监控</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" title="知识图谱">知识图谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="神经网络">神经网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A6%8F%E5%88%A9/" title="福利">福利</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="科学上网">科学上网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E6%8A%80/" title="科技">科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" title="移动安全">移动安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" title="程序员">程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%91%E8%AF%9D/" title="笑话">笑话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记">笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%97%E6%B3%95/" title="算法">算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86/" title="管理">管理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86%E6%96%87%E5%AD%A6/" title="管理文学">管理文学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%B3%BB%E7%BB%9F/" title="系统">系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%88%E7%AB%AF/" title="终端">终端</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%8F%E5%8E%86%E6%9D%82/" title="经历（杂）">经历（杂）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%BC%E5%90%88/" title="综合">综合</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BC%96%E7%A8%8B/" title="编程">编程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E6%A0%BC/" title="网格">网格</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C/" title="网络">网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全">网络安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86/" title="网络安全知识">网络安全知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="网络技术">网络技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80/" title="美国国家安全局">美国国家安全局</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8A%E5%A4%A9/" title="聊天">聊天</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8C%E5%9C%BA/" title="职场">职场</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="虚拟机">虚拟机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%9E%8D%E8%B5%84/" title="融资">融资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%86%E8%A7%89/" title="视觉">视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%A3%E9%94%81/" title="解锁">解锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">计算机图形学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" title="计算机视觉">计算机视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E7%BD%AE/" title="设置">设置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%91%E4%BD%9C/" title="译作">译作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%AD%E8%A8%80/" title="语言">语言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%BB%E4%B9%A6/" title="读书">读书</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" title="路由器">路由器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">软件工程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" title="远程桌面">远程桌面</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%80%9A%E8%AE%AF/" title="通讯">通讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%8D%E5%81%9A%E7%B3%BB%E7%BB%9F/" title="重做系统">重做系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/" title="金融科技">金融科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%81/" title="锁">锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%99%E9%A2%98%E9%9B%86/" title="错题集">错题集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%AE%E7%9B%98%E8%83%8C%E5%85%89/" title="键盘背光">键盘背光</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙">防火墙</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/" title="非技术">非技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9F%B3%E4%B9%90/" title="音乐">音乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" title="项目分析">项目分析</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" title="领域驱动设计">领域驱动设计</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A3%9F%E8%B0%B1/" title="食谱">食谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2/" title="黑客">黑客</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E5%AE%89%E5%85%A8/" title="黑客安全">黑客安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" title="黑客技术">黑客技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%B1%8F/" title="黑屏">黑屏</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 暗网探秘.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+<div id="gafoot"></div>
+<script src="https://www.w3counter.com/tracker.js?id=151347"></script>
+<script src="https://101121.xyz/ga/app.js"></script>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

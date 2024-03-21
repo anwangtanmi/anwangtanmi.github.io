@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AI on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/categories/ai/</link>
+    <description>Recent content in AI on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 27 Feb 2018 16:28:22 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/categories/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>usaco总结</title>
+      <link>https://anwangtanmi.github.io/posts/660d3d0d2602c0b99c7c99dc5d428373/</link>
+      <pubDate>Tue, 27 Feb 2018 16:28:22 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/660d3d0d2602c0b99c7c99dc5d428373/</guid>
+      <description>咕噜~~&#xA;这次usaco没有打上银组真是让我尴尬，第一次打usaco，有点紧张。。。&#xA;同组第一题的传送牛粪，虽不知道何必如此大费周章，但也是一代水题&#xA;题面是这样的：&#xA;Farmer John最讨厌的农活是运输牛粪。为了精简这个过程，他制造了一个伟大的发明：便便传送门！与使用拖拉机拖着装满牛粪的大车从一个地点到另一个地点相比，他可以使用便便传送门将牛粪从一个地点瞬间传送到另一个地点。&#xA;Farmer John的农场沿着一条长直道路而建，所以他农场上的每个地点都可以简单地用该地点在道路上的位置来表示（相当于数轴上的一个点）。一个传送门可以用两个数xx和yy表示，被拖到地点xx的牛粪可以瞬间传送到地点yy，反之亦然。&#xA;Farmer John想要将牛粪从地点aa运输到地点bb，他建造了一个可能对这一过程有所帮助的传送门（当然，如果没有帮助，他也可以不用）。请帮助他求出他需要使用拖拉机运输牛粪的总距离的最小值。&#xA;输入格式（文件名：teleport.in）：&#xA;输入仅包含一行，为四个用空格分隔的整数：aa和bb，表示起始地点和结束地点，后面是xx和yy，表示传送门。所有的位置都是范围为0…1000…100的整数，不一定各不相同。&#xA;输出格式（文件名：teleport.out）：&#xA;输出一个整数，为Farmer John需要用拖拉机运输牛粪的最小距离。&#xA;输入样例：&#xA;3 10 8 2 输出样例：&#xA;3 在这个样例中，最佳策略是将牛粪从位置3运到位置2，传送到位置8，再运到位置10。 所以需要用拖拉机的总距离为1 + 2 = 3。&#xA;这题我采用了模拟法，一遍过，代码如下&#xA;#include using namespace std; int a,b,x,y,i,j; long long n=0,m=0; int main() { freopen(&#34;teleport.in&#34;,&#34;r&#34;,stdin); freopen(&#34;teleport.out&#34;,&#34;w&#34;,stdout); cin&amp;gt;&amp;gt;a&amp;gt;&amp;gt;b&amp;gt;&amp;gt;x&amp;gt;&amp;gt;y; if(b&amp;gt;a) { n=b-a; if(x&amp;gt;y) { if(a&amp;gt;y) m+=a-y; else m+=y-a; if(b&amp;gt;x) m+=b-x; else m+=x-b; } else { if(a&amp;gt;x) m+=a-x; else m+=x-a; if(b&amp;gt;y) m+=b-y; else m+=y-b; } } else { n=a-b; if(x&amp;gt;y) { if(a&amp;gt;x) m+=a-x; else m+=x-a; if(b&amp;gt;y) m+=b-y; else m+=y-b; } else { if(a&amp;gt;y) m+=a-y; else m+=y-a; if(b&amp;gt;x) m+=b-x; else m+=x-b; } } if(n&amp;gt;m) cout&amp;lt; 很长，可以简洁很多，但这样写思路会更清晰，AC后也就没想过化简。</description>
+    </item>
+    <item>
+      <title>CNN结构：色彩特征提取-色彩属性HSV空间（色彩冷暖初始）</title>
+      <link>https://anwangtanmi.github.io/posts/24aab89c8916bb82bd4aa4805d65f21c/</link>
+      <pubDate>Thu, 23 Nov 2017 17:49:13 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/24aab89c8916bb82bd4aa4805d65f21c/</guid>
+      <description>看完颜色的物理和数学描述基础，再来分析颜色的哲学基础，颜色的人文语义属性。颜色的基本三属性为色相、明度和纯度。&#xA;来自于百科：色彩是通过眼、脑和我们的生活经验所产生的一种对光的视觉效应。人对颜色的感觉不仅仅由光的物理性质所决定，比如人类对颜色的感觉往往受到周围颜色的影响。有时人们也将物质产生不同颜色的物理特性直接称为颜色。&#xA;人眼对色彩的感知一般来源于来自于光源的直射色和物体表面的反射色。&#xA;基础理论，查看百度经验：色彩基础知识 。下面文章摘抄了一小部分。&#xA;参考：如何通俗地解释色彩三要素：色相、明度、纯度？ HSV(Hue, Saturation, Value)是根据颜色的直观特性由A. R. Smith在1978年创建的一种颜色空间, 也称六角锥体模型(Hexcone Model)。色彩的基本属性离开RGB色彩空间，重新定义了色彩的HSV空间，依然表示 单个色彩的唯一性，但有可能仍然没有包含提夫尼蓝。参考：色彩的HSV表示模型，Hue, Saturation, Value。HSV空间和RGB空间是双射映射。&#xA;RGB为生成色，CMYK为反射色，RGB和CMY颜色模型都是面向硬件的，而HSV（Hue Saturation Value）颜色模型是面向用户的。&#xA;色彩基本属性 色相-hue&#xA;色相是指色彩的相貌,是色彩最显著的特征,是不同波长的色彩被感觉的结果。光谱上的红、橙、黄、绿、青、蓝、紫就是七种不同的基本色相。&#xA;色相变化&#xA;参考：色相环&#xA;明度-value&#xA;明度是指色彩的明暗、深浅程度的差别,它取决于反射光的强弱。它包括两个含义:一是指一种颜色本身的明与暗,二是指不同色相之间存在着明与暗的差别。&#xA;颜色有深浅、明暗的变化。比如，深黄、中黄、淡黄、柠檬黄等黄颜色在明度上就不一样，紫红、深红、玫瑰红、大红、朱红、桔红等红颜色在亮度上也不尽相同。这些颜色在明暗、深浅上的不同变化，也就是色彩的又一重要特征一一明度变化。&#xA;色彩的明度变化有许多种情况，一是不同&#xA;色相之间的明度变化。如：在未调配过得原色黄色明度最高、黄比橙亮、橙比红亮、红比紫亮、紫比黑亮；二是在某种颜色中，加白色明度就会逐渐提高，加黑色明度就会变暗，但同时它们的&#xA;纯度(颜色的&#xA;饱和度)就会降低，三是相同的颜色，因光线照射的强弱不同也会产生不同的明暗变化。 纯度-saturation&#xA;也称彩度、艳度、浓度、饱和度,是指色彩的纯净程度。&#xA;其他色彩名词&#xA;相关关系及影响&#xA;0.三要素环&#xA;1. 明度对比类型 为了细致的研究色彩明暗对比，可以把黑、灰、白划分为11个色阶。靠近白的3阶为高调色，靠近黑的三阶为低调色，中间三阶为中调色。&#xA;高调：具有柔软、轻快、纯洁、淡雅之感；&#xA;中调：具有柔和、含蓄、稳重、明确之感；&#xA;低调：具有朴素、浑厚、沉重、压抑之感。&#xA;2. 纯度对比类型.p76&#xA;低纯度基调1-3：给人以平淡、消极、无力、陈旧的感觉，同时也能给人自然、简朴、柔和、超俗、宁静的感受。&#xA;中纯度基调4-6：能够传达中庸、文雅、安详的感觉。&#xA;高纯度基调7-9：由高纯色组成的基调，由鲜艳、冲动、热烈、活波的视觉感受，给人以积极、强烈而冲动的感觉，如图3-37所示，如运用不当也会产生残暴、恐怖、低俗、刺激的感觉。&#xA;图片：高纯度的红色照片，联想一下贞子&#xA;降低纯度的方法：加白（产生色相偏差）、加黑（失去光亮感，感觉变得沉着冷静）、加灰（变得柔和柔软）。&#xA;3.空间基底映射 RGB空间和HSV空间是双射的，转换矩阵如下所示。&#xA;引用地址：http://wenku.baidu.com/view/3ccc1ec58bd63186bcebbc0c.html###&#xA;金属光泽&#xA;金属光泽是光泽强度的等级之一。一般指反射率R&amp;gt;0.25者，宛如金属抛光后所产生的光泽。同时金属光泽也是矿物光泽的一种。一些硫化物和氧化物矿物。如黄铁矿、方铅矿、镜铁矿等就具有金属光泽。金属光泽矿物均属不透明矿物，很少用作宝石。&#xA;[1]&#xA;金属光泽是指如同金属&#xA;抛光后的表面所反射的光泽，如同平滑的金属光洁表面所呈现的光泽，反光极强，同&#xA;非金属光泽、&#xA;半金属光泽并列。 特别之处： 金属光泽在RGB空间可以在三通道均匀分布，转化到HSV空间，会产生奇特的特征，表示为金属光泽物体只有V值，其H值和S值均为0. 其他属性&#xA;冷暖对比&#xA;由于色彩的冷暖差别而形成的色彩对比,称为冷暖对比。红、橙、黄使人感觉温暖;蓝、蓝绿、蓝紫使人感觉寒冷;绿与紫介于期间,另外,色彩的冷暖对比还受明度与纯度的影响,白光反射高而感觉冷,黑色吸收率高而感觉暖。&#xA;在色相环上，红橙黄为暖色，其中橙色称为“暖极”，绿青蓝为冷色，其中天蓝色被称为“冷极”。在色重上，暖色偏重，冷色偏轻。在湿度上，冷色湿润。纯度越高，冷暖感越强。纯度越低，冷暖感也随之降低。&#xA;补色对比&#xA;将红与绿、黄与紫、蓝与橙等具有补色关系的色彩彼此并置,使色彩感觉更为鲜明,纯度增加,称为补色对比。&#xA;色调 色调指得是一幅画中画面色彩的总体倾向,是大的色彩效果。在大自然中,我们经常见到这样一种现象:不同颜色的物体或被笼罩在一片金色的阳光之中,或被笼罩在一片轻纱薄雾似的、淡蓝色的月色之中;或被秋天迷人的黄金色所笼罩;或被统一在冬季银白色的世界之中。这种在不同颜色的物体上,笼罩着某一种色彩,使不同颜色的物体都带有同一色彩倾向,这样的色彩现象就是色调。色调是画面色彩构成的总体效果。</description>
+    </item>
+    <item>
+      <title>骰子点数识别之图像分割</title>
+      <link>https://anwangtanmi.github.io/posts/0e1508e3ad945b221557076073aa83c7/</link>
+      <pubDate>Thu, 05 Jan 2017 13:55:51 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/0e1508e3ad945b221557076073aa83c7/</guid>
+      <description>链接1：利用卷积神经网络识别骰子点数&#xA;链接1：利用神经网络识别骰子点数&#xA;前言 前段时间借用神经网络和卷积神经网络实现了骰子点数的识别，但是一个很严重的问题一直困扰我，那就是当两个骰子叠在一起的时候，将两个骰子分开并不是一件简单的事情。&#xA;下图是我在识别过程中产生的不能识别的，叠加在一起的图片素材。&#xA;面对这些形态各异的图片，有的时候是两个骰子一个角连在一起，有的是一条边，有的是三个骰子叠在一起。所以，很难找到一个满意的办法解决这个问题。&#xA;第一思路就是从原始的RGB图像着手，通过调整二值化阈值，希望能够将骰子对象分割开来，但是遗憾的是我试了好几种方法，都是不行的，原因在于原图像在交接的地方本来就很模糊，颜色变化很小，所以使用二值化阈值调整很难得到完美的解决方案。&#xA;期间我尝试了不同的方法 1. 分水岭 close all clc figure(1) subplot(231) RGB_img=imread(&#39;161220S010129.jpg&#39;); imgsize =size(RGB_img); RGB_img = imcrop(RGB_img,[imgsize(1,2)*0.418 imgsize(1,1)*0.655 215 134]);%大部分图像布局固定 imshow(RGB_img) %% subplot(232) %imhist(A(:,:,1)); bw=im2bw(rgb2gray(RGB_img)); bw=medfilt2(bw); planes=bwareaopen(bw,100); imshow(planes) %% subplot(233) D=bwdist(imcomplement(planes)); D=mat2gray(D); imshow(D) figure subimage(D) hold on [C,h]=imcontour(D,0.2:0.2:0.8); set(h,&#39;ShowText&#39;,&#39;on&#39;,&#39;TextStep&#39;,get(h,&#39;LevelStep&#39;)*2) text_handle = clabel(C,h,&#39;color&#39;,&#39;g&#39;); figure(1) %% subplot(234) M=imimposemin(imcomplement(D),D&amp;gt;.8); imshow(M); %% subplot(236) L=watershed(M); r=L &amp;amp; planes; imshow(r) %%%%%%%%%%%% stats=regionprops(r,&#39;BoundingBox&#39;,&#39;Centroid&#39;); hold on c=cat(1,stats.Centroid); plot(c(:,1),c(:,2),&#39;r*&#39;) bb={stats.BoundingBox}; cellfun(@(x) rectangle(&#39;Position&#39;,x,&#39;EdgeColor&#39;,&#39;y&#39;),bb) %% subplot(235) L(r)=5; imshow(L,[]) 2.</description>
+    </item>
+    <item>
+      <title>VB控制单片机LED之最简单上位机</title>
+      <link>https://anwangtanmi.github.io/posts/1fad61fe03925aa8f374bf0c52bc5913/</link>
+      <pubDate>Fri, 11 Apr 2014 16:15:11 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/1fad61fe03925aa8f374bf0c52bc5913/</guid>
+      <description>这里分享一下自己写的VB上微机控制LED，这已经是最简单的VB上位机了&#xA;VB上位机默认使用COM4，单片机P1^0口接LED，点击按键就可以控制LED了&#xA;工程构建&#xA;实验效果&#xA;单片机程序 ：&#xA;#include void UartInit(void) { SCON |= 0x50 ; PCON = 0x00 ; TMOD |= 0x20 ; TH1 = 0xfd ;&#x9;/*11.0592MHZ,9600kps*/ TL1 = 0xfd ; TR1 = 1 ; ES = 1; EA = 1 ; } void main(void) { UartInit(); while(1); } void UartISR(void) interrupt 4 { if(TI) { TI = 0 ; } if(RI) { RI = 0 ; P1 = SBUF ; } } 上位机程序 ：</description>
+    </item>
+    <item>
+      <title>Flash CS5暗藏物理引擎</title>
+      <link>https://anwangtanmi.github.io/posts/f1074a73e5e951e9114857676d41c700/</link>
+      <pubDate>Sun, 19 Dec 2010 16:48:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/f1074a73e5e951e9114857676d41c700/</guid>
+      <description> 刚换上了Flash CS5,在配置FlashDevelop的时候发现了几个奇怪的SWC,位置在：D:/program files/Adobe /Adobe Flash CS5/Common/Configuration/ActionScript 3.0/libs。&#xA;其中内包括PffLib.swc,上网搜索了一下震惊了。原来是个物理引擎，不过暂时没有找到任何 API 的说明文档，不过高手 做了一个例子，可以直接在Flash CS5中编译成功，看样子下一个版本的FlashPlayer应该可以用到这个物理引擎了。&#xA;Flash CS5物理引擎测试： http://heftybyte.com/?p=36 </description>
+    </item>
+  </channel>
+</rss>

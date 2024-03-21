@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>恶意软件 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/</link>
+    <description>Recent content in 恶意软件 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 09 Jul 2018 15:40:56 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>黑客自己也被黑，大多数LokiBot都是初始版本的修改版</title>
+      <link>https://anwangtanmi.github.io/posts/eff2d6c90d6eeedad2b8ca63f5513894/</link>
+      <pubDate>Mon, 09 Jul 2018 15:40:56 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/eff2d6c90d6eeedad2b8ca63f5513894/</guid>
+      <description>安全研究人员了解到，大多数流传出去的数恶意软件LokiBot原来都是原始版本的修改版本。&#xA;2015年以来，LokiBot就通过从多种流行的网络浏览器、FTP、电子邮件客户端，以及PuTTY等IT管理工具中获取凭证，从而窃取用户的密码和加密货币钱包。&#xA;最初的LokiBot是由一个网名叫“lokistov”，又名“Carter”的人开发和销售，价格为300美元，但是后来暗网上很多其他黑客也开始销售同样的恶意软件，价格则相对低得多（一般能低至80美元）。&#xA;人们认为，LokiBot的源代码已经被泄漏，使得其他人可以将其编译为各种版本。&#xA;不过，Twitter上一个名为“d00rt”的研究人员发现，有些人在没有访问LokiBot源代码的情况下就能对其最初版本进行少量修改（补丁），从而让其他黑客可以定义他们自己的自定义域来接收那些窃取来的数据。&#xA;黑客正在积极散播“被劫持”版本的LokiBot 研究人员发现，这款恶意软件所在的C&amp;amp;C服务器位置，也就是被窃取的数据本该被发送到的位置，已经被改为被存储到5个不同的位置——其中四个使用3DES算法加密，还有一个使用简单的XOR算法加密。&#xA;该恶意软件有一个名为“Decrypt3DESstring”的功能，可以被用来解密所有加密字符串，以及获取C&amp;amp;C服务器的URL。&#xA;研究人员分析了新版LokiBot并且与原始版本进行了比较，发现新版本中的Decrypt3DESstring函数已经被修改，使它总是返回受XOR保护的字符串值，而不是返回受3DES保护的字符串值。&#xA;“在所有新版的LokiBot中，3DES保护的URL总是相同的。”研究人员说道。&#xA;“另外，这些URL从来没被使用过。Decrypt3DESstring会返回一个解密3DES算法的缓冲器。当然这应该是理想状态，但如前所述，实际上每次调用Decrypt3DESstring时，都会返回解密或加密XOR的URL。”&#xA;这些更改使得任何拥有新版本LokiBot的人都能用简单的HEX编辑器来编辑程序，并且添加他们自定义的URL来接收被盗的数据。&#xA;解密函数还被用于获取令恶意软件在系统上持久化所需要的注册表值，但由于在修改后，解密函数只会返回URL，所以在设备重新启动后，修改后版本的LokiBot是无法重新启动的。&#xA;但是，目前尚不清楚为什么初始版本LokiBot的开发者也将同样的C&amp;amp;C服务器URL，存储在用安全性较低的XOR算法加密过的字符串中，即便这是没有任何必要的。&#xA;据悉，目前以超低价格被广泛散布的多种LokiBot版本，也被某些黑客以同样的方式做了修改。&#xA;同时，LokiBot的原作者已经发布了新的2.0版本，并且正在多个论坛上在线销售。&#xA;要了解更多关于新版本LokiBot的细节，可以阅读发布在GitHub上的研究文章：&#xA;https://github.com/d00rt/hijacked_lokibot_version/blob/master/doc/LokiBot_hijacked_2018.pdf</description>
+    </item>
+    <item>
+      <title>每日安全简讯(20160726)</title>
+      <link>https://anwangtanmi.github.io/posts/3f40776ba65023407695012432158715/</link>
+      <pubDate>Tue, 26 Jul 2016 11:19:26 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/3f40776ba65023407695012432158715/</guid>
+      <description>1、研究者发现Hackhound及其C2被用于工业间谍活动&#xA;2、勒索软件Stampdado被破解，解密工具已免费发布&#xA;3、攻击者利用Twitter公司Docker漏洞下载Vine源代码&#xA;4、PHP 0day漏洞，允许攻击者以上帝模式访问网站&#xA;5、研究者利用洋葱蜜罐发现百余个暗网窥探节点&#xA;6、韩国网购网站疑因钓鱼邮件泄漏10万客户数据&#xA;（新闻来源：mcafee、bleepingcomputer、softpedia、theregister、securityweek、koreaherald）</description>
+    </item>
+  </channel>
+</rss>

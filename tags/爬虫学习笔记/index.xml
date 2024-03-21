@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>爬虫学习笔记 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+    <description>Recent content in 爬虫学习笔记 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 14 Oct 2017 14:08:38 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>爬虫学习笔记–Tor隐藏Ip</title>
+      <link>https://anwangtanmi.github.io/posts/a0db242e2f39c42a1006f5922ccc3295/</link>
+      <pubDate>Sat, 14 Oct 2017 14:08:38 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/a0db242e2f39c42a1006f5922ccc3295/</guid>
+      <description>因为在爬虫时，如果使用了默认的IP 可能导致自己的IP遭到封禁&#xA;所以就要隐藏自己的IP 事先说明 爬虫要有度 也要考虑服务器的压力 本篇基于win10 tor的原理&#xA;http://www.cnblogs.com/likeli/p/5719230.html&#xA;http://blog.csdn.net/whiup/article/details/52317779&#xA;https://www.deepdotweb.com/2014/05/23/use-tor-socks5-proxy/&#xA;1.安装tor浏览器 http://www.theonionrouter.com/projects/torbrowser.html.en&#xA;如果进不去网页 那么请自行解决 2.tor的配置请看这篇&#xA;https://jingyan.baidu.com/article/adc815137654fbf723bf73b1.html&#xA;这样就可以搭建好了tor&#xA;python 要安装库&#xA;pip install pysocks&#xA;pip install stem&#xA;import socks import socket import requests socks.set_default_proxy(socks.SOCKS5,&#34;127.0.0.1&#34;,9150) socket.socket = socks.socksocket a = requests.get(&#34;http://checkip.amazonaws.com&#34;).text print a 通过访问&#xA;http://checkip.amazonaws.com 会得到一个ip 会发现这个ip已经是隐藏的ip了 controller.signal(Signal.NEWNYM) 切换ip #coding=utf-8 from stem import Signal from stem.control import Controller import socket import socks import requests import time import sys reload(sys) sys.setdefaultencoding(&#39;utf-8&#39;) controller = Controller.</description>
+    </item>
+  </channel>
+</rss>

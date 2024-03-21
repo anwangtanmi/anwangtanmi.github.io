@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>技术文档 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/</link>
+    <description>Recent content in 技术文档 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 28 Mar 2019 18:51:28 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>c-lightning 闪电网络配置洋葱服务（tor）</title>
+      <link>https://anwangtanmi.github.io/posts/06d51b576188c6d1b359e6174096f765/</link>
+      <pubDate>Thu, 28 Mar 2019 18:51:28 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/06d51b576188c6d1b359e6174096f765/</guid>
+      <description>我只是在5.2方式下做了验证&#xA;我的系统：Linux vbtc 4.15.0-45-generic #48~16.04.1-Ubuntu SMP Tue Jan 29 18:03:48 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux&#xA;1、安装tor及配置参照 《tor隐藏服务配置(比特币).txt》&#xA;2、为持久的.onion地址创建隐藏服务（tor2）&#xA;/etc/tor/torrc文件中添加以下行：&#xA;HiddenServiceDir /var/lib/tor/lightningd-service_v2/&#xA;HiddenServicePort 1234 127.0.0.1:9735&#xA;保存文件并重新启动Tor服务：/etc/init.d/tor restart&#xA;可以在/var/lib/tor/var/lib/tor/lightningd-service_v2/hostname找到新创建的地址&#xA;注意：&#xA;版本2洋葱地址在Tor服务重新启动时保持不变。它是在您创建Tor隐藏服务时创建的。&#xA;3、查看外部地址：&#xA;curl ipinfo.io/ip&#xA;4、查看内部地址&#xA;ip route get 1 | awk ‘{print $NF;exit}’&#xA;5、c-lightning参数配置（5.1或5.2）：&#xA;5.1 、（服务器上配置）c-lightning具有公共IP地址和固定的Tor隐藏服务地址，该地址是持久的，因此外部用户可以连接到该节点。参数&#xA;–bind-addr=yourInternalIPAddress:port –announce-addr=yourexternalIPAddress:port –announce-addr=your.onionAddress:port` 注意：&#xA;your.onionAddress是使用Tor隐藏服务创建的（见上文）。端口是指示为隐藏服务端口的端口。如果隐藏的服务创建行是HiddenServicePort 1234 127.0.0.1:9735.onion地址，则可以在1234端口（全局端口）访问。&#xA;通过以下方式连接到此节点：lightning-cli connect nodeID .onionAddress globalPort 或 lightning-cli connect nodeID yourexternalIPAddress Port&#xA;5.2、 （本地个人开发环境）c-lightning没有公共IP地址，但有一个固定的Tor隐藏服务地址是持久的。参数：&#xA;–bind-addr=yourInternalIPAddress:port –announce-addr=your.onionAddress:port&#xA;验证：&#xA;lightning-cli getinfo 可以看到 .</description>
+    </item>
+  </channel>
+</rss>

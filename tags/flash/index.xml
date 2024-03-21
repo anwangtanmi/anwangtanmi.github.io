@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>flash on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/flash/</link>
+    <description>Recent content in flash on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 30 Jan 2010 15:34:00 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/flash/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Install flash plugin to Chrome Browser on Ubuntu 9.10</title>
+      <link>https://anwangtanmi.github.io/posts/9212e74232ad64eac671aa3d9af59371/</link>
+      <pubDate>Sat, 30 Jan 2010 15:34:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/9212e74232ad64eac671aa3d9af59371/</guid>
+      <description>http://www.howtoforge.com/how-to-enable-adobes-flash-player-in-google-chrome-ubuntu-9.04-p2&#xA;Open a terminal (Applications &amp;gt; Accessories &amp;gt; Terminal):&#xA;If the Flash plugin is already installed for Firefox, we have to find out where it is located:&#xA;sudo updatedb&#xA;sudo locate libflashplayer.so&#xA;If it is installed, output should be similar to this one…&#xA;falko@falko-desktop:~$ sudo locate libflashplayer.so&#xA;/opt/Adobe AIR/Versions/1.0/Resources/libflashplayer.so&#xA;/usr/lib/flashplugin-installer/libflashplayer.so&#xA;falko@falko-desktop:~$&#xA;… which means the Flash plugin is located in /usr/lib/flashplugin-installer/libflashplayer.so. If there’s no output, this means that the Flash plugin isn’t installed – you can then install it as follows:</description>
+    </item>
+    <item>
+      <title>Flex Deep Link(深链接) BrowserManager</title>
+      <link>https://anwangtanmi.github.io/posts/b40b11e82cefbbb58cdba4d3acb015f2/</link>
+      <pubDate>Fri, 11 Sep 2009 11:41:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/b40b11e82cefbbb58cdba4d3acb015f2/</guid>
+      <description>最近做游戏的时候，发现退出登陆时URL上会自动加上一个“#”字符，很奇怪，Google+Baidu无数次都没有找到答案。今天无意间看到几个群友在说通过“BrowserManager”获取URL，于是仔细查看了API，又发现了“HistoryManager”，这个问题终于明白了。&#xA;我们通常看的Web页面 可以通过浏览器的“前进”“后退”来查看刚才看过的页面，同样，嵌入的页面中的flash也可以实现这样的功能。方法是通过HistoryManageer类和BrowserManager类两种方法来实现。HistoryManageer类主要是用在Flex2，Flex3后很少用了。待会我将分别介绍这两种方法。&#xA;回到刚才说URL上自动加“#”号的问题：原因是Application 默认historyManagementEnabled属性是ture，也就是说HistoryManageer类功能自动开启了，Application 里面通过程序控制addChild或removeChild任何组件所导致的变化，将会记录在flash的history中，导致重写url，加上“#”字符。故有了这个奇怪的“#”号。在Flex3中，HistoryManager功能在Flex项目中默认打开的还有Accordion 和 TabNavigator组件。对于没有默认打开该功能的组件，如果要实现该功能，则需要另外注册。下面引用两片文章加以说明：&#xA;对于一个网站来说，其是有若干个网页组成的。而各个网页之间的链接叫做超链接。链接成为网页和网页之间的桥梁。那么，对于一个Flash整站来说，有没有一个办法来实现Flash各页面（更恰当的说是各功能模块）之间的链接呢。比如，我想在浏览器中输入一个链接便可以链到Flash整站中的一页—一个功能模块，而不是每次都要通过Flash整站的第一个页面的功能导航进入。把Flash的各个功能块页面化，那么我们该怎么实现呢。到底能不能实现呢？&#xA;答案是肯定的，通过Flex Deep Link 便能实现上述功能。&#xA;目录 [隐藏] 1 第一，Deep Link 简介。 2 第二，HistoryManager。 3 方法： 4 属性： 5 如何分析URl 6 获得链接信息 Flex Deep Link(深链接)-第一，Deep Link 简介。 Deep Link其实也是依赖Flash和浏览器的交互来实现的，通过获取链接地址中#后面的参数来实现页面标记，当你在Flex Bulid3发布一个项目时，其会自动你发布的目录生成一个名为History的文件夹，里面有History.js,HistoryFrame.html,history.css这三个文件，可见Deep Link也是通过和浏览器交互来实现的.如果浏览器不支持JavaScript或者禁用JavaScript，那么Deep LinK肯定是不能用的。&#xA;对于Deep Link应用，最重要的就是学会应用BrowserManager和HistoryManager这两个类。我们由简单到困难，先讲一讲HistoryManager这个类的应用。&#xA;Flex Deep Link(深链接)- 第二，HistoryManager。 HistoryManager功能在Flex项目中是默认打开的，比如在使用Accordion 和 TabNavigator组件时，在不同区域切换时，Flex会自动记录下各个状态，我们可以通过点击浏览器的“前进”和“后退”按钮来前进和倒退，在你切换这些组件的区域时，Flex会自动你在网页链接的后面加写参数，以便记录当前页面的状态。&#xA;默认情况下HistoryManager的功能是打开的，你可以通过设置各个组件或Application的historyManagementEnabled属性为false（默认为TRUE）来关闭此功能。&#xA;这些都没什么好讲的。关键是怎么在一些普通组建上使用HistoryManager功能，默认的navigator container组建都是支持该功能的。要使一些普通组建也支持此功能，必须：&#xA;1.实现mx.managers.IHistoryManagerClient接口。&#xA;2.用HistoryManager’的register()方法为组建注册。&#xA;3.当组件状态改变时保存组件的状态。&#xA;4.通过实施IHistoryManagerClient的saveState() 和 loadState()方法来保存和读取组件状态。&#xA;拿CheckBox为例：&#xA;xmlns:mx=”http://www.adobe.com/2006/mxml”&#xA;label=”Check me” implements=”mx.managers.IHistoryManagerClient” //关键步骤1，实现接口&#xA;creationComplete=”mx.managers.HistoryManager.register(this);”//关键步骤2，注册组件&#xA;change=”boxChanged(event)”//关键步骤3，当组件发生变化时保存状态&#xA;&amp;gt;&#xA;if (newState != selected) {</description>
+    </item>
+  </channel>
+</rss>

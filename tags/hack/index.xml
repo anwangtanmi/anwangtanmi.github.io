@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hack on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/hack/</link>
+    <description>Recent content in hack on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 23 Feb 2020 14:25:29 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/hack/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker 搭建HFish蜜罐</title>
+      <link>https://anwangtanmi.github.io/posts/51245b7b79af663d21d7153cecbe53b8/</link>
+      <pubDate>Sun, 23 Feb 2020 14:25:29 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/51245b7b79af663d21d7153cecbe53b8/</guid>
+      <description>HFish 是一款基于 Golang 开发的跨平台多功能主动诱导型开源蜜罐框架系统，为了企业安全防护做出了精心的打造，全程记录黑客攻击手段，实现防护自主化。&#xA;1、多功能 不仅仅支持 HTTP(S) 蜜罐，还支持 SSH、SFTP、Redis、Mysql、FTP、Telnet、暗网 等&#xA;2、扩展性 提供 API 接口，使用者可以随意扩展蜜罐模块 ( WEB、PC、APP )&#xA;3、便捷性 使用 Golang SQLite 开发，使用者可以在 Win Mac Linux 上快速部署一套蜜罐平台&#xA;转存失败重新上传取消&#xA;蜜罐 技术本质上是一种对攻击方进行 欺骗的技术，通过布置一些作为 诱饵的主机、网络服务 或者 信息，诱使攻击方对它们实施攻击，从而可以对攻击行为进行 捕获 和 分析，了解攻击方所使用的工具与方法，推测攻击意图和动机，能够让防御方清晰地了解他们所面对的安全威胁，并通过技术和管理手段来增强实际系统的安全防护能力。&#xA;蜜罐 好比是 情报收集系统。蜜罐好像是故意让人攻击的目标，引诱黑客前来攻击。所以攻击者入侵后，你就可以知道他是如何得逞的，随时了解针对服务器发动的最新的攻击和漏洞。还可以通过窃听黑客之间的联系，收集黑客所用的种种工具，并且掌握他们的社交网络。&#xA;HFish安装法式有很多种，这次就演示用docker搭建，其他方式你们有兴趣可以去试试，首先下载镜像：&#xA;docker pull imdevops/hfish&#xA;主节点管理端部署docker run -d -it -p 8080:8080 -p 8989:8989 -p 9000:9000 -p 9001:9001 -p 6379:6379 7da65a1950f0 客户端子节点部署&#xA;docker run -d -it -p 7879:7879 -p 6379:6379 -p 8080:8080 -p 8989:8989 -p 9000:9000 -p 11211:11211 -e CLUSTER_IP=192.</description>
+    </item>
+  </channel>
+</rss>

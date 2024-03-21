@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>由http暗藏通道探讨开–转自黑白网络 - 暗网探秘</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="由http暗藏通道探讨开–转自黑白网络" />
+<meta property="og:description" content="原文链接：
+http://www.cnblogs.com/linyawen/archive/2011/10/26/2224883.html 由http暗藏通道探讨开–转自黑白网络 转自 http://www.heibai.net/article/info/info.php?infoid=1565
+什么是局域网安全，系统管理员怎样才能保障局域网的安全？这是一个不断变化的安全概念，很长的一个时期以来，在局域网与外界互联处放置一个防火墙，严格控制开放的端口，就能在很大程度上掌握安全的主动权，方便的控制网内外用户所能使用的服务。比如，在防火墙上仅仅开放80，53两个端口，那么无论是内部还是外面的恶意人士都将无法使用一些已经证明比较危险的服务。 但要注意一点，防火墙在某种意义上是很愚蠢的，管理员对防火墙的过分依赖以及从而产生的懈怠情绪将不可避免的形成安全上的重大隐患，“通道“技术就是一个很好的例子，这也是本文要讨论的。 那么什么是通道呢？这里所谓的通道，是指一种绕过防火墙端口屏蔽的通讯方式。防火墙两端的数据包封装在防火墙所允许通过的数据包类型或是端口上，然后穿过防火墙与对端通讯，当封装的数据包到达目的地时，再将数据包还原，并将还原后的数据包交送到相应的服务上。 我们举例说明： A主机系统在防火墙之后，受防火墙保护，防火墙配置的访问控制原则是只允许80端口的数据进出，B主机系统在防火墙之外，是开放的。现在假设需要从A系统Telnet到B系统上去，怎么办？使用正常的telnet肯定是不 可能了，但我们知道80端口是开放的。这个时候使用Httptunnel通道，就是一个好的办法，思路如下： 在A机器上起一个tunnel的client端，让它侦听本机的一个不被使用的任意指定端口，如1234，同时将来自1234端口上的数据指引到远端（B机）的80端口上（注意，是80端口，防火墙允许通过），然后在B机上起一个server，同样挂接在80端口上，同时指引80端口的来自client的转发到本机的telnet服务端口23，这样就ok了。现在在A机上telnet本机端口1234，根据刚才的设置数据包会被转发到目标端口为80的B机，因为防火墙允许通过80端口的数据，因此数据包畅通的穿过防火墙，到达B机。此时B机在80端口侦听的进程收到来自A的数据包，会将数据包还原，再交还给telnet进程。当数据包需要由B到A返回时，将由80端口再回送，同样可以顺利的通过防火墙。 实际上tunnel概念已经产生很久了，很有可能读者也早已使用过类似的技术，只不过自己不清楚罢了。不相信的读者可以看看如下网址http://www.http-tunnel.com。这是一个以提供tunnel服务为生的公司，通过他们的在线tunnel server,局域网内的用户可以使用被防火墙所屏蔽的ICQ，E-MAIL，pcanywhere， AIM，MSN， Yahoo，Morpheus，Napster等等诸多软件。读者是不是可以由此想想自己是否接触及使用过这一概念？ 好了，下面来介绍一个在“非公开领域”使用的的通道软件，httptunnel 什么是httptunnel? 什么是Httptunnel，嘿嘿，作者偷个懒，从它的主页上直接拷贝一段话，自己看吧，说的很清楚。 httptunnel creates a bidirectional virtual data connection tunnelled in HTTP requests. The HTTP requests can be sent via an HTTP proxy if so desired. This can be useful for users behind restrictive firewalls. If WWW access is allowed through a HTTP proxy, it’s possible to use httptunnel and, say, telnet or PPP to connect to a computer outside the firewall." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://anwangtanmi.github.io/posts/232c9bb8a88dca0969bb9db2b7d6011c/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2011-10-26T10:54:00+08:00" />
+<meta property="article:modified_time" content="2011-10-26T10:54:00+08:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="暗网探秘" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">暗网探秘</div>
+					
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">由http暗藏通道探讨开–转自黑白网络</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2011-10-26T10:54:00&#43;08:00">2011-10-26</time></div></div>
+		</header>
+		<div id="gatop"></div>
+		<div class="content post__content clearfix">
+			
+<div class="entry-content clearfix">
+<div id="article_content" class="article_content clearfix">
+<div class="article-source-link">
+原文链接：<br>
+<a href="http://www.cnblogs.com/linyawen/archive/2011/10/26/2224883.html" target="_blank" rel="noopener noreferrer">http://www.cnblogs.com/linyawen/archive/2011/10/26/2224883.html</a>
+</div>
+<p> <br>
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-d284373521.css">
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-d284373521.css">
+</p><div class="htmledit_views" id="content_views">
+<div id="post_detail">
+<div class="post">
+<div class="postTitle">
+<a id="cb_post_title_url" href="https://www.cnblogs.com/linyawen/archive/2011/10/26/2224883.html" rel="nofollow" data-token="0d990103f9fc7d1a490885eefdede683">由http暗藏通道探讨开–转自黑白网络</a>
+</div>
+<div class="postText">
+<div id="cnblogs_post_body" class="blogpost-body">
+<p>转自  <a href="http://www.heibai.net/article/info/info.php?infoid=1565" rel="nofollow" data-token="98824e1901c0675d21f1f454ce713667">http://www.heibai.net/article/info/info.php?infoid=1565</a></p>
+<p>什么是局域网安全，系统管理员怎样才能保障局域网的安全？这是一个不断变化的安全概念，很长的一个时期以来，在局域网与外界互联处放置一个防火墙，严格控制开放的端口，就能在很大程度上掌握安全的主动权，方便的控制网内外用户所能使用的服务。比如，在防火墙上仅仅开放80，53两个端口，那么无论是内部还是外面的恶意人士都将无法使用一些已经证明比较危险的服务。 <br>但要注意一点，防火墙在某种意义上是很愚蠢的，管理员对防火墙的过分依赖以及从而产生的懈怠情绪将不可避免的形成安全上的重大隐患，“通道“技术就是一个很好的例子，这也是本文要讨论的。 <br>那么什么是通道呢？这里所谓的通道，是指一种绕过防火墙端口屏蔽的通讯方式。防火墙两端的数据包封装在防火墙所允许通过的数据包类型或是端口上，然后穿过防火墙与对端通讯，当封装的数据包到达目的地时，再将数据包还原，并将还原后的数据包交送到相应的服务上。 <br>我们举例说明： <br>A主机系统在防火墙之后，受防火墙保护，防火墙配置的访问控制原则是只允许80端口的数据进出，B主机系统在防火墙之外，是开放的。现在假设需要从A系统Telnet到B系统上去，怎么办？使用正常的telnet肯定是不 可能了，但我们知道80端口是开放的。这个时候使用Httptunnel通道，就是一个好的办法，思路如下： <br>在A机器上起一个tunnel的client端，让它侦听本机的一个不被使用的任意指定端口，如1234，同时将来自1234端口上的数据指引到远端（B机）的80端口上（注意，是80端口，防火墙允许通过），然后在B机上起一个server，同样挂接在80端口上，同时指引80端口的来自client的转发到本机的telnet服务端口23，这样就ok了。现在在A机上telnet本机端口1234，根据刚才的设置数据包会被转发到目标端口为80的B机，因为防火墙允许通过80端口的数据，因此数据包畅通的穿过防火墙，到达B机。此时B机在80端口侦听的进程收到来自A的数据包，会将数据包还原，再交还给telnet进程。当数据包需要由B到A返回时，将由80端口再回送，同样可以顺利的通过防火墙。 </p>
+<p>实际上tunnel概念已经产生很久了，很有可能读者也早已使用过类似的技术，只不过自己不清楚罢了。不相信的读者可以看看如下网址http://www.http-tunnel.com。这是一个以提供tunnel服务为生的公司，通过他们的在线tunnel server,局域网内的用户可以使用被防火墙所屏蔽的ICQ，E-MAIL，pcanywhere， AIM，MSN， Yahoo，Morpheus，Napster等等诸多软件。读者是不是可以由此想想自己是否接触及使用过这一概念？ </p>
+<p>好了，下面来介绍一个在“非公开领域”使用的的通道软件，httptunnel <br>什么是httptunnel? <br>什么是Httptunnel，嘿嘿，作者偷个懒，从它的主页上直接拷贝一段话，自己看吧，说的很清楚。 <br>httptunnel creates a bidirectional virtual data connection tunnelled in HTTP requests. The HTTP requests can be sent via an HTTP proxy if so desired. <br>This can be useful for users behind restrictive firewalls. If WWW access is allowed through a HTTP proxy, it’s possible to use httptunnel and, say, telnet or PPP to connect to a computer outside the firewall. <br>怎么样，很清楚吧，我们下面大致介绍一下它的使用。 <br>1：httptunnel的使用 </p>
+<p>httptunnel目前比较稳定的版本是3.0.5, 支持各种常见的unix系统，包括window平台。可以从ftp://ftp.nocrew.org/pub/nocrew/unix/httptunnel-3.0.5.tar.gz下载，它的安装是比较简单的，照INSTALL文件做就可以了，这里不介绍。 <br>整个软件安装完毕后，我们会得到两个关键文件，htc和hts,其中htc是客户端（c），而hts是server(s)端，我们来看看具体怎么使用的。 <br>假设有A（域名client.yiming.com)机，B(域名server.yiming.com)机，两机均为solaris环境，A机在防火墙保护中，B机在防火墙以外，防火墙的管理员控制了访问规则，仅ALLOW 80和53端口的进出数据包。而我们的任务是要利用Httptunnel从A机telnet到B机上，穿过防火墙的限制。操作如下： <br>首先我们在A上启动client端，命令很简单，： <br>client.yiming.com#htc -F 1234  server.yiming.com:80， <br>系统回到提示符下，此刻我们用netstat –an 可以看到系统内多出了1234端口的侦听 <br>*.1234                 *.*                0      0     0      0 LISTEN <br>然后我们在B机上启动server端，命令如下： <br>server.yiming.com#hts –F localhost:23 80 <br>系统回到提示符下，此刻我们用netstat看 <br>*.80              *.*                0      0     0      0 LISTEN <br>80端口处于侦听状态，需要注意的是，如果系统本身跑的有web服务（80端口本身处于侦听），并不会影响Httptunnel的工作。 </p>
+<p>Ok,server以及client端都启动了，我们可以开始我们的“通道“试验了，在client.yiming.com上执行一下如下命令看看： <br>Client.yiming.com#telnet localhost 1234 <br>Trying 0.0.0.0… <br>Connected to 0. <br>Escape character is ‘^]’. <br>SunOS 5.7 <br>This is yiming’s private box! Any question,contact me with <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1861717571767f586b7d7b6d6a716c61366262367079367b76">[email protected]</a> <br>login: <br>^_^，看到B机的登录提示符了,输入账号密码看看是否工作正常？ <br>Login:yiming <br>Password: (omit here;) ) <br>sever.yiming.com# ls <br>bak         check       go          httpd       lost+found  mrtg        run         soft        wg <br>呵呵，工作正常呀，和正常的telnet没有什么差别哟。 <br>仔细观察整个过程，会发现在最开始的地方显示的是Trying 0.0.0.0…，Connected to 0.而不是Trying server.yiming.com…,Connect to server.yiming.com，这就很直观的可以看出来client端是转发1234数据包到本机80端口的。（然后再转发到远端）而不是直接连接远端的B机。 </p>
+<p>上面是比较直观的测试，ommmm,我还有点怀疑，server和client之间会不会还是通过23端口通讯，只不过我们没有看到呢？抓取数据包来看看吧，它可是不会骗我们哟。我们在server起个tcpdump瞧瞧。 <br>server.yiming.com#tcpdump host client.yiming.com <br>tcpdump: listening on hme0 <br>14:42:54.213699 client.yiming.com.51767 &gt; server.yiming.com.80: S 1237977857:1237977857(0) win 8760 <mss> (DF) <br>14:42:54.213767server.yiming.com.80 &gt; client.yiming.com.51767: S 1607785698:1607785698(0) ack 1237977858 win 8760 <mss> (DF) <br>14:42:54.216186 client.yiming.com.51768 &gt; server.yiming.com.80: . ack 1 win 8760 (DF) <br>14:42:54.218661 client.yiming.com.51768 &gt; server.yiming.com.80: P 1:44(43) ack 1 win 8760 (DF) <br>14:42:54.218728 client.yiming.com.51768 &gt; server.yiming.com.80: P 44:48(4) ack 1 win 8760 (DF) <br>篇幅所限，上面只是截取了结果中的一点点数据包，但已经可以说明问题了，我们看到server和client之间顺利的完成了三次握手，然后开始push数据，而且通讯确实走的是80端口。有点意思噢，呵呵。 <br>看是看出来了，但太不直白，到底在搞什么呀，我们再稍微改动一下tcpdump的运行方式，进一步在来看看telnet的数据是否被封装在80端口的数据包内传输？ <br>server.yiming.com#tcpdump –X host client.yiming.com <br>14:43:05.246911 server.yiming.com.80 &gt; client.yiming.com.51768: . 2997:4457(1460) ack 89 win 8760 (DF) <br>0x0000   4500 05dc 3b23 4000 ff06 e2c2 yyyy yyyy        E…;#@……f.D <br>0x0010   xxxx xxxx 0050 de42 5fd5 ac4f 39ac 016f        .f.#.P.B_..O9..o <br>0x0020   5010 2238 98e4 0000 746f 7461 6c20 3636        P.”8….total.66 <br>0x0030   370d 0a64 7277 7872 2d78 722d 7820 2032        7..drwxr-xr-x..2 <br>0x0040   3920 726f 6f74 2020 2020 2072 6f6f 7420        9.root…..root. <br>呵呵，这次清楚多了，上面应该是一次ls命令的输出结果，可以清楚的看到telnet的结果！果然telnet的数据是在80端口的数据包内！ </mss></mss></p>
+<p>问题： <br>由上面的内容，我们可以想象一下，如果单纯的信赖防火墙，会产生什么样的后果？ </p>
+<p>检测： <br>这种行为不能被发现吗？使用入侵检测系统来看看，先用snort，这可是大名鼎鼎的open free IDS啦，我使用了snort 1.8.2，算是比较高的版本了，它对整个过程抓获的数据包产成了告警，如下： <br>[**] WEB-MISC whisker splice attack [**] <br>12/02-14:42:54.389175 client.yiming.com:51767-&gt; server.yiming.com:80 <br>TCP TTL:251 TOS:0x0 ID:3327 IpLen:20 DgmLen:42 DF <br>***AP*** Seq: 0x49CA0BA7  Ack: 0x5FD4DCE3  Win: 0x2238  TcpLen: 20 <br>=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ </p>
+<p>[**] WEB-MISC whisker splice attack [**] <br>12/02-14:43:03.195006 client.yiming.com:51767 -&gt; server.yiming.com:80 <br>TCP TTL:251 TOS:0x0 ID:3439 IpLen:20 DgmLen:41 DF <br>***AP*** Seq: 0x49CA0C20  Ack: 0x5FD4DCE3  Win: 0x2238  TcpLen: 20 <br>=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ </p>
+<p>[**] WEB-MISC whisker splice attack [**] <br>12/02-14:43:04.630268 client.yiming.com:51768-&gt; server.yiming.com:80 <br>TCP TTL:251 TOS:0x0 ID:3496 IpLen:20 DgmLen:41 DF <br>***AP*** Seq: 0x49CA0C4E  Ack: 0x5FD4DCE3  Win: 0x2238  TcpLen: 20 <br>=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+ </p>
+<p>我们看到snort对抓获的数据包产生了WEB-MISC whisker splice attack的告警，然而这种攻击并没有发生，同时snort对tunnel数据包没有察觉。这样snort就同时犯了IDS系统的两个大忌，false positive，false negative。是snort这个入侵检测系统水平太低吗？不是，作者本人使用snort已经将近一年了，感觉好极了。而且snort可是刚刚（2001年12月）被一家英国的独立测试实验室NSS评为THE BEST的，它的对手可是包括ISS，CISCO SECURE IDS，CA ETRUST，CYBERSAFE CENTRAX，NFR等诸多高档的商用IDS系统呢。 <br>同样，作者试了试手头其他的IDS系统，没有能够察觉的（包括商用的）。 <br>这也很正常，因为这也是基于签名的IDS系统的通病，目前决大数IDS系统包括著名的商用软件ISS,NFR等都是基于签名的，也就是说系统维护着一套特定攻击数据包的数据模式签名。系统工作时，检查经过的数据包的内容，和自己数据库内数据模式签名对比，如果和某种攻击模式签名相同，那么就判断发生了某种攻击。 <br>由此我们可以看出很明显的存在若干问题：如对签名的依赖不可避免的导致两个结果，false negative ,false positive。也就是说会产生漏报和误报，这一点很容易理解，当新出现一种攻击模式时，由于IDS系统内没有相应的数据签名，那么就不可能捕获相应的攻击数据包，false negative由此发生。同时，过于依赖签名模式也很容易误报，就象我们上面的例子。同时，对数据签名的依赖会在一定程度上降低系统性能—经过的数据包都需要和IDS系统的签名对照。 <br>此外，基于签名的IDS系统本身有可能由于依据签名这一特性而被攻击，一个例子是stick ，这个程序的作者利用IDS系统进行签名匹配工作原理，发送大量带有攻击特征的数据包给IDS系统，使IDS系统本身处理能力超过极限，从而导致IDS系统无法响应。按照作者Coretez Giovanni的说法，运行2秒钟stick就能使著名的商用IDS系统ISS real secure崩溃。 </p>
+<p>好了，看来依靠手头的IDS是无法察觉这种行为了，有其它办法吗？我们仔细分析一下截获的httptunnel数据包再说吧。 <br>仔细观察截获的httptunnel数据包，我们发现紧跟着三次握手完成后的第一个数据包包含着一个POST动作，是由htc（client端）发送到hts(server端)的。如下： </p>
+<p>14:55:39.128908 client.yiming.com.51767 &gt; server.yiming.com.80: S 3521931836:3521931836(0) win 8760 <mss> (DF) <br>0x0000   4500 002c d3cc 4000 fb06 53c9 xxxx xxxx        E..,..@…S..f.# <br>0x0010   yyyy yyyy ca37 0050 d1ec 6a3c 0000 0000        .f.D.7.P..j&lt;…. <br>0x0020   6002 2238 1708 0000 0204 05b4 0000             `.”8………. <br>14:55:39.128945 server.yiming.com.80 &gt; client.yiming.com.51767: S 2946004964:2946004964(0) ack 3521931837 win 8760 <mss> (DF) <br>0x0000   4500 002c cb85 4000 ff06 5810 yyyy yyyy        E..,..@…X..f.D <br>0x0010   xxxx xxxx 0050 ca37 af98 77e4 d1ec 6a3d        .f.#.P.7..w…j= <br>0x0020   6012 2238 ef79 0000 0204 05b4                  `.”8.y…… <br>14:55:39.131002 client.yiming.com.51767 &gt; server.yiming.com.80: . ack 1 win 8760 (DF) <br>0x0000   4500 0028 d3cd 4000 fb06 53cc xxxx xxxx        E..(..@…S..f.# <br>0x0010   yyyy yyyy ca37 0050 d1ec 6a3d af98 77e5        .f.D.7.P..j=..w. <br>0x0020   5010 2238 0737 0000 0000 0000 0000             P.”8.7…….. <br>14:55:39.132841 server.yiming.com.80 &gt; client.yiming.com.51767: . ack 44 win 8760 (DF) <br>0x0000   4500 0028 cb86 4000 ff06 5813 yyyy yyyy        E..(..@…X..f.D <br>0x0010   xxxx xxxx 0050 ca37 af98 77e5 d1ec 6a68        .f.#.P.7..w…jh <br>0x0020   5010 2238 070c 0000                            P.”8…. <br>14:55:39.132860 client.yiming.com.51767 &gt; server.yiming.com.80: P 1:44(43) ack 1 win 8760 (DF) <br>0x0000   4500 0053 d3ce 4000 fb06 53a0 xxxx xxxx        E..S..@…S..f.# <br>0x0010   yyyy yyyy ca37 0050 d1ec 6a3d af98 77e5        .f.D.7.P..j=..w. <br>0x0020   5018 2238 d23a 0000 504f 5354 202f 696e        P.”8.:..POST./in <br>0x0030   6465 782e 6874 6d6c 3f63 7261 703d 3130        dex.html?crap=10 <br>0x0040   3037 3838 3034 3836 2048 5454 502f 312e        07880486.HTTP/1. <br>0x0050   310d 0a                                        1.. <br>                                     1.. <br>看起来是发送client端的数据包到server端的，那么server有什么反应呢？我们往下看 <br>上面这个过程完成后，htc和hts又发生一次握手（注意），如下： <br>14:55:39.134301 client.yiming.com.51768 &gt; server.yiming.com.80: S 2851199448:2851199448(0) win 8760 <mss> (DF) <br>0x0000   4500 002c d3df 4000 fb06 53b6 xxxx xxxx        E..,..@…S..f.# <br>0x0010   yyyy yyyy ca38 0050 a9f1 d9d8 0000 0000        .f.D.8.P…….. <br>0x0020   6002 2238 cf65 0000 0204 05b4 0000             `.”8.e…….. <br>14:55:39.134389 server.yiming.com.80 &gt; client.yiming.com.51768: S 2946060449:2946060449(0) ack 2851199449 win 8760 <mss> (DF) <br>0x0000   4500 002c cb8f 4000 ff06 5806 yyyy yyyy        E..,..@…X..f.D <br>0x0010   xxxx xxxx 0050 ca38 af99 50a1 a9f1 d9d9        .f.#.P.8..P….. <br>0x0020   6012 2238 cf19 0000 0204 05b4                  `.”8…….. <br>14:55:39.136527 client.yiming.com.51768 &gt; server.yiming.com.80: . ack 1 win 8760 (DF) <br>0x0000   4500 0028 d3e0 4000 fb06 53b9 xxxx xxxx        E..(..@…S..f.# <br>0x0010   yyyy yyyy ca38 0050 a9f1 d9d9 af99 50a2        .f.D.8.P……P. <br>0x0020   5010 2238 e6d6 0000 0000 0000 0000             P.”8………. <br>14:55:39.137333 client.yiming.com.51768 &gt; server.yiming.com.80: P 1:43(42) ack 1 win 8760 (DF) <br>0x0000   4500 0052 d3e1 4000 fb06 538e xxxx xxxx        E..R..@…S..f.# <br>0x0010   yyyy yyyy ca38 0050 a9f1 d9d9 af99 50a2        .f.D.8.P……P. <br>0x0020   5018 2238 25ce 0000 4745 5420 2f69 6e64        P.”8%…GET./ind <br>0x0030   6578 2e68 746d 6c3f 6372 6170 3d31 3030        ex.html?crap=100 <br>0x0040   3738 3830 3438 3620 4854 5450 2f31 2e31        7880486.HTTP/1.1 <br>0x0050   0d0a                                           .. <br>14:55:39.137379 server.yiming.com.80 &gt; client.yiming.com.51768: . ack 43 win 8718 (DF) <br>0x0000   4500 0028 cb90 4000 ff06 5809 yyyy yyyy        E..(..@…X..f.D <br>0x0010   xxxx xxxx 0050 ca38 af99 50a2 a9f1 da03        .f.#.P.8..P….. <br>0x0020   5010 220e e6d6 0000                            P.”….. <br>14:55:39.139733 client.yiming.com.51768 &gt; server.yiming.com.80: P 43:89(46) ack 1 win 8760 (DF) <br>0x0000   4500 0056 d3e2 4000 fb06 5389 xxxx xxxx        E..V..@…S..f.# <br>0x0010   yyyy yyyy ca38 0050 a9f1 da03 af99 50a2        .f.D.8.P……P. <br>0x0020   5018 2238 e156 0000 486f 7374 3a20 3230        P.”8.V..Host:.20 <br>0x0030   322e 3130 322e 3232 372e 3638 3a38 300d        2.102.227.68:80. <br>0x0040   0a43 6f6e 6e65 6374 696f 6e3a 2063 6c6f        .Connection:.clo <br>0x0050   7365 0d0a 0d0a                                 se…. <br>14:55:39.151300 server.yiming.com.80 &gt; client.yiming.com.51768: P 1:170(169) ack 89 win 8760 (DF) <br>0x0000   4500 00d1 cb91 4000 ff06 575f yyyy yyyy        E…..@…W_.f.D <br>0x0010   xxxx xxxx 0050 ca38 af99 50a2 a9f1 da31        .f.#.P.8..P….1 <br>0x0020   5018 2238 e721 0000 4854 5450 2f31 2e31        P.”8.!..HTTP/1.1 <br>0x0030   2032 3030 204f 4b0d 0a43 6f6e 7465 6e74        .200.OK..Content <br>0x0040   2d4c 656e 6774 683a 2031 3032 3430 300d        -Length:.102400. <br>0x0050   0a43 6f6e 6e65 6374 696f 6e3a 2063 6c6f        .Connection:.clo <br>0x0060   7365 0d0a 5072 6167 6d61 3a20 6e6f 2d63        se..Pragma:.no-c <br>0x0070   6163 6865 0d0a 4361 6368 652d 436f 6e74        ache..Cache-Cont <br>0x0080   726f 6c3a 206e 6f2d 6361 6368 652c 206e        rol:.no-cache,.n <br>0x0090   6f2d 7374 6f72 652c 206d 7573 742d 7265        o-store,.must-re <br>0x00a0   7661 6c69 6461 7465 0d0a 4578 7069 7265        validate..Expire <br>0x00b0   733a 2030 0d0a 436f 6e74 656e 742d 5479        s:.0..Content-Ty <br>0x00c0   7065 3a20 7465 7874 2f68 746d 6c0d 0a0d        pe:.text/html… <br>我们注意到，这次由hts(server)端向htc(client)端发送了一个GET的标识包。估计是去“取“刚才client端发来的数据包，而且是一次新的握手！为了验证，我们分别在client,server端，执行netstat –an，结果证明了我们的观察是正确的，如下： <br>client.yiming.com.51767     server.yiming.com.80     8760      0  8760      0 ESTABLISHED <br>client.yiming.com.51768    server.yiming.com.80     8760      0  8760      0 ESTABLISHED <br>在server端，执行netstat –an，结果如下： <br>server.yiming.com.80    client.yiming.com.51767  8760      0  8760      0 ESTABLISHED <br>server.yiming.com.80    client.yiming.com.51768  8760      0  8760      0 ESTABLISHED <br>我们看到果然，起了两个socketm，为什么会起两个？不得而知。可以问他（<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7418150607341a1b170611035a1b0613">[email protected]</a>）;) </mss></mss></mss></mss></p>
+<p>GET动作完成后，server端又向client端发送了一个数据包，内容是HTTP/1.1 200 OK Content-Length: 102400 <br>Connection: close <br>Pragma: no-cache <br>Cache-Control: no-cache, no-store, must-revalidate <br>Expires: 0 <br>Content-Type: text/html <br>这里应该是定义数据包传输最大值等参数的。 <br>作者察觉，似乎经由了这三次htc和hts之间的作用后，httptunnel才真正的建立起来，后面的工作才能正常开展，而且从此以后后续的所有数据包一律没有80端口经常走的GET,PUT,POST之类的内容！！这里看来可以想点办法。 </p>
+<p>上面说过，正常走80端口的数据包应该是web行为，那么就数据包中就应该少不了get等正常的动作内容，如果在80端口经过的数据总是没有这些东东，那么就肯定有问题了， <br>那么这种问题就有了一种解决方案，就是用人工来检测通过的数据包，那么这种行为从理论上可以被发现的，但是实际上的操作是不可能的，有没有这种产品呢？按照这个思路检索网上的数据，果然发现有种入侵检测e-Gap系统可以确实察觉及屏蔽httptunnel等通道软件的存在，它工作在tcp/ip的应用层，在应用层一级检测数据包的确切性，比如，检测80端口的数据包，如果看起来数据包中总是没有有效的数据（URL,get,put等参数），那么e-Gap系统就会报警，并中断连接行为。 <br>有兴趣的可以参见如下网址 <br>http://www.whalecommunications.com/fr_030008.htm <br>因为费用问题，作者本人没有试验过，；） </p>
+<p>需要注意的是，这种侦测方法仅对明文传送的有效，如果数据被加密，那么也就无计可施了。那么再进一步，如果加密了呢？ </p>
+<p>目前作者掌握的情况来看，StealthWatch硬件产品可能是一种比较好的选择，它完全摈弃了基于签名的工作模式，而是采用一种正在申请专利的基于flow-base构架策略，按照几家评测实验室的结果来看，可以有效的察觉已经公开和未公开的各种攻击，Dos，蠕虫，病毒等，甚至包括加密的通讯！但是，它的价钱也远远的超出了普通的商用IDS系统，一套齐备的设施需4万美元！有兴趣的可以参见如下网址： <br>http://www.lancope.com/products/ </p>
+<p>好了，是结束的时候了，通过上面的这个httptunnel例子，能使大家学到一些东西，并对防火墙，ids等有点点感觉，放羊啦~~~~~ ；）</p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+</div>
+<div class="postfoot">
+posted on<br>
+<span id="post-date">2011-10-26 10:54</span><br>
+<a href="https://www.cnblogs.com/linyawen/" rel="nofollow" data-token="bf437d992a37a5331ded5e833b0a97da">linyawen</a> 阅读(<br>
+<span id="post_view_count">…</span>) 评论(<br>
+<span id="post_comment_count">…</span>)<br>
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=2224883" rel="nofollow" data-token="f50e183168bd431db4f265b273cf844c">编辑</a><br>
+<a href="#" rel="nofollow" data-token="74250f8914bd52732e07c784b10dcd84">收藏</a>
+</div>
+</div>
+</div>
+<p>转载于:https://www.cnblogs.com/linyawen/archive/2011/10/26/2224883.html</p>
+</div>
+</div>
+</div>
+		</div>
+		<div id="gabottom"></div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<p class="authorbox__warning">
+		<strong>WARNING:</strong> Authorbox is activated, but [Author] parameters are not specified.
+	</p>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/posts/23f9b6c2279e16aaaa56d88961cfdb99/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">争议ToR——数据中心架构与布线（update）</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/posts/f250865f3f7bb7794fd5ef62c173a649/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">Windows7 网络自动断开的困境</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://anwangtanmi.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/9b95da130ea943dbd082cf1a171a19e7/">暗网网址导航大全（2021年12月更新）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/bfac6452d61bcc1e7704a5ca15185e04/">暗网网址合集 暗网链接 Deep Web Link Director</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/c40e3e8c0724a9f9f096273235f23281/">全球十大暗网搜索引擎</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/120eca3d03790d345b608f2dbb6cae46/">最详细的暗网教程——tor洋葱浏览器的安装和使用方法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cf06ef810fe5b19e83228ca2e707ed26/">最新darkweb暗网搜索引擎——Tordex | The Uncensored Tor Search Engine</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ai/">AI</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/altiumdesigner/">AltiumDesigner</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/btc/">BTC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/darknet/">darknet</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/database/">Database</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/deeplearning/">DeepLearning</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/docker/">Docker</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/gis/">GIS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/google/">Google</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ios/">iOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java/">java</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/life/">Life</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/linux/">linux</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/lpc/">LPC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/macos/">macOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/mysql/">mysql</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/python/">Python</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/qt/">qt</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/seo/">SEO</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/threejs/">threejs</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/unity/">Unity</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">产品设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/">图形视频</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E7%A8%8B%E7%9F%A5%E8%AF%86/">教程知识</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E8%82%B2/">教育</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E8%AE%BA/">数论</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/">显卡驱动</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%99%BA%E8%83%BD%E6%90%9C%E7%B4%A2%E6%8A%80%E6%9C%AF/">智能搜索技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">模型压缩</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/">模拟电路</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E9%A2%98/">模拟题</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B0%B4%E4%B8%8B%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">水下图像增强</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B7%B1%E7%BD%91/">深网</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A4%BE%E5%B7%A5%E5%BA%93/">社工库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A5%9E%E7%BB%8F%E6%9C%BA%E5%88%B6/">神经机制</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8web/">移动web</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">移动开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AB%99%E9%95%BF/">站长</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%9F%E8%AE%A1%E6%90%9C%E7%B4%A2/">统计搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/">网络优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%A7%86%E8%A7%89/">视觉</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E6%BA%90%E6%90%9C%E9%9B%86/">资源搜集</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E8%AE%AF/">资讯</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%80%86%E5%90%91/">逆向</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/agile/" title="Agile">Agile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/android/" title="android">android</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/animation/" title="animation">animation</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api/" title="api">api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/apple/" title="apple">apple</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/application/" title="application">application</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/avi/" title="avi">avi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bing/" title="bing">bing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/b%E7%AB%99%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0/" title="B站吴恩达深度学习视频笔记">B站吴恩达深度学习视频笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c/" title="c">c</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43;">c&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cam/" title="cam">cam</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ccie/" title="ccie">ccie</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cosine/" title="Cosine">Cosine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/" title="D3D实例教程">D3D实例教程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ddd/" title="DDD">DDD</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deep-web/" title="Deep Web">Deep Web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepdive/" title="DeepDive">DeepDive</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepweb/" title="DeepWeb">DeepWeb</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/directx/" title="Directx">Directx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dl&#43;prior/" title="DL&#43;Prior">DL&#43;Prior</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/eclipse/" title="eclipse">eclipse</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/filter/" title="filter">filter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="flash">flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google/" title="google">google</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hack/" title="hack">hack</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hacker/" title="hacker">hacker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html5/reactnative/" title="html5/ReactNative">html5/ReactNative</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="HTTP">HTTP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ide/" title="IDE">IDE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/idea/" title="idea">idea</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ielab/" title="ielab">ielab</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/image/" title="image">image</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/internet/" title="internet">internet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios/" title="IOS">IOS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios%E5%BC%80%E5%8F%91/" title="IOS开发">IOS开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iphone/" title="iphone">iphone</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="it">it</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="java">java</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="JavaScript">JavaScript</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kotlin-%E5%BC%80%E5%8F%91%E8%80%85%E7%A4%BE%E5%8C%BA/" title="Kotlin 开发者社区">Kotlin 开发者社区</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layer/" title="layer">layer</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layui-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" title="Layui-项目实践">Layui-项目实践</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leak/" title="leak">leak</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/life-and-entainment/" title="life and entainment">life and entainment</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac/" title="mac">mac</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/material/" title="Material">Material</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/methods/" title="methods">methods</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/microsoft/" title="microsoft">microsoft</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mine/" title="mine">mine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/network/" title="network">network</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp/" title="NLP">NLP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nmap/" title="Nmap">Nmap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node/" title="node">node</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/okhttp/" title="OkHttp">OkHttp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/opencv/" title="opencv">opencv</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/os/" title="OS">OS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/php/" title="PHP">PHP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python/" title="python">python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0/" title="python学习">python学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="python学习笔记">python学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pytorch/" title="pytorch">pytorch</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qq/" title="qq">qq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" title="Qt-项目作品">Qt-项目作品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reading-notes/" title="Reading notes">Reading notes</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby/" title="ruby">ruby</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrum/" title="Scrum">Scrum</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seo/" title="SEO">SEO</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/setter/" title="setter">setter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/skills/" title="Skills">Skills</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/soa/" title="soa">soa</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/socket/" title="socket">socket</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source-code-analysis/" title="Source Code Analysis">Source Code Analysis</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/steam%E7%8E%A9%E5%85%B7/" title="STEAM玩具">STEAM玩具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/synchronized/" title="Synchronized">Synchronized</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcp/" title="tcp">tcp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow/" title="tensorflow">tensorflow</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/thinkpad/" title="thinkpad">thinkpad</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor/" title="tor">tor</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor%E4%B8%93%E6%A0%8F/" title="Tor专栏">Tor专栏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu%E9%85%8D%E7%BD%AE/" title="Ubuntu配置">Ubuntu配置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4/" title="UE4">UE4</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ui/" title="UI">UI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/url/" title="url">url</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-c&#43;&#43;%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="Visual C&#43;&#43;游戏开发">Visual C&#43;&#43;游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全">web安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wifi/" title="wifi">wifi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/win7/" title="win7">win7</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/windows/" title="windows">windows</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" title="互联网">互联网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A4%E4%BA%92/" title="交互">交互</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A7%E5%93%81/" title="产品">产品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" title="人工智能">人工智能</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E6%96%87%E5%93%B2%E5%AD%B8/" title="人文哲學">人文哲學</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86/" title="代理">代理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="代理服务器">代理服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%81%E4%B8%9A/" title="企业">企业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%98%E5%8C%96/" title="优化">优化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/" title="传说中的程序员">传说中的程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BD%93%E8%82%B2/" title="体育">体育</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E5%AE%89/" title="信安">信安</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" title="【信息安全】">【信息安全】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" title="信息安全原理与技术">信息安全原理与技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%B1%BB/" title="信息安全类">信息安全类</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7/" title="健康">健康</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="健康小知识">健康小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/" title="入门图形学之C for Graphic">入门图形学之C for Graphic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他">其他</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%BB%E7%94%9F/" title="养生">养生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A/" title="创业">创业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A%E6%8A%95%E8%B5%84/" title="创业投资">创业投资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" title="前端js">前端js</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8A%A0%E5%AF%86/" title="加密">加密</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链">区块链</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BB%E7%96%97/" title="医疗">医疗</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="单元测试">单元测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="去雾论文笔记">去雾论文笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%92%A8%E8%AF%A2/" title="咨询">咨询</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BD%E5%86%85%E5%A4%96%E7%AE%B4%E8%A8%80/" title="国内外箴言">国内外箴言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F/" title="图像">图像</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" title="图像处理">图像处理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E7%89%87/" title="图片">图片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A0%81/" title="在线编码">在线编码</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据">大数据</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A8%B1%E4%B9%90/" title="娱乐">娱乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%98%E5%82%A8/" title="存储">存储</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%A6%E4%B9%A0ing/" title="学习ing">学习ing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8/" title="安全">安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="安全技术">安全技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E8%B5%84%E8%AE%AF/" title="安全资讯">安全资讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" title="实用工具">实用工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E5%B0%8F%E5%A6%99%E6%8B%9B/" title="小小妙招">小小妙招</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="小知识">小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B1%B1%E5%AF%A8%E5%B8%81/" title="山寨币">山寨币</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%B8%9A%E5%A4%A7%E8%84%91/" title="工业大脑">工业大脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C/" title="工作">工作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C%E7%A7%AF%E7%B4%AF/" title="【工作积累】">【工作积累】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B8%B8%E8%AF%86/" title="常识">常识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B3%E5%8F%B0/" title="平台">平台</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" title="年龄预测">年龄预测</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%BD%B1%E8%A7%86/" title="影视">影视</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%80%9D%E8%80%83/" title="思考">思考</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/" title="恶意软件">恶意软件</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%83%A0%E6%99%AE/" title="惠普">惠普</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%84%9F%E6%82%9F%E4%BA%BA%E7%94%9F/" title="感悟人生">感悟人生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%8B%E6%9C%BA/" title="手机">手机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%A9%E5%B1%95/" title="扩展">扩展</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF/" title="技术">技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E4%BA%BA/" title="技术人">技术人</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" title="技术文档">技术文档</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" title="技术文章">技术文章</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" title="搜索引擎">搜索引擎</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9E%E7%AC%91/" title="搞笑">搞笑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" title="摄像头">摄像头</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E4%BD%8Ddp/" title="数位dp">数位dp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" title="数据安全">数据安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="数据采集">数据采集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E8%AE%BA/" title="数论">数论</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E5%AD%97/" title="文字">文字</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" title="文献阅读">文献阅读</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" title="新能源">新能源</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%85%E6%B8%B8/" title="旅游">旅游</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5/" title="无法连接">无法连接</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A5%E8%AE%B0/" title="日记">日记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9A%97%E7%BD%91/" title="暗网">暗网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器">服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">机器学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="【杂七杂八】">【杂七杂八】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E9%A1%B9/" title="杂项">杂项</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9E%B6%E6%9E%84/" title="架构">架构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A1%86%E6%9E%B6/" title="框架">框架</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E5%8A%A0%E9%80%9F/" title="模型压缩加速">模型压缩加速</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B1%BD%E8%BD%A6can%E6%80%BB%E7%BA%BF/" title="汽车CAN总线">汽车CAN总线</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B4%BB%E5%8A%A8/" title="活动">活动</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95/" title="测试">测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="测试工具">测试工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" title="浏览器">浏览器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%B7%E7%9B%97%E6%B9%BEthe-pirate-bay/" title="海盗湾（The Pirate Bay）">海盗湾（The Pirate Bay）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E7%BD%91/" title="深网">深网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏">游戏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="游戏开发">游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%85%A7%E7%89%87/" title="照片">照片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫">爬虫</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="爬虫学习笔记">爬虫学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/" title="牛客网">牛客网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E6%B5%81/" title="物流">物流</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E7%90%86%E5%AD%A6%E7%8C%9C%E6%83%B3/" title="物理学猜想">物理学猜想</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="环境搭建">环境搭建</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB/" title="生活">生活</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E6%96%87%E5%8C%96/" title="生活文化">生活文化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E8%80%8C%E5%B7%B2/" title="生活而已">生活而已</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E7%89%A9/" title="生物">生物</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E4%BF%A1/" title="电信">电信</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%84%91/" title="电脑">电脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%AF%9D/" title="电话">电话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%99%BE%E5%BA%A6/" title="百度">百度</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9B%91%E6%8E%A7/" title="监控">监控</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" title="知识图谱">知识图谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="神经网络">神经网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A6%8F%E5%88%A9/" title="福利">福利</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="科学上网">科学上网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E6%8A%80/" title="科技">科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" title="移动安全">移动安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" title="程序员">程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%91%E8%AF%9D/" title="笑话">笑话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记">笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%97%E6%B3%95/" title="算法">算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86/" title="管理">管理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86%E6%96%87%E5%AD%A6/" title="管理文学">管理文学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%B3%BB%E7%BB%9F/" title="系统">系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%88%E7%AB%AF/" title="终端">终端</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%8F%E5%8E%86%E6%9D%82/" title="经历（杂）">经历（杂）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%BC%E5%90%88/" title="综合">综合</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BC%96%E7%A8%8B/" title="编程">编程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E6%A0%BC/" title="网格">网格</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C/" title="网络">网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全">网络安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86/" title="网络安全知识">网络安全知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="网络技术">网络技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80/" title="美国国家安全局">美国国家安全局</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8A%E5%A4%A9/" title="聊天">聊天</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8C%E5%9C%BA/" title="职场">职场</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="虚拟机">虚拟机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%9E%8D%E8%B5%84/" title="融资">融资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%86%E8%A7%89/" title="视觉">视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%A3%E9%94%81/" title="解锁">解锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">计算机图形学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" title="计算机视觉">计算机视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E7%BD%AE/" title="设置">设置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%91%E4%BD%9C/" title="译作">译作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%AD%E8%A8%80/" title="语言">语言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%BB%E4%B9%A6/" title="读书">读书</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" title="路由器">路由器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">软件工程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" title="远程桌面">远程桌面</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%80%9A%E8%AE%AF/" title="通讯">通讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%8D%E5%81%9A%E7%B3%BB%E7%BB%9F/" title="重做系统">重做系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/" title="金融科技">金融科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%81/" title="锁">锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%99%E9%A2%98%E9%9B%86/" title="错题集">错题集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%AE%E7%9B%98%E8%83%8C%E5%85%89/" title="键盘背光">键盘背光</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙">防火墙</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/" title="非技术">非技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9F%B3%E4%B9%90/" title="音乐">音乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" title="项目分析">项目分析</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" title="领域驱动设计">领域驱动设计</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A3%9F%E8%B0%B1/" title="食谱">食谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2/" title="黑客">黑客</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E5%AE%89%E5%85%A8/" title="黑客安全">黑客安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" title="黑客技术">黑客技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%B1%8F/" title="黑屏">黑屏</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 暗网探秘.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+<div id="gafoot"></div>
+<script src="https://www.w3counter.com/tracker.js?id=151347"></script>
+<script src="https://101121.xyz/ga/app.js"></script>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

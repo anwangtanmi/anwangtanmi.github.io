@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>log日志记录 - 暗网探秘</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="log日志记录" />
+<meta property="og:description" content="http://www.cnblogs.com/wangwanchao/p/5310096.html
+在项目开发中，记录错误日志是一个很有必要功能。
+一是方便调试
+二是便于发现系统运行过程中的错误
+三是存储业务数据，便于后期分析
+日志的实现方式：
+1、自己写类，将日志数据，以io操作方式，写数据到文本文件。或者是写到数据库中。
+2、使用log4j。log4j，这也是此文要记录的。log4j，以前在用.Net做web form时，用log4net。平台通吃。而且，log4j可以将日志，输出到console窗口，输出到文本文件，输出到数据库
+等，功能还是很强大的！
+3、使用jdk自带的logging.jar中的方法。
+4、使用slfj。slfj，是也是一个很强大的功能。slfj旨在一统天下，也就是slfj提供了logging.jar 和 log4j的接口，可以通过slfj来调用log4j，也可以调用jdk的logging。
+Log4j三个主要的组件，它们分别是 Logger、Appender和Layout，
+Log4j 允许开发人员定义多个Logger，每个Logger拥有自己的名字，Logger之间通过名字来表明隶属关系。有一个Logger
+称为Root，它永远存在，且不能通过名字检索或引用，可以通过Logger.getRootLogger（）方法获得，其它Logger通过
+Logger.getLogger（String name）方法。
+Appender则是用来指明将所有的log信息存放到什么地方，Log4j中支持多种appender，如 console、files、GUI
+components、NT Event Loggers等，一个Logger可以拥有多个Appender，也就是你既可以将Log信息输出到屏幕，同时
+存储到一个文件中。
+Layout的作用是控制Log信息的输出方式，也就是格式化输出的信息。
+log日志级别
+trace： 是追踪，就是程序推进以下，你就可以写个trace输出，所以trace应该会特别多，不过没关系，我们可以设置最低日志级别不让他输出。
+debug： 调试么，我一般就只用这个作为最低级别，trace压根不用。是在没办法就用eclipse或者idea的debug功能就好了么。
+info： 输出一下你感兴趣的或者重要的信息，这个用的最多了。
+warn： 有些信息不是错误信息，但是也要给程序员的一些提示，类似于eclipse中代码的验证不是有error 和warn（不算错误但是也请注意，比如以下depressed的方法）。
+error： 错误信息。用的也比较多。
+fatal： 级别比较高了。重大错误，这种级别你可以直接停止程序了，是不应该出现的错误么！不用那么紧张，其实就是一个程度的问题。
+log4j的配置文件
+%p: 输出日志信息优先级，即DEBUG，INFO，WARN，ERROR，FATAL,
+%d: 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyy MMM dd HH:mm:ss,SSS}，输出类似：2002年10月18日 22：10：28，921 %r: 输出自应用启动到输出该log信息耗费的毫秒数 %c: 输出日志信息所属的类目，通常就是所在类的全名 %t: 输出产生该日志事件的线程名 %l: 输出日志事件的发生位置，相当于%C.%M(%F:%L)的组合,包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java:10) %x: 输出和当前线程相关联的NDC(嵌套诊断环境),尤其用到像java servlets这样的多客户多线程的应用中。 %%: 输出一个”%”字符 %F: 输出日志消息产生时所在的文件名称 %L: 输出代码中的行号 %m: 输出代码中指定的消息,产生的日志具体信息 %n: 输出一个回车换行符，Windows平台为”\r\n”，Unix平台为”\n”输出日志信息换行 可以在%与模式字符之间加上修饰符来控制其最小宽度、最大宽度、和文本的对齐方式。如： 1)%20c：指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，默认的情况下右对齐。 2)%-20c:指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，”-”号指定左对齐。 3)%." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://anwangtanmi.github.io/posts/2cc325c2418cdf9403d57aca7099dfcd/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-06-05T10:38:54+08:00" />
+<meta property="article:modified_time" content="2017-06-05T10:38:54+08:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="暗网探秘" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">暗网探秘</div>
+					
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">log日志记录</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-06-05T10:38:54&#43;08:00">2017-06-05</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java/" rel="category">java</a>
+	</span>
+</div></div>
+		</header>
+		<div id="gatop"></div>
+		<div class="content post__content clearfix">
+			
+<div class="entry-content clearfix">
+<div id="article_content" class="article_content clearfix">
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-3019150162.css">
+<div id="content_views" class="markdown_views prism-tomorrow-night-eighties">
+<br>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+<path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+</svg>
+<p><a href="http://www.cnblogs.com/wangwanchao/p/5310096.html" rel="nofollow" data-token="e5c6b975526cdcf626cdb48a237eb51f">http://www.cnblogs.com/wangwanchao/p/5310096.html</a></p>
+<p>在项目开发中，记录错误日志是一个很有必要功能。</p>
+<p>一是方便调试</p>
+<p>二是便于发现系统运行过程中的错误</p>
+<p>三是存储业务数据，便于后期分析</p>
+<p>日志的实现方式：</p>
+<p>1、自己写类，将日志数据，以io操作方式，写数据到文本文件。或者是写到数据库中。</p>
+<p>2、使用log4j。log4j，这也是此文要记录的。log4j，以前在用.Net做web form时，用log4net。平台通吃。而且，log4j可以将日志，输出到console窗口，输出到文本文件，输出到数据库</p>
+<p>等，功能还是很强大的！</p>
+<p>3、使用jdk自带的logging.jar中的方法。</p>
+<p>4、使用slfj。slfj，是也是一个很强大的功能。slfj旨在一统天下，也就是slfj提供了logging.jar 和 log4j的接口，可以通过slfj来调用log4j，也可以调用jdk的logging。</p>
+<p>Log4j三个主要的组件，它们分别是 Logger、Appender和Layout，</p>
+<p>Log4j 允许开发人员定义多个Logger，每个Logger拥有自己的名字，Logger之间通过名字来表明隶属关系。有一个Logger</p>
+<p>称为Root，它永远存在，且不能通过名字检索或引用，可以通过Logger.getRootLogger（）方法获得，其它Logger通过</p>
+<p>Logger.getLogger（String name）方法。</p>
+<p>Appender则是用来指明将所有的log信息存放到什么地方，Log4j中支持多种appender，如 console、files、GUI</p>
+<p>components、NT Event Loggers等，一个Logger可以拥有多个Appender，也就是你既可以将Log信息输出到屏幕，同时</p>
+<p>存储到一个文件中。</p>
+<p>Layout的作用是控制Log信息的输出方式，也就是格式化输出的信息。</p>
+<p>log日志级别</p>
+<p>trace： 是追踪，就是程序推进以下，你就可以写个trace输出，所以trace应该会特别多，不过没关系，我们可以设置最低日志级别不让他输出。</p>
+<p>debug： 调试么，我一般就只用这个作为最低级别，trace压根不用。是在没办法就用eclipse或者idea的debug功能就好了么。</p>
+<p>info： 输出一下你感兴趣的或者重要的信息，这个用的最多了。</p>
+<p>warn： 有些信息不是错误信息，但是也要给程序员的一些提示，类似于eclipse中代码的验证不是有error 和warn（不算错误但是也请注意，比如以下depressed的方法）。</p>
+<p>error： 错误信息。用的也比较多。</p>
+<p>fatal： 级别比较高了。重大错误，这种级别你可以直接停止程序了，是不应该出现的错误么！不用那么紧张，其实就是一个程度的问题。</p>
+<p>log4j的配置文件</p>
+<p>%p: 输出日志信息优先级，即DEBUG，INFO，WARN，ERROR，FATAL,</p>
+<p>%d: 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyy MMM dd HH:mm:ss,SSS}，输出类似：2002年10月18日 22：10：28，921 <br> %r: 输出自应用启动到输出该log信息耗费的毫秒数 <br> %c: 输出日志信息所属的类目，通常就是所在类的全名 <br> %t: 输出产生该日志事件的线程名 <br> %l: 输出日志事件的发生位置，相当于%C.%M(%F:%L)的组合,包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java:10) <br> %x: 输出和当前线程相关联的NDC(嵌套诊断环境),尤其用到像java servlets这样的多客户多线程的应用中。 <br> %%: 输出一个”%”字符 <br> %F: 输出日志消息产生时所在的文件名称 <br> %L: 输出代码中的行号 <br> %m: 输出代码中指定的消息,产生的日志具体信息 <br> %n: 输出一个回车换行符，Windows平台为”\r\n”，Unix平台为”\n”输出日志信息换行 <br> 可以在%与模式字符之间加上修饰符来控制其最小宽度、最大宽度、和文本的对齐方式。如： <br> 1)%20c：指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，默认的情况下右对齐。 <br> 2)%-20c:指定输出category的名称，最小的宽度是20，如果category的名称小于20的话，”-”号指定左对齐。 <br> 3)%.30c:指定输出category的名称，最大的宽度是30，如果category的名称大于30的话，就会将左边多出的字符截掉，但小于30的话也不会有空格。 <br> 4)%20.30c:如果category的名称小于20就补空格，并且右对齐，如果其名称长于30字符，就从左边交远销出的字符截掉。</p>
+<p>log的输出配置 <br> Log4j提供的appender有以下几种： <br> org.apache.log4j.ConsoleAppender（控制台）， <br> org.apache.log4j.FileAppender（文件）， <br> org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件）， <br> org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件）， <br> org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）</p>
+<p>(1).ConsoleAppender选项 <br> Threshold=WARN:指定日志消息的输出最低层次。 <br> ImmediateFlush=true:默认值是true,意谓着所有的消息都会被立即输出。 <br> Target=System.err：默认情况下是：System.out,指定输出控制台</p>
+<p>(2).FileAppender 选项 <br> Threshold=WARN:指定日志消息的输出最低层次。 <br> ImmediateFlush=true:默认值是true,意谓着所有的消息都会被立即输出。 <br> File=mylog.txt:指定消息输出到mylog.txt文件。 <br> Append=false:默认值是true,即将消息增加到指定文件中，false指将消息覆盖指定的文件内容。</p>
+<p>(3).DailyRollingFileAppender 选项 <br> Threshold=WARN:指定日志消息的输出最低层次。 <br> ImmediateFlush=true:默认值是true,意谓着所有的消息都会被立即输出。 <br> File=mylog.txt:指定消息输出到mylog.txt文件。 <br> Append=false:默认值是true,即将消息增加到指定文件中，false指将消息覆盖指定的文件内容。 <br> DatePattern=’.’yyyy-ww:每周滚动一次文件，即每周产生一个新的文件。当然也可以指定按月、周、天、时和分。即对应的格式如下： <br> 1)’.’yyyy-MM: 每月 <br> 2)’.’yyyy-ww: 每周 <br> 3)’.’yyyy-MM-dd: 每天 <br> 4)’.’yyyy-MM-dd-a: 每天两次 <br> 5)’.’yyyy-MM-dd-HH: 每小时 <br> 6)’.’yyyy-MM-dd-HH-mm: 每分钟</p>
+<p>(4).RollingFileAppender 选项 <br> Threshold=WARN:指定日志消息的输出最低层次。 <br> ImmediateFlush=true:默认值是true,意谓着所有的消息都会被立即输出。 <br> File=mylog.txt:指定消息输出到mylog.txt文件。 <br> Append=false:默认值是true,即将消息增加到指定文件中，false指将消息覆盖指定的文件内容。 <br> MaxFileSize=100KB: 后缀可以是KB, MB 或者是 GB. 在日志文件到达该大小时，将会自动滚动，即将原来的内容移到mylog.log.1文件。 <br> MaxBackupIndex=2:指定可以产生的滚动文件的最大数。</p>
+<p>配置日志信息的布局</p>
+<p>org.apache.log4j.HTMLLayout（以HTML表格形式布局）， <br> org.apache.log4j.PatternLayout（可以灵活地指定布局模式）， <br> org.apache.log4j.SimpleLayout（包含日志信息的级别和信息字符串）， <br> org.apache.log4j.TTCCLayout（包含日志产生的时间、线程、类别等等信息）</p>
+<p>log4j日志输出位置：</p>
+<p>控制台</p>
+<p>文本文件</p>
+<p>数据库</p>
+<pre class="prettyprint"><code class=" hljs sql"> 1 log4j.rootCategory=DEBUG,logfile,stdout    
+ 2     
+ 3 log4j.logger.SYSTEM = INFO,JDBC    
+ 4 log4j.logger.OPERATION = INFO,JDBC2   
+ 5 
+ 6 #JDBC configure    
+ 7 log4j.appender.JDBC.Threshold=INFO    
+ 8 log4j.appender.JDBC=org.apache.log4j.jdbc.JDBCAppender     
+ 9 log4j.appender.JDBC.driver=oracle.jdbc.driver.OracleDriver    
+10 log4j.appender.JDBC.URL=jdbc:oracle:thin:@127.0.0.1:1521:ORCL    
+11 log4j.appender.JDBC.user=hh   
+12 log4j.appender.JDBC.password=hh   
+13 log4j.appender.JDBC.layout=org.apache.log4j.PatternLayout    
+14 log4j.appender.JDBC.sql=<span class="hljs-operator"><span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> SYS_LOG(USERID,LOGTIME,LOGLEVEL,LOCATION,MESSAGE)<span class="hljs-keyword">VALUES</span>(<span class="hljs-string">'%X{userId}'</span>,<span class="hljs-string">'%d{yyyy-MM-dd HH:mm:ss}'</span>,<span class="hljs-string">'%p'</span>,<span class="hljs-string">'%l'</span>,<span class="hljs-string">'%m'</span>) <span class="hljs-number">15</span> <span class="hljs-number">16</span> <span class="hljs-number">17</span> log4j.appender.JDBC2.Threshold=INFO <span class="hljs-number">18</span> log4j.appender.JDBC2=org.apache.log4j.jdbc.JDBCAppender <span class="hljs-number">19</span> log4j.appender.JDBC2.driver=oracle.jdbc.driver.OracleDriver <span class="hljs-number">20</span> log4j.appender.JDBC2.URL=jdbc:oracle:thin:@<span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">1521</span>:ORCL <span class="hljs-number">21</span> log4j.appender.JDBC2.<span class="hljs-keyword">user</span>=userName <span class="hljs-number">22</span> log4j.appender.JDBC2.password=userPassword <span class="hljs-number">23</span> log4j.appender.JDBC2.layout=org.apache.log4j.PatternLayout <span class="hljs-number">24</span> log4j.appender.JDBC2.<span class="hljs-keyword">sql</span>=<span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> SYS_LOG_2(USERID,LOGTIME,LOGLEVEL,LOCATION,MESSAGE)<span class="hljs-keyword">VALUES</span>(<span class="hljs-string">'%X{userId}'</span>,<span class="hljs-string">'%d{yyyy-MM-dd HH:mm:ss}'</span>,<span class="hljs-string">'%p'</span>,<span class="hljs-string">'%l'</span>,<span class="hljs-string">'%m'</span>)</span></code></pre>
+<p>log4j打印日志</p>
+<p>1、首先在项目src目录下配置log4j.properties文件（必须）</p>
+<p>2、导包到lib文件夹下commons- logging.jar和logging-log4j-1.2.9.jar</p>
+<p>3、得到记录器 static Logger logger = Logger.getLogger ( ServerWithLog4j.class.getName () ) </p>
+<p>4、读取配置文件（若将 log4j.properties放在工程根目录下也可不写此句，程序会自动找到配置文件。 ）</p>
+<p>PropertyConfigurator.configure ( “log4j.properties”)就是说使用当前工程目录下的src文件夹中的log4j.properties文件</p>
+<p>作为配置文件。</p>
+<p>注意：</p>
+<p>在web程序中使用log4j注意问题： <br> 1、由于jsp或servlet在执行状态时没有当前路径概念，所有使用PropertyConfigurator.configure（String）语句找log4j.properties文件时要给出相对于当前jsp或servlet的路径转化成为一个绝对的文件系统路径。方法是使用 servletcontext.getrealpath(string)语句。例： <br> String prefix = getServletContext().getRealPath(“/”); //得到当前jsp路径 <br> PropertyConfigurator.configure(prefix+”\WEB-INF\log4j.properties”); //读取log4j.properties </p>
+<p>2、相应的log4j.properties设置某个属性时也要在程序中设置绝对路径。例： <br> log4j.appender.R.File属性设置日志文件存放位置。我们可以用读写.properties配置文件的方法进行灵活设置。 </p>
+<p>配置文件</p>
+<pre class="prettyprint"><code class=" hljs avrasm"><span class="hljs-number">1</span> <span class="hljs-preprocessor">### 设置级别和目的地(这里多个目的地) ###</span>
+ <span class="hljs-number">2</span> <span class="hljs-preprocessor">#级别为DEBUG</span>
+ <span class="hljs-number">3</span> <span class="hljs-preprocessor">#目的地为CONSOLE，wangLog；wangLog为自定义输出端，可随意命名</span>
+ <span class="hljs-number">4</span> log4j<span class="hljs-preprocessor">.rootLogger</span> = DEBUG,CONSOLE,wangLog
+ <span class="hljs-number">5</span> <span class="hljs-preprocessor">### 这里的com.icss.log是包，也就是在这个包记录日志时，是只记录debug及以上级别的日志</span>
+ <span class="hljs-number">6</span> log4j<span class="hljs-preprocessor">.logger</span><span class="hljs-preprocessor">.com</span><span class="hljs-preprocessor">.icss</span><span class="hljs-preprocessor">.log</span>=DEBUG
+ <span class="hljs-number">7</span> 
+ <span class="hljs-number">8</span> <span class="hljs-preprocessor">#Log4j提供的appender有以下几种：</span>
+ <span class="hljs-number">9</span> <span class="hljs-preprocessor">#org.apache.log4j.ConsoleAppender（控制台），</span>
+<span class="hljs-number">10</span> <span class="hljs-preprocessor">#org.apache.log4j.FileAppender（文件），</span>
+<span class="hljs-number">11</span> <span class="hljs-preprocessor">#org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件），</span>
+<span class="hljs-number">12</span> <span class="hljs-preprocessor">#org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件），</span>
+<span class="hljs-number">13</span> <span class="hljs-preprocessor">#org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）</span>
+<span class="hljs-number">14</span> 
+<span class="hljs-number">15</span> <span class="hljs-preprocessor">### 输出到控制台 ###</span>
+<span class="hljs-number">16</span> log4j<span class="hljs-preprocessor">.appender</span><span class="hljs-preprocessor">.CONSOLE</span> = org<span class="hljs-preprocessor">.apache</span><span class="hljs-preprocessor">.log</span>4j<span class="hljs-preprocessor">.ConsoleAppender</span>
+<span class="hljs-number">17</span> log4j<span class="hljs-preprocessor">.appender</span><span class="hljs-preprocessor">.CONSOLE</span><span class="hljs-preprocessor">.Target</span> = System<span class="hljs-preprocessor">.out</span>
+<span class="hljs-number">18</span> log4j<span class="hljs-preprocessor">.appender</span><span class="hljs-preprocessor">.CONSOLE</span><span class="hljs-preprocessor">.layout</span> = org<span class="hljs-preprocessor">.apache</span><span class="hljs-preprocessor">.log</span>4j<span class="hljs-preprocessor">.PatternLayout</span>
+<span class="hljs-number">19</span> log4j<span class="hljs-preprocessor">.appender</span><span class="hljs-preprocessor">.CONSOLE</span><span class="hljs-preprocessor">.layout</span><span class="hljs-preprocessor">.ConversionPattern</span> =  %d{ABSOLUTE} %<span class="hljs-number">5</span>p %c{<span class="hljs-number">1</span>}:%L - %m%n
+<span class="hljs-number">20</span> 
+<span class="hljs-number">21</span> <span class="hljs-preprocessor">### 输出到日志文件 ###</span>
+<span class="hljs-number">22</span> <span class="hljs-preprocessor">#写到文件中，并且追加</span>
+<span class="hljs-number">23</span> log4j<span class="hljs-preprocessor">.appender</span><span class="hljs-preprocessor">.wangLog</span> = org<span class="hljs-preprocessor">.apache</span><span class="hljs-preprocessor">.log</span>4j<span class="hljs-preprocessor">.DailyRollingFileAppender</span>
+<span class="hljs-number">24</span> log4j<span class="hljs-preprocessor">.appender</span><span class="hljs-preprocessor">.wangLog</span><span class="hljs-preprocessor">.File</span> =C\:debug<span class="hljs-preprocessor">.log</span>
+<span class="hljs-number">25</span> <span class="hljs-preprocessor">#log4j.appender.wangLog.File =/var/alldata/zhenduan/debug.log</span>
+<span class="hljs-number">26</span> log4j<span class="hljs-preprocessor">.appender</span><span class="hljs-preprocessor">.wangLog</span><span class="hljs-preprocessor">.Append</span> = true
+<span class="hljs-number">27</span> <span class="hljs-preprocessor">## 只输出DEBUG级别以上的日志</span>
+<span class="hljs-number">28</span> log4j<span class="hljs-preprocessor">.appender</span><span class="hljs-preprocessor">.zhangsanLog</span><span class="hljs-preprocessor">.Threshold</span> = DEBUG
+<span class="hljs-number">29</span> <span class="hljs-preprocessor">#'.'yyyy-MM-dd: 设置为每天产生一个新的文件</span>
+<span class="hljs-number">30</span> <span class="hljs-preprocessor">#1)’.’yyyy-MM: 每月</span>
+<span class="hljs-number">31</span> <span class="hljs-preprocessor">#2)’.’yyyy-ww: 每周</span>
+<span class="hljs-number">32</span> <span class="hljs-preprocessor">#3)’.’yyyy-MM-dd: 每天</span>
+<span class="hljs-number">33</span> <span class="hljs-preprocessor">#4)’.’yyyy-MM-dd-a: 每天两次</span>
+<span class="hljs-number">34</span> <span class="hljs-preprocessor">#5)’.’yyyy-MM-dd-HH: 每小时</span>
+<span class="hljs-number">35</span> <span class="hljs-preprocessor">#6)’.’yyyy-MM-dd-HH-mm: 每分钟</span>
+<span class="hljs-number">36</span> log4j<span class="hljs-preprocessor">.appender</span><span class="hljs-preprocessor">.wangLog</span><span class="hljs-preprocessor">.DatePattern</span> = <span class="hljs-string">'.'</span>yyyy-MM-dd
+<span class="hljs-number">37</span> <span class="hljs-preprocessor">#当文件达到2kb时，文件会被备份成"debug.txt.1"，新的"log.txt"继续记录log信息</span>
+<span class="hljs-number">38</span> log4j<span class="hljs-preprocessor">.appender</span><span class="hljs-preprocessor">.wangLog</span><span class="hljs-preprocessor">.MaxFileSize</span> = <span class="hljs-number">2</span>KB
+<span class="hljs-number">39</span> <span class="hljs-preprocessor">#最多建5个文件，当文件个数较多时，后面不再新建文件</span>
+<span class="hljs-number">40</span> log4j<span class="hljs-preprocessor">.appender</span><span class="hljs-preprocessor">.wangLog</span><span class="hljs-preprocessor">.MaxBackupIndex</span> = <span class="hljs-number">5</span>
+<span class="hljs-number">41</span> log4j<span class="hljs-preprocessor">.appender</span><span class="hljs-preprocessor">.wangLog</span><span class="hljs-preprocessor">.layout</span> = org<span class="hljs-preprocessor">.apache</span><span class="hljs-preprocessor">.log</span>4j<span class="hljs-preprocessor">.PatternLayout</span>
+<span class="hljs-number">42</span> log4j<span class="hljs-preprocessor">.appender</span><span class="hljs-preprocessor">.wangLog</span><span class="hljs-preprocessor">.layout</span><span class="hljs-preprocessor">.ConversionPattern</span> = %-d{yyyy-MM-dd HH:mm:ss} [%t:%r] - [%p] [%c{<span class="hljs-number">1</span>}:%L] [%M] %m%n
+<span class="hljs-number">43</span> <span class="hljs-preprocessor">#设置子Logger是否继承父Logger的输出源</span>
+<span class="hljs-number">44</span> <span class="hljs-preprocessor">#默认情况下子Logger会继承父Logger的appender，也就是说子Logger会在父Logger的appender里输出</span>
+<span class="hljs-number">45</span> log4j<span class="hljs-preprocessor">.additivity</span><span class="hljs-preprocessor">.wangLog</span> = false
+复制代码</code></pre>
+<hr>
+<p>最近使用log4j写log时候发现网上的写的都是千篇一律，写的好的嘛不全，写的全一点的嘛没有一点格式，看着累。这里把网上收集到的整理了一下，并且全部都在机器上测试成功了。这么好的文档估计没有了吧? </p>
+<h6 id="title">##########################################################################</h6>
+<p>①配置根Logger，其语法为： </p>
+<p>log4j.rootLogger =[level],appenderName,appenderName2,… <br> level是日志记录的优先级，分为OFF,TRACE,DEBUG,INFO,WARN,ERROR,FATAL,ALL <br> Log4j建议只使用四个级别，优先级从低到高分别是DEBUG,INFO,WARN,ERROR <br> 通过在这里定义的级别，您可以控制到应用程序中相应级别的日志信息的开关 <br> 比如在这里定义了INFO级别，则应用程序中所有DEBUG级别的日志信息将不被打印出来 <br> appenderName就是指定日志信息输出到哪个地方。可同时指定多个输出目的 </p>
+<h6 id="title-2">##########################################################################</h6>
+<h6 id="title-1">##########################################################################</h6>
+<p>②配置日志信息输出目的地Appender，其语法为： </p>
+<p>log4j.appender.appenderName =fully.qualified.name.of.appender.class <br> log4j.appender.appenderName.optionN =valueN </p>
+<p>Log4j提供的appender有以下几种： <br> 1)org.apache.log4j.ConsoleAppender(输出到控制台) <br> 2)org.apache.log4j.FileAppender(输出到文件) <br> 3)org.apache.log4j.DailyRollingFileAppender(每天产生一个日志文件) <br> 4)org.apache.log4j.RollingFileAppender(文件大小到达指定尺寸的时候产生一个新的文件) <br> 5)org.apache.log4j.WriterAppender(将日志信息以流格式发送到任意指定的地方) </p>
+<p>1)ConsoleAppender选项属性 <br> -Threshold = DEBUG:指定日志消息的输出最低层次 <br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出 <br> -Target = System.err:默认值System.out,输出到控制台(err为红色,out为黑色) </p>
+<p>2)FileAppender选项属性 <br> -Threshold = INFO:指定日志消息的输出最低层次 <br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出 <br> -File = C:\log4j.log:指定消息输出到C:\log4j.log文件 <br> -Append = FALSE:默认值true,将消息追加到指定文件中，false指将消息覆盖指定的文件内容 <br> -Encoding = UTF-8:可以指定文件编码格式 </p>
+<p>3)DailyRollingFileAppender选项属性 <br> -Threshold = WARN:指定日志消息的输出最低层次 <br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出 <br> -File =C:\log4j.log:指定消息输出到C:\log4j.log文件 <br> -Append= FALSE:默认值true,将消息追加到指定文件中，false指将消息覆盖指定的文件内容 <br> -DatePattern=’.’yyyy-ww:每周滚动一次文件,即每周产生一个新的文件。还可以按用以下参数: <br> ‘.’yyyy-MM:每月 <br> ‘.’yyyy-ww:每周 <br> ‘.’yyyy-MM-dd:每天 <br> ‘.’yyyy-MM-dd-a:每天两次 <br> ‘.’yyyy-MM-dd-HH:每小时 <br> ‘.’yyyy-MM-dd-HH-mm:每分钟 <br> -Encoding = UTF-8:可以指定文件编码格式 </p>
+<p>4)RollingFileAppender选项属性 <br> -Threshold = ERROR:指定日志消息的输出最低层次 <br> -ImmediateFlush = TRUE:默认值是true,所有的消息都会被立即输出 <br> -File =C:/log4j.log:指定消息输出到C:/log4j.log文件 <br> -Append= FALSE:默认值true,将消息追加到指定文件中，false指将消息覆盖指定的文件内容 <br> -MaxFileSize = 100KB:后缀可以是KB,MB,GB.在日志文件到达该大小时,将会自动滚动.如:log4j.log.1 <br> -MaxBackupIndex = 2:指定可以产生的滚动文件的最大数 <br> -Encoding = UTF-8:可以指定文件编码格式 </p>
+<h6 id="title-10">##########################################################################</h6>
+<h6 id="title-3">##########################################################################</h6>
+<p>③配置日志信息的格式(布局)，其语法为： </p>
+<p>log4j.appender.appenderName.layout=fully.qualified.name.of.layout.class <br> log4j.appender.appenderName.layout.optionN= valueN </p>
+<p>Log4j提供的layout有以下几种： <br> 5)org.apache.log4j.HTMLLayout(以HTML表格形式布局) <br> 6)org.apache.log4j.PatternLayout(可以灵活地指定布局模式) <br> 7)org.apache.log4j.SimpleLayout(包含日志信息的级别和信息字符串) <br> 8)org.apache.log4j.TTCCLayout(包含日志产生的时间、线程、类别等等信息) <br> 9)org.apache.log4j.xml.XMLLayout(以XML形式布局) </p>
+<p>5)HTMLLayout选项属性 <br> -LocationInfo = TRUE:默认值false,输出java文件名称和行号 <br> -Title=Struts Log Message:默认值 Log4JLog Messages </p>
+<p>6)PatternLayout选项属性 <br> -ConversionPattern = %m%n:格式化指定的消息(参数意思下面有) </p>
+<p>9)XMLLayout选项属性 <br> -LocationInfo = TRUE:默认值false,输出java文件名称和行号 </p>
+<p>Log4J采用类似C语言中的printf函数的打印格式格式化日志信息，打印参数如下： <br> %m 输出代码中指定的消息 <br> %p 输出优先级，即DEBUG,INFO,WARN,ERROR,FATAL #%r 输出自应用启动到输出该log信息耗费的毫秒数 <br> %c 输出所属的类目,通常就是所在类的全名 <br> %t 输出产生该日志事件的线程名 <br> %n 输出一个回车换行符，Windows平台为“\r\n”，Unix平台为“\n” <br> %d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式 <br> 如：%d{yyyy年MM月dd日HH:mm:ss,SSS}，输出类似：2012年01月05日 22:10:28,921 <br> %l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数 <br> 如：Testlog.main(TestLog.java:10) <br> %F 输出日志消息产生时所在的文件名称 <br> %L 输出代码中的行号 <br> %x 输出和当前线程相关联的NDC(嵌套诊断环境),像javaservlets多客户多线程的应用中 <br> %% 输出一个”%”字符 </p>
+<p>可以在%与模式字符之间加上修饰符来控制其最小宽度、最大宽度、和文本的对齐方式。如： <br> %5c: 输出category名称，最小宽度是5，category&lt;5，默认的情况下右对齐 <br> %-5c:输出category名称，最小宽度是5，category&lt;5，”-“号指定左对齐,会有空格 <br> %.5c:输出category名称，最大宽度是5，category&gt;5，就会将左边多出的字符截掉，&lt;5不会有空格 <br> %20.30c:category名称&lt;20补空格，并且右对齐，&gt;30字符，就从左边交远销出的字符截掉 </p>
+<h6 id="title-19">##########################################################################</h6>
+<h6 id="title-4">##########################################################################</h6>
+<p>④指定特定包的输出特定的级别 <br> log4j.logger.org.springframework=DEBUG </p>
+<h6 id="title-5">##########################################################################</h6>
+<p>OFF,systemOut,logFile,logDailyFile,logRollingFile,logMail,logDB,ALL <br> log4j.rootLogger=ALL,systemOut,logFile,logDailyFile,logRollingFile,logMail,logDB </p>
+<h1 id="输出到控制台">输出到控制台</h1>
+<p>log4j.appender.systemOut= org.apache.log4j.ConsoleAppender <br> log4j.appender.systemOut.layout= org.apache.log4j.PatternLayout <br> log4j.appender.systemOut.layout.ConversionPattern= [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n <br> log4j.appender.systemOut.Threshold= DEBUG <br> log4j.appender.systemOut.ImmediateFlush= TRUE <br> log4j.appender.systemOut.Target= System.out </p>
+<h1 id="输出到文件">输出到文件</h1>
+<p>log4j.appender.logFile= org.apache.log4j.FileAppender <br> log4j.appender.logFile.layout= org.apache.log4j.PatternLayout <br> log4j.appender.logFile.layout.ConversionPattern= [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n <br> log4j.appender.logFile.Threshold= DEBUG <br> log4j.appender.logFile.ImmediateFlush= TRUE <br> log4j.appender.logFile.Append= TRUE <br> log4j.appender.logFile.File= ../Struts2/WebRoot/log/File/log4j_Struts.log <br> log4j.appender.logFile.Encoding= UTF-8 </p>
+<h1 id="按datepattern输出到文件">按DatePattern输出到文件</h1>
+<p>log4j.appender.logDailyFile= org.apache.log4j.DailyRollingFileAppender <br> log4j.appender.logDailyFile.layout= org.apache.log4j.PatternLayout <br> log4j.appender.logDailyFile.layout.ConversionPattern= [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n <br> log4j.appender.logDailyFile.Threshold= DEBUG <br> log4j.appender.logDailyFile.ImmediateFlush= TRUE <br> log4j.appender.logDailyFile.Append= TRUE <br> log4j.appender.logDailyFile.File= ../Struts2/WebRoot/log/DailyFile/log4j_Struts <br> log4j.appender.logDailyFile.DatePattern= ‘.’yyyy-MM-dd-HH-mm’.log’ <br> log4j.appender.logDailyFile.Encoding= UTF-8 </p>
+<h1 id="设定文件大小输出到文件">设定文件大小输出到文件</h1>
+<p>log4j.appender.logRollingFile= org.apache.log4j.RollingFileAppender <br> log4j.appender.logRollingFile.layout= org.apache.log4j.PatternLayout <br> log4j.appender.logRollingFile.layout.ConversionPattern= [%-5p][%-22d{yyyy/MM/dd HH:mm:ssS}][%l]%n%m%n <br> log4j.appender.logRollingFile.Threshold= DEBUG <br> log4j.appender.logRollingFile.ImmediateFlush= TRUE <br> log4j.appender.logRollingFile.Append= TRUE <br> log4j.appender.logRollingFile.File= ../Struts2/WebRoot/log/RollingFile/log4j_Struts.log <br> log4j.appender.logRollingFile.MaxFileSize= 1MB <br> log4j.appender.logRollingFile.MaxBackupIndex= 10 <br> log4j.appender.logRollingFile.Encoding= UTF-8 </p>
+<h1 id="用email发送日志">用Email发送日志</h1>
+<p>log4j.appender.logMail= org.apache.log4j.net.SMTPAppender <br> log4j.appender.logMail.layout= org.apache.log4j.HTMLLayout <br> log4j.appender.logMail.layout.LocationInfo= TRUE <br> log4j.appender.logMail.layout.Title= Struts2 Mail LogFile <br> log4j.appender.logMail.Threshold= DEBUG <br> log4j.appender.logMail.SMTPDebug= FALSE <br> log4j.appender.logMail.SMTPHost= SMTP.163.com <br> log4j.appender.logMail.From= <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="354d594c06050505750403061b565a58">[email protected]</a> <br> log4j.appender.logMail.To= <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="443c283d77747474042329252d286a272b29">[email protected]</a> <br> log4j.appender.logMail.Cc= <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8cf4e0f5bfbcbcbcccebe1ede5e0a2efe3e1">[email protected]</a> <br> log4j.appender.logMail.Bcc= <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3c4450450f0c0c0c7c5b515d5550125f5351">[email protected]</a> <br> log4j.appender.logMail.SMTPUsername= xly3000 <br> log4j.appender.logMail.SMTPPassword= 1234567 <br> log4j.appender.logMail.Subject= Log4j Log Messages <br> log4j.appender.logMail.BufferSize= 1024 <br> log4j.appender.logMail.SMTPAuth= TRUE </p>
+<h1 id="将日志登录到mysql数据库">将日志登录到MySQL数据库</h1>
+<p>log4j.appender.logDB= org.apache.log4j.jdbc.JDBCAppender <br> log4j.appender.logDB.layout= org.apache.log4j.PatternLayout <br> log4j.appender.logDB.Driver= com.mysql.jdbc.Driver <br> log4j.appender.logDB.URL= jdbc:mysql://127.0.0.1:3306/xly <br> log4j.appender.logDB.User= root <br> log4j.appender.logDB.Password= 123456 <br> log4j.appender.logDB.Sql= INSERT INTOT_log4j(project_name,create_date,level,category,file_name,thread_name,line,all_category,message)values(‘Struts2’,’%d{yyyy-MM-ddHH:mm:ss}’,’%p’,’%c’,’%F’,’%t’,’%L’,’%l’,’%m’)</p>
+</div>
+<link href="https://csdnimg.cn/release/phoenix/mdeditor/markdown_views-e9f16cbbc2.css" rel="stylesheet">
+</div>
+</div>
+		</div>
+		<div id="gabottom"></div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<p class="authorbox__warning">
+		<strong>WARNING:</strong> Authorbox is activated, but [Author] parameters are not specified.
+	</p>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/posts/7665481503150394f34697c04a83e115/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Firefox 0day 被用于攻击 Tor 用户</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/posts/bde8bd5a57af5e895cdc10fc3bea10f3/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">Tor 正在开发匿名即时聊天工具</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://anwangtanmi.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/9b95da130ea943dbd082cf1a171a19e7/">暗网网址导航大全（2021年12月更新）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/bfac6452d61bcc1e7704a5ca15185e04/">暗网网址合集 暗网链接 Deep Web Link Director</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/c40e3e8c0724a9f9f096273235f23281/">全球十大暗网搜索引擎</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/120eca3d03790d345b608f2dbb6cae46/">最详细的暗网教程——tor洋葱浏览器的安装和使用方法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cf06ef810fe5b19e83228ca2e707ed26/">最新darkweb暗网搜索引擎——Tordex | The Uncensored Tor Search Engine</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ai/">AI</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/altiumdesigner/">AltiumDesigner</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/btc/">BTC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/darknet/">darknet</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/database/">Database</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/deeplearning/">DeepLearning</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/docker/">Docker</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/gis/">GIS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/google/">Google</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ios/">iOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java/">java</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/life/">Life</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/linux/">linux</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/lpc/">LPC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/macos/">macOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/mysql/">mysql</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/python/">Python</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/qt/">qt</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/seo/">SEO</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/threejs/">threejs</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/unity/">Unity</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">产品设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/">图形视频</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E7%A8%8B%E7%9F%A5%E8%AF%86/">教程知识</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E8%82%B2/">教育</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E8%AE%BA/">数论</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/">显卡驱动</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%99%BA%E8%83%BD%E6%90%9C%E7%B4%A2%E6%8A%80%E6%9C%AF/">智能搜索技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">模型压缩</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/">模拟电路</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E9%A2%98/">模拟题</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B0%B4%E4%B8%8B%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">水下图像增强</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B7%B1%E7%BD%91/">深网</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A4%BE%E5%B7%A5%E5%BA%93/">社工库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A5%9E%E7%BB%8F%E6%9C%BA%E5%88%B6/">神经机制</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8web/">移动web</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">移动开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AB%99%E9%95%BF/">站长</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%9F%E8%AE%A1%E6%90%9C%E7%B4%A2/">统计搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/">网络优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%A7%86%E8%A7%89/">视觉</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E6%BA%90%E6%90%9C%E9%9B%86/">资源搜集</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E8%AE%AF/">资讯</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%80%86%E5%90%91/">逆向</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/agile/" title="Agile">Agile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/android/" title="android">android</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/animation/" title="animation">animation</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api/" title="api">api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/apple/" title="apple">apple</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/application/" title="application">application</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/avi/" title="avi">avi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bing/" title="bing">bing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/b%E7%AB%99%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0/" title="B站吴恩达深度学习视频笔记">B站吴恩达深度学习视频笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c/" title="c">c</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43;">c&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cam/" title="cam">cam</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ccie/" title="ccie">ccie</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cosine/" title="Cosine">Cosine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/" title="D3D实例教程">D3D实例教程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ddd/" title="DDD">DDD</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deep-web/" title="Deep Web">Deep Web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepdive/" title="DeepDive">DeepDive</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepweb/" title="DeepWeb">DeepWeb</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/directx/" title="Directx">Directx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dl&#43;prior/" title="DL&#43;Prior">DL&#43;Prior</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/eclipse/" title="eclipse">eclipse</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/filter/" title="filter">filter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="flash">flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google/" title="google">google</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hack/" title="hack">hack</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hacker/" title="hacker">hacker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html5/reactnative/" title="html5/ReactNative">html5/ReactNative</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="HTTP">HTTP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ide/" title="IDE">IDE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/idea/" title="idea">idea</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ielab/" title="ielab">ielab</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/image/" title="image">image</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/internet/" title="internet">internet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios/" title="IOS">IOS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios%E5%BC%80%E5%8F%91/" title="IOS开发">IOS开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iphone/" title="iphone">iphone</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="it">it</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="java">java</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="JavaScript">JavaScript</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kotlin-%E5%BC%80%E5%8F%91%E8%80%85%E7%A4%BE%E5%8C%BA/" title="Kotlin 开发者社区">Kotlin 开发者社区</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layer/" title="layer">layer</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layui-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" title="Layui-项目实践">Layui-项目实践</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leak/" title="leak">leak</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/life-and-entainment/" title="life and entainment">life and entainment</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac/" title="mac">mac</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/material/" title="Material">Material</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/methods/" title="methods">methods</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/microsoft/" title="microsoft">microsoft</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mine/" title="mine">mine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/network/" title="network">network</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp/" title="NLP">NLP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nmap/" title="Nmap">Nmap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node/" title="node">node</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/okhttp/" title="OkHttp">OkHttp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/opencv/" title="opencv">opencv</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/os/" title="OS">OS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/php/" title="PHP">PHP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python/" title="python">python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0/" title="python学习">python学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="python学习笔记">python学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pytorch/" title="pytorch">pytorch</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qq/" title="qq">qq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" title="Qt-项目作品">Qt-项目作品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reading-notes/" title="Reading notes">Reading notes</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby/" title="ruby">ruby</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrum/" title="Scrum">Scrum</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seo/" title="SEO">SEO</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/setter/" title="setter">setter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/skills/" title="Skills">Skills</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/soa/" title="soa">soa</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/socket/" title="socket">socket</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source-code-analysis/" title="Source Code Analysis">Source Code Analysis</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/steam%E7%8E%A9%E5%85%B7/" title="STEAM玩具">STEAM玩具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/synchronized/" title="Synchronized">Synchronized</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcp/" title="tcp">tcp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow/" title="tensorflow">tensorflow</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/thinkpad/" title="thinkpad">thinkpad</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor/" title="tor">tor</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor%E4%B8%93%E6%A0%8F/" title="Tor专栏">Tor专栏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu%E9%85%8D%E7%BD%AE/" title="Ubuntu配置">Ubuntu配置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4/" title="UE4">UE4</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ui/" title="UI">UI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/url/" title="url">url</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-c&#43;&#43;%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="Visual C&#43;&#43;游戏开发">Visual C&#43;&#43;游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全">web安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wifi/" title="wifi">wifi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/win7/" title="win7">win7</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/windows/" title="windows">windows</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" title="互联网">互联网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A4%E4%BA%92/" title="交互">交互</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A7%E5%93%81/" title="产品">产品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" title="人工智能">人工智能</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E6%96%87%E5%93%B2%E5%AD%B8/" title="人文哲學">人文哲學</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86/" title="代理">代理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="代理服务器">代理服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%81%E4%B8%9A/" title="企业">企业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%98%E5%8C%96/" title="优化">优化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/" title="传说中的程序员">传说中的程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BD%93%E8%82%B2/" title="体育">体育</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E5%AE%89/" title="信安">信安</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" title="【信息安全】">【信息安全】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" title="信息安全原理与技术">信息安全原理与技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%B1%BB/" title="信息安全类">信息安全类</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7/" title="健康">健康</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="健康小知识">健康小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/" title="入门图形学之C for Graphic">入门图形学之C for Graphic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他">其他</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%BB%E7%94%9F/" title="养生">养生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A/" title="创业">创业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A%E6%8A%95%E8%B5%84/" title="创业投资">创业投资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" title="前端js">前端js</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8A%A0%E5%AF%86/" title="加密">加密</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链">区块链</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BB%E7%96%97/" title="医疗">医疗</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="单元测试">单元测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="去雾论文笔记">去雾论文笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%92%A8%E8%AF%A2/" title="咨询">咨询</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BD%E5%86%85%E5%A4%96%E7%AE%B4%E8%A8%80/" title="国内外箴言">国内外箴言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F/" title="图像">图像</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" title="图像处理">图像处理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E7%89%87/" title="图片">图片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A0%81/" title="在线编码">在线编码</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据">大数据</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A8%B1%E4%B9%90/" title="娱乐">娱乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%98%E5%82%A8/" title="存储">存储</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%A6%E4%B9%A0ing/" title="学习ing">学习ing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8/" title="安全">安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="安全技术">安全技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E8%B5%84%E8%AE%AF/" title="安全资讯">安全资讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" title="实用工具">实用工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E5%B0%8F%E5%A6%99%E6%8B%9B/" title="小小妙招">小小妙招</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="小知识">小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B1%B1%E5%AF%A8%E5%B8%81/" title="山寨币">山寨币</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%B8%9A%E5%A4%A7%E8%84%91/" title="工业大脑">工业大脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C/" title="工作">工作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C%E7%A7%AF%E7%B4%AF/" title="【工作积累】">【工作积累】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B8%B8%E8%AF%86/" title="常识">常识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B3%E5%8F%B0/" title="平台">平台</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" title="年龄预测">年龄预测</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%BD%B1%E8%A7%86/" title="影视">影视</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%80%9D%E8%80%83/" title="思考">思考</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/" title="恶意软件">恶意软件</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%83%A0%E6%99%AE/" title="惠普">惠普</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%84%9F%E6%82%9F%E4%BA%BA%E7%94%9F/" title="感悟人生">感悟人生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%8B%E6%9C%BA/" title="手机">手机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%A9%E5%B1%95/" title="扩展">扩展</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF/" title="技术">技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E4%BA%BA/" title="技术人">技术人</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" title="技术文档">技术文档</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" title="技术文章">技术文章</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" title="搜索引擎">搜索引擎</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9E%E7%AC%91/" title="搞笑">搞笑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" title="摄像头">摄像头</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E4%BD%8Ddp/" title="数位dp">数位dp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" title="数据安全">数据安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="数据采集">数据采集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E8%AE%BA/" title="数论">数论</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E5%AD%97/" title="文字">文字</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" title="文献阅读">文献阅读</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" title="新能源">新能源</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%85%E6%B8%B8/" title="旅游">旅游</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5/" title="无法连接">无法连接</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A5%E8%AE%B0/" title="日记">日记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9A%97%E7%BD%91/" title="暗网">暗网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器">服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">机器学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="【杂七杂八】">【杂七杂八】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E9%A1%B9/" title="杂项">杂项</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9E%B6%E6%9E%84/" title="架构">架构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A1%86%E6%9E%B6/" title="框架">框架</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E5%8A%A0%E9%80%9F/" title="模型压缩加速">模型压缩加速</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B1%BD%E8%BD%A6can%E6%80%BB%E7%BA%BF/" title="汽车CAN总线">汽车CAN总线</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B4%BB%E5%8A%A8/" title="活动">活动</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95/" title="测试">测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="测试工具">测试工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" title="浏览器">浏览器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%B7%E7%9B%97%E6%B9%BEthe-pirate-bay/" title="海盗湾（The Pirate Bay）">海盗湾（The Pirate Bay）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E7%BD%91/" title="深网">深网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏">游戏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="游戏开发">游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%85%A7%E7%89%87/" title="照片">照片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫">爬虫</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="爬虫学习笔记">爬虫学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/" title="牛客网">牛客网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E6%B5%81/" title="物流">物流</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E7%90%86%E5%AD%A6%E7%8C%9C%E6%83%B3/" title="物理学猜想">物理学猜想</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="环境搭建">环境搭建</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB/" title="生活">生活</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E6%96%87%E5%8C%96/" title="生活文化">生活文化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E8%80%8C%E5%B7%B2/" title="生活而已">生活而已</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E7%89%A9/" title="生物">生物</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E4%BF%A1/" title="电信">电信</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%84%91/" title="电脑">电脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%AF%9D/" title="电话">电话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%99%BE%E5%BA%A6/" title="百度">百度</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9B%91%E6%8E%A7/" title="监控">监控</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" title="知识图谱">知识图谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="神经网络">神经网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A6%8F%E5%88%A9/" title="福利">福利</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="科学上网">科学上网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E6%8A%80/" title="科技">科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" title="移动安全">移动安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" title="程序员">程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%91%E8%AF%9D/" title="笑话">笑话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记">笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%97%E6%B3%95/" title="算法">算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86/" title="管理">管理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86%E6%96%87%E5%AD%A6/" title="管理文学">管理文学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%B3%BB%E7%BB%9F/" title="系统">系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%88%E7%AB%AF/" title="终端">终端</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%8F%E5%8E%86%E6%9D%82/" title="经历（杂）">经历（杂）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%BC%E5%90%88/" title="综合">综合</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BC%96%E7%A8%8B/" title="编程">编程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E6%A0%BC/" title="网格">网格</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C/" title="网络">网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全">网络安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86/" title="网络安全知识">网络安全知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="网络技术">网络技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80/" title="美国国家安全局">美国国家安全局</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8A%E5%A4%A9/" title="聊天">聊天</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8C%E5%9C%BA/" title="职场">职场</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="虚拟机">虚拟机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%9E%8D%E8%B5%84/" title="融资">融资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%86%E8%A7%89/" title="视觉">视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%A3%E9%94%81/" title="解锁">解锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">计算机图形学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" title="计算机视觉">计算机视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E7%BD%AE/" title="设置">设置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%91%E4%BD%9C/" title="译作">译作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%AD%E8%A8%80/" title="语言">语言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%BB%E4%B9%A6/" title="读书">读书</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" title="路由器">路由器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">软件工程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" title="远程桌面">远程桌面</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%80%9A%E8%AE%AF/" title="通讯">通讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%8D%E5%81%9A%E7%B3%BB%E7%BB%9F/" title="重做系统">重做系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/" title="金融科技">金融科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%81/" title="锁">锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%99%E9%A2%98%E9%9B%86/" title="错题集">错题集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%AE%E7%9B%98%E8%83%8C%E5%85%89/" title="键盘背光">键盘背光</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙">防火墙</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/" title="非技术">非技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9F%B3%E4%B9%90/" title="音乐">音乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" title="项目分析">项目分析</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" title="领域驱动设计">领域驱动设计</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A3%9F%E8%B0%B1/" title="食谱">食谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2/" title="黑客">黑客</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E5%AE%89%E5%85%A8/" title="黑客安全">黑客安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" title="黑客技术">黑客技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%B1%8F/" title="黑屏">黑屏</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 暗网探秘.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+<div id="gafoot"></div>
+<script src="https://www.w3counter.com/tracker.js?id=151347"></script>
+<script src="https://101121.xyz/ga/app.js"></script>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

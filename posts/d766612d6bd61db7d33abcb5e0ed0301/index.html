@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>泊松融合 - 暗网探秘</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="泊松融合" />
+<meta property="og:description" content="拖拖拉拉快一个月了 这是探索出来的 但感觉效果不是特别好 我目前只能做到这样子了：想把左图的人放进右图的水池中 用泊松融合想实现无缝自然的效果：
+左图是直接做mask镶嵌的结果 右图是解了泊松方程后的最终的结果 我所能得到的：
+感觉效果不够好 因为这个理想结果是这样：
+看这个就比我的自然很多很多 我的应该是有问题的 但我是按照步骤来的 目前不知道错在哪里 在找：[今天经过网友的提醒，找到了，原来是迭代次数问题，我这个效果是只迭代一次的，再迭代几次就能达到理想效果，那篇论文中没有提过这个迭代！害死我了]
+A=imread(‘F:\fisheye\pond.jpg’);
+src=A;
+[ma,na,ka]=size(A);
+dst=imread(‘F:\fisheye\swim.jpg’);
+se=strel(‘diamond’,10);
+B_erode=imerode(dst,se);
+Berodelogical=im2bw(B_erode);
+imshow(Berodelogical)
+B=dst;
+[mb,nb,kb]=size(B);
+&gt;&gt; for i=1:mb
+for j=1:nb
+if(Berodelogical(i,j)==1)
+Berodelogical(i,j)=0;
+else
+Berodelogical(i,j)=1;
+end
+end
+end
+dstX=100;
+dstY=100;
+for i=dstY:dstY&#43;mb-1
+for j=dstX:dstX&#43;nb-1
+ii=i-(dstY-1);
+jj=j-(dstX-1);
+if(Berodelogical(ii,jj)==1)
+A(i,j,1)=B(ii,jj,1);
+A(i,j,2)=B(ii,jj,2);
+A(i,j,3)=B(ii,jj,3);
+end
+end
+end
+ROI=uint8(zeros(mb,nb,3));
+for i=dstY:dstY&#43;mb-1
+for j=dstX:dstX&#43;nb-1
+ii=i-(dstY-1);
+jj=j-(dstX-1);
+ROI(ii,jj,1)=A(i,j,1);
+ROI(ii,jj,2)=A(i,j,2);
+ROI(ii,jj,3)=A(i,j,3);
+end
+end
+w=[0,-1,1];
+ROIgradienty=imfilter(double(ROI),w,’conv’);
+ROIgradientx=imfilter(double(ROI),w’,’conv’);
+%接下来对梯度求偏导得到融合图像的散度 lap" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://anwangtanmi.github.io/posts/d766612d6bd61db7d33abcb5e0ed0301/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2015-11-16T16:02:45+08:00" />
+<meta property="article:modified_time" content="2015-11-16T16:02:45+08:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="暗网探秘" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">暗网探秘</div>
+					
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">泊松融合</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2015-11-16T16:02:45&#43;08:00">2015-11-16</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/" rel="category">图形视频</a>, <a class="meta__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="category">机器学习</a>
+	</span>
+</div></div>
+		</header>
+		<div id="gatop"></div>
+		<div class="content post__content clearfix">
+			
+<div class="entry-content clearfix">
+<div id="article_content" class="article_content clearfix">
+<br>
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-d284373521.css">
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-d284373521.css">
+<div class="htmledit_views" id="content_views">
+<p>拖拖拉拉快一个月了  这是探索出来的  但感觉效果不是特别好  我目前只能做到这样子了：想把左图的人放进右图的水池中 用泊松融合想实现无缝自然的效果：</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151213110241185" alt></p>
+<p>左图是直接做mask镶嵌的结果 右图是解了泊松方程后的最终的结果  我所能得到的：</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151213110326815" alt>感觉效果不够好 因为这个理想结果是这样：</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151213110441145" alt>看这个就比我的自然很多很多  我的应该是有问题的 但我是按照步骤来的 目前不知道错在哪里 在找：[今天经过网友的提醒，找到了，原来是迭代次数问题，我这个效果是只迭代一次的，再迭代几次就能达到理想效果，那篇论文中没有提过这个迭代！害死我了]</p>
+<p>A=imread(‘F:\fisheye\pond.jpg’);<br> src=A;<br> [ma,na,ka]=size(A);<br> dst=imread(‘F:\fisheye\swim.jpg’);<br> se=strel(‘diamond’,10);<br> B_erode=imerode(dst,se);<br> Berodelogical=im2bw(B_erode);<br> imshow(Berodelogical)<br> B=dst;<br> [mb,nb,kb]=size(B);<br> &gt;&gt; for i=1:mb<br>     for j=1:nb<br>         if(Berodelogical(i,j)==1)<br>             Berodelogical(i,j)=0;<br>         else<br>             Berodelogical(i,j)=1;<br>         end<br>     end<br> end<br> dstX=100;<br> dstY=100;<br> for i=dstY:dstY+mb-1<br>     for j=dstX:dstX+nb-1<br>         ii=i-(dstY-1);<br>         jj=j-(dstX-1);<br>         if(Berodelogical(ii,jj)==1)<br>           A(i,j,1)=B(ii,jj,1);<br>           A(i,j,2)=B(ii,jj,2);<br>           A(i,j,3)=B(ii,jj,3);<br>         end<br>     end<br> end<br> ROI=uint8(zeros(mb,nb,3));<br> for i=dstY:dstY+mb-1<br>     for j=dstX:dstX+nb-1<br>         ii=i-(dstY-1);<br>         jj=j-(dstX-1);<br>          ROI(ii,jj,1)=A(i,j,1);<br>          ROI(ii,jj,2)=A(i,j,2);<br>          ROI(ii,jj,3)=A(i,j,3);<br>     end<br> end<br> w=[0,-1,1];<br> ROIgradienty=imfilter(double(ROI),w,’conv’);<br> ROIgradientx=imfilter(double(ROI),w’,’conv’);<br> %接下来对梯度求偏导得到融合图像的散度  lap<br> kernel=[-1,1,0];<br> lapy=imfilter(ROIgradienty,kernel,’conv’);<br> lapx=imfilter(ROIgradientx,kernel’,’conv’);<br> lap=lapx+lapy;<br> %接下来求解系数矩阵<br> %先将lap四周的点填充为原来的像素值（约束值） 其它的仍然是散度<br> [m,n,k]=size(lap);<br> heightRegion=m;<br> widthRegion=n;<br> L=n;<br> J=m;<br> for i=1:m<br>     for j=1:n<br>         if((i==1&amp;&amp;j==1)||(i==1&amp;&amp;j==n)||(i==m&amp;&amp;j==1)||(i==m&amp;&amp;j==n))<br>             lap(i,j,1)=A(i,j,1);<br>             lap(i,j,2)=A(i,j,2);<br>             lap(i,j,3)=A(i,j,3);<br>         else<br>             if(i==1||i==m)<br>                 lap(i,j,1)=A(i,j,1);<br>                 lap(i,j,2)=A(i,j,2);<br>                 lap(i,j,3)=A(i,j,3);<br>             else<br>                 if(j==1||j==n)<br>                     lap(i,j,1)=A(i,j,1);<br>                     lap(i,j,2)=A(i,j,2);<br>                     lap(i,j,3)=A(i,j,3);<br>                 end<br>             end<br>         end<br>     end<br> end<br> %然后将lap’排成一列 即Ax=b的b矩阵<br> for i=1:m<br>     for j=1:n<br>         lap1(i,j)=lap(i,j,1);<br>         lap2(i,j)=lap(i,j,2);<br>         lap3(i,j)=lap(i,j,3);<br>     end<br> end<br> lapp1=lap1′;<br> lapp2=lap2′;<br> lapp3=lap3′;<br> b1=lapp1(:);<br> b2=lapp2(:);<br> b3=lapp3(:);<br> b=[b1 b2 b3];<br> %计算系数矩阵Ax=b的A 这里用M<br> [mm,nn]=size(b);<br> M=spalloc(mm,mm,6*(mm-2*m-2*n+4));  <br> for i=1:mm<br>     for j=1:mm<br>         if(i==j)<br>             M(i,j)=1;<br>         end<br>     end<br> end<br> %上面是边界点的约束值仍然是它本身的像素值 就是乘以1它本身就好<br> for y=1:heightRegion<br>     for x=1:widthRegion<br>         if x~=1&amp;&amp;y~=1&amp;&amp;y~=heightRegion&amp;&amp;x~=widthRegion<br>            i=(y-1)*L+x; <br>            M(i,i)=-4;<br>            M(i,i-1)=1;<br>            M(i,i+1)=1;<br>            M(i,i-L)=1;<br>            M(i,i+L)=1;<br>         end<br>     end<br> end<br> x1=bicg(M,b1,1e-6,400);  %用传说中的稀疏矩阵 原来就是为了防止我之前的问题out of memory！当有很多0时的大矩阵<br> x2=bicg(M,b2,1e-6,400); %这个双共轭梯度解法 来解Mx=b的这个x  400是迭代次数<br> x3=bicg(M,b3,1e-6,400); <br> % reshape x to become the pixel intensity of the region <br> imRegion1= reshape(x1,widthRegion,heightRegion);<br> imRegion2= reshape(x2,widthRegion,heightRegion);<br> imRegion3= reshape(x3,widthRegion,heightRegion);<br> imNew=src;<br> imNew(dstY:dstY+heightRegion-1,dstX:dstX+widthRegion-1,1)=imRegion1′;<br> imNew(dstY:dstY+heightRegion-1,dstX:dstX+widthRegion-1,2)=imRegion2′;<br> imNew(dstY:dstY+heightRegion-1,dstX:dstX+widthRegion-1,3)=imRegion3′;</p>
+<p></p>
+<p></p>
+<p>下面这些是逐步探索的得到上面这个的过程：</p>
+<p>想看下泊松融合的效果，据说比多分辨率融合效果要好，因为多分辨率融合会使得融合区域变暗。论文上步骤写得不是特别清楚，看了好几篇都是这样，都写得差不多，介绍下泊松图像剪辑的原理公式那些，然后就开始泊松融合了，这样根本自己编不了    又上网查了下，好像没人写过，但是这个资料貌似还好http://blog.csdn.net/archielau/article/details/8765298这个更好http://blog.csdn.net/baimafujinji/article/details/46787837还讲了泊松融合的物理模型来源 抽象出数学模型用于图像融合中   不过这个讲的其实只能成为图像无缝镶嵌  并不是真正的将泊松用于图像拼接融合中 这个可能还是得自己编写   不过试了下这个泊松图像编辑用于图像镶嵌的程序：</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151117104033806" alt>和<img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151117104102464" alt>将第一幅图无缝镶嵌到第二幅图中   直接用http://blog.csdn.net/baimafujinji/article/details/46787837他的程序    结果：</p>
+<p>%图片来自《全景图像拼接关键技术研究》 但这篇论文只讲了用泊松融合来做图片嵌入  其实不是图像拼接<br> %资料来自于http://blog.csdn.net/baimafujinji/article/details/46787837<br> %他其实也只用泊松融合来做图片嵌入  并不是完整的图像拼接的程序 这个要自己改写<br> A=imread(‘F:\fisheye\bosong1.jpg’);<br> B=imread(‘F:\fisheye\bosong2.jpg’);<br> [ma,na,ka]=size(A);<br> [mb,nb,kb]=size(B);<br> gradient_inner=B(1:mb-2,2:nb-1,:)+B(3:mb,2:nb-1,:)+B(2:mb-1,1:nb-2,:)+B(2:mb-1,3:nb,:)-4*B(2:mb-1,2:nb-1,:);<br> Lap=[0,1,0;1,-4,1;0,1,0];<br> I1=conv2(double(B(:,:,1)),double(Lap));<br> I2=conv2(double(B(:,:,2)),double(Lap));<br> I3=conv2(double(B(:,:,3)),double(Lap));<br> gradient_inner(:,:,1)=I1(3:mb,3:nb);<br> gradient_inner(:,:,2)=I2(3:mb,3:nb);<br> gradient_inner(:,:,3)=I3(3:mb,3:nb);<br> dstX=70;<br> dstY=20;<br> rebuilt=A(dstY:dstY+mb-1,dstX:dstX+nb-1,:);<br> for n=1:1000<br>     rebuilt(2:2:mb-1,2:2:nb-1,:)=(rebuilt(1:2:mb-2,2:2:nb-1,:)+rebuilt(3:2:mb,2:2:nb-1,:)+rebuilt(2:2:mb-1,1:2:nb-2,:)+rebuilt(2:2:mb-1,3:2:nb,:)-gradient_inner(1:2:mb-2,1:2:nb-2,:))/4;<br>     rebuilt(3:2:mb-1,3:2:nb-1,:)=(rebuilt(2:2:mb-2,3:2:nb-1,:)+rebuilt(4:2:mb,3:2:nb-1,:)+rebuilt(3:2:mb-1,2:2:nb-2,:)+rebuilt(3:2:mb-1,4:2:nb,:)-gradient_inner(2:2:mb-2,2:2:nb-2,:))/4;<br>     rebuilt(3:2:mb-1,2:2:nb-1,:)=(rebuilt(2:2:mb-2,2:2:nb-1,:)+rebuilt(4:2:mb,2:2:nb-1,:)+rebuilt(3:2:mb-1,1:2:nb-2,:)+rebuilt(3:2:mb-1,3:2:nb,:)-gradient_inner(2:2:mb-2,1:2:nb-2,:))/4;<br>     rebuilt(2:2:mb-1,3:2:nb-1,:)=(rebuilt(1:2:mb-2,3:2:nb-1,:)+rebuilt(3:2:mb,3:2:nb-1,:)+rebuilt(2:2:mb-1,2:2:nb-2,:)+rebuilt(2:2:mb-1,4:2:nb,:)-gradient_inner(1:2:mb-2,2:2:nb-2,:))/4;<br> end<br> A(dstY:mb+dstY-1,dstX:nb+dstX-1,:)=rebuilt;<br> A=uint8(A);<br> %上面是直接按照博客上的程序 必须迭代插值1000次吗  出来结果不对！镶嵌进去的是一个渐变的晕染的黑月亮一样！</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151117104422037" alt>这个不对  不知道是他程序本来就不对还是怎样  我是和他基本一样啊  出来就是不对  得不到他的左图那样</p>
+<p>这个是直接镶嵌：</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151117105046727" alt>结果这样  就是要让这个边界没有  要自然</p>
+<p>按照原理  改成这样：</p>
+<p>A=imread(‘F:\fisheye\bosong1.jpg’);<br> B=imread(‘F:\fisheye\bosong2.jpg’);<br> [ma,na,ka]=size(A);<br> [mb,nb,kb]=size(B);<br> gradient_inner=B(1:mb-2,2:nb-1,:)+B(3:mb,2:nb-1,:)+B(2:mb-1,1:nb-2,:)+B(2:mb-1,3:nb,:)-4*B(2:mb-1,2:nb-1,:);<br> Lap=[0,1,0;1,-4,1;0,1,0];<br> I1=conv2(double(B(:,:,1)),double(Lap));<br> I2=conv2(double(B(:,:,2)),double(Lap));<br> I3=conv2(double(B(:,:,3)),double(Lap));<br> gradient_inner(:,:,1)=I1(3:mb,3:nb);<br> gradient_inner(:,:,2)=I2(3:mb,3:nb);<br> gradient_inner(:,:,3)=I3(3:mb,3:nb);<br> dstX=70;<br> dstY=20;<br> for i=dstY:dstY+mb-3<br>     for j=dstX:dstX+nb-3<br>         ii=i-(dstY-1);<br>         jj=j-(dstX-1);<br>         A(i,j,1)=(A(i+1,j,1)+A(i,j+1,1)+A(i-1,j,1)+A(i,j-1,1)-gradient_inner(ii,jj,1))/4;<br>         A(i,j,2)=(A(i+1,j,2)+A(i,j+1,2)+A(i-1,j,2)+A(i,j-1,2)-gradient_inner(ii,jj,2))/4;<br>         A(i,j,3)=(A(i+1,j,3)+A(i,j+1,3)+A(i-1,j,3)+A(i,j-1,3)-gradient_inner(ii,jj,3))/4;<br>     end<br> end<br> %上面的还是不对 有边界的黑框</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151117105310660" alt>这还是不对  是个有边界的不晕染的黑月亮框框！</p>
+<p>上面不对   我找到http://blog.csdn.net/hjimce/article/details/45716603这个人写得比较好    原理步骤都讲得很清晰 浅显易懂    所以按照他的步骤一步一步来：</p>
+<p>1，得到掩膜 并裁剪出源图中的包含目标的最小矩形 先直接覆盖在A图中：</p>
+<p>%http://blog.csdn.net/hjimce/article/details/45716603按照这个资料<br> %先得到掩膜mask  方便裁剪出一个包含镶嵌图的最小矩形<br> B=imread(‘F:\fisheye\bosong2.jpg’);<br> [mb,nb,kb]=size(B);<br> bmask=im2bw(B);<br> for i=1:mb<br>     for j=1:nb<br>         if(bmask(i,j)==1)<br>             bottom=i;<br>         end<br>     end<br> end<br> for j=1:nb<br>     for i=1:mb<br>         if(bmask(i,j)==1)<br>             right=j;<br>         end<br>     end<br> end<br> for i=mb:-1:1<br>     for j=1:nb<br>         if(bmask(i,j)==1)<br>             up=i;<br>         end<br>     end<br> end<br> for j=nb:-1:1<br>     for i=1:mb<br>         if(bmask(i,j)==1)<br>             left=j;<br>         end<br>     end<br> end<br> wid=-left;<br> height=bottom-up;<br> BB=uint8(zeros(height,wid,3));<br> for i=up:bottom<br>     for j=left:right<br>         ii=i-(up-1);<br>         jj=j-left+1;<br>         BB(ii,jj,1)=B(i,j,1);<br>         BB(ii,jj,2)=B(i,j,2);<br>         BB(ii,jj,3)=B(i,j,3);<br>     end<br> end<br> [mbb,nbb,kbb]=size(BB);<br> dstX=70;<br> dstY=20;<br> A=imread(‘F:\fisheye\bosong1.jpg’);<br> [ma,na,ka]=size(A);<br> for i=dstY:dstY+mbb-1<br>     for j=dstX:dstX+nbb-1<br>         ii=i-(dstY-1);<br>         jj=j-(dstX-1);<br>         A(i,j,1)=BB(ii,jj,1);<br>         A(i,j,2)=BB(ii,jj,2);<br>         A(i,j,3)=BB(ii,jj,3);<br>     end<br> end</p>
+<p>结果：<img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151117120833010" alt>掩膜计算得有点不准确 不过这个没太大关系  反正主要关注泊松融合  这个我是直接用二值图判断得到的   误差就随它去了</p>
+<p>2，计算BB的x、y方向的梯度场  计算A的x、y方向的梯度场   并将A的要放进月亮的位置的梯度场替换成BB的梯度场得到AA</p>
+<p>%计算BB和AA的x方向y方向的梯度场<br> w=[0,-1,1];<br> BBx=imfilter(double(BB),w,’conv’);<br> BBy=imfilter(double(BB),w’,’conv’);<br> %imshow(BBx,[])<br> AAx=imfilter(double(AA),w,’conv’);<br> AAy=imfilter(double(AA),w’,’conv’);<br> %imshow(AAx,[])<br> %对AAx和AAy分别做mask 点乘  即等同于将AA待镶嵌区域的梯度场替换成BB的梯度场<br> for i=dstY:dstY+mbb-1<br>     for j=dstX:dstX+nbb-1<br>         ii=i-dstY+1;<br>         jj=j-dstX+1;<br>         AAx(i,j,1)=BBx(ii,jj,1);<br>         AAx(i,j,2)=BBx(ii,jj,2);<br>         AAx(i,j,3)=BBx(ii,jj,3);<br>         AAy(i,j,1)=BBy(ii,jj,1);<br>         AAy(i,j,2)=BBy(ii,jj,2);<br>         AAy(i,j,3)=BBy(ii,jj,3);<br>     end<br> end</p>
+<p>结果：<img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151118111113629" alt></p>
+<p>3，计算AA的偏导得到散度 （拉普拉斯坐标）</p>
+<p>%接下来对梯度求偏导得到融合图像的散度  lap<br> kernel=[-1,1,0];<br> lapx=imfilter(AAx,kernel,’conv’);<br> lapy=imfilter(AAy,kernel’,’conv’);<br> lap=lapx+lapy;</p>
+<p>4，构建系数矩阵   ax=b  其中a是系数矩阵 x是所求的重构的像素点的各个通道值 b是散度</p>
+<p>%接下来求解系数矩阵<br> %先将lap四周的点填充为原来的像素值（约束值） 其它的仍然是散度<br> [m,n,k]=size(lap);<br> for i=1:m<br>     for j=1:n<br>         if((i==1&amp;&amp;j==1)||(i==1&amp;&amp;j==n)||(i==m&amp;&amp;j==1)||(i==m&amp;&amp;j==n))<br>             lap(i,j,1)=A(i,j,1);<br>             lap(i,j,2)=A(i,j,2);<br>             lap(i,j,3)=A(i,j,3);<br>         else<br>             if(i==1||i==m)<br>                 lap(i,j,1)=A(i,j,1);<br>                 lap(i,j,2)=A(i,j,2);<br>                 lap(i,j,3)=A(i,j,3);<br>             else<br>                 if(j==1||j==n)<br>                     lap(i,j,1)=A(i,j,1);<br>                     lap(i,j,2)=A(i,j,2);<br>                     lap(i,j,3)=A(i,j,3);<br>                 end<br>             end<br>         end<br>     end<br> end<br> %然后将lap’排成一列 即Ax=b的b矩阵<br> for i=1:m<br>     for j=1:n<br>         lap1(i,j)=lap(i,j,1);<br>         lap2(i,j)=lap(i,j,2);<br>         lap3(i,j)=lap(i,j,3);<br>     end<br> end<br> lapp1=lap1′;<br> lapp2=lap2′;<br> lapp3=lap3′;<br> b1=lapp1(:);<br> b2=lapp2(:);<br> b3=lapp3(:);<br> b=[b1 b2 b3];<br> %计算系数矩阵Ax=b的A 这里用AAA 先对角线全部填1 然后非周围点就再例外赋值 1  1 -4 1  1<br> [mm,nn]=size(b);<br> AAA=int(zeros(mm,mm));                                                                                         %There is error!!!!!<br> for i=1:mm<br>     for j=1:mm<br>         if(i==j)<br>             AAA(i,j)=1;<br>         end<br>     end<br> end</p>
+<p>但是到这步就有问题了 因为AAA是25071×25071大小  说超过了MATLAB的最大矩阵范围！！！如果这个问题不能解决 后面都不用做了 更不用说通过Ax=b求出x了   那求不出x 那融合后的每点的值就没办法得到了。  那个博主只说了在OpenCV里怎么泊松融合，因为在我出错的这步，OpenCV里有一种快速解泊松方程的方法，所以OpenCV里不是这样构造A和b来解x的。</p>
+<p></p>
+<p></p>
+<p>然后我重新查了资料，原来pudn上有现成的别人传的泊松融合的程序matlab写的  我下下来 分析了下  运行了下  结果</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151128203215060" alt>左图是融合效果  这样看 好像的确是将右图的月亮融合进去了  无缝融合   但我换了幅图试下  结果：</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151128203449164" alt>其实下载的程序感官上就像是将左边的飞机处理成右边的飞机的效果 然后放进目标图中   这个融合效果不好  因为它带了背景  其实    这个程序是这样的：</p>
+<p>src_img = imread(‘moon.jpg’);<br> dst_img = imread(‘mountains.jpg’);  %先读取两幅原图 一个是待嵌入图 一个是目标图<br> img_width = 95;   %这个其实就是包含目标图的矩形  包含月亮的矩形  这个是上传文档的作者自己定的 <br> img_height = 90;<br> src_st_x = 165;    %这个就是原图中的点 表示待会儿从哪里开始切出这个矩形<br> src_st_y = 55;<br> dst_st_x = 700;  %这个就是目标图中的点  表示待会儿从哪里开始放进这个包含月亮的矩形   <br> dst_st_y = 350;<br> extracted_src_img = src_img(src_st_y:src_st_y+img_height,src_st_x:src_st_x+img_width,:);  %截出月亮大小  以及原图中从某点开始的对应月亮区域<br> extracted_dst_img = dst_img(dst_st_y:dst_st_y+img_height,dst_st_x:dst_st_x+img_width,:);<br> [rws,cls] = size(extracted_src_img(:,:,1));<br> dst_img_temp = dst_img;<br> dst_img_temp(dst_st_y:dst_st_y+img_height,dst_st_x:dst_st_x+img_width,:) = extracted_src_img;    %把月亮放进目标图中你之前想放的对应位置<br> padding_factor = 10;<br> padded_src_img = pad_image(extracted_src_img,padding_factor);  %这个函数是月亮和原图那个小区域扩充边界   上下左右都多填充了10个像素的大小区域 用黑色填充的<br> padded_dst_img = pad_image(extracted_dst_img,padding_factor);  %对切出的矩形和目标图的矩形都这样填充<br> temp_result = zeros(rws,cls,3);<br> temp_result(:,:,1) = find_result_channel(padded_src_img(:,:,1),padded_dst_img(:,:,1),padding_factor);   <br> temp_result(:,:,2) = find_result_channel(padded_src_img(:,:,2),padded_dst_img(:,:,2),padding_factor);      <br> temp_result(:,:,3) = find_result_channel(padded_src_img(:,:,3),padded_dst_img(:,:,3),padding_factor);<br> figure(1); imshow(uint8(temp_result));                                                                   %对每个通道计算系数矩阵A和b 求新像素值x  让月亮的颜色和要融合图的一样  ！<br> dst_img(dst_st_y:dst_st_y+img_height,dst_st_x:dst_st_x+img_width,:) = temp_result;  %将处理好的月亮的矩形放进目标图中那个要换掉的矩形的位置<br> figure(2); imshow(uint8(dst_img));</p>
+<p>其中几个子函数是这样的：</p>
+<p>function [padded_image] = pad_image(src_img,padding_factor) %其实就是将src_img上下左右都填充padding_factor个像素大小  用黑色填充<br> rws = size(src_img,1);<br> cls = size(src_img,2);<br> temp = zeros(rws,padding_factor);<br> src_img_temp_1 = zeros(rws,cls + (2*padding_factor),3);<br> src_img_temp_1(:,:,1) = [temp src_img(:,:,1) temp];<br> src_img_temp_1(:,:,2) = [temp src_img(:,:,2) temp];<br> src_img_temp_1(:,:,3) = [temp src_img(:,:,3) temp];<br> src_img_temp_2 = zeros(rws+ (2*padding_factor),cls+ (2*padding_factor),3);<br> rws= size(src_img_temp_2,1);<br> cls = size(src_img_temp_2,2);<br> temp = zeros(padding_factor,cls);<br> src_img_temp_2(:,:,1) = [temp; src_img_temp_1(:,:,1); temp];<br> src_img_temp_2(:,:,2) = [temp; src_img_temp_1(:,:,2); temp];<br> src_img_temp_2(:,:,3) = [temp; src_img_temp_1(:,:,3); temp];<br> padded_image = src_img_temp_2;</p>
+<p>function result = find_result_channel(src_img,dst_img,padding_factor) %这个其实就是将src_img按照dst_img进行处理  让它们看起来颜色亮度一致  或者说和谐<br> [rws cls] = size(src_img);<br> src_img_x = find_x_gradient(src_img,cls);  <br> src_img_y = find_y_gradient(src_img,rws);<br> dst_img_x = find_x_gradient(dst_img,cls);<br> dst_img_y = find_y_gradient(dst_img,rws);<br> new_dst_img_x=dst_img_x;<br> new_dst_img_y=dst_img_y;<br> new_dst_img_x(2:rws-1,2:cls-1) = src_img_x(2:rws-1,2:cls-1);<br> new_dst_img_y(2:rws-1,2:cls-1) = src_img_y(2:rws-1,2:cls-1);<br> new_dst_img_x_x = find_x_gradient_b_diff(new_dst_img_x,cls);<br> new_dst_img_y_y = find_y_gradient_b_diff(new_dst_img_y,rws);<br> divergence_field = new_dst_img_x_x + new_dst_img_y_y;<br> divergence_field = divergence_field(padding_factor:size(divergence_field,1)-padding_factor-1,padding_factor:size(divergence_field,2)-padding_factor-1);<br> src_img = src_img(padding_factor+1:size(src_img,1)-padding_factor,padding_factor+1:size(src_img,2)-padding_factor);<br> dst_img = dst_img(padding_factor+1:size(dst_img,1)-padding_factor,padding_factor+1:size(dst_img,2)-padding_factor);<br> [rws cls] = size(src_img);<br> %laplace_sparse_matrix = Create_Laplace_Sparse_Matrix(rws, cls);<br> laplace_sparse_matrix = sp_laplace(rws, cls);<br> mask = zeros(rws,cls);<br> mask(:,1) = 1;<br> mask(:,cls) = 1;<br> mask(1,:) = 1;<br> mask(rws,:) = 1;<br> mask = logical(mask);<br> mask = mask(:);<br> divergence_field = divergence_field(:);<br> src_img = src_img(:);<br> dst_img = dst_img(:);<br> x_dash_dash = dst_img(mask);<br> A_dash_dash = laplace_sparse_matrix(:,mask);<br> b_dash_dash = A_dash_dash * x_dash_dash;<br> b_dash = divergence_field – b_dash_dash;<br> A_dash = laplace_sparse_matrix(~mask,~mask);<br> b_dash = b_dash(~mask,:);<br> x_dash = A_dash\b_dash;<br> result = zeros(size(divergence_field,1),1);<br> result(~mask,1) = x_dash;<br> result(mask,1) = x_dash_dash;<br> result = reshape(result,rws,cls);</p>
+<p>这个函数还有几个子函数：</p>
+<p>function [A,N] = sp_laplace(nx,ny)              %这个函数是构建系数矩阵<br> N = nx * ny;  <br> N5 = 5 * N;<br> irow = zeros(N5, 1);<br> icol = irow; <br> NZA = irow;<br> index = 0;<br> row = 0;<br> for j = 1:ny<br>    for k = 1:nx<br>       row = row + 1;<br>       if j &gt; 1<br>          index = index + 1;<br>          NZA (index) = -1.0;<br>          irow(index) = row;<br>          icol(index) = row – nx;   % South<br>       end<br>       if k &gt; 1<br>          index = index + 1;<br>          NZA (index) = -1.0;<br>          irow(index) = row;<br>          icol(index) = row – 1;    % West<br>       end<br>       index = index + 1;<br>       NZA (index) = 4.0;<br>       irow(index) = row;<br>       icol(index) = row;           % P (self)<br>       if k &lt; nx<br>          index = index + 1;<br>          NZA (index) = -1.0;<br>          irow(index) = row;<br>          icol(index) = row + 1;    % East<br>       end<br>       if j &lt; ny <br>          index = index + 1;<br>          NZA (index) = -1.0;<br>          irow(index) = row;<br>          icol(index) = row + nx;   % North<br>       end<br>    end<br> end            <br> icol = icol(1:index); <br> irow = irow(1:index);<br> NZA = NZA(1:index);<br> A = sparse (irow, icol, NZA, N, N);</p>
+<p>function [Iy] = find_y_gradient_b_diff(I,Ny)<br> I = double(I);<br> Iy = I – [I(2:Ny,:); I(1,:)];</p>
+<p>function [Iy] = find_y_gradient(I,Ny)<br> Iy = [I(2:Ny,:); I(1,:)] – I;</p>
+<p>function [Ix] = find_x_gradient_b_diff(I,Nx)<br> I = double(I);<br> Ix = I – [I(:,2:Nx) I(:,1)];</p>
+<p>function [Ix] = find_x_gradient(I,Nx)<br> Ix =[I(:,2:Nx) I(:,1)]-I;    %这是x方向的梯度？这样求梯度 第一列放到最后去 减去原图？</p>
+<p>这就是pudn上别人传的用MATLAB写的泊松融合  但我感觉这个不对 我还是觉得应该像http://blog.csdn.net/hjimce/article/details/45716603这个人里的一样：</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151128205432344" alt>而不是像上面一样将包含飞机的最小矩形切出来 对比目标图的背景进行处理 让它们好像颜色亮度等和谐  然后放进去   我感觉不是这样！</p>
+<p></p>
+<p></p>
+<p></p>
+<p>找到一个更完整的资料http://blog.csdn.net/vsooda/article/details/38823745原来OpenCV3里面已经把泊松融合封装在了cloning这个类里面了！我的版本是2.4.9，所以我就稍微改了下：</p>
+<p>#include <stdlib.h>  <br> #include <opencv2 highgui highgui.hpp>  <br> #include<opencv2 opencv.hpp><br> using namespace cv;  <br> void dst(double *mod_diff, double *sineTransform, int h, int w)  <br>     {  <br>         unsigned long int idx;  <br>         Mat temp = Mat(2 * h + 2, 1, CV_32F);  <br>         Mat res = Mat(h, 1, CV_32F);  <br>         Mat planes[] = { Mat_<float>(temp), Mat::zeros(temp.size(), CV_32F) };  <br>         Mat result;  <br>         int p = 0;  <br>         for (int i = 0; i &lt; w; i++)  <br>         {  <br>             temp.at<float>(0, 0) = 0.0;  <br>             for (int j = 0, r = 1; j &lt; h; j++, r++)  <br>             {  <br>                 idx = j*w + i;  <br>                 temp.at<float>(r, 0) = (float)mod_diff[idx];  <br>             }  <br>             temp.at<float>(h + 1, 0) = 0.0;  <br>             for (int j = h – 1, r = h + 2; j &gt;= 0; j–, r++)  <br>             {  <br>                 idx = j*w + i;  <br>                 temp.at<float>(r, 0) = (float)(-1.0 * mod_diff[idx]);  <br>             }  <br>             merge(planes, 2, result);  <br>             dft(result, result, 0, 0);  <br>             Mat planes1[] = { Mat::zeros(result.size(), CV_32F), Mat::zeros(result.size(), CV_32F) };  <br>             split(result, planes1);  <br>             std::complex<double> two_i = std::sqrt(std::complex<double>(-1));  <br>             double factor = -2 * imag(two_i);  <br>             for (int c = 1, z = 0; c &lt; h + 1; c++, z++)  <br>             {  <br>                 res.at<float>(z, 0) = (float)(planes1[1].at<float>(c, 0) / factor);  <br>             }  <br>             for (int q = 0, z = 0; q &lt; h; q++, z++)  <br>             {  <br>                 idx = q*w + p;  <br>                 sineTransform[idx] = res.at<float>(z, 0);  <br>             }  <br>             p++;  <br>         }  <br>     }  <br>   <br> void idst(double *mod_diff, double *sineTransform, int h, int w)  <br>     {  <br>         int nn = h + 1;  <br>         unsigned long int idx;  <br>         dst(mod_diff, sineTransform, h, w);  <br>         for (int i = 0; i &lt; h; i++)  <br>         for (int j = 0; j &lt; w; j++)  <br>         {  <br>             idx = i*w + j;  <br>             sineTransform[idx] = (double)(2 * sineTransform[idx]) / nn;  <br>         }  <br>     }  <br> void transpose(double *mat, double *mat_t, int h, int w)  <br>     {  <br>         Mat tmp = Mat(h, w, CV_32FC1);  <br>         unsigned long int idx;  <br>         for (int i = 0; i &lt; h; i++)  <br>         {  <br>             for (int j = 0; j &lt; w; j++)  <br>             {  <br>                 idx = i*(w)+j;  <br>                 tmp.at<float>(i, j) = (float)mat[idx];  <br>             }  <br>         }  <br>         Mat tmp_t = tmp.t();  <br>         for (int i = 0; i &lt; tmp_t.size().height; i++)  <br>         for (int j = 0; j &lt; tmp_t.size().width; j++)  <br>         {  <br>             idx = i*tmp_t.size().width + j;  <br>             mat_t[idx] = tmp_t.at<float>(i, j);  <br>         }  <br>     }  <br> void solve(const Mat &amp;img, double *mod_diff, Mat &amp;result)  <br>     {  <br>         int w = img.size().width;  <br>         int h = img.size().height;  <br>         unsigned long int idx, idx1;  <br>         double *sineTransform = new double[(h – 2)*(w – 2)];  <br>         double *sineTransform_t = new double[(h – 2)*(w – 2)];  <br>         double *denom = new double[(h – 2)*(w – 2)];  <br>         double *invsineTransform = new double[(h – 2)*(w – 2)];  <br>         double *invsineTransform_t = new double[(h – 2)*(w – 2)];  <br>         double *img_d = new double[(h)*(w)];  <br>         //结果存在img_d      <br>         dst(mod_diff, sineTransform, h – 2, w – 2);  <br>         transpose(sineTransform, sineTransform_t, h – 2, w – 2);  <br>         dst(sineTransform_t, sineTransform, w – 2, h – 2);  <br>         transpose(sineTransform, sineTransform_t, w – 2, h – 2);  <br>         int cy = 1;  <br>         for (int i = 0; i &lt; w – 2; i++, cy++)  <br>         {  <br>             for (int j = 0, cx = 1; j &lt; h – 2; j++, cx++)  <br>             {  <br>                 idx = j*(w – 2) + i;  <br>                 denom[idx] = (float)2 * cos(CV_PI*cy / ((double)(w – 1))) – 2 + 2 * cos(CV_PI*cx / ((double)(h – 1))) – 2;  <br>   <br>             }  <br>         }  <br>         for (idx = 0; idx &lt; (unsigned)(w – 2)*(h – 2); idx++)  <br>         {  <br>             sineTransform_t[idx] = sineTransform_t[idx] / denom[idx];  <br>         }  <br>         idst(sineTransform_t, invsineTransform, h – 2, w – 2);  <br>         transpose(invsineTransform, invsineTransform_t, h – 2, w – 2);  <br>         idst(invsineTransform_t, invsineTransform, w – 2, h – 2);  <br>         transpose(invsineTransform, invsineTransform_t, w – 2, h – 2);  <br>         for (int i = 0; i &lt; h; i++)  <br>         {  <br>             for (int j = 0; j &lt; w; j++)  <br>             {  <br>                 idx = i*w + j;  <br>                 img_d[idx] = (double)img.at<uchar>(i, j);  <br>             }  <br>         }  <br>         for (int i = 1; i &lt; h – 1; i++)  <br>         {  <br>             for (int j = 1; j &lt; w – 1; j++)  <br>             {  <br>                 idx = i*w + j;  <br>                 img_d[idx] = 0.0;  <br>             }  <br>         }  <br>         for (int i = 1, id1 = 0; i &lt; h – 1; i++, id1++)  <br>         {  <br>             for (int j = 1, id2 = 0; j &lt; w – 1; j++, id2++)  <br>             {  <br>                 idx = i*w + j;  <br>                 idx1 = id1*(w – 2) + id2;  <br>                 img_d[idx] = invsineTransform_t[idx1];  <br>             }  <br>         }  <br>         for (int i = 0; i &lt; h; i++)  <br>         {  <br>             for (int j = 0; j &lt; w; j++)  <br>             {  <br>                 idx = i*w + j;  <br>                 if (img_d[idx] &lt; 0.0) {  <br>                     result.at<uchar>(i, j) = 0;  <br>                 }  <br>                 else if (img_d[idx] &gt; 255.0)  <br>                     result.at<uchar>(i, j) = 255;  <br>                 else {  <br>                     result.at<uchar>(i, j) = (uchar)img_d[idx];  <br>                 }  <br>             }  <br>         }  <br>         delete[] sineTransform;  <br>         delete[] sineTransform_t;  <br>         delete[] denom;  <br>         delete[] invsineTransform;  <br>         delete[] invsineTransform_t;  <br>         delete[] img_d;  <br>     }  <br> void poisson_solver(const Mat &amp;img, Mat &amp;gxx, Mat &amp;gyy, Mat &amp;result)  <br>     {  <br>         int w = img.size().width;  <br>         int h = img.size().height;  <br>         unsigned long int idx;  <br>         Mat lap = Mat(img.size(), CV_32FC1);  <br>         lap = gxx + gyy;  <br>         Mat bound = img.clone();  <br>         //rectangle 外围保持原样，rect内部变为scalar  <br>         rectangle(bound, Point(1, 1), Point(img.cols – 2, img.rows – 2), Scalar::all(0), -1);  <br>         //rectangle(bound, Point(20, 20), Point(img.cols – 50, img.rows – 50), Scalar::all(0), -1);  <br>         double *boundary_point = new double[h*w];  <br>         Mat bound_map = cv::Mat(img.size(), CV_8UC1, cv::Scalar(0)); <br>         for (int i = 1; i &lt; h – 1; i++)  <br>         for (int j = 1; j &lt; w – 1; j++)  <br>         {  <br>             idx = i*w + j;  <br>             boundary_point[idx] = -4 * (int)bound.at<uchar>(i, j) + (int)bound.at<uchar>(i, (j + 1)) + (int)bound.at<uchar>(i, (j – 1))+ (int)bound.at<uchar>(i – 1, j) + (int)bound.at<uchar>(i + 1, j);  <br>             bound_map.at<uchar>(i, j) = boundary_point[idx];  <br>         }  <br>         Mat diff = Mat(h, w, CV_32FC1);  <br>         for (int i = 0; i &lt; h; i++)  <br>         {  <br>             for (int j = 0; j &lt; w; j++)  <br>             {  <br>                 idx = i*w + j;  <br>                 diff.at<float>(i, j) = (float)(lap.at<float>(i, j) – boundary_point[idx]);  <br>             }  <br>         }  <br>         //diff和lap几乎没什么区别 <br>         double *mod_diff = new double[(h – 2)*(w – 2)];  <br>         for (int i = 0; i &lt; h – 2; i++)  <br>         {  <br>             for (int j = 0; j &lt; w – 2; j++)  <br>             {  <br>                 idx = i*(w – 2) + j;  <br>                 mod_diff[idx] = diff.at<float>(i + 1, j + 1);  <br>   <br>             }  <br>         }  <br>         ///////////////////////////////////////////////////// Find DST  /////////////////////////////////////////////////////  <br>         solve(img, mod_diff, result);  <br>         delete[] mod_diff;  <br>         delete[] boundary_point;  <br>     }  <br> void lapx(const Mat &amp;img, Mat &amp;gxx)  <br>     {  <br>         Mat kernel = Mat::zeros(1, 3, CV_8S);  <br>         kernel.at<char>(0, 0) = -1;  <br>         kernel.at<char>(0, 1) = 1;  <br>         filter2D(img, gxx, CV_32F, kernel);  <br>     }  <br> void lapy(const Mat &amp;img, Mat &amp;gyy)  <br>     {  <br>         Mat kernel = Mat::zeros(3, 1, CV_8S);  <br>         kernel.at<char>(0, 0) = -1;  <br>         kernel.at<char>(1, 0) = 1;  <br>         filter2D(img, gyy, CV_32F, kernel);  <br>     }  <br> void getGradientx(const Mat &amp;img, Mat &amp;gx)  <br>     {  <br>         Mat kernel = Mat::zeros(1, 3, CV_8S);  <br>         kernel.at<char>(0, 2) = 1;  <br>         kernel.at<char>(0, 1) = -1;  <br>         filter2D(img, gx, CV_32F, kernel);  <br>     }  <br> void getGradienty(const Mat &amp;img, Mat &amp;gy)  <br>     {  <br>         Mat kernel = Mat::zeros(3, 1, CV_8S);  <br>         kernel.at<char>(2, 0) = 1;  <br>         kernel.at<char>(1, 0) = -1;  <br>         filter2D(img, gy, CV_32F, kernel);  <br>     }  <br> void main()<br> {<br><span></span>Mat g=imread(“bosong.jpg”);<br><span></span>Mat I=imread(“bosong1.jpg”);<br><span></span>Mat gx,gy,sx,sy;<br><span></span>getGradientx(g,gx);<br><span></span>getGradienty(g,gy);<br><span></span>getGradientx(I,sx);<br><span></span>getGradienty(I,sy);<br><span></span>//下面其实就是poisson()函数 <br><span></span>Mat fx = Mat(I.size(), CV_32FC3);  <br>     Mat fy = Mat(I.size(), CV_32FC3);  <br>     fx = gx + sx;  <br>     fy = gy + sy;<br>     Mat gxx = Mat(I.size(), CV_32FC3);  <br>     Mat gyy = Mat(I.size(), CV_32FC3);  <br>     //gxx, gyy 是在x，y方向的laplacian算子  <br>     lapx(fx, gxx);  <br>     lapy(fy, gyy);  <br><span></span>vector<mat> rgb_channel,rgbx_channel,rgby_channel;<br>     split(gxx, rgbx_channel);  <br>     split(gyy, rgby_channel);  <br>     split(I, rgb_channel);<br><span></span>Mat rgbchan2=rgb_channel.at(2);<br><span></span>Mat rgbchan1=rgb_channel.at(1);<br><span></span>Mat rgbchan0=rgb_channel.at(0);<br><span></span>Mat rgbxchan2=rgbx_channel.at(2);<br><span></span>Mat rgbychan2=rgby_channel.at(2);<br><span></span>Mat rgbxchan1=rgbx_channel.at(1);<br><span></span>Mat rgbychan1=rgby_channel.at(1);<br><span></span>Mat rgbxchan0=rgbx_channel.at(0);<br><span></span>Mat rgbychan0=rgby_channel.at(0);<br><span></span>Mat output1,output2,output0;<br>     //运行下面这个函数时出错<br>     poisson_solver(rgbchan2,rgbxchan2,rgbychan2,output2);  <br>     poisson_solver(rgbchan1,rgbxchan1,rgbychan1,output1);  <br>     poisson_solver(rgbchan0,rgbxchan0,rgbychan0,output0);<br><span></span>vector<mat> output;<br><span></span>output.at(2)=output2;<br><span></span>output.at(1)=output1;<br><span></span>output.at(0)=output0;<br><span></span>Mat result;<br><span></span>merge(output,result);<br><span></span>namedWindow(“poissonresult”);<br><span></span>imshow(“poissonresult”,output1);<br><span></span>waitKey(0);<br> }</mat></mat></char></char></char></char></char></char></char></char></float></float></float></uchar></uchar></uchar></uchar></uchar></uchar></uchar></uchar></uchar></uchar></float></float></float></float></float></double></double></float></float></float></float></float></opencv2></opencv2></stdlib.h></p>
+<p>结果出错，在运行poisson_solver()时出错：</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151123134643276" alt>那个月亮的图我是扩大到和另一张一样大，用0填充的，所以大小一样了，这个错误，，，，，？后来检查了下，这个错误是在solve()最后一个for循环嵌套里，所以百度了下，这个错误很可能是去访问了矩阵中根本不存在的位置(超出了那个矩阵的大小) ，所以我加上了一句if(i&gt;=0 &amp;&amp; i<result.cols j>=0 &amp;&amp; j<result.rows p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151123164716328" alt>我这里只显示一个通道  可是</p>
+<p> 出错：显示说这个通道没有实际大小 ：</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151123164547584" alt>这个错误又是闹哪样。。。？</p>
+<p></p>
+<p>继续调试，结合http://blog.csdn.net/vsooda/article/details/38823745和http://blog.csdn.net/hjimce/article/details/45716603如果他们两个人的单独运行 有错误！试着调试结果还是不行 这个报错说我的结果blend是空的  我有试着下VS2015+OpenCV3.0因为想亲自看看那个类   但是本来装好了 结果我打开错误的标示以为是自己装错了 又卸载了 现在又重装！！！哎：</p>
+<p>#include<opencv2 opencv.hpp><br> #include<opencv2 highgui highgui.hpp><br> #include<opencv2 imgproc imgproc.hpp><br> #include<iostream><br> using namespace cv;<br> using namespace std;<br> void computeGradientX(const Mat &amp;img,Mat &amp;gx)  <br> {  <br>     Mat kernel = Mat::zeros(1, 3, CV_8S);  <br>     kernel.at<char>(0,2) = 1;  <br>     kernel.at<char>(0,1) = -1;  <br>     if(img.channels() == 3)  <br>         filter2D(img, gx, CV_32F, kernel);  <br>     else if (img.channels() == 1)  <br>     {  <br>         Mat tmp[3];  <br>         for(int chan = 0 ; chan &lt; 3 ; ++chan)  <br>             filter2D(img, tmp[chan], CV_32F, kernel);  <br>         merge(tmp, 3, gx);  <br>     }  <br> }  <br> void computeGradientY( const Mat &amp;img, Mat &amp;gy)  <br> {  <br>     Mat kernel = Mat::zeros(3, 1, CV_8S);  <br>     kernel.at<char>(2,0) = 1;  <br>     kernel.at<char>(1,0) = -1;  <br>     if(img.channels() == 3)  <br>         filter2D(img, gy, CV_32F, kernel);  <br>     else if (img.channels() == 1)  <br>     {  <br>         Mat tmp[3];  <br>         for(int chan = 0 ; chan &lt; 3 ; ++chan)  <br>             filter2D(img, tmp[chan], CV_32F, kernel);  <br>         merge(tmp, 3, gy);  <br>     }  <br> }  <br> void computeLaplacianX(const Mat &amp;img,Mat &amp;laplacianX)  <br> {  <br>     Mat kernel = Mat::zeros(1, 3, CV_8S);  <br>     kernel.at<char>(0,0) = -1;  <br>     kernel.at<char>(0,1) = 1;  <br>     filter2D(img, laplacianX, CV_32F, kernel);  <br> }  <br> void computeLaplacianY(const Mat &amp;img,Mat &amp;laplacianY)  <br> {  <br>     Mat kernel = Mat::zeros(3, 1, CV_8S);  <br>     kernel.at<char>(0,0) = -1;  <br>     kernel.at<char>(1,0) = 1;  <br>     filter2D(img, laplacianY, CV_32F, kernel);  <br> }  <br> void computeDerivatives(const Mat&amp; destination, const Mat &amp;patch, const Mat &amp;binaryMask,Mat &amp;binaryMaskFloat)  <br> {  <br>     //initVariables(destination,binaryMask);//相关变量初始化，没用 <br><span></span>Mat destinationGradientX,destinationGradientY,patchGradientX,patchGradientY;<br>     computeGradientX(destination,destinationGradientX);//计算背景图像的x方向梯度  <br>     computeGradientY(destination,destinationGradientY);//计算背景图像y方向的梯度  <br>     computeGradientX(patch,patchGradientX);//计算ROI区域转换复制到destination一样大小的patch图片x方向梯度  <br>     computeGradientY(patch,patchGradientY);//计算y方向梯度  <br>     Mat Kernel(Size(3, 3),CV_8UC1);  <br>     Kernel.setTo(Scalar(1));  <br>     erode(binaryMask, binaryMask, Kernel, Point(-1,-1), 3);     //对binaryMask进行腐蚀，去掉边界的毛刺点，让边界曲线平滑一点  <br>     binaryMask.convertTo(binaryMaskFloat,CV_32FC1,1.0/255.0);  <br> }  <br> //矩阵点乘，将lhs与rhs点乘得到result，因为有三个通道，估计mat不能实现三通道的矩阵的一次性点乘，所以才有这个函数  <br> void arrayProduct(const cv::Mat&amp; lhs, const cv::Mat&amp; rhs, cv::Mat&amp; result)  <br> {  <br>     vector <mat> lhs_channels;  <br>     vector <mat> result_channels;  <br>     split(lhs,lhs_channels);//拆分成3个通道的矩阵  <br>     split(result,result_channels);  <br>     for(int chan = 0 ; chan &lt; 3 ; ++chan)//三个矩阵进行分别相乘  <br>         multiply(lhs_channels[chan],rhs,result_channels[chan]);  <br>     merge(result_channels,result);//合成为一个  <br> }  <br> void dst(double *mod_diff, double *sineTransform, int h, int w)  <br> {  <br>         unsigned long int idx;  <br>         Mat temp = Mat(2 * h + 2, 1, CV_32F);  <br>         Mat res = Mat(h, 1, CV_32F);  <br>         Mat planes[] = { Mat_<float>(temp), Mat::zeros(temp.size(), CV_32F) };  <br>         Mat result;  <br>         int p = 0;  <br>         for (int i = 0; i &lt; w; i++)  <br>         {  <br>             temp.at<float>(0, 0) = 0.0;  <br>             for (int j = 0, r = 1; j &lt; h; j++, r++)  <br>             {  <br>                 idx = j*w + i;  <br>                 temp.at<float>(r, 0)=(float)mod_diff[idx];  <br>             }  <br>             temp.at<float>(h + 1, 0) = 0.0;  <br>             for (int j = h – 1, r = h + 2; j &gt;= 0; j–, r++)  <br>             {  <br>                 idx = j*w + i;  <br>                 temp.at<float>(r, 0) = (float)(-1.0 * mod_diff[idx]);  <br>             }  <br>             merge(planes, 2, result);  <br>             dft(result, result, 0, 0);  <br>             Mat planes1[] = { Mat::zeros(result.size(), CV_32F), Mat::zeros(result.size(), CV_32F) };  <br>             split(result, planes1);  <br>             std::complex<double> two_i = std::sqrt(std::complex<double>(-1));  <br>             double factor = -2 * imag(two_i);  <br>             for (int c = 1, z = 0; c &lt; h + 1; c++, z++)  <br>                 res.at<float>(z, 0) = (float)(planes1[1].at<float>(c, 0) / factor);  <br>             for (int q = 0, z = 0; q &lt; h; q++, z++)  <br>             {  <br>                 idx = q*w + p;  <br>                 sineTransform[idx] = res.at<float>(z, 0);  <br>             }  <br>             p++;  <br>         }  <br> }  <br> void idst(double *mod_diff, double *sineTransform, int h, int w)  <br> {  <br>         int nn = h + 1;  <br>         unsigned long int idx;  <br>         dst(mod_diff, sineTransform, h, w);  <br>         for (int i = 0; i &lt; h; i++)  <br>         for (int j = 0; j &lt; w; j++)  <br>         {  <br>             idx = i*w + j;  <br>             sineTransform[idx] = (double)(2 * sineTransform[idx]) / nn;  <br>         }  <br> }  <br> void transpose(double *mat, double *mat_t, int h, int w)  <br> {  <br>         Mat tmp = Mat(h, w, CV_32FC1);  <br>         unsigned long int idx;  <br>         for (int i = 0; i &lt; h; i++)  <br>         {  <br>             for (int j = 0; j &lt; w; j++)  <br>             {  <br>                 idx = i*(w)+j;  <br>                 tmp.at<float>(i, j) = (float)mat[idx];  <br>             }  <br>         }  <br>         Mat tmp_t = tmp.t();  <br>         for (int i = 0; i &lt; tmp_t.size().height; i++)  <br>         for (int j = 0; j &lt; tmp_t.size().width; j++)  <br>         {  <br>             idx = i*tmp_t.size().width + j;  <br>             mat_t[idx] = tmp_t.at<float>(i, j);  <br>         }  <br> }  <br> void solve(const Mat &amp;myimg,double *mymod_diff, Mat &amp;myresult)  <br> {  <br>         int w = myimg.size().width;  <br>         int h = myimg.size().height;  <br>         unsigned long int idx, idx1;  <br>         double *sineTransform = new double[(h – 2)*(w – 2)];  <br>         double *sineTransform_t = new double[(h – 2)*(w – 2)];  <br>         double *denom = new double[(h – 2)*(w – 2)];  <br>         double *invsineTransform = new double[(h – 2)*(w – 2)];  <br>         double *invsineTransform_t = new double[(h – 2)*(w – 2)];  <br>         double *img_d = new double[(h)*(w)];  <br>         //结果存在img_d  <br>         dst(mymod_diff,sineTransform,h-2,w-2);  <br>         transpose(sineTransform,sineTransform_t,h-2,w-2);  <br>         dst(sineTransform_t,sineTransform,w-2,h-2);  <br>         transpose(sineTransform,sineTransform_t,w-2,h-2);  <br>         int cy = 1;  <br>         for (int i=0;i<w-2>         {  <br>             for (int j=0,cx=1;j<h-2>             {  <br>                 idx = j*(w – 2) + i;  <br>                 denom[idx] = (float)2 * cos(CV_PI*cy / ((double)(w – 1))) – 2 + 2 * cos(CV_PI*cx / ((double)(h – 1))) – 2;  <br>             }  <br>         }  <br>         for (idx = 0; idx &lt; (unsigned)(w – 2)*(h – 2); idx++)   <br>             sineTransform_t[idx] = sineTransform_t[idx] / denom[idx];   <br>         idst(sineTransform_t, invsineTransform, h – 2, w – 2);  <br>         transpose(invsineTransform, invsineTransform_t, h – 2, w – 2);  <br>         idst(invsineTransform_t, invsineTransform, w – 2, h – 2);  <br>         transpose(invsineTransform, invsineTransform_t, w – 2, h – 2);  <br>         for (int i = 0; i &lt; h; i++)  <br>         {  <br>             for (int j = 0; j &lt; w; j++)  <br>             {  <br>                 idx = i*w + j;  <br>                 img_d[idx] = (double)myimg.at<uchar>(i, j);  <br>             }  <br>         }  <br>         for (int i = 1; i &lt; h – 1; i++)  <br>         {  <br>             for (int j = 1; j &lt; w – 1; j++)  <br>             {  <br>                 idx = i*w + j;  <br>                 img_d[idx] = 0.0;  <br>             }  <br>         }  <br>         for (int i = 1, id1 = 0; i &lt; h – 1; i++, id1++)  <br>         {  <br>             for (int j = 1, id2 = 0; j &lt; w – 1; j++, id2++)  <br>             {  <br>                 idx = i*w + j;  <br>                 idx1 = id1*(w – 2) + id2;  <br>                 img_d[idx] = invsineTransform_t[idx1];  <br>             }  <br>         }  <br>         for (int i = 0; i &lt; h; i++)  <br>         {  <br>             for (int j = 0; j &lt; w; j++)  <br>             {  <br>               if(i&gt;=0 &amp;&amp; i<myresult.cols j>=0 &amp;&amp; j<myresult.rows><span></span> {<br>                 idx = i*w + j;  <br>                 if (img_d[idx] &lt; 0.0) <br>                     myresult.at<uchar>(i, j) = 0;   <br>                 else if (img_d[idx] &gt; 255.0)  <br>                     myresult.at<uchar>(i, j) = 255;  <br>                 else  <br>                     myresult.at<uchar>(i, j) = (uchar)img_d[idx];  <br><span></span> }<br>             }  <br>         }  <br>         delete[] sineTransform;  <br>         delete[] sineTransform_t;  <br>         delete[] denom;  <br>         delete[] invsineTransform;  <br>         delete[] invsineTransform_t;  <br>         delete[] img_d;  <br> }  </uchar></uchar></uchar></myresult.rows></myresult.cols></uchar></h-2></w-2></float></float></float></float></float></double></double></float></float></float></float></float></mat></mat></char></char></char></char></char></char></char></char></iostream></opencv2></opencv2></opencv2></p>
+<p> //泊松方程求解 输入散度(laplacianX+laplacianY)，及边界点像素即可重建求解   <br> //输入：img为背景图片，laplacianX+laplacianY 为散度  <br> //输出：result重建结果  <br> void poissonSolver(const Mat &amp;img, Mat &amp;laplacianX , Mat &amp;laplacianY, Mat &amp;result)  <br> {  <br>     const int w = img.cols;  <br>     const int h = img.rows;  <br>     Mat lap = Mat(img.size(),CV_32FC1);  <br>     lap = laplacianX + laplacianY;//散度  <br>     Mat bound = img.clone();  <br>     //边界修正，opencv为了方便，直接把图片最外围的像素点排除在外，不参与泊松重建  <br>     rectangle(bound,Point(1,1),Point(img.cols-2,img.rows-2),Scalar::all(0),-1);  <br>     //Mat boundary_points;  <br>     //Laplacian(bound, boundary_points, CV_32F);  <br>     //boundary_points = lap – boundary_points;  <br>     //Mat mod_diff = boundary_points(Rect(1, 1, w-2, h-2));  <br>     //solve(img,mod_diff,result);  <br><span></span>//把上面四句和下面的换掉<br><span></span>   unsigned long int idx;<br><span></span>   double *boundary_point = new double[h*w];  <br>         Mat bound_map = cv::Mat(img.size(), CV_8UC1, cv::Scalar(0));  <br>         for (int i = 1; i &lt; h – 1; i++)  <br>         for (int j = 1; j &lt; w – 1; j++)  <br>         {  <br>             idx = i*w + j;  <br>             boundary_point[idx] = -4 * (int)bound.at<uchar>(i, j) + (int)bound.at<uchar>(i, (j + 1)) + (int)bound.at<uchar>(i, (j – 1))  <br>                 + (int)bound.at<uchar>(i – 1, j) + (int)bound.at<uchar>(i + 1, j);  <br>             bound_map.at<uchar>(i, j) = boundary_point[idx];  <br>         }  <br>         Mat diff = Mat(h, w, CV_32FC1);  <br>         for (int i = 0; i &lt; h; i++)  <br>         {  <br>             for (int j = 0; j &lt; w; j++)  <br>             {  <br>                 idx = i*w + j;  <br>                 diff.at<float>(i, j) = (float)(lap.at<float>(i, j) – boundary_point[idx]);  <br>             }  <br>         }  <br>         double *mod_diff = new double[(h – 2)*(w – 2)];  <br>         for (int i = 0; i &lt; h – 2; i++)  <br>         {  <br>             for (int j = 0; j &lt; w – 2; j++)  <br>             {  <br>                 idx = i*(w – 2) + j;  <br>                 mod_diff[idx] = diff.at<float>(i + 1, j + 1);  <br>             }  <br>         }  <br>         solve(img, mod_diff, result);  <br>         delete[] mod_diff;  <br>         delete[] boundary_point;  <br> }  <br> //泊松重建  <br> void poisson(const Mat &amp;destination,const Mat &amp;destinationGradientX,const Mat &amp;destinationGradientY,const Mat &amp;patchGradientX,const Mat &amp;patchGradientY,Mat &amp;outputB,Mat &amp;outputG,Mat &amp;outputR)  <br> {  <br>     Mat laplacianX = Mat(destination.size(),CV_32FC3);  <br>     Mat laplacianY = Mat(destination.size(),CV_32FC3);  <br>     //因为前面已经对destinationGradientX做了固定区域的mask，patchGradientX做了修改区域的mask  <br>     laplacianX = destinationGradientX + patchGradientX;//求解整张图片新的梯度场  <br>     laplacianY = destinationGradientY + patchGradientY;  <br>     computeLaplacianX(laplacianX,laplacianX);//求解梯度的散度 也就是拉普拉坐标  <br>     computeLaplacianY(laplacianY,laplacianY);  <br>     vector<mat> rgbx_channel,rgby_channel;<br><span></span>split(laplacianX,rgbx_channel);//通道拆分  <br>     split(laplacianY,rgby_channel); <br><span></span>vector<mat> output1;<br>     split(destination,output1);  <br>     //for(int chan =0;chan&lt;3;chan++)  <br>     //    poissonSolver(output1[chan], rgbx_channel[chan], rgby_channel[chan], output[chan]);   //这里有问题说mat里面不许这样？！我改用下面的 大不了多写几句<br><span></span>Mat output1B,output1G,output1R,rgbx_channelB,rgbx_channelG,rgbx_channelR,rgby_channelB,rgby_channelG,rgby_channelR;<br><span></span>output1B=output1.at(0);<br><span></span>output1G=output1.at(1);<br><span></span>output1R=output1.at(2);<br><span></span>rgbx_channelB=rgbx_channel.at(0);<br><span></span>rgbx_channelG=rgbx_channel.at(1);<br><span></span>rgbx_channelR=rgbx_channel.at(2);<br><span></span>rgby_channelB=rgby_channel.at(0);<br><span></span>rgby_channelG=rgby_channel.at(1);<br><span></span>rgby_channelR=rgby_channel.at(2);<br><span></span>poissonSolver(output1B, rgbx_channelB, rgby_channelB, outputB);<br><span></span>poissonSolver(output1G, rgbx_channelG, rgby_channelG, outputG);<br><span></span>poissonSolver(output1R, rgbx_channelR, rgby_channelR, outputR);<br><span></span>//output.at(0)=B;  //我这样对吗  平常做右值的可以作为左值吗 ？<br>     //output.at(1)=G;<br><span></span>//output.at(2)=R;<br> }  </mat></mat></float></float></float></uchar></uchar></uchar></uchar></uchar></uchar></p>
+<p> //输入：I背景整张图片  wmask背景中待修改的区域的mask  <br> //输出：cloned  <br> void evaluate(const Mat &amp;I,const Mat &amp;wmask,const Mat &amp;patchGradientX,const Mat &amp;patchGradientY, Mat &amp;cloned)  <br> {  <br>     bitwise_not(wmask,wmask);//矩阵元素取反操作，这样背景图片保持不变的像素对应的mask值为1  <br>     Mat binaryMaskFloatInverted;<br>     wmask.convertTo(binaryMaskFloatInverted,CV_32FC1,1.0/255.0);  <br>     //上面已经对patchGradientX做了mask操作 ，这边也对destinationGradientX做mask操作 <br>     Mat mydestinationGradientX,mydestinationGradientY;<br>     computeGradientX(I,mydestinationGradientX);//计算背景图像的x方向梯度  <br>     computeGradientY(I,mydestinationGradientY);//计算背景图像y方向的梯度  <br>     arrayProduct(mydestinationGradientX,binaryMaskFloatInverted, mydestinationGradientX);  <br>     arrayProduct(mydestinationGradientY,binaryMaskFloatInverted, mydestinationGradientY);  <br><span></span>Mat outputB,outputG,outputR;     //改了这里！！！！！！！！！！！！！！！！<br>     poisson(I,mydestinationGradientX,mydestinationGradientY,patchGradientX,patchGradientY,outputB,outputG,outputR);  <br><span></span>Mat output[]={outputB,outputG,outputR};<br>     merge(output,3,cloned);  <br> }  <br> //克隆融合外部接口函数  <br> //输入：destination背景图片的整张图片  binaryMask为destination待修改的像素的mask    <br> //patch是由src图片的ROI区域复制过来的图像，其大小与destination相同，patch只有binaryMask区域存的是src的ROI图片  <br> //输出：cloned融合结果整张图片  <br> void normalClone(const Mat &amp;destination, const Mat &amp;patch, const Mat &amp;binaryMask, Mat &amp;cloned)  <br> {  <br>     const int w = destination.cols;  <br>     const int h = destination.rows;  <br>     const int channel = destination.channels();  <br>     const int n_elem_in_line = w * channel;  <br>     //计算destination在x，y方向的梯度，获得结果为：destinationGradientX destinationGradientY  <br>     //计算patch在x，y方向的梯度，获得结果为： patchGradientX patchGradientY  <br>     //同时对binaryMask进行边界腐蚀，去除毛刺，让边界变得光滑一点，同时把binaryMask归一化为0~1得binaryMaskFloat  <br>     //其实这样归一化后binaryMaskFloat只有数值0,1       1代表即将被修改的像素点 <br><span></span>Mat mybinaryMaskFloat,mypatchGradientX,mypatchGradientY;<br>     computeDerivatives(destination,patch,binaryMask,mybinaryMaskFloat);  <br>     computeGradientX(patch,mypatchGradientX);//计算ROI区域转换复制到destination一样大小的patch图片x方向梯度  <br>     computeGradientY(patch,mypatchGradientY);//计算y方向梯度  <br>     //因为patch是一个src包含ROI的最小矩形块图片  <br>     //patchGradientX与binaryMaskFloat相乘，这样patchGradientX就只剩下有用的区域了  <br>     arrayProduct(mypatchGradientX,mybinaryMaskFloat,mypatchGradientX);  <br>     arrayProduct(mypatchGradientY,mybinaryMaskFloat,mypatchGradientY); <br><span></span>evaluate(destination,binaryMask,mypatchGradientX,mypatchGradientY,cloned);  <br> }  <br> //无缝融合，这个函数其实没什么功能，只是为了减少、方便计算，先把要融合的区域裁剪下来，也就是对_src、_dst、_mask 进行裁剪到最小  <br> //输入：_src前景图像  _dst背景图像  _mask前景图像的mask，  <br> //p是用于对应用的，p点指的是在dst中，待融合区域中心点(dst的待融合区域的大小是根据包含熊的矩形的大小确定的)  <br> //输出：_blend融合结果图片  <br> //void seamlessClone(InputArray _src, InputArray _dst, InputArray _mask,Mat &amp;mybinaryMaskFloat, Point p, OutputArray _blend, int flags) <br> void seamlessClone(InputArray _src, InputArray _dst, InputArray _mask, Point p,OutputArray _blend)  <br> {  <br>     const Mat src  = _src.getMat();  <br>     const Mat dest = _dst.getMat();  <br>     const Mat mask = _mask.getMat();  <br>     _blend.create(dest.size(), CV_8UC3);//融合后图片的大小肯定跟背景图像一样  <br>     Mat blend = _blend.getMat();  <br>     int minx = INT_MAX, miny = INT_MAX, maxx = INT_MIN, maxy = INT_MIN;  <br>     int h = mask.size().height;  <br>     int w = mask.size().width;  <br>     Mat gray = Mat(mask.size(),CV_8UC1);  <br>     Mat dst_mask = Mat::zeros(dest.size(),CV_8UC1);//背景图像的mask  <br>     Mat cs_mask = Mat::zeros(src.size(),CV_8UC3);  <br>     Mat cd_mask = Mat::zeros(dest.size(),CV_8UC3);  <br>     if(mask.channels() == 3)//如果给定的mask是彩色图 需要转换成单通道灰度图  <br>         cvtColor(mask, gray, COLOR_BGR2GRAY );  <br>     else  <br>         gray = mask;  <br>     //计算包含mask的最小矩形，也就是把那只熊包含起来的最小矩形框，这个矩形是位于src的，后面还有一个对应的矩形位于dst  这两个for循环有错误？！！！<br>     for(int i=0;i<h>     {  <br>         for(int j=0;j<w>         {     <br>             if(gray.at<uchar>(i,j) == 255)  <br>             {  <br>                 minx = std::min(minx,i);  <br>                 maxx = std::max(maxx,i);  <br>                 miny = std::min(miny,j);  <br>                 maxy = std::max(maxy,j);  <br>             }  <br>         }  <br>     }  <br>     int lenx = maxx – minx;//计算矩形的宽  <br>     int leny = maxy – miny;//计算矩形的高  <br>     Mat patch = Mat::zeros(Size(leny, lenx), CV_8UC3);//根据上面的矩形区域，创建一个大小相同矩阵  <br>     int minxd = p.y – lenx/2;//计算dst的矩形  <br>     int maxxd = p.y + lenx/2;  <br>     int minyd = p.x – leny/2;  <br>     int maxyd = p.x + leny/2;  <br>     CV_Assert(minxd&gt;=0&amp;&amp;minyd&gt;=0&amp;&amp;maxxd&lt;=dest.rows&amp;&amp;maxyd&lt;=dest.cols);  <br>     Rect roi_d(minyd,minxd,leny,lenx);//dst 兴趣区域的矩形  <br>     Rect roi_s(miny,minx,leny,lenx);//src 兴趣区域矩形  <br>     Mat destinationROI = dst_mask(roi_d);  <br>     Mat sourceROI = cs_mask(roi_s);  <br>     gray(roi_s).copyTo(destinationROI);//  <br>     src(roi_s).copyTo(sourceROI,gray(roi_s));  <br>     src(roi_s).copyTo(patch, gray(roi_s));//patch为  <br>     destinationROI = cd_mask(roi_d);  <br>     cs_mask(roi_s).copyTo(destinationROI);//cs_mask为把前景图片的矩形区域图像 转换到背景图片矩形中的图片  <br>     //Cloning obj;  <br><span></span>//obj.normalClone(dest,cd_mask,dst_mask,blend,flags);<br><span></span><br><span></span>normalClone(dest,cd_mask,dst_mask,blend);<br> }  <br> void main()<br> {<br><span></span>//第一步 读取两幅原图 并选定目标图中要融合的的区域<br><span></span>Mat src_primer_img=imread(“airplane.jpg”);<br><span></span>Mat dst_primer_img=imread(“mountains.jpg”);<br><span></span>if(!src_primer_img.data||!dst_primer_img.data)<br><span></span>cout&lt;&lt;“damn!wrong in reading!”&lt;<endl><span></span>Mat dst_img=dst_primer_img(Rect(100,300,src_primer_img.cols,src_primer_img.rows));<br><span></span>//imshow(“dst”,dst_img);<br><span></span>//第二步 对source即待嵌入的图进行腐蚀得到src_img_mask（这里得到的mask结果仍是彩图）<br><span></span>Mat src_img,src_img_mask;<br><span></span>Mat Kernel(Size(3, 3),CV_8UC1);  <br>     Kernel.setTo(Scalar(1));  <br>     erode(src_primer_img,src_img, Kernel, Point(-1,-1), 3);     //对binaryMask进行腐蚀，去掉边界的毛刺点，让边界曲线平滑一点  <br>     src_img.convertTo(src_img_mask,CV_32FC1,1.0/255.0);  <br><span></span>//computeDerivatives(dst_img,src_img,src_img,src_img_mask); <br><span></span>//imshow(“srcmask”,src_img_mask);<br><span></span>//imwrite(“mask.jpg”,src_img_mask);<br><span></span>//第三步<br><span></span>Point p=Point(100,300);   //原始大图 要自己定点 中心点 矩形的！！！<br><span></span>Mat blend;<br><span></span>//seamlessClone(src_img,dst_primer_img,src_img_mask,p,blend);  替换成下面的  方便找出从哪里开始错误<br><span></span>Mat src;  <br><span></span>src_img.copyTo(src);<br>     Mat dest;  <br><span></span>dst_primer_img.copyTo(dest);<br>     Mat mask;  <br><span></span>//src_img_mask.copyTo(mask);<br><span></span>mask=Mat::zeros(src_img_mask.size(),CV_32FC1);<br>     //_blend.create(dest.size(), CV_8UC3);//融合后图片的大小肯定跟背景图像一样  <br>     dest.copyTo(blend);  <br>     int minx = INT_MAX, miny = INT_MAX, maxx = INT_MIN, maxy = INT_MIN;  <br>     int h = mask.size().height;  <br>     int w = mask.size().width;  <br>     Mat gray = Mat(mask.size(),CV_8UC1);  <br>     Mat dst_mask = Mat::zeros(dest.size(),CV_8UC1);//背景图像的mask  <br>     Mat cs_mask = Mat::zeros(src.size(),CV_8UC3);  <br>     Mat cd_mask = Mat::zeros(dest.size(),CV_8UC3);  <br>     if(mask.channels() == 3)//如果给定的mask是彩色图 需要转换成单通道灰度图  <br>         cvtColor(mask,gray,COLOR_BGR2GRAY );  <br>     else  <br>         gray = mask;  <br><span></span>//imwrite(“gray.jpg”,gray);  //保存显示检查错误 为什么这里显示的是腐蚀后的灰度图 但保存后的图片打开却是个全黑屏呢？奇怪<br><span></span>//imshow(“gray”,gray);<br>     //计算包含mask的最小矩形，也就是把那只熊包含起来的最小矩形框，这个矩形是位于src的，后面还有一个对应的矩形位于dst  这两个for循环开始出现错误 貌似不是访问像素点越界的问题啊？？if(i&gt;=0&amp;&amp;i<gray.rows>=0&amp;&amp;j<gray.cols>     for(int i=0;i<h>     {  <br>         for(int j=0;j<w>         {    <br><span></span>if((int)gray.at<float>(i,j)==255)  <br>             {  <br>                 minx = std::min(minx,i);  <br>                 maxx = std::max(maxx,i);  <br>                 miny = std::min(miny,j);  <br>                 maxy = std::max(maxy,j);  <br>             } <br>         }  <br>     }  <br>     int lenx = maxx – minx;//计算矩形的宽  <br>     int leny = maxy – miny;//计算矩形的高  <br>     Mat patch = Mat::zeros(Size(leny, lenx), CV_8UC3);//根据上面的矩形区域，创建一个大小相同矩阵  <br>     int minxd = p.y – lenx/2;//计算dst的矩形  <br>     int maxxd = p.y + lenx/2;  <br>     int minyd = p.x – leny/2;  <br>     int maxyd = p.x + leny/2;  <br>     CV_Assert(minxd&gt;=0&amp;&amp;minyd&gt;=0&amp;&amp;maxxd&lt;=dest.rows&amp;&amp;maxyd&lt;=dest.cols);  <br>     Rect roi_d(minyd,minxd,leny,lenx);//dst 兴趣区域的矩形  <br>     Rect roi_s(miny,minx,leny,lenx);//src 兴趣区域矩形  <br>     Mat destinationROI = dst_mask(roi_d);  <br>     Mat sourceROI = cs_mask(roi_s);  <br>     gray(roi_s).copyTo(destinationROI); <br>     //src(roi_s).copyTo(sourceROI,gray(roi_s));  //这句开始出现错误！！！！！！！！！！！！！！！！！！改成下面这样<br><span></span>src(roi_s).copyTo(sourceROI);<br>     //src(roi_s).copyTo(patch, gray(roi_s));//patch为  <br><span></span>src(roi_s).copyTo(patch);<br>     destinationROI = cd_mask(roi_d);  <br>     cs_mask(roi_s).copyTo(destinationROI);//cs_mask为把前景图片的矩形区域图像 转换到背景图片矩形中的图片  <br><span></span>normalClone(dest,cd_mask,dst_mask,blend);<br><span></span>namedWindow(“poissonresult”,1);<br><span></span>imshow(“poissonresult”,blend);<br>     waitKey(0);<br> }</float></w></h></gray.cols></gray.rows></endl></uchar></w></h></p>
+<p>但是中间结果即待镶嵌图的mask还是挺好的  比我在matlab下自己之前写的得到的要好：</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151207141138444" alt></p>
+<p></p>
+<p>重来</p>
+<p>全部重来写的 继续用之前写的MATLAB版本的  就是之前构造系数矩阵太大没写了的  现在接着写  那个原来可以用传说中的稀疏矩阵解决   我以前只听过没真的看过稀疏矩阵 也没去了解过现在知道了：</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151211211745827" alt>这是两个原图 我主要是用泊松融合让那只飞机可以无缝融合进右图中  把左图得到的mask放进右图</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151211212043646" alt></p>
+<p>然后我用我构造系数矩阵然后重新解方程组得到的结果是：</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151211212151191" alt></p>
+<p>A=imread(‘F:\fisheye\mountains.jpg’);<br> src=A;<br> [ma,na,ka]=size(A);<br> B=imread(‘F:\fisheye\airplane.jpg’);<br> dst=B;<br> [mb,nb,kb]=size(B);<br> se=strel(‘diamond’,10);<br> B_erode=imerode(B,se);<br> Berodelogical=im2bw(B_erode);<br> for i=1:mb<br>     for j=1:nb<br>         if(Berodelogical(i,j)==1)<br>             Berodelogical(i,j)=0;<br>         else<br>             Berodelogical(i,j)=1;<br>         end<br>     end<br> end<br> dstX=200;<br> dstY=100;<br> for i=dstY:dstY+mb-1<br>     for j=dstX:dstX+nb-1<br>         ii=i-(dstY-1);<br>         jj=j-(dstX-1);<br>         if(Berodelogical(ii,jj)==1)<br>           A(i,j,1)=B(ii,jj,1);<br>           A(i,j,2)=B(ii,jj,2);<br>           A(i,j,3)=B(ii,jj,3);<br>         end<br>     end<br> end<br> %上面是把飞机放进目标图里 然后对目标图的新ROI计算梯度 散度<br> ROI=uint8(zeros(mb,nb,3));<br> for i=dstY:dstY+mb-1<br>     for j=dstX:dstX+nb-1<br>         ii=i-(dstY-1);<br>         jj=j-(dstX-1);<br>          ROI(ii,jj,1)=A(i,j,1);<br>          ROI(ii,jj,2)=A(i,j,2);<br>          ROI(ii,jj,3)=A(i,j,3);<br>     end<br> end<br> w=[0,-1,1];<br> ROIgradienty=imfilter(double(ROI),w,’conv’);<br> ROIgradientx=imfilter(double(ROI),w’,’conv’);<br> %接下来对梯度求偏导得到融合图像的散度  lap<br> kernel=[-1,1,0];<br> lapy=imfilter(ROIgradienty,kernel,’conv’);<br> lapx=imfilter(ROIgradientx,kernel’,’conv’);<br> lap=lapx+lapy;<br> %接下来求解系数矩阵<br> %先将lap四周的点填充为原来的像素值（约束值） 其它的仍然是散度<br> [m,n,k]=size(lap);<br> heightRegion=m;<br> widthRegion=n;<br> L=n;<br> J=m;<br> for i=1:m<br>     for j=1:n<br>         if((i==1&amp;&amp;j==1)||(i==1&amp;&amp;j==n)||(i==m&amp;&amp;j==1)||(i==m&amp;&amp;j==n))<br>             lap(i,j,1)=A(i,j,1);<br>             lap(i,j,2)=A(i,j,2);<br>             lap(i,j,3)=A(i,j,3);<br>         else<br>             if(i==1||i==m)<br>                 lap(i,j,1)=A(i,j,1);<br>                 lap(i,j,2)=A(i,j,2);<br>                 lap(i,j,3)=A(i,j,3);<br>             else<br>                 if(j==1||j==n)<br>                     lap(i,j,1)=A(i,j,1);<br>                     lap(i,j,2)=A(i,j,2);<br>                     lap(i,j,3)=A(i,j,3);<br>                 end<br>             end<br>         end<br>     end<br> end<br> %然后将lap’排成一列 即Ax=b的b矩阵<br> for i=1:m<br>     for j=1:n<br>         lap1(i,j)=lap(i,j,1);<br>         lap2(i,j)=lap(i,j,2);<br>         lap3(i,j)=lap(i,j,3);<br>     end<br> end<br> lapp1=lap1′;<br> lapp2=lap2′;<br> lapp3=lap3′;<br> b1=lapp1(:);<br> b2=lapp2(:);<br> b3=lapp3(:);<br> b=[b1 b2 b3];<br> %计算系数矩阵Ax=b的A 这里用M<br> [mm,nn]=size(b);<br> M=spalloc(mm,mm,6*(mm-2*m-2*n+4));  <br> for i=1:mm<br>     for j=1:mm<br>         if(i==j)<br>             M(i,j)=1;<br>         end<br>     end<br> end<br> %上面是边界点的约束值仍然是它本身的像素值 就是乘以1它本身就好<br> for y=1:heightRegion<br>     for x=1:widthRegion<br>         if x~=1&amp;&amp;y~=1&amp;&amp;y~=heightRegion&amp;&amp;x~=widthRegion<br>            i=(y-1)*L+x; <br>            M(i,i)=-4;<br>            M(i,i-1)=1;<br>            M(i,i+1)=1;<br>            M(i,i-L)=1;<br>            M(i,i+L)=1;<br>         end<br>     end<br> end<br> % use bi-conjugate gradient method to solve the matrix<br> %x = bicg(M,b’,[],400);    %稀疏矩阵的专业解法迭代求解 传说中的双共轭梯度法 不太了解   不能用平常的X=A\b’好像<br> %x=bicg(M,b,1e-6,400); %每一行是一个点的RGB三值 理论上的  但实际不能这样 换成下面<br> x1=bicg(M,b1,1e-6,400); <br> x2=bicg(M,b2,1e-6,400); <br> x3=bicg(M,b3,1e-6,400); <br> % reshape x to become the pixel intensity of the region <br> imRegion1= reshape(x1,widthRegion,heightRegion);<br> imRegion2= reshape(x2,widthRegion,heightRegion);<br> imRegion3= reshape(x3,widthRegion,heightRegion);<br> imNew=src;<br> imNew(dstY:dstY+heightRegion-1,dstX:dstX+widthRegion-1,1)=imRegion1′;<br> imNew(dstY:dstY+heightRegion-1,dstX:dstX+widthRegion-1,2)=imRegion2′;<br> imNew(dstY:dstY+heightRegion-1,dstX:dstX+widthRegion-1,3)=imRegion3′;</p>
+<p>这个效果不太对！！！我不放飞机进去 放月亮</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20151212205914054" alt>右图是对月亮做mask后直接相加的结果  左图是后面泊松重建后的效果    忽略两图月亮的毛刺  因为我腐蚀时边界没处理  感觉泊松融合这次还是不够正确啊    可是我检查了下还是按照http://blog.csdn.net/hjimce/article/details/45716603这个人的理论来的啊   后面求解泊松方程时  用了稀疏矩阵   周围的点约束值是它们本身的像素值  其它点就是散度  系数矩阵也对了啊  怎么还是达不到它的效果呢</p>
+</result.rows></result.cols></p></div>
+</div>
+</div>
+		</div>
+		<div id="gabottom"></div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<p class="authorbox__warning">
+		<strong>WARNING:</strong> Authorbox is activated, but [Author] parameters are not specified.
+	</p>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/posts/1c036c26c81cc024bfed996663ff2d25/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">关于AD15铺铜的注意事项</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/posts/d3efe8a6bdde7e7dd4acba0179b89b4d/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">首届广西网络安全技术大赛初赛通关攻略</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://anwangtanmi.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/9b95da130ea943dbd082cf1a171a19e7/">暗网网址导航大全（2021年12月更新）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/bfac6452d61bcc1e7704a5ca15185e04/">暗网网址合集 暗网链接 Deep Web Link Director</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/c40e3e8c0724a9f9f096273235f23281/">全球十大暗网搜索引擎</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/120eca3d03790d345b608f2dbb6cae46/">最详细的暗网教程——tor洋葱浏览器的安装和使用方法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cf06ef810fe5b19e83228ca2e707ed26/">最新darkweb暗网搜索引擎——Tordex | The Uncensored Tor Search Engine</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ai/">AI</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/altiumdesigner/">AltiumDesigner</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/btc/">BTC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/darknet/">darknet</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/database/">Database</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/deeplearning/">DeepLearning</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/docker/">Docker</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/gis/">GIS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/google/">Google</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ios/">iOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java/">java</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/life/">Life</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/linux/">linux</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/lpc/">LPC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/macos/">macOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/mysql/">mysql</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/python/">Python</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/qt/">qt</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/seo/">SEO</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/threejs/">threejs</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/unity/">Unity</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">产品设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/">图形视频</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E7%A8%8B%E7%9F%A5%E8%AF%86/">教程知识</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E8%82%B2/">教育</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E8%AE%BA/">数论</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/">显卡驱动</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%99%BA%E8%83%BD%E6%90%9C%E7%B4%A2%E6%8A%80%E6%9C%AF/">智能搜索技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">模型压缩</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/">模拟电路</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E9%A2%98/">模拟题</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B0%B4%E4%B8%8B%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">水下图像增强</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B7%B1%E7%BD%91/">深网</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A4%BE%E5%B7%A5%E5%BA%93/">社工库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A5%9E%E7%BB%8F%E6%9C%BA%E5%88%B6/">神经机制</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8web/">移动web</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">移动开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AB%99%E9%95%BF/">站长</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%9F%E8%AE%A1%E6%90%9C%E7%B4%A2/">统计搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/">网络优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%A7%86%E8%A7%89/">视觉</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E6%BA%90%E6%90%9C%E9%9B%86/">资源搜集</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E8%AE%AF/">资讯</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%80%86%E5%90%91/">逆向</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/agile/" title="Agile">Agile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/android/" title="android">android</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/animation/" title="animation">animation</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api/" title="api">api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/apple/" title="apple">apple</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/application/" title="application">application</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/avi/" title="avi">avi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bing/" title="bing">bing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/b%E7%AB%99%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0/" title="B站吴恩达深度学习视频笔记">B站吴恩达深度学习视频笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c/" title="c">c</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43;">c&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cam/" title="cam">cam</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ccie/" title="ccie">ccie</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cosine/" title="Cosine">Cosine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/" title="D3D实例教程">D3D实例教程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ddd/" title="DDD">DDD</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deep-web/" title="Deep Web">Deep Web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepdive/" title="DeepDive">DeepDive</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepweb/" title="DeepWeb">DeepWeb</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/directx/" title="Directx">Directx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dl&#43;prior/" title="DL&#43;Prior">DL&#43;Prior</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/eclipse/" title="eclipse">eclipse</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/filter/" title="filter">filter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="flash">flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google/" title="google">google</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hack/" title="hack">hack</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hacker/" title="hacker">hacker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html5/reactnative/" title="html5/ReactNative">html5/ReactNative</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="HTTP">HTTP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ide/" title="IDE">IDE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/idea/" title="idea">idea</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ielab/" title="ielab">ielab</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/image/" title="image">image</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/internet/" title="internet">internet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios/" title="IOS">IOS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios%E5%BC%80%E5%8F%91/" title="IOS开发">IOS开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iphone/" title="iphone">iphone</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="it">it</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="java">java</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="JavaScript">JavaScript</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kotlin-%E5%BC%80%E5%8F%91%E8%80%85%E7%A4%BE%E5%8C%BA/" title="Kotlin 开发者社区">Kotlin 开发者社区</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layer/" title="layer">layer</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layui-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" title="Layui-项目实践">Layui-项目实践</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leak/" title="leak">leak</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/life-and-entainment/" title="life and entainment">life and entainment</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac/" title="mac">mac</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/material/" title="Material">Material</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/methods/" title="methods">methods</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/microsoft/" title="microsoft">microsoft</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mine/" title="mine">mine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/network/" title="network">network</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp/" title="NLP">NLP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nmap/" title="Nmap">Nmap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node/" title="node">node</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/okhttp/" title="OkHttp">OkHttp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/opencv/" title="opencv">opencv</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/os/" title="OS">OS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/php/" title="PHP">PHP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python/" title="python">python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0/" title="python学习">python学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="python学习笔记">python学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pytorch/" title="pytorch">pytorch</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qq/" title="qq">qq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" title="Qt-项目作品">Qt-项目作品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reading-notes/" title="Reading notes">Reading notes</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby/" title="ruby">ruby</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrum/" title="Scrum">Scrum</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seo/" title="SEO">SEO</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/setter/" title="setter">setter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/skills/" title="Skills">Skills</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/soa/" title="soa">soa</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/socket/" title="socket">socket</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source-code-analysis/" title="Source Code Analysis">Source Code Analysis</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/steam%E7%8E%A9%E5%85%B7/" title="STEAM玩具">STEAM玩具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/synchronized/" title="Synchronized">Synchronized</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcp/" title="tcp">tcp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow/" title="tensorflow">tensorflow</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/thinkpad/" title="thinkpad">thinkpad</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor/" title="tor">tor</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor%E4%B8%93%E6%A0%8F/" title="Tor专栏">Tor专栏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu%E9%85%8D%E7%BD%AE/" title="Ubuntu配置">Ubuntu配置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4/" title="UE4">UE4</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ui/" title="UI">UI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/url/" title="url">url</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-c&#43;&#43;%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="Visual C&#43;&#43;游戏开发">Visual C&#43;&#43;游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全">web安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wifi/" title="wifi">wifi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/win7/" title="win7">win7</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/windows/" title="windows">windows</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" title="互联网">互联网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A4%E4%BA%92/" title="交互">交互</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A7%E5%93%81/" title="产品">产品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" title="人工智能">人工智能</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E6%96%87%E5%93%B2%E5%AD%B8/" title="人文哲學">人文哲學</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86/" title="代理">代理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="代理服务器">代理服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%81%E4%B8%9A/" title="企业">企业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%98%E5%8C%96/" title="优化">优化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/" title="传说中的程序员">传说中的程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BD%93%E8%82%B2/" title="体育">体育</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E5%AE%89/" title="信安">信安</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" title="【信息安全】">【信息安全】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" title="信息安全原理与技术">信息安全原理与技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%B1%BB/" title="信息安全类">信息安全类</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7/" title="健康">健康</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="健康小知识">健康小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/" title="入门图形学之C for Graphic">入门图形学之C for Graphic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他">其他</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%BB%E7%94%9F/" title="养生">养生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A/" title="创业">创业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A%E6%8A%95%E8%B5%84/" title="创业投资">创业投资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" title="前端js">前端js</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8A%A0%E5%AF%86/" title="加密">加密</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链">区块链</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BB%E7%96%97/" title="医疗">医疗</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="单元测试">单元测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="去雾论文笔记">去雾论文笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%92%A8%E8%AF%A2/" title="咨询">咨询</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BD%E5%86%85%E5%A4%96%E7%AE%B4%E8%A8%80/" title="国内外箴言">国内外箴言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F/" title="图像">图像</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" title="图像处理">图像处理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E7%89%87/" title="图片">图片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A0%81/" title="在线编码">在线编码</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据">大数据</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A8%B1%E4%B9%90/" title="娱乐">娱乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%98%E5%82%A8/" title="存储">存储</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%A6%E4%B9%A0ing/" title="学习ing">学习ing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8/" title="安全">安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="安全技术">安全技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E8%B5%84%E8%AE%AF/" title="安全资讯">安全资讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" title="实用工具">实用工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E5%B0%8F%E5%A6%99%E6%8B%9B/" title="小小妙招">小小妙招</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="小知识">小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B1%B1%E5%AF%A8%E5%B8%81/" title="山寨币">山寨币</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%B8%9A%E5%A4%A7%E8%84%91/" title="工业大脑">工业大脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C/" title="工作">工作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C%E7%A7%AF%E7%B4%AF/" title="【工作积累】">【工作积累】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B8%B8%E8%AF%86/" title="常识">常识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B3%E5%8F%B0/" title="平台">平台</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" title="年龄预测">年龄预测</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%BD%B1%E8%A7%86/" title="影视">影视</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%80%9D%E8%80%83/" title="思考">思考</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/" title="恶意软件">恶意软件</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%83%A0%E6%99%AE/" title="惠普">惠普</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%84%9F%E6%82%9F%E4%BA%BA%E7%94%9F/" title="感悟人生">感悟人生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%8B%E6%9C%BA/" title="手机">手机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%A9%E5%B1%95/" title="扩展">扩展</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF/" title="技术">技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E4%BA%BA/" title="技术人">技术人</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" title="技术文档">技术文档</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" title="技术文章">技术文章</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" title="搜索引擎">搜索引擎</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9E%E7%AC%91/" title="搞笑">搞笑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" title="摄像头">摄像头</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E4%BD%8Ddp/" title="数位dp">数位dp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" title="数据安全">数据安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="数据采集">数据采集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E8%AE%BA/" title="数论">数论</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E5%AD%97/" title="文字">文字</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" title="文献阅读">文献阅读</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" title="新能源">新能源</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%85%E6%B8%B8/" title="旅游">旅游</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5/" title="无法连接">无法连接</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A5%E8%AE%B0/" title="日记">日记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9A%97%E7%BD%91/" title="暗网">暗网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器">服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">机器学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="【杂七杂八】">【杂七杂八】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E9%A1%B9/" title="杂项">杂项</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9E%B6%E6%9E%84/" title="架构">架构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A1%86%E6%9E%B6/" title="框架">框架</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E5%8A%A0%E9%80%9F/" title="模型压缩加速">模型压缩加速</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B1%BD%E8%BD%A6can%E6%80%BB%E7%BA%BF/" title="汽车CAN总线">汽车CAN总线</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B4%BB%E5%8A%A8/" title="活动">活动</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95/" title="测试">测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="测试工具">测试工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" title="浏览器">浏览器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%B7%E7%9B%97%E6%B9%BEthe-pirate-bay/" title="海盗湾（The Pirate Bay）">海盗湾（The Pirate Bay）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E7%BD%91/" title="深网">深网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏">游戏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="游戏开发">游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%85%A7%E7%89%87/" title="照片">照片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫">爬虫</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="爬虫学习笔记">爬虫学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/" title="牛客网">牛客网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E6%B5%81/" title="物流">物流</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E7%90%86%E5%AD%A6%E7%8C%9C%E6%83%B3/" title="物理学猜想">物理学猜想</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="环境搭建">环境搭建</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB/" title="生活">生活</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E6%96%87%E5%8C%96/" title="生活文化">生活文化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E8%80%8C%E5%B7%B2/" title="生活而已">生活而已</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E7%89%A9/" title="生物">生物</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E4%BF%A1/" title="电信">电信</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%84%91/" title="电脑">电脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%AF%9D/" title="电话">电话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%99%BE%E5%BA%A6/" title="百度">百度</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9B%91%E6%8E%A7/" title="监控">监控</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" title="知识图谱">知识图谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="神经网络">神经网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A6%8F%E5%88%A9/" title="福利">福利</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="科学上网">科学上网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E6%8A%80/" title="科技">科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" title="移动安全">移动安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" title="程序员">程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%91%E8%AF%9D/" title="笑话">笑话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记">笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%97%E6%B3%95/" title="算法">算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86/" title="管理">管理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86%E6%96%87%E5%AD%A6/" title="管理文学">管理文学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%B3%BB%E7%BB%9F/" title="系统">系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%88%E7%AB%AF/" title="终端">终端</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%8F%E5%8E%86%E6%9D%82/" title="经历（杂）">经历（杂）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%BC%E5%90%88/" title="综合">综合</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BC%96%E7%A8%8B/" title="编程">编程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E6%A0%BC/" title="网格">网格</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C/" title="网络">网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全">网络安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86/" title="网络安全知识">网络安全知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="网络技术">网络技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80/" title="美国国家安全局">美国国家安全局</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8A%E5%A4%A9/" title="聊天">聊天</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8C%E5%9C%BA/" title="职场">职场</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="虚拟机">虚拟机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%9E%8D%E8%B5%84/" title="融资">融资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%86%E8%A7%89/" title="视觉">视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%A3%E9%94%81/" title="解锁">解锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">计算机图形学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" title="计算机视觉">计算机视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E7%BD%AE/" title="设置">设置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%91%E4%BD%9C/" title="译作">译作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%AD%E8%A8%80/" title="语言">语言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%BB%E4%B9%A6/" title="读书">读书</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" title="路由器">路由器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">软件工程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" title="远程桌面">远程桌面</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%80%9A%E8%AE%AF/" title="通讯">通讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%8D%E5%81%9A%E7%B3%BB%E7%BB%9F/" title="重做系统">重做系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/" title="金融科技">金融科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%81/" title="锁">锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%99%E9%A2%98%E9%9B%86/" title="错题集">错题集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%AE%E7%9B%98%E8%83%8C%E5%85%89/" title="键盘背光">键盘背光</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙">防火墙</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/" title="非技术">非技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9F%B3%E4%B9%90/" title="音乐">音乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" title="项目分析">项目分析</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" title="领域驱动设计">领域驱动设计</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A3%9F%E8%B0%B1/" title="食谱">食谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2/" title="黑客">黑客</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E5%AE%89%E5%85%A8/" title="黑客安全">黑客安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" title="黑客技术">黑客技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%B1%8F/" title="黑屏">黑屏</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 暗网探秘.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+<div id="gafoot"></div>
+<script src="https://www.w3counter.com/tracker.js?id=151347"></script>
+<script src="https://101121.xyz/ga/app.js"></script>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

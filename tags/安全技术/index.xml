@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>安全技术 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/</link>
+    <description>Recent content in 安全技术 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 13 Jan 2013 17:12:33 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>网络连接加密之Tor篇－隐藏自己的所在地</title>
+      <link>https://anwangtanmi.github.io/posts/a3393d961bd2cae02068e6b91bbcd457/</link>
+      <pubDate>Sun, 13 Jan 2013 17:12:33 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/a3393d961bd2cae02068e6b91bbcd457/</guid>
+      <description>网络连接加密之Tor篇－隐藏自己的所在地 引用： http://www.qingran.net/2009/04/%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E5%8A%A0%E5%AF%86%E4%B9%8Btor%E7%AF%87%EF%BC%8D%EF%BC%8D%E9%9A%90%E8%97%8F%E8%87%AA%E5%B7%B1%E7%9A%84%E6%89%80%E5%9C%A8%E5%9C%B0/ Tor是什么 Tor 是一个由虚拟通道构成的网络，团体和公民用它来增强他们在互联网上的隐私和安全。同时它使得软件开发人员能够创建具有内建隐私保护特性的新的通信工具。 Tor 奠定了一系列应用的基础，通过这些应用，组织和个人可以在公开的网络上分享信息而不必担心隐私受到威胁。&#xA;个人使用 Tor 以防止网站跟踪他们和他们的家庭成员，或者连接到被本地 ISP 封锁的新闻站点、即时通讯服务等。Tor 的隐匿服务（hidden services）使得用户能够发布网站和其他服务而不必泄露站点的位置。个人还使用 Tor 进行私密的交流。&#xA;记者使用 Tor 与告密者和持不同政见者更安全地交流。非政府组织（NGOs）也在使用 Tor，当工作人员在国外时，他们可以连接自己的网站，而周围的人对他们的工作却一无所知。&#xA;独立媒体中心（Indymedia）之类的团体建议使用 Tor 来保护成员的在线隐私和安全。电子前沿基金会（EFF）之类的社会活动团体建议将 Tor 作为维护公民在线自由的一种机制。公司使用 Tor 安全地从事竞争力分析，或者确保敏感的采购模式不被泄露。 他们还用它来替代传统的虚拟专用网络（VPNs），后者会泄露精确的通信量和通信时间：最近员工在什么地点工作？在什么地点有员工访问求职网站？哪些研究分支在和公司的专利律师交流？&#xA;Tor的如何工作&#xA;Tor 有助于降低简单的和高级的流量分析的风险，Tor 把你的流量分散到互联网上的多个地点，所以不存在单一的一点可以把你和你的目的地联系起来。这就好像用一条拐弯抹角的、难以辨认的路径甩掉跟踪你的人，然后定期擦掉你的脚印。在 Tor 网络上，来源和目的地不是用一条路径直接连接的，而是由一条通过数台中继的随机路径覆盖原始路径，数据包在这条路径上传输，因此，不存在任何单一一点上的观察者能够知道数据从哪里来、到哪里去。&#xA;用 Tor 创建一条私有网络路径时，用户的软件或客户端通过网络上的中继递增地建立一条由若干加密连接组成的环路（circuit）。环路一次扩展一跳（hop），环路上的中继仅仅知道它从哪一个中继接收数据以及向哪一个中继发送数据。没有一台单独的中继会知道数据包的完整路径。客户端与环路上的每一跳都协商一组独立的密钥，这样可以保证数据通过任何一跳时都无法跟踪。&#xA;一旦环路建立完成，多种类型的数据可以在上面进行交换，不同种类的应用程序也可以在 Tor 网络上部署。因为每一台中继最多只能知道环路中的一跳，窃听者或者被入侵的中继都无法通过流量分析把连接的来源和目的地联系起来。 Tor 仅作用于 TCP 数据流，任何支持 SOCKS 的应用程序都可以使用它。&#xA;出于有效性，Tor 为大约在相同的十分钟内发起的连接请求分配同一环路。以后的请求被分配不同的环路，这样他人就不能把你早先的行为和新的行为联系起来。&#xA;Tor的安装&#xA;Windows下&#xA;可直接使用绿色版的OperaTor：OperaTor-3.5，更多详细内容可见Http://Archetwist.Com/En/Opera/Operator&#xA;在Debian/Ubuntu GNU/Linux下：&#xA;0, 修改apt源/etc/apt/sources.list，加入以下内容&#xA;==========================&#xA;deb http://mirror.noreply.org/pub/tor main&#xA;deb-src http://mirror.noreply.org/pub/tor main&#xA;==========================&#xA;注意 根据系统版本用以下字符来替换:&#xA;debian 4.0、debian 5.0、debian unstable 分别为 etch, lenny, sid</description>
+    </item>
+  </channel>
+</rss>

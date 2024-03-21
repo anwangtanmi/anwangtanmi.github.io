@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>代理 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E4%BB%A3%E7%90%86/</link>
+    <description>Recent content in 代理 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 29 May 2019 14:33:36 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E4%BB%A3%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mac下ProxyChains Tor实现代理</title>
+      <link>https://anwangtanmi.github.io/posts/5b0c3dc7030679493efdd144614516d3/</link>
+      <pubDate>Wed, 29 May 2019 14:33:36 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/5b0c3dc7030679493efdd144614516d3/</guid>
+      <description> 背景:通过Privoxy可以实现转http代理为socks5，能实现绝大多数shell里的代理转发，如wget curl等。但是对于ssh [email protected]登陆后，隐藏自己的ip却无能为力，本文即用ProxyChains来解决这个问题。 安装&#xA;Mac下可以直接输入命令:brew install proxychains-ng进行安装，&#xA;其配置文件在/usr/local/Cellar/proxychains-ng/4.11/etc下的proxychains.conf,&#xA;或者/etc下的proxychains.conf&#xA;编辑它末尾添加: socks5 127.0.0.1 9150,&#xA;然后打开TorBrowser，这样proxychains就会通过9150端口，将请求送给Tor，走Tor来完成。 示例:&#xA;proxychains4 wget -O index.html https://check.torproject.org/\?lang\=zh_CN&#xA;通过得到的index.html可以清晰判断网络是否走了Tor。&#xA;至于开头说的ssh 登陆到一个远程服务器shell，隐藏自己的ip，只需:proxychains4 ssh root@your_ip,可以看到tor转发的过程。进到服务器后，输入last或who命令进行查看，你会看到你的真实IP被隐藏了！&#xA;如果你的前老板欠你钱了，那么你懂的………..&#xA;备注&#xA;在使用proxychains4的时候，shell里不要设置http_proxy和htts_proxy,即不要启动Privoxy的http代理功能，否则会打乱这个回路.&#xA;——————— 作者：yanzi1225627 来源：CSDN 原文：https://blog.csdn.net/yanzi1225627/article/details/51285091 版权声明：本文为博主原创文章，转载请附上博文链接！&#xA;proxychains4 open -a /Applications/Google\ Chrome.app&#xA;proxychains4 curl cip.cc&#xA;点赞 收藏 分享 文章举报 马克88 发布了86 篇原创文章 ·&#xA;获赞 54 ·&#xA;访问量 13万+ 私信 关注 </description>
+    </item>
+  </channel>
+</rss>

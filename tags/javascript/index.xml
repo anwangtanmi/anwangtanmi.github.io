@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JavaScript on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/javascript/</link>
+    <description>Recent content in JavaScript on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 12 Nov 2019 09:46:41 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一文搞懂web中暗藏的密码学</title>
+      <link>https://anwangtanmi.github.io/posts/3da2d3fe46f6fdef7da45b101607af3a/</link>
+      <pubDate>Tue, 12 Nov 2019 09:46:41 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/3da2d3fe46f6fdef7da45b101607af3a/</guid>
+      <description>前言 开发网站登录功能时，如何保证密码在传输过程/储存的安全？&#xA;相信不少前后端的朋友，在面试时都会被问到类似的问题。&#xA;在我对密码学一无所知时，也仅会回答：“MD5加密啊。”&#xA;诸不知，密码学在网络七层模型，甚至web开发中的应用比我想象得多得多。&#xA;1. 什么是密码学？ 密码学是各种安全应用程序所必需的，现代密码学旨在创建通过应用数学原理和计算机科学来保护信息的机制。但相比之下，密码分析旨在解密此类机制，以便获得对信息的非法访问。&#xA;密码学具有三个关键属性：&#xA;机密性，为了防止未经授权的各方访问信息（换句话说，是要确保只有经过授权的人才能访问受限制的数据）。 完整性，是指保护信息不被随意篡改 真实性，与识别信息的所有者有关。 例如个人医疗数据：&#xA;机密性，个人医疗数据需要保密，这意味着只有医生或医护人员才能访问它。 完整性，还必须保护其完整性，因为篡改此类数据可能导致错误的诊断或治疗，并给患者带来健康风险。 真实性，患者数据应与已识别的个人联系起来，且患者需要知道操作者（医生）是谁。 在本文中，我们将从加密，哈希，编码和混淆四种密码学基础技术来入门。&#xA;本文图片经过再制，方便看懂。&#xA;大纲和主体内容引自： How Secure Are Encryption, Hashing, Encoding and Obfuscation?&#xA;2. 什么是加密？ 加密定义：以保证机密性的方式转换数据的过程。&#xA;为此，加密需要使用一个保密工具，就密码学而言，我们称其为“密钥”。&#xA;加密密钥和任何其他加密密钥应具有一些属性：&#xA;为了保护机密性，密钥的值应难以猜测。 应该在单个上下文中使用它，避免在不同上下文中重复使用（类比JS作用域）。密钥重用会带来安全风险，如果规避了其机密性，则影响更大，因为它“解锁”了更敏感的数据。 2.1 加密的分类：对称和非对称 加密分为两类：对称和非对称&#xA;对称加密：&#xA;用途：文件系统加密，Wi-Fi保护访问（WPA），数据库加密（例如信用卡详细信息）&#xA;非对称加密：&#xA;用途： TLS，VPN，SSH。&#xA;其主要区别是：所需的密钥数量：&#xA;在对称加密算法中，单个密用于加密和解密数据。只有那些有权访问数据的人才能拥有单个共享密钥。 在非对称加密算法中，使用了两个密钥：一个是公用密钥，一个是私有密钥。顾名思义，私钥必须保密，而每个人都可以知道公钥。 应用加密时，将使用公钥，而解密则需要私钥。 任何人都应该能够向我们发送加密数据，但是只有我们才能够解密和读取它。 通常使用非对称加密来在不安全的通道上进行通信时，两方之间会安全地建立公共密钥。 通过此共享密钥，双方切换到对称加密。 这种加密速度更快，更适合处理大量数据。 能被密码界承认的加密算法都是公开的：&#xA;某些公司使用专有或“军事级”加密技术进行加密，这些技术是“私有的”。且基于“复杂“算法，但这不是加密的工作方式。 密码界广泛使用和认可的所有加密算法都是公开的，因为它们基于数学算法，只有拥有密钥或先进的计算能力才能解决。 公开算法是得到广泛采用，证明了其价值的。 3. 什么是哈希？ 哈希算法定义：·一种只能加密，不能解密的密码学算法，可以将任意长度的信息转换成一段固定长度的字符串。&#xA;加密算法是可逆的（使用密钥），并且可以提供机密性（某些较新的加密算法也可以提供真实性），而哈希算法是不可逆的，并且可以提供完整性，以证明未修改特定数据。&#xA;哈希算法的前提很简单：给定任意长度的输入，输出特定长度的字节。在大多数情况下，此字节序列对于该输入将是唯一的，并且不会给出输入是什么的指示。换一种说法：&#xA;仅凭哈希算法的输出，是无法确定原始数据的。 取一些任意数据以及使用哈希算法输出，就可以验证此数据是否与原始输入数据匹配，从而无需查看原始数据。 为了说明这一点，请想象一个强大的哈希算法通过将每个唯一输入放在其自己的存储桶中而起作用。当我们要检查两个输入是否相同时，我们可以简单地检查它们是否在同一存储桶中。&#xA;散列文件的存储单位称为桶（Bucket）&#xA;3.1 例子一：资源下载 提供文件下载的网站通常会返回每个文件的哈希值，以便用户可以验证其下载副本的完整性。&#xA;例如，在Debian的图像下载服务中，您会找到其他文件，例如SHA256SUMS，其中包含可供下载的每个文件的哈希输出（在本例中为SHA-256算法）。&#xA;下载文件后，可以将其传递给选定的哈希算法，输出一段哈希值 用该哈希值来与校验和文件中列出的哈希值作匹配，以校验是否一致。 在终端中，可以用openssl来对文件进行哈希处理：</description>
+    </item>
+    <item>
+      <title>弹出层效果，背景变暗</title>
+      <link>https://anwangtanmi.github.io/posts/7ab6eb4d2bbe8c54459a86b75f4c2da2/</link>
+      <pubDate>Fri, 23 May 2008 11:48:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/7ab6eb4d2bbe8c54459a86b75f4c2da2/</guid>
+      <description>我把js做成一个文件保存为msg.js文件：&#xA;代码如下：&#xA;//&#xA;JavaScript Document&#xA;var&#xA;isIe&#xA;=&#xA;(document.all)&#xA;?&#xA;true&#xA;:&#xA;false&#xA;; //&#xA;设置select的可见状态 function&#xA;setSelectState(state) …&#xA;{ var objl=document.getElementsByTagName(‘select‘); for(var i=0;i&amp;lt;objl.length;i++) …{ objl[i].style.visibility=state; } }&#xA;function&#xA;mousePosition(ev) …&#xA;{ if(ev.pageX || ev.pageY) …{ return …{x:ev.pageX, y:ev.pageY}; } return …{ x:ev.clientX + document.body.scrollLeft – document.body.clientLeft,y:ev.clientY + document.body.scrollTop – document.body.clientTop }; }&#xA;//&#xA;弹出方法 function&#xA;showMessageBox(wTitle,content,pos,wWidth) …&#xA;{ closeWindow(); var bWidth=parseInt(document.documentElement.scrollWidth); var bHeight=parseInt(document.documentElement.scrollHeight); if(isIe)…{ setSelectState(‘hidden‘);} var back=document.createElement(“div“); back.id=“back“; var styleStr=“top:0px;left:0px;position:absolute;background:#003973;width:“+bWidth+“px;height:“+bHeight+“px;“; styleStr+=(isIe)?</description>
+    </item>
+  </channel>
+</rss>

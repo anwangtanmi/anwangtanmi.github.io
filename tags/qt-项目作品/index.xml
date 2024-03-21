@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Qt-项目作品 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/</link>
+    <description>Recent content in Qt-项目作品 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 27 Feb 2020 16:02:29 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Qt编写的项目作品21-网络请求客户端/服务器</title>
+      <link>https://anwangtanmi.github.io/posts/98474b7d27a72356edd26fca5b9534de/</link>
+      <pubDate>Thu, 27 Feb 2020 16:02:29 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/98474b7d27a72356edd26fca5b9534de/</guid>
+      <description> 一、实现原理 http请求就是tcp通信，所以第一步实例化QTcpServer类监听端口，并绑定newConnection信号槽。 一旦有新的连接，交给专门的解包类处理，将对应的数据解包，http请求有特定的头部数据等，比如是否需要保活等参数，将其取出来并解析应用。 收发数据交互其实就是QTcpSocket通信对象的交互，只是收发数据带了对应的头部数据。 回复网页数据只需要将网页的html数据发给请求对象即可。 二、功能特点 支持多个客户端连接并发同时处理，100个毫无压力。 可设置http请求是长连接还是短连接，默认长连接。 支持多种回复数据格式，其中包括网页内容、json数据等。 服务端示例中同时包含读取文件回复、读取数据库回复。 支持8种配色方案（暗黑、灰黑、深绿、浅黄、深蓝、深黑、暗蓝、默认）。 客户端可指定请求地址，服务端可指定网卡和端口进行监听。 所有请求和连接都有计数，所有在线请求的IP和端口都显示在表格中。 可以提供一个简易的网页配置服务，包括交互，作为设备的web配置。 可自由拓展增加权限校验等，作为一个http请求服务器。 纯Qt实现，代码框架整洁，注释完整，支持任意Qt版本、任意编译器、任意操作系统。 三、效果图 四、体验地址 体验地址：https://pan.baidu.com/s/1uQsDQO5E5crUBN2J-nPeLQ 提取码：1jkp 名称：bin_httpserver.zip 国内站点：https://gitee.com/feiyangqingyun 国际站点：https://github.com/feiyangqingyun 个人主页：https://blog.csdn.net/feiyangqingyun 知乎主页：https://www.zhihu.com/people/feiyangqingyun/ 备注：如果网盘下载不到可以去开源主页下载&#xA;点赞 2 收藏 分享 文章举报 feiyangqingyun&#xA;博客专家 发布了276 篇原创文章 ·&#xA;获赞 360 ·&#xA;访问量 29万+ 他的留言板 关注 </description>
+    </item>
+  </channel>
+</rss>

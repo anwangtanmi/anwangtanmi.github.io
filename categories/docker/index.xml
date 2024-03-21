@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/categories/docker/</link>
+    <description>Recent content in Docker on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 03 Jul 2019 10:53:26 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/categories/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>docker启动redis、并加载配置文件</title>
+      <link>https://anwangtanmi.github.io/posts/3edaa0554972968a2ec27d4ecc491fd7/</link>
+      <pubDate>Wed, 03 Jul 2019 10:53:26 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/3edaa0554972968a2ec27d4ecc491fd7/</guid>
+      <description>docker以配置文件的方式启动Redis，看似简单，其实暗藏杀机、填坑无数，let us look look.&#xA;◆◆Step：准备 redis.conf&#xA;redis官网：https://redis.io/&#xA;进入官网，直接下载 redis-xxx.tar.gz，然后解压得到redis.conf&#xA;杀机：请保持官网和docker中redis版本一致，不同版本redis的配置文件可能不一样。&#xA;◆◆Step：本机上创建redis目录，放入配置文件和创建数据目录备用，并修改配置文件&#xA;1：创建redis目录&#xA;# cd /usr # 进入/usr目录 # mkdir redis # 创建redis目录 # cd redis # 进入redis目录 # 将准备好的redis.conf放进reids目录 # mkdir data # 创建redis数据目录 2：修改配置文件&#xA;开启redis验证 requirepass 123&#xA;允许redis外地连接&#xA;杀机：务必将 daemonize yes注释起来，因为该配置和docker run中-d参数冲突，会导致容器一直启动失败&#xA;开启redis数据持久化 appendonly yes&#xA;◆◆Step：docker下载redis镜像&#xA;因为准备的redis.conf是5.0.5版本的 所有docker下载镜像的版本也是5.0.5&#xA;# docker pull redis:5.0.5 查看下载好的redis镜像&#xA;# docker images ◆◆Step：启动redis # docker run -d -p 6379:6379 -v /usr/redis/redis.conf:/etc/redis/redis.conf -v /usr/redis/data:/data --name myredis redis:5.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>产品设计 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/</link>
+    <description>Recent content in 产品设计 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 25 Jun 2019 14:53:07 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SAP WebIDE编辑器的主题设置</title>
+      <link>https://anwangtanmi.github.io/posts/7c56d4c97d3b848d02dba037cad7fecd/</link>
+      <pubDate>Tue, 25 Jun 2019 14:53:07 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/7c56d4c97d3b848d02dba037cad7fecd/</guid>
+      <description>我的本地Eclipse和sublime Text等编辑器，为了保护视力都设置的是黑色或者豆沙绿的背景，而SAP WebIDE JavaScript编辑器默认的背景色还是纯白色，看久了眼睛很累：&#xA;这个背景色其实也是可以更换的：WebIDE里选择Preferences&#xA;把theme改成Tommorow Night Blue(dark)即可：&#xA;要获取更多Jerry的原创文章，请关注公众号”汪子熙”:</description>
+    </item>
+    <item>
+      <title>UE4静态光，固定光，动态光的区别（待更新）</title>
+      <link>https://anwangtanmi.github.io/posts/b4454815022d509855f582319028a6be/</link>
+      <pubDate>Sat, 11 May 2019 01:07:45 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/b4454815022d509855f582319028a6be/</guid>
+      <description> 区别 官网链接&#xA;静态光&#xA;固定光&#xA;动态光&#xA;由于静态灯仅使用光照贴图，因此在游戏玩法之前将其阴影烘焙。这意味着它们不能影响移动（动态）对象，在游戏过程中不会以任何方式改变，正如我们在示例中看到的那样。但是，当照明也是静态的对象时，它们能够产生区域（接触）阴影。这是通过调整Source Radius属性来完成的。但是，应该注意的是，接收柔和阴影的表面可能必须正确设置其光照贴图分辨率才能使阴影看起来很好。&#xA;静态灯的主要用途是用于移动平台上的低功耗设备。&#xA;固定灯是用于保持在一个位置的灯，但能够以其他方式改变，例如亮度和颜色。这是他们与静态灯不同的主要方式，静态灯在游戏过程中不会以任何方式改变。但是，应该注意，运行时亮度的变化只会影响直接照明。间接（反弹）照明，因为它是由Lightmass预先计算的，不会改变。&#xA;在三种光线移动中，固定光源往往具有最高质量，中等可变性和中等性能成本。&#xA;固定灯的所有间接照明和阴影都存储在Lightmap中。直接阴影存储在Shadowmap中。这些灯使用了距离场阴影，这意味着即使在点亮的物体上具有相当低的光照贴图分辨率，它们的阴影也可以保持清晰。&#xA;可移动灯光投射出完全动态的光线和阴影，可以改变位置，旋转，颜色，亮度，衰减，半径以及几乎所有其他属性。他们投射的光线都没有被烘焙到光照贴图中，目前它们不能有任何间接照明。&#xA;固定灯和静态光一样将其间接照明存储在光照贴图中。间接照明不能在运行时通过改变亮度和颜色来改变，就像直接照明一样。这意味着即使灯具有未选中的Visible，其间接照明也将在灯光构建期间放入灯光图中。灯光上的IndirectLightingIntensity可用于在照明构建时缩放或禁用给定灯光的间接照明。&#xA;然而，有一个名为IndirectLightingIntensity的后期处理音量设置，它允许您缩放灯光图对所有灯光的贡献，可以在运行时从蓝图中更改。&#xA;动态阴影 固定光 光源的实时阴影具有主要的性能成本。具有阴影的完全动态光通常比无阴影的动态光花费二十倍（20倍）渲染。出于这个原因，固定灯能够在静态物体上产生静态阴影，但有一些限制。&#xA;动态对象(如静态网格组件和具有可移动设置的SkeletalMeshComponents)必须从距离场阴影映射集成到静态阴影中。这是通过每个物体的阴影来完成的。每个可移动的物体从静止的光中产生两个动态阴影:一个处理投射到物体上的静态世界的阴影，一个处理投射到世界上的物体的阴影。在这种设置下，固定光源的唯一阴影成本来自它所影响的动态对象。这意味着，根据有多少动态对象，成本可以从很小到很大。有了足够多的动态对象，使用可移动的光会更有效。&#xA;方向固定光（Directional Stationary Lights）的特殊之处在于，它们通过级联阴影映射支持整个场景的阴影，同时也支持静态阴影。这是非常有用的水平与许多动画树叶;你想要在玩家周围有移动的阴影，但又不想为覆盖大范围的视野而付出很多级联的代价。动态阴影在距离上逐渐消失为静态阴影，因此过渡常常难以区分。要设置此设置，只需更改动态阴影距离静止光的方向光静止为您希望褪色发生的范围。&#xA;即使在方向灯上使用级联阴影映射，可移动组件仍然会创建PerObject阴影。这种行为在动态阴影距离较小的情况下是有用的，但是在较大的距离下会产生不必要的开销。若要禁用PerObject阴影并保存性能，请禁用对灯光上的可移动对象使用Inset阴影。&#xA;动态光 动态灯光设置投阴影使用整个场景的动态阴影，这有一个显着的性能成本。性能成本主要来自于光影响的网格数，以及这些网格的三角形计数。这意味着投射大半径可移动光的阴影成本将是小半径可移动光成本的许多倍。 动态光lightmap缓存 当一个点或聚光灯不移动时，我们可以从阴影映射中存储该光并在下一帧中重用它。这使得阴影投射可移动的点和聚光灯在环境通常不移动的游戏中更便宜。阴影贴图缓存应该是任何UE4项目中自动启用的功能。要检查并查看使用阴影贴图缓存获得的性能，可以通过执行以下操作启用和禁用阴影贴图缓存：&#xA;选择要在项目级别中投射动态阴影的所有灯光。&#xA;按Backtick（`）键打开控制台并键入Stat Shadowrendering以查看动态阴影的当前成本。&#xA;再次按Backtick（`）键打开控制台并键入r.Shadow.CacheWholeSceneShadows 0以禁用动态阴影缓存&#xA;请务必记下CallCount和InclusiveAug部分中的数字&#xA;现在再次按Backtick键打开控制台并键入r.Shadow.CacheWholeSceneShadows 1以重新启用阴影缓存。如果您比较CallCount和InclusiveAug数字，您可以看到此功能对动态阴影性能的影响。&#xA;虽然阴影映射缓存可以降低在UE4项目中使用动态阴影的成本，但是如果与不支持的特性一起使用，则存在一些限制，可能会导致呈现构件。&#xA;默认情况下，缓存只能在对象满足以下要求时才会发生:&#xA;Primitives被设置为静态或固定。 在水平面上使用的材料不使用世界位置偏移量。 光需要是一个点或聚光灯，移动设置为可移动，并启用阴影投射。 灯光必须保持在一个位置。 使用动画镶嵌或像素深度偏移的材质在缓存阴影深度时可能会导致伪影。 </description>
+    </item>
+    <item>
+      <title>Levels – 在UE4中创建高质量植被</title>
+      <link>https://anwangtanmi.github.io/posts/7283bc036e6973cc40894738999b837e/</link>
+      <pubDate>Sat, 16 Feb 2019 11:16:10 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/7283bc036e6973cc40894738999b837e/</guid>
+      <description>一篇翻译文章，介绍了一些制作植被的思路和方法，如何在UE4中创建写实的植被；部分段落为概括翻译或略过，以下为发表在知乎的链接：&#xA;https://zhuanlan.zhihu.com/p/56529198</description>
+    </item>
+    <item>
+      <title>微信开发者工具更新后报错：appJSON……字段需为black或white</title>
+      <link>https://anwangtanmi.github.io/posts/28b75f1be8257e041a3f9054aac48d5b/</link>
+      <pubDate>Mon, 11 Feb 2019 18:19:51 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/28b75f1be8257e041a3f9054aac48d5b/</guid>
+      <description>今天更新微信开发者工具后，打开小程序项目提示这个错误，导致项目无法运行&#xA;解决办法：&#xA;根据提示，将#fff改成white即可</description>
+    </item>
+    <item>
+      <title>UX——[Universal Style]</title>
+      <link>https://anwangtanmi.github.io/posts/4f4abffd6b03ed0ee31244b76473f1fa/</link>
+      <pubDate>Thu, 13 Dec 2018 11:15:45 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/4f4abffd6b03ed0ee31244b76473f1fa/</guid>
+      <description>基于Microsoft通用设计风格（UWP风格）。&#xA;官网：https://docs.microsoft.com/zh-cn/windows/uwp/design/style/color&#xA;Theme：主题（亮色暗色、系统自动选择）&#xA;foreground：前景颜色&#xA;background：背景颜色&#xA;accent：强调色&#xA;color：https://doc.qt.io/qt-5/qtquickcontrols2-universal.html#pre-defined-universal-colors&#xA;视觉效果：</description>
+    </item>
+    <item>
+      <title>SecureCRT_16750正版破解注册机</title>
+      <link>https://anwangtanmi.github.io/posts/2a86435d382768d21610ab64b4320030/</link>
+      <pubDate>Mon, 03 Dec 2018 19:29:56 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/2a86435d382768d21610ab64b4320030/</guid>
+      <description> 一个好用的连接工具, 小伙伴给的, 分享了.&#xA;链接: https://pan.baidu.com/s/1vfyGpyU7B10sLHmp16AdMA 提取码: 221r&#xA;压缩包里的 keygen.exe 是注册机, 添加到 Windows Defender 白名单里, 不然会被杀掉. 我的是 win10, 实测是会被杀的.&#xA;解压缩后先安装, 然后把 Crack 包里的两个文件拷到安装目录里. 打开 keygen.exe, 点击 Path. 在打开的窗口选择 SecureCRT 的程序打开. 窗口自动关闭后会弹出另一个窗口. 接着在打开的窗口选择 LicenseHelper.exe 再打开. 然后就得到 License 的信息了. 这个窗口不要关. 打开软件后注册吧. 大概就是打开软件后在 Help 里选择 Enter License Data 然后点击下一步, 在这个窗口填入上面获取到 License 的那个窗口的信息即可. </description>
+    </item>
+    <item>
+      <title>pytorch ShuffleNetV2 知识整理</title>
+      <link>https://anwangtanmi.github.io/posts/90b3303b861f82ce8328aaaabd918c67/</link>
+      <pubDate>Wed, 29 Aug 2018 17:42:48 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/90b3303b861f82ce8328aaaabd918c67/</guid>
+      <description>算法提出是从这里引出的：&#xA;https://blog.csdn.net/u012426298/article/details/80688080&#xA;各种算法比较：&#xA;https://blog.csdn.net/sun_28/article/details/78170878&#xA;pytorch实现，有torch转caffe：&#xA;https://github.com/miaow1988/ShuffleNet_V2_pytorch_caffe&#xA;https://github.com/Randl/ShuffleNetV2-pytorch&#xA;这个有测试速度，cpu 416 100ms&#xA;改变通道数：1:改为了96通道后，速度变成了200ms了，与mobilenetv2就差不多了&#xA;self.num_of_channels = {0.5: [24, 48, 96, 192, 1024], 1: [96, 116, 232, 464, 1024], 1.5: [24, 176, 352, 704, 1024], 2: [24, 244, 488, 976, 2048]} https://github.com/jacke121/ShuffleNetV2-pytorch&#xA;https://github.com/timctho/shufflenet-v2-pytorch/blob/master/net.py&#xA;这有测试&#xA;https://github.com/ZHANG-SHI-CHANG/ShuffleNetV2-Pytorch/blob/master/ShuffleNetV2.py&#xA;https://github.com/xingmimfl/pytorch_ShuffleNet_ShuffleNetV2/blob/master/shufflenet_v2.py&#xA;https://github.com/Bugdragon/ShuffleNet_v2_PyTorch/blob/master/ShuffleNetv2.py&#xA;https://github.com/Randl/ShuffleNetV2-pytorch</description>
+    </item>
+    <item>
+      <title>UE4材质中的纹理合成</title>
+      <link>https://anwangtanmi.github.io/posts/c818469f10c7aee73300fd9f7a507612/</link>
+      <pubDate>Tue, 21 Aug 2018 17:43:51 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/c818469f10c7aee73300fd9f7a507612/</guid>
+      <description>纹理合成的需求 UE4材质常常需要合成不同的纹理。常用的合成运算，有好几种选择，下面单独介绍。 下面这两种图片，是合成之前的图片。 UE4材质中的乘法 乘法是最常用的合成运算。 下面是这两张图用乘法合成的效果。 乘法合成很简单，取值范围在运算之后仍然是0~1。 但是合成之后会变暗，这是因为两个0~1的数相乘，会变得更小，所以更暗。下图是材质节点。 UE4材质中的加法 这是加法合成的效果。 两个0~1之间的数相加，范围是0~2，所以需要再除以2。下图是材质节点。 但是为什么整体会变亮？其实不只是变亮，而是亮度趋向于平均值。亮的地方更暗，暗的地方更亮。 这就是均值运算造成的结果。&#xA;UE4材质中的除法 下图是合成的效果。 下图是材质节点。 其实除法一般不用于纹理合成，原因很简单，两个0~1之间的数相除之后，其取值范围变化非常大。可能会有很多像素点的值直接超过1，表现为白色。合成之后的结果也证明了这一点。 另外，哪个除以哪个，效果也不同。下图是交换之后的结果。&#xA;UE4材质中的减法 同样的，减法不满足交换律。下图是减法合成的效果。 下图为材质节点。 两个0~1之间的数相减，其取值范围为-1~1，而小于0的颜色按照0来算，所以很多像素点直接就是黑色。 你也可以进行先加1再除以2的运算，但是效果。。并不好，下图就是。 UE4材质中的插值(Lerp) 插值可以取得更多样的效果，因为插值引入了第三个参数。 下图是材质节点。 而Lerp的Alpha参数分别为0.5、0.2、0.8的效果。 可以看到，插值可以很好地控制合成效果。 而插值的第三个参数，可以使用一个灰度图。下图就是用一张黑白相间的灰度图合成的效果。 原文地址：原文地址 本文首发于翰者学堂</description>
+    </item>
+    <item>
+      <title>虚幻4常见问题</title>
+      <link>https://anwangtanmi.github.io/posts/2d6959abc52cb5ad9e72ec9d7e8d95ca/</link>
+      <pubDate>Thu, 12 Jul 2018 16:48:51 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/2d6959abc52cb5ad9e72ec9d7e8d95ca/</guid>
+      <description>问题1：&#xA;问题描述：UE4找不到游戏模块&#xA;UE4 the game module’fps’could not be found&#xA;解决方案：&#xA;重新编译一遍C++项目，通过C++项目启动UE4生成游戏模块，为了防止生成失效可以启动uproject文件再关闭C++启动项目&#xA;问题2：&#xA;问题描述：打包失败，游戏模块dll路径拒绝访问，代码重新生成失败&#xA;解决方案：&#xA;设置代码项目为启动端，只点生成，打包不要用uproject启动打包，用C++项目启动打包就不会出现问题了&#xA;问题3：&#xA;问题描述：int和int32有区别吗？&#xA;解决方案:&#xA;并没有区别，UE4命名规范用的int32&#xA;问题4&#xA;问题描述：UE4无法新建C++项目&#xA;解决方案：&#xA;1.检测新建项目路径是否有中文&#xA;2.UE4版本脱离了启动端是离线版本，请使用在线版本开发C++项目&#xA;问题5：&#xA;问题描述：UE4开发安卓程序需要什么环境&#xA;解决方案：&#xA;需要安卓环境，分别是SDK、NDK、ANT、JDK&#xA;问题6：&#xA;问题描述：UE4插件安装容易发生打包失败&#xA;解决方案：尽量不要使用插件&#xA;问题7：&#xA;问题描述：IOS开发，蓝图可以打包，C++不能&#xA;解决方案：一般都是xcode的锅，可以尝试降低xcode版本&#xA;问题8：&#xA;问题描述：UE4 IOS项目开发远程打包失败&#xA;解决方案：检测xcode有没有设置为默认指定路径 命令：sudo xcode-select -s 你的Xcode安装路径/Contents/Developer&#xA;问题8.1：&#xA;问题描述：Unable to clean target while hot-reloading. Close the editor and try again.&#xA;解决方案：删除save文件重新生成&#xA;问题9:&#xA;问题描述：iOS 关闭强制使用https&#xA;解决方案：IOS-&amp;gt;Extra PList Data写入NSAppTransportSecurity NSAllowsArbitraryLoads 问题10：&#xA;问题描述：虚幻报错LogPlayLevel: Compiling with non-standard Xcode (xcode-select): /Library/Developer/CommandLineTools/</description>
+    </item>
+    <item>
+      <title>UE4为组件Component注册事件时没有效果的问题解决</title>
+      <link>https://anwangtanmi.github.io/posts/857dc0449285f8b1a9552204d8b10fcf/</link>
+      <pubDate>Wed, 06 Dec 2017 18:07:11 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/857dc0449285f8b1a9552204d8b10fcf/</guid>
+      <description>按照UE4的教程：&#xA;.h文件：&#xA;// 在 Project Settings 的 Description 页面填入版权声明。 #pragma once #include &#34;GameFramework/Actor.h&#34; #include &#34;FPSProjectile.generated.h&#34; UCLASS() class FPSPROJECT_API AFPSProjectile : public AActor { GENERATED_BODY() public: // 设置该 actor 属性的默认值 AFPSProjectile(); // 游戏开始时或生成时调用 virtual void BeginPlay() override; // 每帧调用 virtual void Tick( float DeltaSeconds ) override; // 球体碰撞组件。 UPROPERTY(VisibleDefaultsOnly, Category = Projectile) USphereComponent* CollisionComponent; // 发射物运动组件。 UPROPERTY(VisibleAnywhere, Category = Movement) UProjectileMovementComponent* ProjectileMovementComponent; // 在发射方向上设置发射物初速度的函数。 void FireInDirection(const FVector&amp;amp; ShootDirection); // 发射物命中物体时调用的函数。 void OnHit(UPrimitiveComponent* HitComponent, class AActor* OtherActor, class UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult&amp;amp; Hit); }; cpp文件：</description>
+    </item>
+    <item>
+      <title>unity 仿ue4湖水效果</title>
+      <link>https://anwangtanmi.github.io/posts/96cd22d3061f64b327c98aadf3771613/</link>
+      <pubDate>Sat, 23 Sep 2017 12:09:16 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/96cd22d3061f64b327c98aadf3771613/</guid>
+      <description>这次是做个测试，看看材质通用性&#xA;为了方便使用的是untiy 5.6 + shaderforge 1.38&#xA;下面是最后的效果（当然比起ue4里面还添加了一些，用的线性空间和deferred模式）&#xA;下面是ue4原本的&#xA;因为主要是法线上的效果，unity在法线和光照效果上还是差挺多的&#xA;连节点中还发现深度信息和ue4略有不同这个要注意&#xA;而且在测试中还发现了shaderforge的bug&#xA;当然depth相关节点最终连接到normal节点的话会报下面的错&#xA;Shader error in ‘Shader Forge/test’: undeclared identifier ‘partZ’ at line 106 (on d3d11)&#xA;但是只需要改源码，把partZ声明放在使用之前就可以了&#xA;下面是第一个版本的shaderforge节点&#xA;基本和ue4那个很像，需要注意的是某些节点虽然和ue4很像，但是略有不同&#xA;预览是错误，因为需要改源码，但每次改过后，shaderforge打开又会开回来&#xA;这个bug其实挺多见的，节点连多了，各种bug就出现了&#xA;效果如下&#xA;但是这个缺少放入物体虚化的效果，于是又改了下&#xA;效果就是第一幅图的了，注意这个需要开启透明，使用的时候只能是不透明的物体放入水中，否则会有深度问题&#xA;节点如下&#xA;预览也是这个问题，shader文件里直接改&#xA;放上改好的shader下载地址（注意只有shader文件）&#xA;http://download.csdn.net/download/shenmifangke/9991699</description>
+    </item>
+    <item>
+      <title>可以叫板Google的一个搜索引擎——DuckDuckGo</title>
+      <link>https://anwangtanmi.github.io/posts/a3544c8e84c6e2c9056e59aaacb7c620/</link>
+      <pubDate>Fri, 18 Nov 2016 21:00:18 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/a3544c8e84c6e2c9056e59aaacb7c620/</guid>
+      <description>本文由Markdown语法编辑器编辑完成。&#xA;作为习惯了使用Google进行资料查询的我来说，如果没有Google，真的感觉很难受。纵使找了一些可以翻墙的软件，但无奈还是经常不稳定，总是时断时续的。Bing和百度搜索出来的东西，距离自己想要的东西，差别比较大。&#xA;前段时间在虎嗅上面读到一篇关于搜索引擎的文章，题目叫：《谷歌是最安全的搜索引擎？这家谷歌的竞争对手有话要说》。原文链接：https://www.huxiu.com/article/148190/1.html。&#xA;文章首先承认谷歌Google是当今世界搜索引擎的巨无霸，即使微软花了很大的力气研发了Bing搜索，但是在搜索精准度上还是与Google相差甚远。&#xA;但是，这两年在搜索引擎领域中却冒出了一匹黑鸭，叫DuckDuckGo (鸭子鸭子跑)，它已经成为了Google在搜索领域最小却也是最主要的竞争对手之一。2015年，DuckDuckGo被用户进行了多达30亿次的搜索，虽然这仅仅相当于Google的日搜索量，但是这家公司2011年才仅有3名员工。&#xA;DuckDuckGo之所以能在强手如林的搜索引擎市场下，赢得一席之地，必然是有它的独到之处。那就是找准了自己的定位——让用户做私人的、匿名的网络搜索。因为很多用户非常反感Google对他们的搜索信息进行收集和分析。这就是差异化竞争。&#xA;搜索引擎公司的一大收入来源是广告收入。针对什么样的用户，投放什么样的广告，被用户点击的机率更大，这是搜索引擎公司一个很重要的工作，不管是Google，还是百度等其他搜索引擎。那么，这些公司在广告投放前，便会根据该用户之前搜索过的信息，来判断该用户的兴趣喜好等。也就是说，我们的每一次检索内容都会被搜索引擎“悄悄地”记录下来，然后对这些记录进行分析，然后再投放具有针对性的广告，增加广告的被点击率，从而为搜索引擎公司带来巨额收入。&#xA;DuckDuckGo不会收集用户信息来为广告商提供精准营销，相反地，它加入了微软/Bing/雅虎的广告网络，并且基于一些更普遍的事实推送没有针对性的广告，比如根据你使用英文搜索这一事实推送英文广告。而谷歌可以根据你刚刚搜索“夏天 裙子”，就在你接下来登陆的所有网站推送女装网店广告，这偶尔会让小探觉得毛骨悚然。&#xA;好了，大家可以试用一下这个搜索引擎，虽然它可能不像Google那样精准，但是在查找国外的技术资料时，还是要比百度强很多倍的。而且，这个搜索引擎不会收集你的个人信息，而且它目前还没有被政府屏蔽。&#xA;以下是这个搜索引擎的访问地址和主页界面： https://duckduckgo.com/ 要想成功，就要敢于创新，就要搞差异化竞争。这家公司做到了，为他点赞！！！</description>
+    </item>
+    <item>
+      <title>UI界面</title>
+      <link>https://anwangtanmi.github.io/posts/6de9a98b420130f4d9a0fb3e9b41196d/</link>
+      <pubDate>Thu, 05 Dec 2013 10:57:38 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/6de9a98b420130f4d9a0fb3e9b41196d/</guid>
+      <description>1，50套免费精美的UI界面设计工具箱下载&#xA;Clean UI Kit，Blugraphic Dark UI Kit，Dark Web and Apps UI Kit，Milk UI Kit Freebie，Silky Light UI，Hanna UI Kit，Media Black UI Kit (PSD)，Midnight UI Kit PSD，Black UI Kit， Cloudy UI kit，Clean and Usable UI Kit，Plush UI Toggles PSD，Clean UI Kit PSD，Blaubarry UI Kit，Mega Web Elements UI Kit，Mega-UI Pack 1， Dark UI Kit (Free PSD)， Web UI Set，Free Dark Gold UI Kit，Cosmic UI Kit， Moonify UI，Stylish User Interface Kit (PSD)，Dark Bionic，Hand Drawn UI Kit，Apple Styled UI Elements，Chutzpah UI Design Kit，Web UI Elements Kit，Dark UI Kit (PSD)，UI Resource，Transparent UI Kit，Magico UI Kit (PSD)，Butterscotch UI Kit，Minion UI，“Pizza” UI Kit，Blue UI Touch Kit，White UI Kit Freebie，Fresh UI Kit，Orange UI Kit (Icon Deposit)，Soft UI Kit，Minimize UI Kit – Free PSD，Sleek UI Elements，Electric UI Kit，Transparent Glass UI，Colorful UI，Hendricks UI Kit，Creamy UI Kit，UI Kit – Milky (PSD)，Orange UI Kit，Soft Touch UI Kit，Free PSD: iTunes Inspired UI Kit</description>
+    </item>
+    <item>
+      <title>22个完美设计的 PSD 登录表单模板免费下载！</title>
+      <link>https://anwangtanmi.github.io/posts/5b4fdd9a6f20234e3068155bc2215fa4/</link>
+      <pubDate>Mon, 03 Sep 2012 13:30:36 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/5b4fdd9a6f20234e3068155bc2215fa4/</guid>
+      <description>在网页设计过程中，如果有现成的 PSD 素材可以使用，那么可以事半功倍。作为网站不可或缺的部分，登录表单的设计经常都让设计师们头疼。今天这篇文章和大家分享的22个完美设计的 PSD 登录表单模板能够帮上设计师们的大忙，可以从这些优秀的设计中获取灵感，也可以直接下载使用。&#xA;Login Modal Window PSD&#xA;Log in/Sign in Form&#xA;Dark Login Box&#xA;Secure Login form PSD&#xA;Login Page free PSD Template&#xA;Login modal box&#xA;Pretty clean login form&#xA;PSD Login forms&#xA;Blue login box&#xA;Account Login Panel (PSD)&#xA;Fresh WordPress Login Form Set&#xA;Clean Log In Form PSD&#xA;Classic Login Page (PSD)&#xA;Vintage Sign Up Form&#xA;FREE AND AWESOME LOGIN BOX TEMPLATE [PSD]&#xA;Minimal Login User Interface</description>
+    </item>
+  </channel>
+</rss>

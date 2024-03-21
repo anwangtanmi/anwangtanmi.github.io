@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>OkHttp on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/okhttp/</link>
+    <description>Recent content in OkHttp on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 31 Oct 2016 14:35:24 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/okhttp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>最近很火的OkHttp剥洋葱系列</title>
+      <link>https://anwangtanmi.github.io/posts/83a4b961cd9973706589a119f63e01c3/</link>
+      <pubDate>Mon, 31 Oct 2016 14:35:24 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/83a4b961cd9973706589a119f63e01c3/</guid>
+      <description>最近很火的OkHttp剥洋葱系列 最近因为Retrofit组合Rxjava系列火的不得了，我也是最近事情较少所以好好研究了一下这种组合。如果你不了解Retrofit你肯定会问跟我们今天说的OkHttp有什么关系：Retrofit内部使用OkHttp实现。当然如果只是因为Retrofit，那我们完全没有必要专门拿出一篇文章来写，毕竟安卓4.4开始Google开始将OkHttp整合到系统里面，为什么要整合OkHttp呢？我们来分析下。&#xA;首先列出来几个常用的请求框架吧： 1.HttpURLConnection 这个安卓自带的请求框架应该没什么好说了，总结一下就一个字 繁。当然它也是有优势的，身为基础的请求框架 可塑性很强。基本可以满足你开发的需求，但是代码冗余。 2.Volley 这个框架是我比较常用的，自Volley发布以来一直受大量程序旺的追捧，当然我也是其中一个旺。相比其他框架Volley采用链式请求，代码清晰简介易配置，而且解决了activity消失返回数据的处理问题。实为居家旅行必备良药。但是封装的越完善可塑性就越差，对于一个新手来说，修改Volley请求那叫一个苦逼，别问我为什么。 3.OkHttp 这个框架相比HttpURLConnection封装的要好一些，相比于Volley可塑性那是相当的好。 针对可塑性：HttpURLConnection&amp;gt;OkHttp&amp;gt;Volley 针对简易性：Volley&amp;gt;Okhttp&amp;gt;HttpURLConnection&#xA;究竟要用那个框架完全取决于你的项目需求。这里仅仅抛砖引玉&#xA;Android studio请引入（强烈建议使用AS）：&#xA;compile &#39;com.squareup.okhttp:okhttp:2.4.0&#39; 一，get请求 废话不多说先上代码&#xA;OkHttpClient client = new OkHttpClient(); //创建请求可以编辑请求的头 体 等 具体看类代码 Request request = new Request.Builder() .url(&#34;&#34;) .addHeader(&#34;&#34;, &#34;&#34;) .cacheControl(null) .build(); Call call = client.newCall(request); //将线程加入调度，等待结果返回，注意回调函数运行在线程中 call.enqueue(new Callback() { @Override public void onFailure(Request request, IOException e) { } @Override public void onResponse(Response response) throws IOException { response.isSuccessful();//是否成功 response.body().string();//返回参数 response.body().byteStream();//获取流输入 } }); call.</description>
+    </item>
+  </channel>
+</rss>

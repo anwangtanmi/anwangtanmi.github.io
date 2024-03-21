@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NLP on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/nlp/</link>
+    <description>Recent content in NLP on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 23 Feb 2020 14:55:36 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/nlp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>BERT and Knowledge Distillation</title>
+      <link>https://anwangtanmi.github.io/posts/e167acbf0f7ffe379c485adeffe0d7e5/</link>
+      <pubDate>Sun, 23 Feb 2020 14:55:36 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/e167acbf0f7ffe379c485adeffe0d7e5/</guid>
+      <description>知识蒸馏&#xA;知识蒸馏（Knowledge Distillation,KD）是想将复杂模型（teacher network）中的暗知识（dark knowledge）迁移到简单模型（student network）中。一般来说，老师网络具有强大的能力和表现，而学生网络则更为紧凑。通过知识蒸馏，希望学生网络能尽可能逼近亦或是超过老师网络，从而用复杂度更小的模型来获得类似的预测效果。Hinton在Distilling the Knowledge in a Neural Network一文中首次提出了知识蒸馏的概念，通过引入老师网络的软目标（soft targets）以诱导学生网络的训练。&#xA;在具体了解知识蒸馏的具体流程前，我们首先回顾一下四个常见的损失函数：Softmax、log_softmax、NLLLoss和CrossEntropy。&#xA;Softmax：Softmax广泛的应用于分类问题中，它输入一个实数向量并返回一个表示类别可能性的概率分布，其中每个元素都是非负的，且所有元素总和为1。&#xA;Softmax&#xA;(&#xA;x&#xA;)&#xA;=&#xA;exp&#xA;⁡&#xA;(&#xA;x&#xA;i&#xA;)&#xA;∑&#xA;j&#xA;exp&#xA;⁡&#xA;(&#xA;x&#xA;j&#xA;)&#xA;\text{Softmax}(x) = \frac{\exp(x_{i})}{\sum_{j}\exp(x_{j})}&#xA;Softmax(x)=∑j​exp(xj​)exp(xi​)​ log_softmax：即对softmax处理后的结果做一次对数运算 NNLLoss（negtive log likelihood losss）：若&#xA;x&#xA;i&#xA;=&#xA;[&#xA;q&#xA;1&#xA;,&#xA;q&#xA;2&#xA;,&#xA;.&#xA;.&#xA;.&#xA;,&#xA;q&#xA;N&#xA;]&#xA;x_{i}=[q_{1},q_{2},…,q_{N}]&#xA;xi​=[q1​,q2​,...,qN​]为网络的第 i&#xA;i&#xA;i个输出， y&#xA;i&#xA;y_{i}&#xA;yi​为真实标签，那么有： f</description>
+    </item>
+  </channel>
+</rss>

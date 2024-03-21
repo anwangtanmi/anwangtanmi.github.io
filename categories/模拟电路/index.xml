@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>模拟电路 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/</link>
+    <description>Recent content in 模拟电路 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 02 Jan 2017 15:49:01 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>放大器设计-光电放大电路噪声分析-实践</title>
+      <link>https://anwangtanmi.github.io/posts/6ac5f76d865f68fe55f8d7ba2a591e16/</link>
+      <pubDate>Mon, 02 Jan 2017 15:49:01 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/6ac5f76d865f68fe55f8d7ba2a591e16/</guid>
+      <description>http://download.csdn.net/detail/u012176730/9727079&#xA;可看该pdf，里面格式更加工整&#xA;另一篇是关于控制系统的&#xA;http://download.csdn.net/detail/u012176730/9727083&#xA;该实际设计包括两部分，分别是前级互阻放大器设计，次级放大器设计； 3.1 互阻放大器设计 开始实际设计前，必须要知道所有可控制得参数。&#xA;图 11 互阻放大电路的最初拓补结构&#xA;图 13 和图 13 所示：在780nm 处，转换的系数大致在 0.5A/W。而我们实际 入射的光功率约为 50uW，所以我们会得到的光电流约为 IIN=25uA。我们想要得 到的输出是 5V，所以我们需要一共对这个电流进行 200k 倍的放大。这里的 200k 包括了第一季放大和第二级放大。第一级放大主要利用互阻放大器，使得电流转 换成电压，放大的倍数取决于 R2。可是 R2 作为输出的负载也直接影响了上升时间，具体见图12；&#xA;图 12 S2386 负载与上升时间&#xA;由于激光调制的存在，所以我们的光功率信号的频谱最大可以达到 200KHz 附近。一般的，BW=0.35/Tr，也就是说 Tr=0.35/BW=1.75us，所以我们把 R2 定 在了 5K 欧姆，这是为了尽量减轻后级放大的压力，也不破坏 S2386 响应的折中。&#xA;图 13 光电转换系数&#xA;除了上升时间这个参数，还有许多参数需要我们关注，暗电流 ID，端电容 Ct，并联电阻 RSH，以上三个参数直接影响到我们接下来的芯片的选型和低噪的 大小。&#xA;图 14 S2386‐18L参数&#xA;暗电流就是在没有光的情况下，光电二极管上的流动的静态电流。这里ID=2pA，这个 2pA 最终会影响到输出直流误差（这里我们不讨论误差），也会产生暗电流散弹噪声，该散弹噪声具备白噪声特点，噪声频谱宽而均匀。暗电流 引起的散弹噪声大小为：&#xA;iSD=rt(2*q*ID)&#xA;所以暗电流散弹噪声为&#xA;iSD =rt（2*1.6*10^(-19)*2*10^(-12)）=rt(64*10^(-32))=0.8fA/rtHz;&#xA;而并联电阻 RSH 带来的热噪声也是白噪声，这里的值约为 10G 欧姆。为了方 便讨论，用电流噪声来表示：</description>
+    </item>
+  </channel>
+</rss>

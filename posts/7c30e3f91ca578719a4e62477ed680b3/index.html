@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Dart语言学习总结 - 暗网探秘</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Dart语言学习总结" />
+<meta property="og:description" content="因要学习flutter平台，平台语言使用Dart，看了一下官方的demo:
+https://github.com/flutter/flutter
+看起来有点吃力，还是学习Dart语言也有利于以后开发，学习地址：
+https://www.dartlang.org/guides/language/language-tour
+https://www.dartlang.org/guides/libraries/library-tour
+总结如下：
+1.Dart简介 强类型语言
+一个单线程的语言
+类型注释是可选的，Dart可以推断类型。
+Dart支持泛型类型
+程序都必须具有顶级main()功能，该功能用作应用程序的入口点
+接口可以有函数
+类和接口是统一的，都是接口
+2.关键字： abstract 2
+dynamic 2
+implements 2
+show 1
+as 2
+else
+import 2
+static 2
+assert
+enum
+in
+super
+async 1
+export 2
+interface 2
+switch
+await 3
+external 2
+is
+sync 1
+break
+extends
+library 2
+this
+case
+factory 2
+mixin 2
+throw
+catch
+false
+new
+true
+class
+final
+null
+try
+const
+finally" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://anwangtanmi.github.io/posts/7c30e3f91ca578719a4e62477ed680b3/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-10-09T09:40:18+08:00" />
+<meta property="article:modified_time" content="2018-10-09T09:40:18+08:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="暗网探秘" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">暗网探秘</div>
+					
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Dart语言学习总结</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-10-09T09:40:18&#43;08:00">2018-10-09</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E5%89%8D%E7%AB%AF/" rel="category">前端</a>
+	</span>
+</div></div>
+		</header>
+		<div id="gatop"></div>
+		<div class="content post__content clearfix">
+			
+<div class="entry-content clearfix">
+<div id="article_content" class="article_content clearfix">
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-3019150162.css">
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-3019150162.css">
+<div class="htmledit_views" id="content_views">
+<p style="margin-left:0in;"><strong>因要学习flutter平台，平台语言使用Dart，看了一下官方的demo:</strong></p>
+<p style="margin-left:0in;"><a href="https://github.com/flutter/flutter" rel="nofollow" data-token="d9b6d7e474a9a91593e2ce68407c24dc">https://github.com/flutter/flutter</a></p>
+<p style="margin-left:0in;"><strong>看起来有点吃力，还是学习Dart语言也有利于以后开发，学习地址</strong><strong>：</strong></p>
+<p style="margin-left:0in;"><a href="https://www.dartlang.org/guides/language/language-tour" rel="nofollow" data-token="931efa854716f3330b3bbe7268b47000">https://www.dartlang.org/guides/language/language-tour</a></p>
+<p style="margin-left:0in;"><a href="https://www.dartlang.org/guides/libraries/library-tour" rel="nofollow" data-token="b14be2df3de0382f9c4c7c88409bae86">https://www.dartlang.org/guides/libraries/library-tour</a></p>
+<p style="margin-left:0in;">总结如下：</p>
+<h1 style="margin-left:0in;"><strong>1.Dart简介</strong></h1>
+<p style="margin-left:0in;">强类型语言</p>
+<p style="margin-left:0in;">一个单线程的语言</p>
+<p style="margin-left:0in;">类型注释是可选的，Dart可以推断类型。</p>
+<p style="margin-left:0in;">Dart支持泛型类型</p>
+<p style="margin-left:0in;"><span style="color:#212529;">程序都必须具有顶级</span><span style="color:#008f83;">main()</span><span style="color:#212529;">功能，该功能用作应用程序的入口点</span></p>
+<p style="margin-left:0in;">接口可以有函数</p>
+<p style="margin-left:0in;">类和接口是统一的，都是接口</p>
+<h1 style="margin-left:0in;"><span style="color:#212529;"><strong>2.关键字</strong><strong>：</strong></span></h1>
+<table cellspacing="0" summary>
+<tbody>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">abstract 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">dynamic 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">implements 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.975in;">
+<p style="margin-left:0in;"><span style="color:#212529;">show 1</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">as 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">else</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">import 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.975in;">
+<p style="margin-left:0in;"><span style="color:#212529;">static 2</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">assert</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">enum</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">in</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.9486in;">
+<p style="margin-left:0in;"><span style="color:#212529;">super</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">async 1</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">export 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">interface 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.975in;">
+<p style="margin-left:0in;"><span style="color:#212529;">switch</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">await 3</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">external 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">is</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.975in;">
+<p style="margin-left:0in;"><span style="color:#212529;">sync 1</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">break</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">extends</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">library 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.8631in;">
+<p style="margin-left:0in;"><span style="color:#212529;">this</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">case</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">factory 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">mixin 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.9652in;">
+<p style="margin-left:0in;"><span style="color:#212529;">throw</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">catch</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">false</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">new</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.8631in;">
+<p style="margin-left:0in;"><span style="color:#212529;">true</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">class</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">final</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">null</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.8631in;">
+<p style="margin-left:0in;"><span style="color:#212529;">try</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">const</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">finally</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">on 1</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.975in;">
+<p style="margin-left:0in;"><span style="color:#212529;">typedef 2</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">continue</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">for</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">operator 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.8631in;">
+<p style="margin-left:0in;"><span style="color:#212529;">var</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">covariant 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">Function 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">part 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.8631in;">
+<p style="margin-left:0in;"><span style="color:#212529;">void</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">default</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">get 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">rethrow</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.9201in;">
+<p style="margin-left:0in;"><span style="color:#212529;">while</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">deferred 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">hide 1</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">return</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.8631in;">
+<p style="margin-left:0in;"><span style="color:#212529;">with</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.1069in;">
+<p style="margin-left:0in;"><span style="color:#212529;">do</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.2222in;">
+<p style="margin-left:0in;"><span style="color:#212529;">if</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:1.4451in;">
+<p style="margin-left:0in;"><span style="color:#212529;">set 2</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.975in;">
+<p style="margin-left:0in;"><span style="color:#212529;">yield 3</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<ul style="margin-left:.375in;">
+<li>带有上标<strong>1</strong>单词是<strong>上下文关键字</strong>，仅在特定位置具有含义。他们到处都是有效的标识符。</li>
+<li>带有上标<strong>2</strong>单词是<strong>内置标识符</strong>。为了简化将JavaScript代码移植到Dart的任务，这些关键字在大多数地方都是有效的标识符，但它们不能用作类或类型名称，也不能用作导入前缀。</li>
+<li><span style="color:#212529;">带有上标</span><strong><span style="color:#212529;">3</span></strong><span style="color:#212529;">的单词是与Dart 1.0发布后添加的</span><a href="https://www.dartlang.org/guides/language/language-tour#asynchrony-support" rel="nofollow" data-token="d66ddf6540da74b5654fb024bb77c33e">异步支持</a><span style="color:#212529;">相关的更新，有限的保留字。</span></li>
+</ul>
+<h1 style="margin-left:0in;"><span style="color:#111111;"><strong>3.</strong><strong>变量与常量</strong></span></h1>
+<h2 style="margin-left:0in;"><span style="color:#111111;"><strong>3.1变量</strong></span></h2>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">var </span><span style="color:#222222;">name = </span><span style="color:#1b87c9;">‘Bob’ </span><span style="color:#222222;">;</span><span style="color:#222222;"> // 官方建议使用var</span></p>
+<p style="margin-left:0in;"><span style="color:#660066;">dynamic </span><span style="color:#222222;">name = </span><span style="color:#1b87c9;">‘Bob’ </span><span style="color:#222222;">;</span></p>
+<p style="margin-left:0in;"><span style="color:#660066;">String </span><span style="color:#222222;">name = </span><span style="color:#1b87c9;">‘Bob’ </span><span style="color:#222222;">;</span></p>
+<p style="margin-left:0in;"><span style="color:#212529;">未初始化的变量的初始值为</span><span style="color:#008f83;">null</span></p>
+<p style="margin-left:0in;"><span style="color:#212529;">不具备关键字</span><span style="color:#008f83;">public</span><span style="color:#212529;">，</span><span style="color:#008f83;">protected</span><span style="color:#212529;">和</span><span style="color:#008f83;">private</span><span style="color:#212529;">。如果标识符以下划线（_）开头，则表示是私有的。</span><span style="color:#222222;"> </span></p>
+<h2 style="margin-left:0in;"><span style="color:#111111;"><strong>3.2常量</strong></span></h2>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">final </span><span style="color:#222222;">name = </span><span style="color:#1b87c9;">‘Bob’ </span><span style="color:#222222;">;</span><span style="color:#222222;">//</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">con</span><span style="color:#1fb8aa;">st</span> <span style="color:#222222;">name = </span><span style="color:#1b87c9;">‘Bob’ </span><span style="color:#222222;">;</span><span style="color:#222222;">// </span></p>
+<p style="margin-left:0in;">const在类级别，要加static const</p>
+<p style="margin-left:0in;">const构造两个相同的编译时常量会产生同一个的实例</p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> a = </span><span style="color:#1fb8aa;">const </span><span style="color:#660066;">ImmutablePoint</span><span style="color:#222222;">(</span><span style="color:#006666;">1</span><span style="color:#222222;">, </span><span style="color:#006666;">1</span><span style="color:#222222;">);</span><br><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> b = </span><span style="color:#1fb8aa;">const </span><span style="color:#660066;">ImmutablePoint</span><span style="color:#222222;">(</span><span style="color:#006666;">1</span><span style="color:#222222;">, </span><span style="color:#006666;">1</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(identical(a, b)); </span><span style="color:#868686;">// They are the same instance!</span></p>
+<p style="margin-left:0in;">注：<span style="color:#212529;">使用</span><span style="color:#008f83;">static</span><span style="color:#212529;">关键字实现类范围的变量和方法（</span><span style="color:#0c5460;"> 对于常用或广泛使用的实用程序和功能，</span><strong><span style="color:#0c5460;">请</span></strong><span style="color:#0c5460;">考虑使用顶级函数而不是静态方法</span><span style="color:#212529;">）。</span></p>
+<p style="margin-left:0in;"><span style="color:#333333;"><strong>区别一</strong>：final 要求变量只能初始化一次，并不要求赋的值一定是编译时常量，可以是常量也可以不是。而 const 要求在声明时初始化，并且赋值必需为编译时常量。</span></p>
+<p style="margin-left:0in;"><span style="color:#333333;">编译时常量</span><span style="color:#333333;">:</span>字面量（如数字、bool、字符串、List的字面量形式）、其它常量 或者 常量的算术运算，也可以是这些的组合形式（递归要求），简单地说常量就是可以在编译时确定的值。</p>
+<p style="margin-left:0in;"><span style="color:#333333;"><strong>区别二</strong>：final 是惰性初始化，即在运行时第一次使用前才初始化。而 const 是在编译时就确定值了。</span></p>
+<p style="margin-left:0in;"><strong><span style="color:#333333;">区别三</span></strong>：const 可以修饰变量，也可以修饰值（value）。而 final 只用来修饰变量。</p>
+<h1 style="margin-left:0in;"><span style="color:#111111;"><strong>4.</strong><strong>内置类型</strong></span></h1>
+<h2 style="margin-left:0in;"><span style="color:#111111;"><strong>4.1 </strong><strong>数字</strong></span></h2>
+<p style="margin-left:0in;"><a href="https://api.dartlang.org/stable/dart-core/int-class.html" rel="nofollow" data-token="d1a271f2f3e6d0ae1454a413cd4dbb5a"><strong>int</strong></a><span style="color:#212529;">: </span><span style="color:#212529;">整数值不大于64位，具体取决于平台。在Dart VM上，值可以是-2 63到2 63 – 1.编译为JavaScript的Dart使用 从-2 53到2 53 – 1的值。</span></p>
+<p style="margin-left:0in;"><a href="https://api.dartlang.org/stable/dart-core/double-class.html" rel="nofollow" data-token="13217e150e4d9a17cd0e8e31c1a4270c"><strong>double</strong></a><span style="color:#212529;"> :</span>64位（双精度）浮点数，由IEEE 754标准规定。</p>
+<p style="margin-left:0in;"><span style="color:#868686;">// String -&gt; int</span><br><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> one = </span><span style="color:#660066;">int</span><span style="color:#222222;">.parse(</span><span style="color:#1b87c9;">‘1’</span><span style="color:#222222;">);</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(one == </span><span style="color:#006666;">1</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// String -&gt; double</span><br><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> onePointOne = </span><span style="color:#660066;">double</span><span style="color:#222222;">.parse(</span><span style="color:#1b87c9;">‘1.1’</span><span style="color:#222222;">);</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(onePointOne == </span><span style="color:#006666;">1.1</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// int -&gt; String</span><br><span style="color:#660066;">String</span><span style="color:#222222;"> oneAsString = </span><span style="color:#006666;">1.</span><span style="color:#222222;">toString();</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(oneAsString == </span><span style="color:#1b87c9;">‘1’</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// double -&gt; String</span><br><span style="color:#660066;">String</span><span style="color:#222222;"> piAsString = </span><span style="color:#006666;">3.14159</span><span style="color:#222222;">.toStringAsFixed(</span><span style="color:#006666;">2</span><span style="color:#222222;">);</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(piAsString == </span><span style="color:#1b87c9;">‘3.14’</span><span style="color:#222222;">);</span></p>
+<h2 style="margin-left:0in;"><strong><span style="color:#212529;">4.2 </span></strong><strong><span style="color:#111111;">Strings</span></strong><strong><span style="color:#111111;">(字符串)</span></strong></h2>
+<p style="margin-left:0in;"><span style="color:#212529;">Dart字符串是一系列UTF-16代码单元。您可以使用单引号或双引号来创建字符串。</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> s1 = </span><span style="color:#1b87c9;">‘Single </span><span style="color:#1b87c9;">”</span><span style="color:#1b87c9;">quotes work well for</span><span style="color:#1b87c9;">‘ + </span><span style="color:#1b87c9;">” string literals.”</span><span style="color:#222222;">;</span><br><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> s2 = </span><span style="color:#1b87c9;">“$</span><span style="color:#1b87c9;">s1</span><span style="color:#1b87c9;">“</span><span style="color:#1b87c9;">+</span><span style="color:#1b87c9;">‘</span><span style="color:#1b87c9;">case: </span><span style="color:#1b87c9;">${s.toUpperCase()}</span><span style="color:#1b87c9;">‘</span><span style="color:#222222;">;</span></p>
+<p style="margin-left:0in;"><span style="color:#222222;">可以想到”转义”只有’和”,使用</span>三重引号进行“转义”:</p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> s1 = </span><span style="color:#1b87c9;">”’<br> You can create”’</span><br><span style="color:#1b87c9;">“””</span><span style="color:#1b87c9;">multi-line strings like this one.</span><br><span style="color:#1b87c9;">“””</span><span style="color:#222222;">; </span></p>
+<h2 style="margin-left:0in;"><strong><span style="color:#222222;">4.3 </span></strong><strong><span style="color:#111111;">Booleans</span></strong></h2>
+<p style="margin-left:0in;"><span style="color:#111111;">使用bool定义: bool b = true;</span></p>
+<h2 style="margin-left:0in;"><strong>4.4数组</strong></h2>
+<p style="margin-left:0in;"><span style="color:#212529;">在Dart中</span>的数组，其值可以是不同类型</p>
+<p style="margin-left:0in;">var list = [“aa”,”dd”,3,newText(“test”)];</p>
+<p style="margin-left:0in;">list<span style="color:#222222;">.forEach((item) =&gt; print(</span><span style="color:#1b87c9;">‘I drink $i</span><span style="color:#1b87c9;">tem</span><span style="color:#1b87c9;">‘</span><span style="color:#222222;">));</span></p>
+<h2 style="margin-left:0in;"><strong>4.5 </strong><strong><span style="color:#111111;">Maps</span></strong></h2>
+<p style="margin-left:0in;"> key或values要同一个类型(key可以是对象)</p>
+<p style="margin-left:0in;">    var gifts = {‘first’: ‘partridge’};</p>
+<p style="margin-left:0in;">    gifts[‘fourth’] = ‘calling birds’; // Add a key-value pair</p>
+<p style="margin-left:0in;">    gifts[“2”] = “222”;</p>
+<p style="margin-left:0in;">    print(gifts[“2”]); //打印</p>
+<p style="margin-left:0in;">   <span style="color:#008f83;">putIfAbsent()</span><span style="color:#212529;">当且仅当键中的键尚不存在时，如果要为键指定值，请使用此方法</span></p>
+<p style="margin-left:0in;"><span style="color:#212529;">，您必须提供一个返回值的函数：</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> teamAssignments = {};<br> teamAssignments.putIfAbsent(<br>     </span><span style="color:#1b87c9;">‘Catcher’</span><span style="color:#222222;">, () =&gt; pickToughestKid());</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(teamAssignments[</span><span style="color:#1b87c9;">‘Catcher’</span><span style="color:#222222;">] != </span><span style="color:#1fb8aa;">null</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;">map循环：</p>
+<p style="margin-left:0in;"><span style="color:#222222;">g</span><span style="color:#222222;">ifts</span><span style="color:#222222;">.forEach((k, v) {<br>   print(</span><span style="color:#1b87c9;">‘I want to visit $k and swim at $v’</span><span style="color:#222222;">);<br>   </span><span style="color:#868686;">// I want to visit f</span><span style="color:#868686;">irst </span><span style="color:#868686;">and swim at</span><span style="color:#868686;"> partridge</span><br><span style="color:#222222;">});</span><span style="color:#212529;"> </span></p>
+<h2 style="margin-left:0in;"><strong>4.6 Runes</strong></h2>
+<p style="margin-left:0in;"><span style="color:#212529;">在Dart中，Runes是UTF-32位字符串。</span></p>
+<p style="margin-left:0in;"><span style="color:#212529;">Unicode为世界上所有书写系统中使用的每个字母，数字和符号定义唯一的数值。由于Dart字符串是一系列UTF-16位，因此在字符串中表示32位Unicode值需要特殊语法。</span></p>
+<p style="margin-left:0in;"><span style="color:#212529;">表达Unicode代码点的常用方法是 </span><span style="color:#008f83;">\uXXXX</span><span style="color:#212529;">，其中XXXX是4位十六进制值。例如，心脏角色（</span><span style="color:#212529;">♥</span><span style="color:#212529;">）是</span><span style="color:#008f83;">\u2665</span><span style="color:#212529;">。要指定多于或少于4个十六进制数字，请将值放在大括号中。例如，笑表情符号（</span><span style="color:#212529;">😆</span><span style="color:#212529;">）是</span><span style="color:#008f83;">\u{1f600}</span><span style="color:#212529;">。</span></p>
+<p style="margin-left:0in;"><span style="color:#212529;">该</span><a href="https://api.dartlang.org/stable/dart-core/String-class.html" rel="nofollow" data-token="b82a6735753fee991ae97eb5fe100331">字符串</a><span style="color:#212529;"> 类有几个属性，你可以用它来提取符文信息。在</span><span style="color:#008f83;">codeUnitAt</span><span style="color:#212529;">和</span><span style="color:#008f83;">codeUnit</span><span style="color:#212529;">属性返回16位编码单元。</span></p>
+<p style="margin-left:0in;"><span style="color:#212529;">以下示例说明了符文，16位代码单元和32位代码点之间的关系。</span></p>
+<p style="margin-left:0in;">    var clapping = ‘\u{1f44f}’;</p>
+<p style="margin-left:0in;">    print(clapping);</p>
+<p style="margin-left:0in;">    print(clapping.codeUnits);  // [55357, 56399]</p>
+<p style="margin-left:0in;">    print(clapping.runes.toList());  //[128079]</p>
+<p style="margin-left:0in;">    Runes input = new Runes(‘\u2665  \u{1f605}  \u{1f60e}  \u{1f47b}  \u{1f596}  \u{1f44d}’);</p>
+<p style="margin-left:0in;">    print(new String.fromCharCodes(input)); // ♥  😅  😎  👻  🖖  👍</p>
+<h2 style="margin-left:0in;"><strong>4.7 URL</strong></h2>
+<p style="margin-left:0in;">1.<span style="color:#212529;">进行编码和解码的字符</span><em><span style="color:#212529;">除了</span></em><span style="color:#212529;">那些在URI特殊含义（例如</span><span style="color:#008f83;">/</span><span style="color:#212529;">，</span><span style="color:#008f83;">:</span><span style="color:#212529;">，</span><span style="color:#008f83;">&amp;</span><span style="color:#212529;">，</span><span style="color:#008f83;">#</span><span style="color:#212529;">），使用</span><span style="color:#008f83;">encodeFull()</span><span style="color:#212529;">和</span><span style="color:#008f83;">decodeFull()</span><span style="color:#212529;">方法:</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> uri = </span><span style="color:#1b87c9;">‘</span><a href="http://example.org/api?foo=some" rel="nofollow" data-token="bbf6b61fd272d636c2a51c4d5511f0b2"><span style="color:#1b87c9;">http://example.org/api?foo=some</span></a><span style="color:#1b87c9;"> message’</span><span style="color:#222222;">;</span><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> encoded = </span><span style="color:#660066;">Uri</span><span style="color:#222222;">.encodeFull(uri);</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(encoded ==<br>     </span><span style="color:#1b87c9;">‘</span><a href="http://example.org/api?foo=some%20message" rel="nofollow" data-token="8e88fbf107527beb3f15b717ad4eec64"><span style="color:#1b87c9;">http://example.org/api?foo=some%20message</span></a><span style="color:#1b87c9;">‘</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#212529;">2.</span><span style="color:#212529;">编码和解码所有这一切都在一个URI特殊的含义</span><span style="color:#212529;">，使用</span><span style="color:#008f83;">encodeComponent()</span><span style="color:#212529;">和</span><span style="color:#008f83;">decodeComponent()</span><span style="color:#212529;">方法:</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> uri = </span><span style="color:#1b87c9;">‘</span><a href="http://example.org/api?foo=some" rel="nofollow" data-token="bbf6b61fd272d636c2a51c4d5511f0b2"><span style="color:#1b87c9;">http://example.org/api?foo=some</span></a><span style="color:#1b87c9;"> message’</span><span style="color:#222222;">;</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> encoded = </span><span style="color:#660066;">Uri</span><span style="color:#222222;">.encodeComponent(uri);</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(encoded ==<br>     </span><span style="color:#1b87c9;">‘http%3A%2F%2Fexample.org%2Fapi%3Ffoo%3Dsome%20message’</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#212529;">3.组装与拆分：</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> uri = </span><span style="color:#660066;">Uri</span><span style="color:#222222;">(<br>     scheme: </span><span style="color:#1b87c9;">‘http’</span><span style="color:#222222;">,<br>     host: </span><span style="color:#1b87c9;">‘example.org’</span><span style="color:#222222;">,<br>     path: </span><span style="color:#1b87c9;">‘/foo/bar’</span><span style="color:#222222;">,<br>     fragment: </span><span style="color:#1b87c9;">‘frag’</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">// </span><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> uri = </span><span style="color:#660066;">Uri</span><span style="color:#222222;">.parse(</span><span style="color:#1b87c9;">‘http://example.org:8080/foo/bar#frag’</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(uri.scheme == </span><span style="color:#1b87c9;">‘http’</span><span style="color:#222222;">);</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(uri.host == </span><span style="color:#1b87c9;">‘example.org’</span><span style="color:#222222;">);</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(uri.path == </span><span style="color:#1b87c9;">‘/foo/bar’</span><span style="color:#222222;">);</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(uri.fragment == </span><span style="color:#1b87c9;">‘frag’</span><span style="color:#222222;">);</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(uri.origin == </span><span style="color:#1b87c9;">‘</span><a href="http://example.org:8080" rel="nofollow" data-token="b397301d266d9bf4e007a899b36c0e6a"><span style="color:#1b87c9;">http://example.org:8080</span></a><span style="color:#1b87c9;">‘</span><span style="color:#222222;">);</span></p>
+<h2 style="margin-left:0in;"><strong>4.8 日期和时间</strong></h2>
+<p style="margin-left:0in;"><span style="color:#868686;">// Get the current date and time.</span><br><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> now = </span><span style="color:#660066;">DateTime</span><span style="color:#222222;">.now();</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// Create a new DateTime with the local time zone.</span><br><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> y2k = </span><span style="color:#660066;">DateTime</span><span style="color:#222222;">(</span><span style="color:#006666;">2000</span><span style="color:#222222;">); </span><span style="color:#868686;">// January 1, 2000</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// Specify the month and day.</span><br><span style="color:#222222;">y2k = </span><span style="color:#660066;">DateTime</span><span style="color:#222222;">(</span><span style="color:#006666;">2000</span><span style="color:#222222;">, </span><span style="color:#006666;">1</span><span style="color:#222222;">, </span><span style="color:#006666;">2</span><span style="color:#222222;">); </span><span style="color:#868686;">// January 2, 2000</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// Specify the date as a UTC time.</span><br><span style="color:#222222;">y2k = </span><span style="color:#660066;">DateTime</span><span style="color:#222222;">.utc(</span><span style="color:#006666;">2000</span><span style="color:#222222;">); </span><span style="color:#868686;">// 1/1/2000, UTC</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// Specify a date and time in ms since the Unix epoch.</span><br><span style="color:#222222;">y2k = </span><span style="color:#660066;">DateTime</span><span style="color:#222222;">.fromMillisecondsSinceEpoch(</span><span style="color:#006666;">946684800000</span><span style="color:#222222;">,<br>     isUtc: </span><span style="color:#1fb8aa;">true</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#008f83;">// </span><span style="color:#008f83;">millisecondsSinceEpoch</span><span style="color:#212529;">日期的属性返回自“</span>Unix epoch<span style="color:#212529;">” – 1970年1月1日UTC以来的毫秒数：</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// Parse an ISO 8601 date.</span><br><span style="color:#222222;">y2k = </span><span style="color:#660066;">DateTime</span><span style="color:#222222;">.parse(</span><span style="color:#1b87c9;">‘2000-01-01T00:00:00Z’</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"> </p>
+<p style="margin-left:0in;">使用Duration类计算两个日期之间的差异并向前或向后移动日期(要使用UTC日期)：</p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> y2k = </span><span style="color:#660066;">DateTime</span><span style="color:#222222;">.utc(</span><span style="color:#006666;">2000</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// Add one year.</span><br><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> y2001 = y2k.add(</span><span style="color:#660066;">Duration</span><span style="color:#222222;">(days: </span><span style="color:#006666;">366</span><span style="color:#222222;">));</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(y2001.year == </span><span style="color:#006666;">2001</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// Subtract 30 days.</span><br><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> december2000 = y2001.subtract(</span><span style="color:#660066;">Duration</span><span style="color:#222222;">(days: </span><span style="color:#006666;">30</span><span style="color:#222222;">));</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(december2000.year == </span><span style="color:#006666;">2000</span><span style="color:#222222;">);</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(december2000.month == </span><span style="color:#006666;">12</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// Calculate the difference between two dates.</span><br><span style="color:#868686;">// Returns a Duration object.</span><br><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> duration = y2001.difference(y2k);</span><br><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(duration.inDays == </span><span style="color:#006666;">366</span><span style="color:#222222;">); </span><span style="color:#868686;">// y2k was a leap year.</span></p>
+<h1 style="margin-left:0in;"><strong>5.函数</strong></h1>
+<p style="margin-left:0in;"><span style="color:#212529;">所有函数都返回一个值。如果未指定返回值，则将语句</span><span style="color:#008f83;">return null;</span><span style="color:#212529;">隐式附加到函数体。</span></p>
+<h2 style="margin-left:0in;"><span style="color:#212529;"><strong>实现函数的示例：</strong></span></h2>
+<p style="margin-left:0in;"><span style="color:#660066;">bool </span><span style="color:#222222;">isNoble （</span><span style="color:#660066;">int </span><span style="color:#222222;">atomicNumber ）{ </span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">return </span><span style="color:#222222;">_nobleGases [ atomicNumber ] ！= </span><span style="color:#1fb8aa;">null </span><span style="color:#222222;">; } </span></p>
+<p style="margin-left:0in;"><span style="color:#212529;">虽然Effective Dart建议 </span><a href="https://www.dartlang.org/guides/language/effective-dart/design#prefer-type-annotating-public-fields-and-top-level-variables-if-the-type-isnt-obvious" rel="nofollow" data-token="bdf412a391d67a26f91079db49e26d5f">为公共API键入注释</a><span style="color:#212529;">，但如果省略类型，该函数仍然有效：</span></p>
+<p style="margin-left:0in;"><span style="color:#222222;">isNoble （atomicNumber ）{ </span><span style="color:#1fb8aa;">return </span><span style="color:#222222;">_nobleGases [ </span></p>
+<p style="margin-left:0in;"><span style="color:#222222;">atomicNumber ] ！= </span><span style="color:#1fb8aa;">null </span><span style="color:#222222;">; } </span></p>
+<p style="margin-left:0in;"> </p>
+<p style="margin-left:0in;"><span style="color:#212529;">对于只包含一个表达式的函数，可以使用简写语法：</span></p>
+<p style="margin-left:0in;"><span style="color:#660066;">bool </span><span style="color:#222222;">isNoble （</span><span style="color:#660066;">int </span><span style="color:#222222;">atomicNumber ）=&gt; </span></p>
+<p style="margin-left:0in;"><span style="color:#222222;">_nobleGases [ atomicNumber ] ！= </span><span style="color:#1fb8aa;">null </span><span style="color:#222222;">;   </span></p>
+<p style="margin-left:0in;"><span style="color:#212529;">该语法是一个速记 。有时将表示法称为</span><em><span style="color:#212529;">箭头</span></em><span style="color:#212529;">语法。</span><span style="color:#008f83;">=&gt; </span><em><span style="color:#008f83;">expr</span></em><span style="color:#008f83;">{ return </span><em><span style="color:#008f83;">expr</span></em><span style="color:#008f83;">; }=&gt;</span></p>
+<p style="margin-left:0in;"><strong><span style="color:#0c5460;">注意：</span></strong><span style="color:#0c5460;"> 只有</span><em><span style="color:#0c5460;">表达式</span></em><span style="color:#0c5460;"> – 不是</span><em><span style="color:#0c5460;">语句</span></em><span style="color:#0c5460;"> – 可以出现在箭头（=&gt;）和分号（;）之间。例如，您不能在其中放置</span><a href="https://www.dartlang.org/guides/language/language-tour#if-and-else" rel="nofollow" data-token="ed6cc6f1564c7e3f772df41c3ad8113d">if语句</a><span style="color:#0c5460;">，但可以使用</span><a href="https://www.dartlang.org/guides/language/language-tour#conditional-expressions" rel="nofollow" data-token="163bb02d82a545ff213b6eef3a22f3bb">条件表达式</a><span style="color:#0c5460;">。</span></p>
+<p style="margin-left:0in;"><strong><span style="color:#0c5460;">定义必传参&lt;</span></strong><strong><span style="color:#222222;">child</span></strong><strong><span style="color:#0c5460;">&gt;</span></strong><strong><span style="color:#0c5460;">、</span></strong><strong><span style="color:#0c5460;">参数默认值&lt;</span></strong><strong><span style="color:#222222;">number</span></strong><strong><span style="color:#0c5460;">&gt;</span></strong><strong><span style="color:#0c5460;">、选传参</span></strong><strong><span style="color:#0c5460;">&lt;</span></strong><strong><span style="color:#222222;">device</span></strong><strong><span style="color:#222222;">&gt;</span></strong><strong><span style="color:#0c5460;">：</span></strong></p>
+<p style="margin-left:0in;"><span style="color:#660066;">bool </span><span style="color:#222222;">isNoble （</span><span style="color:#222222;">@required </span><span style="color:#660066;">Widget</span><span style="color:#222222;"> child,</span> <span style="color:#660066;">int </span><span style="color:#222222;">number</span><span style="color:#222222;"> = 1</span><span style="color:#222222;">, [</span><span style="color:#660066;">String</span><span style="color:#222222;"> device]）{ </span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">return </span><span style="color:#222222;">_nobleGases [ atomicNumber ] ！= </span><span style="color:#1fb8aa;">null </span><span style="color:#222222;">; } </span></p>
+<p style="margin-left:0in;"><span style="color:#222222;"> </span></p>
+<p style="margin-left:0in;">可以将函数作为参数传递给另一个函数：</p>
+<p style="margin-left:0in;"><span style="color:#660066;">void</span><span style="color:#222222;"> printElement(</span><span style="color:#660066;">int</span><span style="color:#222222;"> element) {<br>   print(element);<br> }</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> list = [</span><span style="color:#006666;">1</span><span style="color:#222222;">, </span><span style="color:#006666;">2</span><span style="color:#222222;">, </span><span style="color:#006666;">3</span><span style="color:#222222;">];</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// Pass printElement as a parameter.</span><br><span style="color:#222222;">list.forEach(printElement);</span><span style="color:#0c5460;"> </span></p>
+<h2 style="margin-left:0in;"><strong>匿名函数</strong><strong>：</strong></h2>
+<p style="margin-left:0in;">  var list = [‘apples’, ‘bananas’, ‘oranges’];</p>
+<p style="margin-left:0in;">  list.forEach((item) {</p>
+<p style="margin-left:0in;">    print(‘${list.indexOf(item)}: $item’);</p>
+<p style="margin-left:0in;">  });</p>
+<p style="margin-left:0in;">再如：</p>
+<p style="margin-left:0in;"><span style="color:#222222;">button.onClick.listen((e) =&gt; window.alert(</span><span style="color:#1b87c9;">‘Confirmed!’</span><span style="color:#222222;">));</span></p>
+<p style="margin-left:0in;"><span style="color:#0c5460;"> </span></p>
+<h2 style="margin-left:0in;"><strong>嵌套函数：</strong></h2>
+<p style="margin-left:0in;"><span style="color:#660066;">void</span><span style="color:#222222;"> myFunction() {<br>     </span><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> insideFunction = </span><span style="color:#1fb8aa;">true</span><span style="color:#222222;">;</span></p>
+<p style="margin-left:0in;"><span style="color:#660066;">void</span><span style="color:#222222;"> nestedFunction() {<br>       </span><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> insideNestedFunction = </span><span style="color:#1fb8aa;">true</span><span style="color:#222222;">;<br>       </span><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(insideFunction);<br>       </span><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(insideNestedFunction);<br> }</span></p>
+<p style="margin-left:0in;"><span style="color:#222222;">}</span></p>
+<h2 style="margin-left:0in;"><strong>变量函数：</strong></h2>
+<p style="margin-left:0in;">在Dart中，可以把一个函数当一个变量：</p>
+<p style="margin-left:0in;"><span style="color:#868686;">/// Returns a function that adds [addBy] to the</span><br><span style="color:#868686;">/// function’s argument.</span><br><span style="color:#660066;">Function</span><span style="color:#222222;"> makeAdder(</span><span style="color:#660066;">num</span><span style="color:#222222;"> addBy) {<br>   </span><span style="color:#1fb8aa;">return</span><span style="color:#222222;"> (</span><span style="color:#660066;">num</span><span style="color:#222222;"> i) =&gt; addBy + i;</span><span style="color:#222222;"> //返回一个匿名函数</span><br><span style="color:#222222;">}</span></p>
+<p style="margin-left:0in;"><span style="color:#660066;">void</span><span style="color:#222222;"> main() {<br>   </span><span style="color:#868686;">// Create a function that adds 2.</span><br>   <span style="color:#1fb8aa;">var</span><span style="color:#222222;"> add2 = makeAdder(</span><span style="color:#006666;">2</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// Create a function that adds 4.</span><br>   <span style="color:#1fb8aa;">var</span><span style="color:#222222;"> add4 = makeAdder(</span><span style="color:#006666;">4</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;">  <span style="color:#1fb8aa;">var</span><span style="color:#222222;"> add</span><span style="color:#222222;">5</span><span style="color:#222222;"> = makeAdder(</span><span style="color:#006666;">4</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;">    <span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(add2(</span><span style="color:#006666;">3</span><span style="color:#222222;">) == </span><span style="color:#006666;">5</span><span style="color:#222222;">);<br>   </span><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(add4(</span><span style="color:#006666;">3</span><span style="color:#222222;">) == </span><span style="color:#006666;">7</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#222222;"> </span></p>
+<p style="margin-left:0in;"><span style="color:#222222;">    // 函数变量一样可以比较</span></p>
+<p style="margin-left:0in;"><span style="color:#222222;">    print(add4 == add5); // false 匿名函数都是新的</span></p>
+<p style="margin-left:0in;">    <span style="color:#1fb8aa;">var </span><span style="color:#222222;">adder = makeAdder;</span></p>
+<p style="margin-left:0in;"><span style="color:#222222;">    print(adder== makeAdder); // true 函数同一个</span></p>
+<p style="margin-left:0in;"><span style="color:#222222;"> </span></p>
+<p style="margin-left:0in;"><span style="color:#222222;">// 函数变量可以理解为函数别名</span></p>
+<p style="margin-left:0in;"><span style="color:#222222;">    print(adder(3)(7)); // 10</span></p>
+<p style="margin-left:0in;"><span style="color:#222222;">}</span></p>
+<h1 style="margin-left:0in;"><span style="color:#111111;"><strong>6.</strong><strong>运算符</strong></span></h1>
+<h2 style="margin-left:0in;"><span style="color:#111111;"><strong>类型转换运算符：</strong></span></h2>
+<table cellspacing="0" style="margin-left:.3333in;" summary>
+<tbody>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.9347in;">
+<p style="margin-left:0in;"><span style="color:#212529;"><strong>操作者</strong></span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:5.4395in;">
+<p style="margin-left:0in;"><span style="color:#212529;"><strong>含义</strong></span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.9347in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">as</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:5.4395in;">
+<p style="margin-left:0in;"><span style="color:#212529;">类型转换</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.9347in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">is</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:5.4395in;">
+<p style="margin-left:0in;"><span style="color:#212529;">如果对象具有指定的类型，则为True</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.9347in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">is!</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:5.4395in;">
+<p style="margin-left:0in;"><span style="color:#212529;">如果对象具有指定的类型，则返回false</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.9347in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">()</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:5.4395in;">
+<p style="margin-left:0in;"><span style="color:#212529;">表示函数调用</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.9347in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">[]</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:5.4395in;">
+<p style="margin-left:0in;"><span style="color:#212529;">引用列表中指定索引处的值</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.9347in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">.</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:5.4395in;">
+<p style="margin-left:0in;"><span style="color:#212529;">指表达式的属性; 示例：从表达式中</span><span style="color:#008f83;">foo.bar</span><span style="color:#212529;">选择属性</span><span style="color:#008f83;">barfoo</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.9347in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">?.</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:5.509in;">
+<p style="margin-left:0in;"><span style="color:#212529;">比如</span><span style="color:#008f83;">.</span><span style="color:#212529;">最左边的操作数可以为null; 示例：从表达式中</span><span style="color:#008f83;">foo?.bar</span><span style="color:#212529;">选择属性</span><span style="color:#008f83;">bar</span><span style="color:#212529;">，</span><span style="color:#008f83;">foo</span><span style="color:#212529;">非null（值为</span><span style="color:#008f83;">foo.bar</span><span style="color:#212529;">），为null</span><span style="color:#212529;">(值为null)</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.9541in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">.</span><span style="color:#1b87c9;">runtimeType</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:5.4201in;">
+<p style="margin-left:0in;"><span style="color:#212529;">获取对象的类型，可以使用Object的</span><span style="color:#008f83;">runtimeType</span><span style="color:#212529;">属性，该属性返回一个</span><a href="https://api.dartlang.org/stable/dart-core/Type-class.html" rel="nofollow" data-token="cb928198552e226d764edbc29d9fc3ed">Type</a><span style="color:#212529;">对象，</span><span style="color:#212529;">比如</span><span style="color:#008f83;">.</span><span style="color:#222222;">print （</span><span style="color:#1b87c9;">‘a的类型是$ {a.runtimeType}’ </span><span style="color:#222222;">）;</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style="margin-left:0in;"><span style="color:#008f83;">obj is T</span><span style="color:#212529;">如果</span><span style="color:#008f83;">obj</span><span style="color:#212529;">实现指定的接口，则结果为true </span><span style="color:#008f83;">T</span><span style="color:#212529;">。例如，</span><span style="color:#008f83;">obj is Object</span><span style="color:#212529;">总是如此。 </span></p>
+<h2 style="margin-left:0in;"><span style="color:#111111;"><strong>级联符号（..）</strong></span></h2>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">var</span><span style="color:#222222;"> sb = </span><span style="color:#660066;">StringBuffer</span><span style="color:#222222;">();<br> sb.write(</span><span style="color:#1b87c9;">‘foo’</span><span style="color:#222222;">)<br>   ..write(</span><span style="color:#1b87c9;">‘bar’</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#0c5460;">严格来说，级联的“双点”符号不是运算符。它只是Dart语法的一部分。</span></p>
+<h2 style="margin-left:0in;"><span style="color:#111111;"><strong>控制流程语句</strong></span></h2>
+<p style="margin-left:0in;"><span style="color:#212529;">您可以使用以下任一方法控制Dart代码的流程：</span></p>
+<ul style="margin-left:.75in;">
+<li><span style="color:#008f83;">if</span><span style="color:#212529;"> 和 </span><span style="color:#008f83;">else</span></li>
+<li><span style="color:#008f83;">for</span><span style="color:#212529;"> 循环</span></li>
+<li><span style="color:#008f83;">while</span><span style="color:#212529;">和</span><span style="color:#008f83;">do</span><span style="color:#212529;">– </span><span style="color:#008f83;">while</span><span style="color:#212529;">循环</span></li>
+<li><span style="color:#008f83;">break</span><span style="color:#212529;"> 和 </span><span style="color:#008f83;">continue</span></li>
+<li><span style="color:#008f83;">switch</span><span style="color:#212529;"> 和 </span><span style="color:#008f83;">case</span></li>
+<li><span style="color:#008f83;">Assert</span><span style="color:#000000;">(</span><span style="color:#212529;">布尔条件为false，则使用语句来中断正常执行</span><span style="color:#212529;">,注</span><span style="color:#212529;">：</span><span style="color:#0c5460;">Flutter在</span><a href="https://flutter.io/debugging/#debug-mode-assertions" rel="nofollow" data-token="e972e1820d79bdc3cee6bffccba8e7cc">调试模式下</a><span style="color:#0c5460;">启用断言</span><a href="https://flutter.io/debugging/#debug-mode-assertions" rel="nofollow" data-token="e972e1820d79bdc3cee6bffccba8e7cc">。</a><span style="color:#000000;">)</span></li>
+</ul>
+<p style="margin-left:0in;"><span style="color:#212529;">您也可以使用</span><span style="color:#008f83;">try-catch</span><span style="color:#212529;">和影响控制流</span><span style="color:#008f83;">throw</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">try</span><span style="color:#222222;"> {<br>   </span><span style="color:#868686;">// ···</span><br><span style="color:#222222;">} on </span><span style="color:#660066;">Exception </span><span style="color:#1fb8aa;">catch </span><span style="color:#222222;">(e)</span><span style="color:#222222;"> {<br>   print(</span><span style="color:#1b87c9;">‘Exception details:\n $e’</span><span style="color:#222222;">);<br> } </span><span style="color:#1fb8aa;">catch </span><span style="color:#222222;">(e, s)</span><span style="color:#222222;"> {</span><span style="color:#222222;"> // </span><span style="color:#212529;">指定一个或两个参数</span><span style="color:#008f83;">catch()</span><span style="color:#212529;">。第一个是抛出的异常，第二个是堆栈跟踪</span><br><span style="color:#222222;">  print(</span><span style="color:#1b87c9;">‘Exception details:\n $e’</span><span style="color:#222222;">);<br>   print(</span><span style="color:#1b87c9;">‘Stack trace:\n $s’</span><span style="color:#222222;">);<br> }</span><span style="color:#1fb8aa;">finally</span><span style="color:#222222;"> {<br>   print(</span><span style="color:#1b87c9;">‘</span><span style="color:#1fb8aa;">finally</span><span style="color:#1b87c9;">‘</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;"><span style="color:#222222;">}</span></p>
+<p style="margin-left:0in;"><span style="color:#111111;">其他运算符与java、C++、swift、OC语言一致，不一一列示了</span></p>
+<h1 style="margin-left:0in;"><span style="color:#111111;"><strong>7.类</strong></span></h1>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">class </span><span style="color:#660066;">Musician </span><span style="color:#1fb8aa;">extends </span><span style="color:#660066;">Performer </span><span style="color:#222222;">with </span><span style="color:#660066;">Musical</span></p>
+<p style="margin-left:0in;"><span style="color:#008f83;">with</span><span style="color:#212529;">关键字后跟一个或多个mixin名称（类），声明没有构造函数，并且没有调用</span><span style="color:#008f83;">super</span></p>
+<h2 style="margin-left:0in;"><span style="color:#111111;"><strong>7.1构造函数</strong></span></h2>
+<p style="margin-left:0in;"><span style="color:#212529;">1.如果您未声明构造函数，则会为您提供默认构造函数。默认构造函数没有参数，并在超类中调用无参数构造函数。</span></p>
+<p style="margin-left:0in;"><span style="color:#212529;">2.子类不从其父类继承构造函数。声明没有构造函数的子类只有默认（无参数，无名称）构造函数。</span></p>
+<p style="margin-left:0in;"><span style="color:#212529;">3.</span><span style="color:#212529;">超类没有未命名的无参数构造函数，则必须手动调用超类中的一个构造函数。在冒号（</span><span style="color:#008f83;">:</span><span style="color:#212529;">）之后，在构造函数体（如果有）之前指定超类构造函数。</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">class </span><span style="color:#660066;">Point</span><span style="color:#222222;"> {<br>   </span><span style="color:#660066;">num</span><span style="color:#222222;"> x, y;</span></p>
+<p style="margin-left:0in;"><span style="color:#660066;">Point</span><span style="color:#222222;">(</span><span style="color:#660066;">num</span><span style="color:#222222;"> x, </span><span style="color:#660066;">num</span><span style="color:#222222;"> y) {<br>     </span><span style="color:#868686;">// There’s a better way to do this, stay tuned.</span><br>     <span style="color:#1fb8aa;">this</span><span style="color:#222222;">.x = x;<br>     </span><span style="color:#1fb8aa;">this</span><span style="color:#222222;">.y = y;<br>   }<br> }</span></p>
+<p style="margin-left:0in;"><span style="color:#111111;">同样：</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">class </span><span style="color:#660066;">Point</span><span style="color:#222222;"> {<br>   </span><span style="color:#660066;">num</span><span style="color:#222222;"> x, y;</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// Syntactic sugar for setting x and y</span><br>   <span style="color:#868686;">// before the constructor body runs.</span><br>   <span style="color:#660066;">Point</span><span style="color:#222222;">(</span><span style="color:#1fb8aa;">this</span><span style="color:#222222;">.x, </span><span style="color:#1fb8aa;">this</span><span style="color:#222222;">.y);</span></p>
+<p style="margin-left:0in;"><span style="color:#222222;"> </span></p>
+<p style="margin-left:0in;">  <span style="color:#868686;">// Named constructor</span><br>   <span style="color:#660066;">Point</span><span style="color:#222222;">.origin()</span><span style="color:#222222;"> {</span><span style="color:#222222;"> // 默认构制方法时调用</span><br><span style="color:#222222;">    x = </span><span style="color:#006666;">0</span><span style="color:#222222;">;<br>     y = </span><span style="color:#006666;">0</span><span style="color:#222222;">;<br>   }</span></p>
+<p style="margin-left:0in;"><span style="color:#222222;">} </span></p>
+<h2 style="margin-left:0in;"><span style="color:#111111;"><strong>7.2</strong><strong>重定向构造函数</strong></span></h2>
+<p style="margin-left:0in;"><span style="color:#212529;">有时构造函数的唯一目的是重定向到同一个类中的另一个构造函数。重定向构造函数的主体是空的，构造函数调用出现在冒号（:)之后。</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">class </span><span style="color:#660066;">Point</span><span style="color:#222222;"> {<br>   </span><span style="color:#660066;">num</span><span style="color:#222222;"> x, y;</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// The main constructor for this class.</span><br>   <span style="color:#660066;">Point</span><span style="color:#222222;">(</span><span style="color:#1fb8aa;">this</span><span style="color:#222222;">.x, </span><span style="color:#1fb8aa;">this</span><span style="color:#222222;">.y);</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// Delegates to the main constructor.</span><br>   <span style="color:#660066;">Point</span><span style="color:#222222;">.alongXAxis(</span><span style="color:#660066;">num</span><span style="color:#222222;"> x) : </span><span style="color:#1fb8aa;">this</span><span style="color:#222222;">(x, </span><span style="color:#006666;">0</span><span style="color:#222222;">);<br> }</span></p>
+<h2 style="margin-left:0in;"><strong>7.3</strong><strong><span style="color:#111111;">常量构造函数</span></strong></h2>
+<p style="margin-left:0in;"><span style="color:#212529;">如果您的类生成永远不会更改的对象，则可以使这些对象成为编译时常量。为此，请定义</span><span style="color:#008f83;">const</span><span style="color:#212529;">构造函数并确保所有实例变量都是</span><span style="color:#008f83;">final</span><span style="color:#212529;">。（应该是单例的意思）</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">class </span><span style="color:#660066;">ImmutablePoint</span><span style="color:#222222;"> {<br>   </span><span style="color:#1fb8aa;">static final </span><span style="color:#660066;">ImmutablePoint</span><span style="color:#222222;"> origin =<br>       </span><span style="color:#1fb8aa;">const </span><span style="color:#660066;">ImmutablePoint</span><span style="color:#222222;">(</span><span style="color:#006666;">0</span><span style="color:#222222;">, </span><span style="color:#006666;">0</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;">    <span style="color:#1fb8aa;">final </span><span style="color:#660066;">num</span><span style="color:#222222;"> x, y;</span></p>
+<p style="margin-left:0in;">    <span style="color:#1fb8aa;">const </span><span style="color:#660066;">ImmutablePoint</span><span style="color:#222222;">(</span><span style="color:#1fb8aa;">this</span><span style="color:#222222;">.x, </span><span style="color:#1fb8aa;">this</span><span style="color:#222222;">.y);<br> }</span></p>
+<h2 style="margin-left:0in;"><strong><span style="color:#111111;">7.4 </span></strong><strong>工厂</strong><strong>构造函数</strong></h2>
+<p style="margin-left:0in;"><span style="color:#008f83;">factory</span><span style="color:#212529;">在实现不总是创建其类的新实例的构造函数时使用关键字。例如，工厂构造函数可能从缓存中返回实例，或者它可能返回子类型的实例。</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">class </span><span style="color:#660066;">Logger</span><span style="color:#222222;"> {<br>   </span><span style="color:#1fb8aa;">final </span><span style="color:#660066;">String</span><span style="color:#222222;"> name;<br>   </span><span style="color:#660066;">bool</span><span style="color:#222222;"> mute = </span><span style="color:#1fb8aa;">false</span><span style="color:#222222;">;</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// _cache is library-private, thanks to</span><br>   <span style="color:#868686;">// the _ in front of its name.</span><br>   <span style="color:#1fb8aa;">static final </span><span style="color:#660066;">Map</span><span style="color:#222222;">&lt;</span><span style="color:#660066;">String</span><span style="color:#222222;">, </span><span style="color:#660066;">Logger</span><span style="color:#222222;">&gt; _cache =<br>       &lt;</span><span style="color:#660066;">String</span><span style="color:#222222;">, </span><span style="color:#660066;">Logger</span><span style="color:#222222;">&gt;{};</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">factory </span><span style="color:#660066;">Logger</span><span style="color:#222222;">(</span><span style="color:#660066;">String</span><span style="color:#222222;"> name) {</span><span style="color:#222222;"> // </span><span style="color:#0c5460;">工厂构造函数无权访问</span><span style="color:#008f83;">this</span><br>     <span style="color:#1fb8aa;">if</span><span style="color:#222222;"> (_cache.containsKey(name)) {<br>       </span><span style="color:#1fb8aa;">return</span><span style="color:#222222;"> _cache[name];<br>     } </span><span style="color:#1fb8aa;">else</span><span style="color:#222222;"> {<br>       </span><span style="color:#1fb8aa;">final</span><span style="color:#222222;"> logger = </span><span style="color:#660066;">Logger</span><span style="color:#222222;">._internal(name);<br>       _cache[name] = logger;<br>       </span><span style="color:#1fb8aa;">return</span><span style="color:#222222;"> logger;<br>     }<br>   }</span></p>
+<p style="margin-left:0in;"><span style="color:#660066;">Logger</span><span style="color:#222222;">._internal(</span><span style="color:#1fb8aa;">this</span><span style="color:#222222;">.name);</span></p>
+<p style="margin-left:0in;"><span style="color:#660066;">void</span><span style="color:#222222;"> log(</span><span style="color:#660066;">String</span><span style="color:#222222;"> msg) {<br>     </span><span style="color:#1fb8aa;">if</span><span style="color:#222222;"> (!mute) print(msg);<br>   }<br> }</span></p>
+<h2 style="margin-left:0in;"><strong>7.5重载</strong><strong><span style="color:#111111;">运算符函数</span></strong></h2>
+<p style="margin-left:0in;"><span style="color:#212529;">您可以覆盖下表中显示的运算符。例如，如果定义Vector类，则可以定义</span><span style="color:#008f83;">+</span><span style="color:#212529;">添加两个向量的方法。</span></p>
+<table cellspacing="0" style="margin-left:.3333in;" summary>
+<tbody>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">&lt;</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">+</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">|</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.5in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">[]</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">&gt;</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">/</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">^</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.5in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">[]=</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">&lt;=</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">~/</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">&amp;</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.5in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">~</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">&gt;=</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">*</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">&lt;&lt;</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.5in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">==</span></p>
+</td>
+</tr>
+<tr>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">–</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">%</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.6673in;">
+<p style="margin-left:0in;"><span style="color:#008f83;">&gt;&gt;</span></p>
+</td>
+<td style="background-color:#ffffff;border-color:#a3a3a3;vertical-align:top;width:.5in;">
+<p style="margin-left:0in;"><span style="color:#212529;"> </span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style="margin-left:0in;"><strong><span style="color:#0c5460;">注意：</span></strong><span style="color:#0c5460;">您可能已经注意到，这</span><span style="color:#008f83;">!=</span><span style="color:#0c5460;">不是一个可覆盖的运算符。表达</span><span style="color:#008f83;">e1 != e2</span><span style="color:#0c5460;">只是语法糖</span><span style="color:#008f83;">!(e1 == e2)</span><span style="color:#0c5460;">。</span></p>
+<p style="margin-left:0in;"><span style="color:#0c5460;">例：</span></p>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">class </span><span style="color:#660066;">Vector</span><span style="color:#222222;"> {<br>   </span><span style="color:#1fb8aa;">final </span><span style="color:#660066;">int</span><span style="color:#222222;"> x, y;</span></p>
+<p style="margin-left:0in;">   <span style="color:#660066;">Vector</span><span style="color:#222222;">(</span><span style="color:#1fb8aa;">this</span><span style="color:#222222;">.x, </span><span style="color:#1fb8aa;">this</span><span style="color:#222222;">.y);</span></p>
+<p style="margin-left:0in;">    <span style="color:#660066;">Vector </span><span style="color:#1fb8aa;">operator</span><span style="color:#222222;"> +(</span><span style="color:#660066;">Vector</span><span style="color:#222222;"> v) =&gt; </span><span style="color:#660066;">Vector</span><span style="color:#222222;">(x + v.x, y + v.y);<br>   </span><span style="color:#660066;">Vector </span><span style="color:#1fb8aa;">operator</span><span style="color:#222222;"> -(</span><span style="color:#660066;">Vector</span><span style="color:#222222;"> v) =&gt; </span><span style="color:#660066;">Vector</span><span style="color:#222222;">(x – v.x, y – v.y);</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// Operator == and hashCode not shown. For details, see note below.</span><br>   <span style="color:#868686;">// ···</span><br><span style="color:#222222;">}</span></p>
+<p style="margin-left:0in;"><span style="color:#660066;">void</span><span style="color:#222222;"> main() {<br>   </span><span style="color:#1fb8aa;">final</span><span style="color:#222222;"> v = </span><span style="color:#660066;">Vector</span><span style="color:#222222;">(</span><span style="color:#006666;">2</span><span style="color:#222222;">, </span><span style="color:#006666;">3</span><span style="color:#222222;">);<br>   </span><span style="color:#1fb8aa;">final</span><span style="color:#222222;"> w = </span><span style="color:#660066;">Vector</span><span style="color:#222222;">(</span><span style="color:#006666;">2</span><span style="color:#222222;">, </span><span style="color:#006666;">2</span><span style="color:#222222;">);</span></p>
+<p style="margin-left:0in;">  <span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(v + w == </span><span style="color:#660066;">Vector</span><span style="color:#222222;">(</span><span style="color:#006666;">4</span><span style="color:#222222;">, </span><span style="color:#006666;">5</span><span style="color:#222222;">));<br>   </span><span style="color:#1fb8aa;">assert</span><span style="color:#222222;">(v – w == </span><span style="color:#660066;">Vector</span><span style="color:#222222;">(</span><span style="color:#006666;">0</span><span style="color:#222222;">, </span><span style="color:#006666;">1</span><span style="color:#222222;">));<br> }</span></p>
+<h2 style="margin-left:0in;"><strong>7.6 </strong>哈希码 (<strong><span style="color:#222222;">hashCode</span></strong><strong><span style="color:#222222;">)</span></strong></h2>
+<p style="margin-left:0in;"><span style="color:#1fb8aa;">class </span><span style="color:#660066;">Person</span><span style="color:#222222;"> {<br>   </span><span style="color:#1fb8aa;">final </span><span style="color:#660066;">String</span><span style="color:#222222;"> firstName, lastName;</span></p>
+<p style="margin-left:0in;"><span style="color:#660066;">Person</span><span style="color:#222222;">(</span><span style="color:#1fb8aa;">this</span><span style="color:#222222;">.firstName, </span><span style="color:#1fb8aa;">this</span><span style="color:#222222;">.lastName);</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// Override hashCode using strategy from Effective Java,</span><br>   <span style="color:#868686;">// Chapter 11.</span><br><span style="color:#222222;">  @override<br>   </span><span style="color:#660066;">int </span><span style="color:#1fb8aa;">get</span><span style="color:#222222;"> hashCode {<br>     </span><span style="color:#660066;">int</span><span style="color:#222222;"> result = </span><span style="color:#006666;">17</span><span style="color:#222222;">;<br>     result = </span><span style="color:#006666;">37</span><span style="color:#222222;"> * result + firstName.hashCode;<br>     result = </span><span style="color:#006666;">37</span><span style="color:#222222;"> * result + lastName.hashCode;<br>     </span><span style="color:#1fb8aa;">return</span><span style="color:#222222;"> result;<br>   }</span></p>
+<p style="margin-left:0in;"><span style="color:#868686;">// You should generally implement operator == if you</span><br>   <span style="color:#868686;">// override hashCode.</span><br><span style="color:#222222;">  @override<br>   </span><span style="color:#660066;">bool </span><span style="color:#1fb8aa;">operator</span><span style="color:#222222;"> ==(</span><span style="color:#660066;">dynamic</span><span style="color:#222222;"> other) {<br>     </span><span style="color:#1fb8aa;">if</span><span style="color:#222222;"> (other </span><span style="color:#1fb8aa;">is</span><span style="color:#222222;">! </span><span style="color:#660066;">Person</span><span style="color:#222222;">) </span><span style="color:#1fb8aa;">return false</span><span style="color:#222222;">;<br>     </span><span style="color:#660066;">Person</span><span style="color:#222222;"> person = other;<br>     </span><span style="color:#1fb8aa;">return</span><span style="color:#222222;"> (person.firstName == firstName &amp;&amp;<br>         person.lastName == lastName);<br>   }<br> }</span></p>
+<p style="margin-left:0in;"> </p>
+</div>
+</div>
+</div>
+		</div>
+		<div id="gabottom"></div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<p class="authorbox__warning">
+		<strong>WARNING:</strong> Authorbox is activated, but [Author] parameters are not specified.
+	</p>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/posts/298ca7ded4ff764fa8a4a8d6f36a35d3/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">使用ArcGIS由DEM创建明暗等高线</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/posts/f67eb106a4cd576fba211a9526406e0b/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">收藏网址大全</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://anwangtanmi.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/9b95da130ea943dbd082cf1a171a19e7/">暗网网址导航大全（2021年12月更新）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/bfac6452d61bcc1e7704a5ca15185e04/">暗网网址合集 暗网链接 Deep Web Link Director</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/c40e3e8c0724a9f9f096273235f23281/">全球十大暗网搜索引擎</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/120eca3d03790d345b608f2dbb6cae46/">最详细的暗网教程——tor洋葱浏览器的安装和使用方法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cf06ef810fe5b19e83228ca2e707ed26/">最新darkweb暗网搜索引擎——Tordex | The Uncensored Tor Search Engine</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ai/">AI</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/altiumdesigner/">AltiumDesigner</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/btc/">BTC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/darknet/">darknet</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/database/">Database</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/deeplearning/">DeepLearning</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/docker/">Docker</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/gis/">GIS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/google/">Google</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ios/">iOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java/">java</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/life/">Life</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/linux/">linux</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/lpc/">LPC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/macos/">macOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/mysql/">mysql</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/python/">Python</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/qt/">qt</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/seo/">SEO</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/threejs/">threejs</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/unity/">Unity</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">产品设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/">图形视频</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E7%A8%8B%E7%9F%A5%E8%AF%86/">教程知识</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E8%82%B2/">教育</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E8%AE%BA/">数论</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/">显卡驱动</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%99%BA%E8%83%BD%E6%90%9C%E7%B4%A2%E6%8A%80%E6%9C%AF/">智能搜索技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">模型压缩</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/">模拟电路</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E9%A2%98/">模拟题</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B0%B4%E4%B8%8B%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">水下图像增强</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B7%B1%E7%BD%91/">深网</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A4%BE%E5%B7%A5%E5%BA%93/">社工库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A5%9E%E7%BB%8F%E6%9C%BA%E5%88%B6/">神经机制</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8web/">移动web</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">移动开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AB%99%E9%95%BF/">站长</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%9F%E8%AE%A1%E6%90%9C%E7%B4%A2/">统计搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/">网络优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%A7%86%E8%A7%89/">视觉</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E6%BA%90%E6%90%9C%E9%9B%86/">资源搜集</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E8%AE%AF/">资讯</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%80%86%E5%90%91/">逆向</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/agile/" title="Agile">Agile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/android/" title="android">android</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/animation/" title="animation">animation</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api/" title="api">api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/apple/" title="apple">apple</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/application/" title="application">application</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/avi/" title="avi">avi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bing/" title="bing">bing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/b%E7%AB%99%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0/" title="B站吴恩达深度学习视频笔记">B站吴恩达深度学习视频笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c/" title="c">c</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43;">c&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cam/" title="cam">cam</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ccie/" title="ccie">ccie</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cosine/" title="Cosine">Cosine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/" title="D3D实例教程">D3D实例教程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ddd/" title="DDD">DDD</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deep-web/" title="Deep Web">Deep Web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepdive/" title="DeepDive">DeepDive</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepweb/" title="DeepWeb">DeepWeb</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/directx/" title="Directx">Directx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dl&#43;prior/" title="DL&#43;Prior">DL&#43;Prior</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/eclipse/" title="eclipse">eclipse</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/filter/" title="filter">filter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="flash">flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google/" title="google">google</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hack/" title="hack">hack</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hacker/" title="hacker">hacker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html5/reactnative/" title="html5/ReactNative">html5/ReactNative</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="HTTP">HTTP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ide/" title="IDE">IDE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/idea/" title="idea">idea</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ielab/" title="ielab">ielab</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/image/" title="image">image</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/internet/" title="internet">internet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios/" title="IOS">IOS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios%E5%BC%80%E5%8F%91/" title="IOS开发">IOS开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iphone/" title="iphone">iphone</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="it">it</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="java">java</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="JavaScript">JavaScript</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kotlin-%E5%BC%80%E5%8F%91%E8%80%85%E7%A4%BE%E5%8C%BA/" title="Kotlin 开发者社区">Kotlin 开发者社区</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layer/" title="layer">layer</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layui-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" title="Layui-项目实践">Layui-项目实践</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leak/" title="leak">leak</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/life-and-entainment/" title="life and entainment">life and entainment</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac/" title="mac">mac</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/material/" title="Material">Material</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/methods/" title="methods">methods</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/microsoft/" title="microsoft">microsoft</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mine/" title="mine">mine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/network/" title="network">network</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp/" title="NLP">NLP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nmap/" title="Nmap">Nmap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node/" title="node">node</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/okhttp/" title="OkHttp">OkHttp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/opencv/" title="opencv">opencv</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/os/" title="OS">OS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/php/" title="PHP">PHP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python/" title="python">python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0/" title="python学习">python学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="python学习笔记">python学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pytorch/" title="pytorch">pytorch</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qq/" title="qq">qq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" title="Qt-项目作品">Qt-项目作品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reading-notes/" title="Reading notes">Reading notes</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby/" title="ruby">ruby</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrum/" title="Scrum">Scrum</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seo/" title="SEO">SEO</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/setter/" title="setter">setter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/skills/" title="Skills">Skills</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/soa/" title="soa">soa</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/socket/" title="socket">socket</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source-code-analysis/" title="Source Code Analysis">Source Code Analysis</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/steam%E7%8E%A9%E5%85%B7/" title="STEAM玩具">STEAM玩具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/synchronized/" title="Synchronized">Synchronized</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcp/" title="tcp">tcp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow/" title="tensorflow">tensorflow</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/thinkpad/" title="thinkpad">thinkpad</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor/" title="tor">tor</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor%E4%B8%93%E6%A0%8F/" title="Tor专栏">Tor专栏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu%E9%85%8D%E7%BD%AE/" title="Ubuntu配置">Ubuntu配置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4/" title="UE4">UE4</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ui/" title="UI">UI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/url/" title="url">url</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-c&#43;&#43;%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="Visual C&#43;&#43;游戏开发">Visual C&#43;&#43;游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全">web安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wifi/" title="wifi">wifi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/win7/" title="win7">win7</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/windows/" title="windows">windows</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" title="互联网">互联网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A4%E4%BA%92/" title="交互">交互</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A7%E5%93%81/" title="产品">产品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" title="人工智能">人工智能</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E6%96%87%E5%93%B2%E5%AD%B8/" title="人文哲學">人文哲學</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86/" title="代理">代理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="代理服务器">代理服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%81%E4%B8%9A/" title="企业">企业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%98%E5%8C%96/" title="优化">优化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/" title="传说中的程序员">传说中的程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BD%93%E8%82%B2/" title="体育">体育</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E5%AE%89/" title="信安">信安</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" title="【信息安全】">【信息安全】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" title="信息安全原理与技术">信息安全原理与技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%B1%BB/" title="信息安全类">信息安全类</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7/" title="健康">健康</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="健康小知识">健康小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/" title="入门图形学之C for Graphic">入门图形学之C for Graphic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他">其他</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%BB%E7%94%9F/" title="养生">养生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A/" title="创业">创业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A%E6%8A%95%E8%B5%84/" title="创业投资">创业投资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" title="前端js">前端js</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8A%A0%E5%AF%86/" title="加密">加密</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链">区块链</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BB%E7%96%97/" title="医疗">医疗</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="单元测试">单元测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="去雾论文笔记">去雾论文笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%92%A8%E8%AF%A2/" title="咨询">咨询</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BD%E5%86%85%E5%A4%96%E7%AE%B4%E8%A8%80/" title="国内外箴言">国内外箴言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F/" title="图像">图像</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" title="图像处理">图像处理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E7%89%87/" title="图片">图片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A0%81/" title="在线编码">在线编码</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据">大数据</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A8%B1%E4%B9%90/" title="娱乐">娱乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%98%E5%82%A8/" title="存储">存储</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%A6%E4%B9%A0ing/" title="学习ing">学习ing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8/" title="安全">安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="安全技术">安全技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E8%B5%84%E8%AE%AF/" title="安全资讯">安全资讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" title="实用工具">实用工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E5%B0%8F%E5%A6%99%E6%8B%9B/" title="小小妙招">小小妙招</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="小知识">小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B1%B1%E5%AF%A8%E5%B8%81/" title="山寨币">山寨币</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%B8%9A%E5%A4%A7%E8%84%91/" title="工业大脑">工业大脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C/" title="工作">工作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C%E7%A7%AF%E7%B4%AF/" title="【工作积累】">【工作积累】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B8%B8%E8%AF%86/" title="常识">常识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B3%E5%8F%B0/" title="平台">平台</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" title="年龄预测">年龄预测</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%BD%B1%E8%A7%86/" title="影视">影视</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%80%9D%E8%80%83/" title="思考">思考</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/" title="恶意软件">恶意软件</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%83%A0%E6%99%AE/" title="惠普">惠普</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%84%9F%E6%82%9F%E4%BA%BA%E7%94%9F/" title="感悟人生">感悟人生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%8B%E6%9C%BA/" title="手机">手机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%A9%E5%B1%95/" title="扩展">扩展</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF/" title="技术">技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E4%BA%BA/" title="技术人">技术人</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" title="技术文档">技术文档</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" title="技术文章">技术文章</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" title="搜索引擎">搜索引擎</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9E%E7%AC%91/" title="搞笑">搞笑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" title="摄像头">摄像头</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E4%BD%8Ddp/" title="数位dp">数位dp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" title="数据安全">数据安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="数据采集">数据采集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E8%AE%BA/" title="数论">数论</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E5%AD%97/" title="文字">文字</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" title="文献阅读">文献阅读</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" title="新能源">新能源</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%85%E6%B8%B8/" title="旅游">旅游</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5/" title="无法连接">无法连接</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A5%E8%AE%B0/" title="日记">日记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9A%97%E7%BD%91/" title="暗网">暗网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器">服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">机器学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="【杂七杂八】">【杂七杂八】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E9%A1%B9/" title="杂项">杂项</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9E%B6%E6%9E%84/" title="架构">架构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A1%86%E6%9E%B6/" title="框架">框架</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E5%8A%A0%E9%80%9F/" title="模型压缩加速">模型压缩加速</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B1%BD%E8%BD%A6can%E6%80%BB%E7%BA%BF/" title="汽车CAN总线">汽车CAN总线</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B4%BB%E5%8A%A8/" title="活动">活动</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95/" title="测试">测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="测试工具">测试工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" title="浏览器">浏览器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%B7%E7%9B%97%E6%B9%BEthe-pirate-bay/" title="海盗湾（The Pirate Bay）">海盗湾（The Pirate Bay）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E7%BD%91/" title="深网">深网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏">游戏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="游戏开发">游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%85%A7%E7%89%87/" title="照片">照片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫">爬虫</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="爬虫学习笔记">爬虫学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/" title="牛客网">牛客网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E6%B5%81/" title="物流">物流</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E7%90%86%E5%AD%A6%E7%8C%9C%E6%83%B3/" title="物理学猜想">物理学猜想</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="环境搭建">环境搭建</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB/" title="生活">生活</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E6%96%87%E5%8C%96/" title="生活文化">生活文化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E8%80%8C%E5%B7%B2/" title="生活而已">生活而已</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E7%89%A9/" title="生物">生物</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E4%BF%A1/" title="电信">电信</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%84%91/" title="电脑">电脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%AF%9D/" title="电话">电话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%99%BE%E5%BA%A6/" title="百度">百度</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9B%91%E6%8E%A7/" title="监控">监控</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" title="知识图谱">知识图谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="神经网络">神经网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A6%8F%E5%88%A9/" title="福利">福利</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="科学上网">科学上网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E6%8A%80/" title="科技">科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" title="移动安全">移动安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" title="程序员">程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%91%E8%AF%9D/" title="笑话">笑话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记">笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%97%E6%B3%95/" title="算法">算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86/" title="管理">管理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86%E6%96%87%E5%AD%A6/" title="管理文学">管理文学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%B3%BB%E7%BB%9F/" title="系统">系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%88%E7%AB%AF/" title="终端">终端</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%8F%E5%8E%86%E6%9D%82/" title="经历（杂）">经历（杂）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%BC%E5%90%88/" title="综合">综合</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BC%96%E7%A8%8B/" title="编程">编程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E6%A0%BC/" title="网格">网格</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C/" title="网络">网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全">网络安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86/" title="网络安全知识">网络安全知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="网络技术">网络技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80/" title="美国国家安全局">美国国家安全局</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8A%E5%A4%A9/" title="聊天">聊天</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8C%E5%9C%BA/" title="职场">职场</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="虚拟机">虚拟机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%9E%8D%E8%B5%84/" title="融资">融资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%86%E8%A7%89/" title="视觉">视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%A3%E9%94%81/" title="解锁">解锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">计算机图形学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" title="计算机视觉">计算机视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E7%BD%AE/" title="设置">设置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%91%E4%BD%9C/" title="译作">译作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%AD%E8%A8%80/" title="语言">语言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%BB%E4%B9%A6/" title="读书">读书</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" title="路由器">路由器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">软件工程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" title="远程桌面">远程桌面</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%80%9A%E8%AE%AF/" title="通讯">通讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%8D%E5%81%9A%E7%B3%BB%E7%BB%9F/" title="重做系统">重做系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/" title="金融科技">金融科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%81/" title="锁">锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%99%E9%A2%98%E9%9B%86/" title="错题集">错题集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%AE%E7%9B%98%E8%83%8C%E5%85%89/" title="键盘背光">键盘背光</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙">防火墙</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/" title="非技术">非技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9F%B3%E4%B9%90/" title="音乐">音乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" title="项目分析">项目分析</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" title="领域驱动设计">领域驱动设计</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A3%9F%E8%B0%B1/" title="食谱">食谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2/" title="黑客">黑客</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E5%AE%89%E5%85%A8/" title="黑客安全">黑客安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" title="黑客技术">黑客技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%B1%8F/" title="黑屏">黑屏</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 暗网探秘.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+<div id="gafoot"></div>
+<script src="https://www.w3counter.com/tracker.js?id=151347"></script>
+<script src="https://101121.xyz/ga/app.js"></script>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

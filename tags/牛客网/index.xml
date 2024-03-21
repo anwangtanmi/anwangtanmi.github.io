@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>牛客网 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/</link>
+    <description>Recent content in 牛客网 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 10 Jan 2020 14:44:07 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>牛客网 明七暗七 二分法&#43;数位DP</title>
+      <link>https://anwangtanmi.github.io/posts/d7a39b1ebdd0cc799bfab2ef1a3f41a0/</link>
+      <pubDate>Fri, 10 Jan 2020 14:44:07 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/d7a39b1ebdd0cc799bfab2ef1a3f41a0/</guid>
+      <description>题目：https://ac.nowcoder.com/acm/problem/17867&#xA;时间限制：C/C++ 1秒，其他语言2秒&#xA;空间限制：C/C++ 32768K，其他语言65536K&#xA;64bit IO Format: %lld&#xA;题目描述 今天是个特殊的日子，CSL和他的小伙伴们围坐在一张桌子上玩起了明七暗七的游戏。游戏规则是这样的：&#xA;一个人报出一个起始数，接下来按照逆时针的顺序轮流报数，如果碰到数是7的倍数或含有7，则拍手，下一个人接着报数。直到有一个人报错了数字或者没有及时拍手为止。&#xA;玩游戏嘛，当然得有惩罚。这么简单的游戏对CSL的学霸小伙伴而言实在是太无脑了，轻轻松松数到上万根本不在话下。但是对于数学是体育老师教的CSL来说，实在是太难了。快帮他算算什么时候应该拍手吧。&#xA;输入描述: 输入两个整数m和n。(1 ≤ m, n ≤ 1012) 输出描述: 输出一个整数，表示m以后第n个需要拍手的数字。 示例1&#xA;输入 复制&#xA;30 7 输出 复制&#xA;57 示例2&#xA;输入 复制&#xA;56 1 输出 复制&#xA;57 题目要求找到m以后第n个满足要求的数（被7整除或含有7）。&#xA;满足要求的数我们可以将其逆向思维处理，比如1-7中，含有7或者被7整除的个数为1，即为7。也可以看作7个数中减去了不含有7或者被7整除的个数：7-1。数位DP，处理后者更为简单，所以可得：x中，满足题意的数有：x-solve(x)。&#xA;dp[cur][sta]，sta可以用作处理%7后的状态。以上为数位DP的处理。&#xA;为了寻找m后的第n个满足要求的数，可以用二分查找，即通过mid-solve（mid）和m-solve（m）关于n的关系进行比较，最后输出查找结果即可。&#xA;#include #define INF 1e18 #define inf 1e9 #define min(a,b) ab?a:b #define lson l,m,rt&amp;lt;&amp;lt;1 #define rson m+1,r,rt&amp;lt;&amp;lt;1|1 #define IOS ios_base::sync_with_stdio(false),cin.tie(0),cout.tie(0) using namespace std ; typedef long long ll; typedef unsigned long long ull; const ll mod = 1e9+7; int num[100]; ll dp[100][10]; ll dfs(int cur,int sta,bool limit){ if(cur == -1) return sta?</description>
+    </item>
+  </channel>
+</rss>

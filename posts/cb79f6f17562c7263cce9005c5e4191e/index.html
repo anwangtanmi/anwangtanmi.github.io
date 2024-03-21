@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>图像对比度增强算法 - 暗网探秘</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="图像对比度增强算法" />
+<meta property="og:description" content="一、全局对比度增强
+1
+1. 直方图均衡化 Histogram Equalization a. 基本思想 对于图像中的灰度点做映射，使得整体图像的灰度大致符合均匀分布。增强图像的对比度。 – 对于灰度值连续的情况，使用灰度的累积分布函数CDF做转换函数，可以使得输出图像的灰度符合均匀分布。 – 对于灰度值不连续的情况，存在舍入误差，得到的灰度分布大致符合均匀分布。 – 直观地理解，如果某一个灰度范围（如200-201）的像素点很少，那么它的概率密度值就会很小，所以CDF在200-201附近的增长变化就会很小；反之，如果某一个灰度范围（如100-101）的像素点很多，CDF在100-101附近的增长变化会很大。总体来看，以灰度为横轴，CDF为纵轴画曲线。这种向上凸的曲线，很像gamma变换: s=crγ
+中
+γ&lt;1
+的情形。将灰度集中的部分拉伸，而将灰度不集中的部分压缩，达到提高对比度的效果。 – 直方图均衡可以看做自适应的gamma变换或者分段变换。前者的优势在于，不需要指定任何参数，所有运算都是基于图像本身的。
+b. 算法 根据图像灰度计算灰度概率密度函数
+PDF
+计算累积概率分布函数
+CDF
+将
+CDF
+归一化到原图灰度取值范围，如[0,255]。 之后
+CDF
+四舍五入取整，得到灰度转换函数
+sk=T(rk)
+将
+CDF
+作为转换函数，将灰度为
+rk
+的点转换为
+sk
+灰度 c. matlab实验 代码
+2
+：
+%% 直方图均衡 clear all;clc;close all; ImgFile=&#39;E:\图像处理\冈萨雷斯图片库\DIP3E_Original_Images_CH03\Fig0310(b)(washed_out_pollen_image).tif&#39;; ImgIn=imread(ImgFile); ImgHistEq=histeq(ImgIn,256); figure;subplot(121);imshow(uint8(ImgIn));title(&#39;原图&#39;); subplot(122);imshow(ImgHistEq);title(&#39;全局灰度增强 - 直方图均衡&#39;); figure;subplot(121);imhist(ImgIn,256); axis([0 255 0 1e5]);title(&#39;原图的直方图&#39;); subplot(122);imhist(ImgHistEq,256);axis([0 255 0 1e5]);title(&#39;直方图均衡化后的直方图&#39;); % 自定义直方图均衡 [counts,x]=imhist(ImgIn,256); cum_counts=cumsum(counts); cum_counts=uint8(cum_counts/max(cum_counts)*255);% 转化函数 figure;plot(x,cum_counts);axis([0 255 0 255]); xlabel(&#39;原图灰度&#39;);ylabel(&#39;转换后灰度&#39;);title(&#39;原图CDF转化的灰度映射函数&#39;); ImgOut=nan(size(ImgIn)); for i=1:length(x) ImgOut(ImgIn==x(i))=cum_counts(i); end ImgOut=uint8(ImgOut); figure;imshow(uint8(ImgOut));title(&#39;自定义直方图均衡&#39;) figure;imhist(ImgOut,256);axis([0 255 0 1e5]);title(&#39;自定义直方图均衡的直方图&#39;) 输出： 图1." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://anwangtanmi.github.io/posts/cb79f6f17562c7263cce9005c5e4191e/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-01-17T17:53:19+08:00" />
+<meta property="article:modified_time" content="2017-01-17T17:53:19+08:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="暗网探秘" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">暗网探秘</div>
+					
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">图像对比度增强算法</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-01-17T17:53:19&#43;08:00">2017-01-17</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="category">图像处理</a>, <a class="meta__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="category">数字图像处理</a>
+	</span>
+</div></div>
+		</header>
+		<div id="gatop"></div>
+		<div class="content post__content clearfix">
+			
+<div class="entry-content clearfix">
+<div id="article_content" class="article_content clearfix">
+<br>
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-d284373521.css">
+<div id="content_views" class="markdown_views prism-atom-one-dark">
+<br>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+<path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+</svg>
+<h3 id="一全局对比度增强1">一、全局对比度增强<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-1-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-1" style="width: 0.588em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.465em; height: 0px; font-size: 127%;"><span style="position: absolute; clip: rect(1.329em 1000em 2.348em -0.276em); top: -2.253em; left: 0.002em;"><span class="mrow" id="MathJax-Span-2"><span class="msubsup" id="MathJax-Span-3"><span style="display: inline-block; position: relative; width: 0.434em; height: 0px;"><span style="position: absolute; clip: rect(3.923em 1000em 4.108em -0.276em); top: -4.013em; left: 0.002em;"><span class="mi" id="MathJax-Span-4"></span><span style="display: inline-block; width: 0px; height: 4.016em;"></span></span><span style="position: absolute; top: -2.623em; left: 0.002em;"><span class="mn" id="MathJax-Span-5" style="font-size: 70.7%; font-family: MathJax_Main;">1</span><span style="display: inline-block; width: 0px; height: 2.256em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.256em;"></span></span></span><span style="border-left-width: 0.002em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.139em; vertical-align: -0.037em;"></span></span><br>
+</nobr></span></h3>
+<h4 id="1-直方图均衡化-histogram-equalization">1. 直方图均衡化 Histogram Equalization</h4>
+<h5 id="a-基本思想"><strong>a. 基本思想</strong></h5>
+<p>对于图像中的灰度点做映射，使得整体图像的灰度大致符合均匀分布。增强图像的对比度。 <br> – 对于灰度值连续的情况，使用灰度的累积分布函数CDF做转换函数，可以使得输出图像的灰度符合均匀分布。 <br> – 对于灰度值不连续的情况，存在舍入误差，得到的灰度分布大致符合均匀分布。 <br> – 直观地理解，如果某一个灰度范围（如200-201）的像素点很少，那么它的概率密度值就会很小，所以CDF在200-201附近的增长变化就会很小；反之，如果某一个灰度范围（如100-101）的像素点很多，CDF在100-101附近的增长变化会很大。总体来看，以灰度为横轴，CDF为纵轴画曲线。这种向上凸的曲线，很像<strong>gamma变换</strong>: <span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-2-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-6" style="width: 3.905em; display: inline-block;"><span style="display: inline-block; position: relative; width: 3.146em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.466em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-7"><span class="mi" id="MathJax-Span-8" style="font-family: MathJax_Math-italic;">s</span><span class="mo" id="MathJax-Span-9" style="font-family: MathJax_Main; padding-left: 0.274em;">=</span><span class="mi" id="MathJax-Span-10" style="font-family: MathJax_Math-italic; padding-left: 0.274em;">c</span><span class="msubsup" id="MathJax-Span-11"><span style="display: inline-block; position: relative; width: 0.924em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.485em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-12" style="font-family: MathJax_Math-italic;">r</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.653em; left: 0.436em;"><span class="mi" id="MathJax-Span-13" style="font-size: 70.7%; font-family: MathJax_Math-italic;">γ<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.003em; vertical-align: -0.063em;"></span></span><br>
+</nobr></span>中<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-3-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-14" style="width: 2.875em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.333em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.466em 1000em 2.659em -0.485em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-15"><span class="mi" id="MathJax-Span-16" style="font-family: MathJax_Math-italic;">γ<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-17" style="font-family: MathJax_Main; padding-left: 0.274em;">&lt;</span><span class="mn" id="MathJax-Span-18" style="font-family: MathJax_Main; padding-left: 0.274em;">1</span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.203em; vertical-align: -0.33em;"></span></span><br>
+</nobr></span>的情形。将灰度集中的部分拉伸，而将灰度不集中的部分压缩，达到提高对比度的效果。 <br> – 直方图均衡可以看做自适应的gamma变换或者分段变换。前者的优势在于，不需要指定任何参数，所有运算都是基于图像本身的。</p>
+<h5 id="b-算法"><strong>b. 算法</strong></h5>
+<ol>
+<li>根据图像灰度计算灰度概率密度函数<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-4-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-19" style="width: 2.93em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.388em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-20"><span class="mi" id="MathJax-Span-21" style="font-family: MathJax_Math-italic;">P<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.111em;"></span></span><span class="mi" id="MathJax-Span-22" style="font-family: MathJax_Math-italic;">D</span><span class="mi" id="MathJax-Span-23" style="font-family: MathJax_Math-italic;">F<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.111em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.003em; vertical-align: -0.063em;"></span></span><br>
+</nobr></span></li>
+<li>计算累积概率分布函数<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-5-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-24" style="width: 2.93em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.388em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-25"><span class="mi" id="MathJax-Span-26" style="font-family: MathJax_Math-italic;">C<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.057em;"></span></span><span class="mi" id="MathJax-Span-27" style="font-family: MathJax_Math-italic;">D</span><span class="mi" id="MathJax-Span-28" style="font-family: MathJax_Math-italic;">F<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.111em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.003em; vertical-align: -0.063em;"></span></span><br>
+</nobr></span></li>
+<li>将<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-6-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-29" style="width: 2.93em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.388em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-30"><span class="mi" id="MathJax-Span-31" style="font-family: MathJax_Math-italic;">C<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.057em;"></span></span><span class="mi" id="MathJax-Span-32" style="font-family: MathJax_Math-italic;">D</span><span class="mi" id="MathJax-Span-33" style="font-family: MathJax_Math-italic;">F<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.111em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.003em; vertical-align: -0.063em;"></span></span><br>
+</nobr></span>归一化到原图灰度取值范围，如[0,255]。</li>
+<li>之后<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-7-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-34" style="width: 2.93em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.388em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-35"><span class="mi" id="MathJax-Span-36" style="font-family: MathJax_Math-italic;">C<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.057em;"></span></span><span class="mi" id="MathJax-Span-37" style="font-family: MathJax_Math-italic;">D</span><span class="mi" id="MathJax-Span-38" style="font-family: MathJax_Math-italic;">F<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.111em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.003em; vertical-align: -0.063em;"></span></span><br>
+</nobr></span>四舍五入取整，得到灰度转换函数<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-8-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-39" style="width: 5.64em; display: inline-block;"><span style="display: inline-block; position: relative; width: 4.556em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.358em 1000em 2.713em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-40"><span class="msubsup" id="MathJax-Span-41"><span style="display: inline-block; position: relative; width: 0.87em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-42" style="font-family: MathJax_Math-italic;">s</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.436em;"><span class="mi" id="MathJax-Span-43" style="font-size: 70.7%; font-family: MathJax_Math-italic;">k</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-44" style="font-family: MathJax_Main; padding-left: 0.274em;">=</span><span class="mi" id="MathJax-Span-45" style="font-family: MathJax_Math-italic; padding-left: 0.274em;">T<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.111em;"></span></span><span class="mo" id="MathJax-Span-46" style="font-family: MathJax_Main;">(</span><span class="msubsup" id="MathJax-Span-47"><span style="display: inline-block; position: relative; width: 0.87em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.485em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-48" style="font-family: MathJax_Math-italic;">r</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.436em;"><span class="mi" id="MathJax-Span-49" style="font-size: 70.7%; font-family: MathJax_Math-italic;">k</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-50" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.337em; vertical-align: -0.397em;"></span></span><br>
+</nobr></span></li>
+<li>将<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-9-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-51" style="width: 2.93em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.388em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-52"><span class="mi" id="MathJax-Span-53" style="font-family: MathJax_Math-italic;">C<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.057em;"></span></span><span class="mi" id="MathJax-Span-54" style="font-family: MathJax_Math-italic;">D</span><span class="mi" id="MathJax-Span-55" style="font-family: MathJax_Math-italic;">F<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.111em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.003em; vertical-align: -0.063em;"></span></span><br>
+</nobr></span>作为转换函数，将灰度为<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-10-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-56" style="width: 1.141em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.924em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.683em 1000em 2.604em -0.485em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-57"><span class="msubsup" id="MathJax-Span-58"><span style="display: inline-block; position: relative; width: 0.87em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.485em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-59" style="font-family: MathJax_Math-italic;">r</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.436em;"><span class="mi" id="MathJax-Span-60" style="font-size: 70.7%; font-family: MathJax_Math-italic;">k</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 0.87em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>的点转换为<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-11-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-61" style="width: 1.141em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.924em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.683em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-62"><span class="msubsup" id="MathJax-Span-63"><span style="display: inline-block; position: relative; width: 0.87em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-64" style="font-family: MathJax_Math-italic;">s</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.436em;"><span class="mi" id="MathJax-Span-65" style="font-size: 70.7%; font-family: MathJax_Math-italic;">k</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 0.87em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>灰度</li>
+</ol>
+<h5 id="c-matlab实验"><strong>c. matlab实验</strong></h5>
+<p>代码<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-12-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-66" style="width: 0.599em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.491em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.304em 1000em 2.442em -0.485em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-67"><span class="msubsup" id="MathJax-Span-68"><span style="display: inline-block; position: relative; width: 0.436em; height: 0px;"><span style="position: absolute; clip: rect(3.851em 1000em 4.176em -0.485em); top: -4.008em; left: 0.003em;"><span class="mi" id="MathJax-Span-69"></span><span style="display: inline-block; width: 0px; height: 4.014em;"></span></span><span style="position: absolute; top: -2.653em; left: 0.003em;"><span class="mn" id="MathJax-Span-70" style="font-size: 70.7%; font-family: MathJax_Main;">2</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.137em; vertical-align: -0.063em;"></span></span><br>
+</nobr></span>：</p>
+<pre class="prettyprint"><code class="language-matlab hljs "><span class="hljs-comment">%% 直方图均衡</span>
+clear all;clc;close all;
+ImgFile=<span class="hljs-string">'E:\图像处理\冈萨雷斯图片库\DIP3E_Original_Images_CH03\Fig0310(b)(washed_out_pollen_image).tif'</span>;
+ImgIn=imread(ImgFile);
+ImgHistEq=histeq(ImgIn,<span class="hljs-number">256</span>);
+figure;subplot(<span class="hljs-number">121</span>);imshow(uint8(ImgIn));title(<span class="hljs-string">'原图'</span>);
+subplot(<span class="hljs-number">122</span>);imshow(ImgHistEq);title(<span class="hljs-string">'全局灰度增强 - 直方图均衡'</span>);
+figure;subplot(<span class="hljs-number">121</span>);imhist(ImgIn,<span class="hljs-number">256</span>);
+axis(<span class="hljs-matrix">[<span class="hljs-number">0</span> <span class="hljs-number">255</span> <span class="hljs-number">0</span> <span class="hljs-number">1e5</span>]</span>);title(<span class="hljs-string">'原图的直方图'</span>);
+subplot(<span class="hljs-number">122</span>);imhist(ImgHistEq,<span class="hljs-number">256</span>);axis(<span class="hljs-matrix">[<span class="hljs-number">0</span> <span class="hljs-number">255</span> <span class="hljs-number">0</span> <span class="hljs-number">1e5</span>]</span>);title(<span class="hljs-string">'直方图均衡化后的直方图'</span>);
+<span class="hljs-comment">% 自定义直方图均衡</span>
+<span class="hljs-matrix">[counts,x]</span>=imhist(ImgIn,<span class="hljs-number">256</span>);
+cum_counts=cumsum(counts);
+cum_counts=uint8(cum_counts/max(cum_counts)*<span class="hljs-number">255</span>);<span class="hljs-comment">% 转化函数</span>
+figure;plot(x,cum_counts);axis(<span class="hljs-matrix">[<span class="hljs-number">0</span> <span class="hljs-number">255</span> <span class="hljs-number">0</span> <span class="hljs-number">255</span>]</span>);
+xlabel(<span class="hljs-string">'原图灰度'</span>);ylabel(<span class="hljs-string">'转换后灰度'</span>);title(<span class="hljs-string">'原图CDF转化的灰度映射函数'</span>);
+ImgOut=<span class="hljs-built_in">nan</span>(<span class="hljs-built_in">size</span>(ImgIn));
+<span class="hljs-keyword">for</span> <span class="hljs-built_in">i</span>=<span class="hljs-number">1</span>:<span class="hljs-built_in">length</span>(x)
+    ImgOut(ImgIn==x(<span class="hljs-built_in">i</span>))=cum_counts(<span class="hljs-built_in">i</span>);
+<span class="hljs-keyword">end</span>
+ImgOut=uint8(ImgOut);
+figure;imshow(uint8(ImgOut));title(<span class="hljs-string">'自定义直方图均衡'</span>)
+figure;imhist(ImgOut,<span class="hljs-number">256</span>);axis(<span class="hljs-matrix">[<span class="hljs-number">0</span> <span class="hljs-number">255</span> <span class="hljs-number">0</span> <span class="hljs-number">1e5</span>]</span>);title(<span class="hljs-string">'自定义直方图均衡的直方图'</span>)</code></pre>
+<p>输出： <br> <img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170117135040596?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVsbF9zcGVlZF90dXJibw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="原图和均衡化后的图" title> <br> 图1. 原图和均衡化后的图。均衡后图像对比度明显增强，纹理和边缘更加清晰。</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170117135112206?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVsbF9zcGVlZF90dXJibw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="原图和均衡化后的图的直方图" title> <br> 图2. 原图和均衡化后的图的直方图。原图灰度分布在很狭窄的区间约[90,140]内。均衡化后灰度较为均匀的分布在整个[0, 255]区间内。</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170117140253597?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVsbF9zcGVlZF90dXJibw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="cdf" title> <br> 图3. 原图CDF归一化到[0, 255]后作为灰度变换函数。为了方便显示，画成连续曲线。</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170117141927525?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVsbF9zcGVlZF90dXJibw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="自定义均衡的直方图" title> <br> 图4. 自定义均衡的直方图。和Matlab自带histeq输出基本一致。</p>
+<h4 id="2-直方图匹配-histogram-matching">2. 直方图匹配 Histogram Matching</h4>
+<h5 id="a-基本思想-1"><strong>a. 基本思想</strong></h5>
+<p>我的理解:</p>
+<blockquote>
+<p>对于图像中的灰度点做映射，使得整体图像的灰度大致符合给定的分布。 <br> 想要图像的直方图Hs和期望直方图Hd相同, 那么二者的CDF也是相同的. <br> 也就是说, 对于某一个灰度x, CDFs(x)=CDFd(x). 所以, 如果CDFs(x)=CDFd(y). 那么我们令x=y. <br> 也就是将原图的x灰度映射为y灰度. 相当于将图像直方图的横轴做了一个点对点的缩放操作. <br> 这个缩放操作的结果就是图像直方图向理想直方图靠近. <br> 在缩放过程中, 如果图像的直方图某一段灰度区间被拉长了, 因为灰度都是整数, 所以直方图的bin会变得稀疏. <br> 所以, <br> 最终的直方图匹配的结果就是直方图的bin变得稀疏了. 有的灰度区间没有灰度点.</p>
+</blockquote>
+<ul>
+<li>对于某些图像，灰度分布过于不均衡，例如背景很大且均匀。直接做直方图均衡会把前景“洗白”，效果很差。</li>
+<li>直方图匹配需要设定一个直方图分布。不同的图像，此分布可能不同。</li>
+</ul>
+<h6 id="b-算法-1"><strong>b. 算法</strong></h6>
+<ol>
+<li>根据图像计算概率密度分布<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-13-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-71" style="width: 2.604em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.117em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.358em 1000em 2.713em -0.539em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-72"><span class="msubsup" id="MathJax-Span-73"><span style="display: inline-block; position: relative; width: 0.87em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.659em -0.539em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-74" style="font-family: MathJax_Math-italic;">p</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.057em; left: 0.491em;"><span class="mi" id="MathJax-Span-75" style="font-size: 70.7%; font-family: MathJax_Math-italic;">r</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-76" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-77" style="font-family: MathJax_Math-italic;">r</span><span class="mo" id="MathJax-Span-78" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.337em; vertical-align: -0.397em;"></span></span><br>
+</nobr></span>；</li>
+<li>根据<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-14-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-79" style="width: 2.604em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.117em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.358em 1000em 2.713em -0.539em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-80"><span class="msubsup" id="MathJax-Span-81"><span style="display: inline-block; position: relative; width: 0.87em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.659em -0.539em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-82" style="font-family: MathJax_Math-italic;">p</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.057em; left: 0.491em;"><span class="mi" id="MathJax-Span-83" style="font-size: 70.7%; font-family: MathJax_Math-italic;">r</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-84" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-85" style="font-family: MathJax_Math-italic;">r</span><span class="mo" id="MathJax-Span-86" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.337em; vertical-align: -0.397em;"></span></span><br>
+</nobr></span>计算累计分布函数<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-15-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-87" style="width: 5.64em; display: inline-block;"><span style="display: inline-block; position: relative; width: 4.556em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.358em 1000em 2.713em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-88"><span class="msubsup" id="MathJax-Span-89"><span style="display: inline-block; position: relative; width: 0.87em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-90" style="font-family: MathJax_Math-italic;">s</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.436em;"><span class="mi" id="MathJax-Span-91" style="font-size: 70.7%; font-family: MathJax_Math-italic;">k</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-92" style="font-family: MathJax_Main; padding-left: 0.274em;">=</span><span class="mi" id="MathJax-Span-93" style="font-family: MathJax_Math-italic; padding-left: 0.274em;">T<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.111em;"></span></span><span class="mo" id="MathJax-Span-94" style="font-family: MathJax_Main;">(</span><span class="msubsup" id="MathJax-Span-95"><span style="display: inline-block; position: relative; width: 0.87em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.485em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-96" style="font-family: MathJax_Math-italic;">r</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.436em;"><span class="mi" id="MathJax-Span-97" style="font-size: 70.7%; font-family: MathJax_Math-italic;">k</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-98" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.337em; vertical-align: -0.397em;"></span></span><br>
+</nobr></span>；</li>
+<li>根据给定的目标分布<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-16-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-99" style="width: 2.713em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.171em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.358em 1000em 2.713em -0.539em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-100"><span class="msubsup" id="MathJax-Span-101"><span style="display: inline-block; position: relative; width: 0.924em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.659em -0.539em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-102" style="font-family: MathJax_Math-italic;">p</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.057em; left: 0.491em;"><span class="mi" id="MathJax-Span-103" style="font-size: 70.7%; font-family: MathJax_Math-italic;">z<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-104" style="font-family: MathJax_Main;">(</span><span class="mi" id="MathJax-Span-105" style="font-family: MathJax_Math-italic;">z<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span class="mo" id="MathJax-Span-106" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.337em; vertical-align: -0.397em;"></span></span><br>
+</nobr></span>计算累计分布函数<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-17-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-107" style="width: 3.092em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.496em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.358em 1000em 2.713em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-108"><span class="mi" id="MathJax-Span-109" style="font-family: MathJax_Math-italic;">G</span><span class="mo" id="MathJax-Span-110" style="font-family: MathJax_Main;">(</span><span class="msubsup" id="MathJax-Span-111"><span style="display: inline-block; position: relative; width: 0.924em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-112" style="font-family: MathJax_Math-italic;">z<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.491em;"><span class="mi" id="MathJax-Span-113" style="font-size: 70.7%; font-family: MathJax_Math-italic;">q<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-114" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.403em; vertical-align: -0.397em;"></span></span><br>
+</nobr></span>；</li>
+<li>对于每一个<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-18-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-115" style="width: 0.599em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.491em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-116"><span class="mi" id="MathJax-Span-117" style="font-family: MathJax_Math-italic;">k</span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.003em; vertical-align: -0.063em;"></span></span><br>
+</nobr></span>，找到一个<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-19-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-118" style="width: 0.599em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.491em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.683em 1000em 2.659em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-119"><span class="mi" id="MathJax-Span-120" style="font-family: MathJax_Math-italic;">q<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 0.937em; vertical-align: -0.33em;"></span></span><br>
+</nobr></span>，使得<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-20-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-121" style="width: 3.092em; display: inline-block;"><span style="display: inline-block; position: relative; width: 2.496em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.358em 1000em 2.713em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-122"><span class="mi" id="MathJax-Span-123" style="font-family: MathJax_Math-italic;">G</span><span class="mo" id="MathJax-Span-124" style="font-family: MathJax_Main;">(</span><span class="msubsup" id="MathJax-Span-125"><span style="display: inline-block; position: relative; width: 0.924em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-126" style="font-family: MathJax_Math-italic;">z<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.491em;"><span class="mi" id="MathJax-Span-127" style="font-size: 70.7%; font-family: MathJax_Math-italic;">q<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-128" style="font-family: MathJax_Main;">)</span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.403em; vertical-align: -0.397em;"></span></span><br>
+</nobr></span>约等于<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-21-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-129" style="width: 1.141em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.924em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.683em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-130"><span class="msubsup" id="MathJax-Span-131"><span style="display: inline-block; position: relative; width: 0.87em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-132" style="font-family: MathJax_Math-italic;">s</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.436em;"><span class="mi" id="MathJax-Span-133" style="font-size: 70.7%; font-family: MathJax_Math-italic;">k</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 0.87em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>；</li>
+<li>将原图中灰度为<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-22-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-134" style="width: 0.599em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.491em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-135"><span class="mi" id="MathJax-Span-136" style="font-family: MathJax_Math-italic;">k</span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.003em; vertical-align: -0.063em;"></span></span><br>
+</nobr></span>的点变为灰度<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-23-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-137" style="width: 0.599em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.491em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.683em 1000em 2.659em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-138"><span class="mi" id="MathJax-Span-139" style="font-family: MathJax_Math-italic;">q<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 0.937em; vertical-align: -0.33em;"></span></span><br>
+</nobr></span>；</li>
+</ol>
+<h5 id="c-matlab实验-1"><strong>c. Matlab实验</strong></h5>
+<pre class="prettyprint"><code class="language-matlab hljs ">clear all;clc;close all;
+ImgFile=<span class="hljs-string">'E:\图像处理\冈萨雷斯图片库\DIP3E_Original_Images_CH03\Fig0323(a)(mars_moon_phobos).tif'</span>;
+ImgIn=imread(ImgFile);
+figure;subplot(<span class="hljs-number">121</span>);imshow(ImgIn);title(<span class="hljs-string">'原图'</span>)
+subplot(<span class="hljs-number">122</span>);imhist(ImgIn);title(<span class="hljs-string">'原图Hist'</span>)
+<span class="hljs-comment">% histeq</span>
+ImgHistEq=histeq(ImgIn);
+figure;subplot(<span class="hljs-number">121</span>);imshow(ImgHistEq);title(<span class="hljs-string">'Hist EQ'</span>);
+subplot(<span class="hljs-number">122</span>);imhist(ImgHistEq,<span class="hljs-number">256</span>);title(<span class="hljs-string">'Hist EQ'</span>)
+<span class="hljs-comment">% 根据3.35(a)估计的分布</span>
+x=<span class="hljs-matrix">[<span class="hljs-number">0</span> <span class="hljs-number">8</span> <span class="hljs-number">16</span> <span class="hljs-number">180</span> <span class="hljs-number">200</span> <span class="hljs-number">255</span>]</span>;
+Y=<span class="hljs-matrix">[<span class="hljs-number">0</span> <span class="hljs-number">70000</span> <span class="hljs-number">8000</span> <span class="hljs-number">0</span> <span class="hljs-number">3139</span> <span class="hljs-number">0</span>]</span>;
+xi=<span class="hljs-number">0</span>:<span class="hljs-number">255</span>;
+yi = interp1q(<span class="hljs-transposed_variable">x'</span>,<span class="hljs-transposed_variable">Y'</span>,<span class="hljs-transposed_variable">xi'</span>);
+figure;plot(xi,yi,<span class="hljs-string">'.'</span>);title(<span class="hljs-string">'目标 Hist'</span>)
+ImgHistMatch = histeq(ImgIn, yi);
+figure;subplot(<span class="hljs-number">121</span>);imshow(ImgHistMatch);title(<span class="hljs-string">'histeq匹配'</span>)
+subplot(<span class="hljs-number">122</span>);imhist(ImgHistMatch,<span class="hljs-number">256</span>);title(<span class="hljs-string">'histeq匹配直方图'</span>)</code></pre>
+<p>输出： <br> <img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170117165259627?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVsbF9zcGVlZF90dXJibw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" title> <br> 图5. 原图和直方图</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170117165321690?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVsbF9zcGVlZF90dXJibw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" title> <br> 图6. 直方图均衡后图像及直方图</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170117165331631?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVsbF9zcGVlZF90dXJibw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" title> <br> 图7. 目标直方图</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170117165345241?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVsbF9zcGVlZF90dXJibw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" title> <br> 图8. 直方图匹配图像和直方图</p>
+<p>自定义直方图匹配</p>
+<pre class="prettyprint"><code class="language-matlab hljs "><span class="hljs-comment">%% 自定义匹配</span>
+clear all;clc;close all;
+ImgFile=<span class="hljs-string">'E:\图像处理\冈萨雷斯图片库\DIP3E_Original_Images_CH03\Fig0323(a)(mars_moon_phobos).tif'</span>;
+ImgIn=imread(ImgFile);
+x=<span class="hljs-matrix">[<span class="hljs-number">0</span> <span class="hljs-number">8</span> <span class="hljs-number">16</span> <span class="hljs-number">180</span> <span class="hljs-number">200</span> <span class="hljs-number">255</span>]</span>;
+Y=<span class="hljs-matrix">[<span class="hljs-number">0</span> <span class="hljs-number">70000</span> <span class="hljs-number">8000</span> <span class="hljs-number">0</span> <span class="hljs-number">3139</span> <span class="hljs-number">0</span>]</span>;
+xi=<span class="hljs-number">0</span>:<span class="hljs-number">255</span>;
+yi = interp1q(<span class="hljs-transposed_variable">x'</span>,<span class="hljs-transposed_variable">Y'</span>,<span class="hljs-transposed_variable">xi'</span>);
+<span class="hljs-matrix">[counts, x]</span>=imhist(ImgIn,<span class="hljs-number">256</span>);
+cum_counts=cumsum(counts);<span class="hljs-comment">% 累加CDF</span>
+<span class="hljs-comment">% 归一化到[0 255]</span>
+cum_counts=<span class="hljs-transposed_variable">cum_counts.</span>/<span class="hljs-built_in">numel</span>(ImgIn);
+s_k=<span class="hljs-built_in">round</span>(cum_counts*<span class="hljs-number">255</span>);
+cum_yi=cumsum(yi);<span class="hljs-comment">% 目标累加CDF</span>
+g_z=<span class="hljs-built_in">round</span>(<span class="hljs-transposed_variable">cum_yi.</span>/sum(yi)*<span class="hljs-number">255</span>); 
+figure;plot(s_k,<span class="hljs-string">'r'</span>);hold on;plot(g_z,<span class="hljs-string">'g'</span>);grid on;hold off;
+legend(<span class="hljs-string">'s_k'</span>,<span class="hljs-string">'g_z'</span>)
+axis(<span class="hljs-matrix">[<span class="hljs-number">0</span> <span class="hljs-number">255</span> <span class="hljs-number">0</span> <span class="hljs-number">255</span>]</span>);title(<span class="hljs-string">'原图累计CDF 和 目标累计CDF'</span>)
+map=<span class="hljs-built_in">nan</span>(<span class="hljs-built_in">size</span>(s_k));
+<span class="hljs-keyword">for</span> k=<span class="hljs-number">1</span>:<span class="hljs-built_in">length</span>(s_k)
+    delta=<span class="hljs-built_in">abs</span>(g_z-s_k(k));
+    <span class="hljs-matrix">[~,z]</span>=min(delta);
+    map(k)=z;
+<span class="hljs-keyword">end</span>
+figure;plot(<span class="hljs-number">0</span>:<span class="hljs-number">255</span>,map);axis(<span class="hljs-matrix">[<span class="hljs-number">0</span> <span class="hljs-number">255</span> <span class="hljs-number">0</span> <span class="hljs-number">255</span>]</span>);grid on;
+xlabel(<span class="hljs-string">'输入灰度'</span>);ylabel(<span class="hljs-string">'输出灰度'</span>);title(<span class="hljs-string">'灰度映射曲线'</span>)
+
+ImgOut=<span class="hljs-built_in">zeros</span>(<span class="hljs-built_in">size</span>(ImgIn));
+<span class="hljs-keyword">for</span> m=<span class="hljs-number">0</span>:<span class="hljs-built_in">length</span>(map)-<span class="hljs-number">1</span>
+    ImgOut(ImgIn==m)=map(m+<span class="hljs-number">1</span>);
+<span class="hljs-keyword">end</span>
+ImgOut=uint8(ImgOut);
+figure;imshow(ImgOut);title(<span class="hljs-string">'直方图匹配'</span>)
+figure;imhist(ImgOut,<span class="hljs-number">256</span>);title(<span class="hljs-string">'直方图匹配'</span>);</code></pre>
+<p>输出：只列出转换函数 <br> <img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170117175111552?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVsbF9zcGVlZF90dXJibw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" title> <br> 转换函数映射图</p>
+<h3 id="二局部对比度增强">二、局部对比度增强</h3>
+<h4 id="1-邻域直方图均衡">1. 邻域直方图均衡</h4>
+<p>将全局直方图均衡的思想应用于邻域直方图处理中。</p>
+<h4 id="2-邻域直方图匹配">2. 邻域直方图匹配</h4>
+<p>将全局直方图匹配的思想应用于邻域直方图处理中。</p>
+<h4 id="3-邻域统计方法">3. 邻域统计方法</h4>
+<h5 id="a-基本思想-2"><strong>a. 基本思想</strong></h5>
+<p>对于一幅图像，灰度的均值<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-24-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-140" style="width: 2.008em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.629em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-141"><span class="msubsup" id="MathJax-Span-142"><span style="display: inline-block; position: relative; width: 1.575em; height: 0px;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-143" style="font-family: MathJax_Math-italic;">M<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.057em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.978em;"><span class="mi" id="MathJax-Span-144" style="font-size: 70.7%; font-family: MathJax_Math-italic;">G</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.203em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>表示平均光照，灰度的方差（或标准差）<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-25-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-145" style="width: 1.575em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.249em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.683em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-146"><span class="msubsup" id="MathJax-Span-147"><span style="display: inline-block; position: relative; width: 1.195em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-148" style="font-family: MathJax_Math-italic;">σ<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.599em;"><span class="mi" id="MathJax-Span-149" style="font-size: 70.7%; font-family: MathJax_Math-italic;">G</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 0.87em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>表示对比度的强弱。 <br> 对于图像某一个像素，邻域的灰度均值<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-26-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-150" style="width: 1.954em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.575em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-151"><span class="msubsup" id="MathJax-Span-152"><span style="display: inline-block; position: relative; width: 1.52em; height: 0px;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-153" style="font-family: MathJax_Math-italic;">M<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.057em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.978em;"><span class="mi" id="MathJax-Span-154" style="font-size: 70.7%; font-family: MathJax_Math-italic;">L</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.137em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>表征邻域光照强度，邻域的方差或者标准差<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-27-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-155" style="width: 1.466em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.195em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.683em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-156"><span class="msubsup" id="MathJax-Span-157"><span style="display: inline-block; position: relative; width: 1.141em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-158" style="font-family: MathJax_Math-italic;">σ<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.599em;"><span class="mi" id="MathJax-Span-159" style="font-size: 70.7%; font-family: MathJax_Math-italic;">L</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 0.87em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>表示邻域对比度的强弱。 <br> 根据<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-28-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-160" style="width: 1.954em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.575em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-161"><span class="msubsup" id="MathJax-Span-162"><span style="display: inline-block; position: relative; width: 1.52em; height: 0px;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-163" style="font-family: MathJax_Math-italic;">M<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.057em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.978em;"><span class="mi" id="MathJax-Span-164" style="font-size: 70.7%; font-family: MathJax_Math-italic;">L</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.137em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>和<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-29-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-165" style="width: 1.466em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.195em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.683em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-166"><span class="msubsup" id="MathJax-Span-167"><span style="display: inline-block; position: relative; width: 1.141em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-168" style="font-family: MathJax_Math-italic;">σ<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.599em;"><span class="mi" id="MathJax-Span-169" style="font-size: 70.7%; font-family: MathJax_Math-italic;">L</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 0.87em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>的大小<strong>自主选择想要增强的点做增强</strong>（例如乘以某一个常数<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-30-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-170" style="width: 0.978em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.762em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-171"><span class="mi" id="MathJax-Span-172" style="font-family: MathJax_Math-italic;">E<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.003em; vertical-align: -0.063em;"></span></span><br>
+</nobr></span>）。</p>
+<h5 id="b-算法-2"><strong>b. 算法</strong></h5>
+<ol>
+<li>初始化：增强常数<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-31-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-173" style="width: 0.978em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.762em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-174"><span class="mi" id="MathJax-Span-175" style="font-family: MathJax_Math-italic;">E<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.003em; vertical-align: -0.063em;"></span></span><br>
+</nobr></span>，灰度下阈值<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-32-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-176" style="width: 1.195em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.978em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-177"><span class="msubsup" id="MathJax-Span-178"><span style="display: inline-block; position: relative; width: 0.924em; height: 0px;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-179" style="font-family: MathJax_Math-italic;">k</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.491em;"><span class="mn" id="MathJax-Span-180" style="font-size: 70.7%; font-family: MathJax_Main;">0</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.203em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>，标准差下阈值 <span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-33-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-181" style="width: 1.195em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.978em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-182"><span class="msubsup" id="MathJax-Span-183"><span style="display: inline-block; position: relative; width: 0.924em; height: 0px;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-184" style="font-family: MathJax_Math-italic;">k</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.491em;"><span class="mn" id="MathJax-Span-185" style="font-size: 70.7%; font-family: MathJax_Main;">1</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.203em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>，标准差上阈值 <span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-34-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-186" style="width: 1.195em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.978em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-187"><span class="msubsup" id="MathJax-Span-188"><span style="display: inline-block; position: relative; width: 0.924em; height: 0px;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-189" style="font-family: MathJax_Math-italic;">k</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.491em;"><span class="mn" id="MathJax-Span-190" style="font-size: 70.7%; font-family: MathJax_Main;">2</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.203em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>，窗口半宽<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-35-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-191" style="width: 0.545em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.436em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-192"><span class="mi" id="MathJax-Span-193" style="font-family: MathJax_Math-italic;">s</span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 0.67em; vertical-align: -0.063em;"></span></span><br>
+</nobr></span>；</li>
+<li>计算图像灰度均值<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-36-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-194" style="width: 2.008em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.629em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-195"><span class="msubsup" id="MathJax-Span-196"><span style="display: inline-block; position: relative; width: 1.575em; height: 0px;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-197" style="font-family: MathJax_Math-italic;">M<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.057em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.978em;"><span class="mi" id="MathJax-Span-198" style="font-size: 70.7%; font-family: MathJax_Math-italic;">G</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.203em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>和灰度标准差<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-37-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-199" style="width: 1.575em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.249em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.683em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-200"><span class="msubsup" id="MathJax-Span-201"><span style="display: inline-block; position: relative; width: 1.195em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-202" style="font-family: MathJax_Math-italic;">σ<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.599em;"><span class="mi" id="MathJax-Span-203" style="font-size: 70.7%; font-family: MathJax_Math-italic;">G</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 0.87em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>；</li>
+<li>对于每一个像素，计算邻域（大小为<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-38-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-204" style="width: 5.911em; display: inline-block;"><span style="display: inline-block; position: relative; width: 4.772em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.466em 1000em 2.659em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-205"><span class="mn" id="MathJax-Span-206" style="font-family: MathJax_Main;">2</span><span class="mo" id="MathJax-Span-207" style="font-family: MathJax_Main; padding-left: 0.22em;">∗</span><span class="mi" id="MathJax-Span-208" style="font-family: MathJax_Math-italic; padding-left: 0.22em;">s</span><span class="mi" id="MathJax-Span-209" style="font-family: MathJax_Math-italic;">t</span><span class="mi" id="MathJax-Span-210" style="font-family: MathJax_Math-italic;">e</span><span class="mi" id="MathJax-Span-211" style="font-family: MathJax_Math-italic;">p</span><span class="mo" id="MathJax-Span-212" style="font-family: MathJax_Main; padding-left: 0.22em;">+</span><span class="mn" id="MathJax-Span-213" style="font-family: MathJax_Main; padding-left: 0.22em;">1</span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.203em; vertical-align: -0.33em;"></span></span><br>
+</nobr></span>的方块）内灰度均值<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-39-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-214" style="width: 1.954em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.575em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-215"><span class="msubsup" id="MathJax-Span-216"><span style="display: inline-block; position: relative; width: 1.52em; height: 0px;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-217" style="font-family: MathJax_Math-italic;">M<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.057em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.978em;"><span class="mi" id="MathJax-Span-218" style="font-size: 70.7%; font-family: MathJax_Math-italic;">L</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.137em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>和标准差<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-40-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-219" style="width: 1.466em; display: inline-block;"><span style="display: inline-block; position: relative; width: 1.195em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.683em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-220"><span class="msubsup" id="MathJax-Span-221"><span style="display: inline-block; position: relative; width: 1.141em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-222" style="font-family: MathJax_Math-italic;">σ<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.599em;"><span class="mi" id="MathJax-Span-223" style="font-size: 70.7%; font-family: MathJax_Math-italic;">L</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 0.87em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>；</li>
+<li>如果<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-41-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-224" style="width: 8.675em; display: inline-block;"><span style="display: inline-block; position: relative; width: 7.049em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-225"><span class="msubsup" id="MathJax-Span-226"><span style="display: inline-block; position: relative; width: 1.52em; height: 0px;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-227" style="font-family: MathJax_Math-italic;">M<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.057em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.978em;"><span class="mi" id="MathJax-Span-228" style="font-size: 70.7%; font-family: MathJax_Math-italic;">L</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-229" style="font-family: MathJax_Main; padding-left: 0.274em;">&lt;<span style="font-family: MathJax_Main;">=</span></span><span class="msubsup" id="MathJax-Span-230" style="padding-left: 0.274em;"><span style="display: inline-block; position: relative; width: 0.924em; height: 0px;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-231" style="font-family: MathJax_Math-italic;">k</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.491em;"><span class="mn" id="MathJax-Span-232" style="font-size: 70.7%; font-family: MathJax_Main;">0</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-233" style="font-family: MathJax_Main; padding-left: 0.22em;">∗</span><span class="msubsup" id="MathJax-Span-234" style="padding-left: 0.22em;"><span style="display: inline-block; position: relative; width: 1.575em; height: 0px;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-235" style="font-family: MathJax_Math-italic;">M<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.057em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.978em;"><span class="mi" id="MathJax-Span-236" style="font-size: 70.7%; font-family: MathJax_Math-italic;">G</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.203em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>并且<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-42-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-237" style="width: 14.041em; display: inline-block;"><span style="display: inline-block; position: relative; width: 11.385em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.604em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-238"><span class="msubsup" id="MathJax-Span-239"><span style="display: inline-block; position: relative; width: 0.924em; height: 0px;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-240" style="font-family: MathJax_Math-italic;">k</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.491em;"><span class="mn" id="MathJax-Span-241" style="font-size: 70.7%; font-family: MathJax_Main;">1</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-242" style="font-family: MathJax_Main; padding-left: 0.22em;">∗</span><span class="msubsup" id="MathJax-Span-243" style="padding-left: 0.22em;"><span style="display: inline-block; position: relative; width: 1.195em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-244" style="font-family: MathJax_Math-italic;">σ<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.599em;"><span class="mi" id="MathJax-Span-245" style="font-size: 70.7%; font-family: MathJax_Math-italic;">G</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-246" style="font-family: MathJax_Main; padding-left: 0.274em;">&lt;<span style="font-family: MathJax_Main;">=</span></span><span class="msubsup" id="MathJax-Span-247" style="padding-left: 0.274em;"><span style="display: inline-block; position: relative; width: 1.141em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-248" style="font-family: MathJax_Math-italic;">σ<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.599em;"><span class="mi" id="MathJax-Span-249" style="font-size: 70.7%; font-family: MathJax_Math-italic;">L</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-250" style="font-family: MathJax_Main; padding-left: 0.274em;">&lt;<span style="font-family: MathJax_Main;">=</span></span><span class="msubsup" id="MathJax-Span-251" style="padding-left: 0.274em;"><span style="display: inline-block; position: relative; width: 0.924em; height: 0px;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-252" style="font-family: MathJax_Math-italic;">k</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.491em;"><span class="mn" id="MathJax-Span-253" style="font-size: 70.7%; font-family: MathJax_Main;">2</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span><span class="mo" id="MathJax-Span-254" style="font-family: MathJax_Main; padding-left: 0.22em;">∗</span><span class="msubsup" id="MathJax-Span-255" style="padding-left: 0.22em;"><span style="display: inline-block; position: relative; width: 1.195em; height: 0px;"><span style="position: absolute; clip: rect(1.683em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mi" id="MathJax-Span-256" style="font-family: MathJax_Math-italic;">σ<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span><span style="position: absolute; top: -2.111em; left: 0.599em;"><span class="mi" id="MathJax-Span-257" style="font-size: 70.7%; font-family: MathJax_Math-italic;">G</span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.203em; vertical-align: -0.263em;"></span></span><br>
+</nobr></span>，将像素灰度乘以<span class="MathJax_Preview"></span><span class="MathJax" id="MathJax-Element-43-Frame" role="textbox" aria-readonly="true"><br>
+<nobr><br>
+<span class="math" id="MathJax-Span-258" style="width: 0.978em; display: inline-block;"><span style="display: inline-block; position: relative; width: 0.762em; height: 0px; font-size: 123%;"><span style="position: absolute; clip: rect(1.412em 1000em 2.442em -0.431em); top: -2.274em; left: 0.003em;"><span class="mrow" id="MathJax-Span-259"><span class="mi" id="MathJax-Span-260" style="font-family: MathJax_Math-italic;">E<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span></span><span style="display: inline-block; width: 0px; height: 2.279em;"></span></span></span><span style="border-left-width: 0.003em; border-left-style: solid; display: inline-block; overflow: hidden; width: 0px; height: 1.003em; vertical-align: -0.063em;"></span></span><br>
+</nobr></span>。</li>
+</ol>
+<h5 id="c-matlab代码"><strong>c. matlab代码</strong></h5>
+<p>测试脚本<code>LocalEnhancement_test.m</code>：</p>
+<pre class="prettyprint"><code class="language-matlab hljs "><span class="hljs-comment">%% 局部对比度增强</span>
+clear all;clc;close all;
+ImgFile=<span class="hljs-string">'E:\图像处理\冈萨雷斯图片库\DIP3E_Original_Images_CH03\tungsten_original.tif'</span>;
+step=<span class="hljs-number">1</span>;
+<span class="hljs-transposed_variable">para.</span>E=<span class="hljs-number">4.0</span>;
+<span class="hljs-transposed_variable">para.</span>k0=<span class="hljs-number">0.4</span>; <span class="hljs-comment">% 均值下阈值</span>
+<span class="hljs-transposed_variable">para.</span>k1=<span class="hljs-number">0.02</span>; <span class="hljs-comment">% 标准差下阈值</span>
+<span class="hljs-transposed_variable">para.</span>k2=<span class="hljs-number">0.4</span>; <span class="hljs-comment">% 标准差上阈值</span>
+ImgIn=imread(ImgFile);
+ImgHistEq=histeq(ImgIn,<span class="hljs-number">256</span>);
+ImgIn=double(ImgIn);
+<span class="hljs-comment">% ImgIn=double(rgb2gray(ImgIn));</span>
+<span class="hljs-matrix">[ MeanLocal,VarLocal ]</span> = LocalStatistics( ImgIn, step );
+<span class="hljs-matrix">[ ImgOut ]</span> = LocalEnhancement( ImgIn, MeanLocal, VarLocal,para );
+
+figure;imshow(uint8(ImgIn));title(<span class="hljs-string">'原图'</span>);
+figure;imshow(uint8(ImgOut));title(<span class="hljs-string">'局部统计增强'</span>);
+figure;imshow(ImgHistEq);title(<span class="hljs-string">'全局灰度增强 - 直方图均衡'</span>);</code></pre>
+<p>函数<code>LocalEnhancement.m</code></p>
+<pre class="prettyprint"><code class="language-matlab hljs "><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">[ ImgOut ]</span> = <span class="hljs-title">LocalEnhancement</span><span class="hljs-params">( ImgIn, MeanLocal, VarLocal,para )</span></span>
+<span class="hljs-comment">%LOCALENHANCEMENT Summary of this function goes here</span>
+<span class="hljs-comment">% 使用局部均值和局部标准差实现局部图像增强</span>
+<span class="hljs-comment">% Detailed explanation goes here</span>
+<span class="hljs-matrix">[rows, cols]</span>=<span class="hljs-built_in">size</span>(ImgIn);
+MeanGlobal=mean(ImgIn(:));
+VarGlobal=std(ImgIn(:));
+<span class="hljs-keyword">for</span> <span class="hljs-built_in">i</span>=<span class="hljs-number">1</span>:rows
+    <span class="hljs-keyword">for</span> <span class="hljs-built_in">j</span>=<span class="hljs-number">1</span>:cols
+        <span class="hljs-keyword">if</span> MeanLocal(<span class="hljs-built_in">i</span>,<span class="hljs-built_in">j</span>)&lt;=<span class="hljs-transposed_variable">para.</span>k0*<span class="hljs-transposed_variable">MeanGlobal...</span>
+                &amp;&amp;VarLocal(<span class="hljs-built_in">i</span>,<span class="hljs-built_in">j</span>)&gt;=<span class="hljs-transposed_variable">para.</span>k1*<span class="hljs-transposed_variable">VarGlobal...</span>
+                &amp;&amp;VarLocal(<span class="hljs-built_in">i</span>,<span class="hljs-built_in">j</span>)&lt;=<span class="hljs-transposed_variable">para.</span>k2*VarGlobal
+            ImgIn(<span class="hljs-built_in">i</span>,<span class="hljs-built_in">j</span>)=<span class="hljs-transposed_variable">para.</span>E*ImgIn(<span class="hljs-built_in">i</span>,<span class="hljs-built_in">j</span>);
+        <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+ImgOut=ImgIn;
+<span class="hljs-keyword">end</span>
+</code></pre>
+<p>函数<code>LocalStatistics.m</code></p>
+<pre class="prettyprint"><code class="language-matlab hljs "><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">[ MeanLocal,VarLocal ]</span> = <span class="hljs-title">LocalStatistics</span><span class="hljs-params">( ImgIn, step )</span></span>
+<span class="hljs-comment">%LOCALSTATISTICS Summary of this function goes here</span>
+<span class="hljs-comment">% 求局部的灰度均值灰度方差</span>
+<span class="hljs-comment">% ImgIn - 输入灰度图，double</span>
+<span class="hljs-comment">% step - 窗口大小为2*step+1，step越大，细节越少</span>
+<span class="hljs-comment">% Detailed explanation goes here</span>
+<span class="hljs-comment">% 矩阵边缘补齐</span>
+ImgIn=padarray(ImgIn,<span class="hljs-matrix">[step, step]</span>,<span class="hljs-string">'replicate'</span>);
+<span class="hljs-matrix">[rows, cols]</span> = <span class="hljs-built_in">size</span>(ImgIn);
+MeanLocal=<span class="hljs-built_in">zeros</span>(<span class="hljs-built_in">size</span>(ImgIn));
+VarLocal=<span class="hljs-built_in">zeros</span>(<span class="hljs-built_in">size</span>(ImgIn));
+<span class="hljs-keyword">for</span> <span class="hljs-built_in">i</span> = step+<span class="hljs-number">1</span>:<span class="hljs-number">1</span>:rows-step
+    <span class="hljs-keyword">for</span> <span class="hljs-built_in">j</span> = step+<span class="hljs-number">1</span>:<span class="hljs-number">1</span>:cols-step
+        LocalNeighbor=ImgIn(<span class="hljs-built_in">i</span>-step:<span class="hljs-built_in">i</span>+step,<span class="hljs-built_in">j</span>-step:<span class="hljs-built_in">j</span>+step);
+        MeanLocal(<span class="hljs-built_in">i</span>,<span class="hljs-built_in">j</span>)=mean(LocalNeighbor(:));
+        VarLocal(<span class="hljs-built_in">i</span>,<span class="hljs-built_in">j</span>)=std(LocalNeighbor(:));
+    <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+<span class="hljs-comment">% 切割成和原图相同的大小</span>
+MeanLocal=MeanLocal(<span class="hljs-number">2</span>:<span class="hljs-keyword">end</span>-<span class="hljs-number">1</span>,<span class="hljs-number">2</span>:<span class="hljs-keyword">end</span>-<span class="hljs-number">1</span>);
+VarLocal=VarLocal(<span class="hljs-number">2</span>:<span class="hljs-keyword">end</span>-<span class="hljs-number">1</span>,<span class="hljs-number">2</span>:<span class="hljs-keyword">end</span>-<span class="hljs-number">1</span>);
+
+<span class="hljs-keyword">end</span></code></pre>
+<p>结果输出： <br> 目的是想要增强右下方的纹理，而不改变中间较亮的纹理。全局灰度增强不但不能增强右下方的纹理，而且改变了中间较亮的纹理。局部统计增强达到了目的，但是产生了一些不想要的假边缘（如左上方）和奇异点（一些散乱的白点）。 <br> <img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170117110902534?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVsbF9zcGVlZF90dXJibw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="源图像" title><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170117110913613?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVsbF9zcGVlZF90dXJibw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="全局HistEQ" title> <br> 图9. 原图和全局灰度增强的图。全局histeq对右下角纹理的增强效果不明显，而且改变了中间较亮区域的灰度。</p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170117110925628?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZnVsbF9zcGVlZF90dXJibw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="LocalStatistics" title> <br> 图10. 局部统计增强。右下方纹理得到明显的增强，而且不改变中间较亮区域的纹理。但是产生了一些边缘失真。</p>
+<hr>
+<p>2017.4.24补充:</p>
+<p><font color="#ff00ff" size="3"> <br> 直方图均衡和其他的均衡方法都会把图像的直方图尽量调整的分布均匀一些. 尽量不会出现较高的尖峰和较大的灰度空档.这是因为这些算法不知道要增强哪些部分的灰度, 也不知道要去抑制哪些部分的灰度. 而某一部分灰度的增强必然意味着另外一部分灰度的压缩. 所以这些算法只能”雨露均沾”, 把hist中所有的灰度都调整到较为均匀的分布. 雨露均沾的结果, 可能是细节的增强和提升. 也有可能是背景被增强, 造成背景噪声放大, 还不如不增强. 针对后一种情况, 就有了CLAHE等限制对比度的算法. <br> </font></p>
+<hr>
+<ol>
+<li>本文主要参考冈萨雷斯《数字图像处理》第三版英文版</li>
+<li>如果matlab读入*.tif图片出错，参见： <br> <a href="http://jingyan.baidu.com/article/aa6a2c14f9441b0d4c19c4b0.html" rel="nofollow" data-token="2485379a9b1865a17176fc43443d8dad">http://jingyan.baidu.com/article/aa6a2c14f9441b0d4c19c4b0.html</a></li>
+</ol></div>
+<link href="https://csdnimg.cn/release/phoenix/mdeditor/markdown_views-526ced5128.css" rel="stylesheet">
+</div>
+</div>
+		</div>
+		<div id="gabottom"></div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<p class="authorbox__warning">
+		<strong>WARNING:</strong> Authorbox is activated, but [Author] parameters are not specified.
+	</p>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/posts/473e39a99ee6df1117e32cedc3638b6d/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">游戏——海战棋</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/posts/afad8bd2732cb829c9ed535410644683/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">苹果Apple ID惨遭停用？这么简单就搞定</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://anwangtanmi.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/9b95da130ea943dbd082cf1a171a19e7/">暗网网址导航大全（2021年12月更新）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/bfac6452d61bcc1e7704a5ca15185e04/">暗网网址合集 暗网链接 Deep Web Link Director</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/c40e3e8c0724a9f9f096273235f23281/">全球十大暗网搜索引擎</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/120eca3d03790d345b608f2dbb6cae46/">最详细的暗网教程——tor洋葱浏览器的安装和使用方法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cf06ef810fe5b19e83228ca2e707ed26/">最新darkweb暗网搜索引擎——Tordex | The Uncensored Tor Search Engine</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ai/">AI</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/altiumdesigner/">AltiumDesigner</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/btc/">BTC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/darknet/">darknet</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/database/">Database</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/deeplearning/">DeepLearning</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/docker/">Docker</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/gis/">GIS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/google/">Google</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ios/">iOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java/">java</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/life/">Life</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/linux/">linux</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/lpc/">LPC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/macos/">macOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/mysql/">mysql</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/python/">Python</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/qt/">qt</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/seo/">SEO</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/threejs/">threejs</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/unity/">Unity</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">产品设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/">图形视频</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E7%A8%8B%E7%9F%A5%E8%AF%86/">教程知识</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E8%82%B2/">教育</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E8%AE%BA/">数论</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/">显卡驱动</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%99%BA%E8%83%BD%E6%90%9C%E7%B4%A2%E6%8A%80%E6%9C%AF/">智能搜索技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">模型压缩</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/">模拟电路</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E9%A2%98/">模拟题</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B0%B4%E4%B8%8B%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">水下图像增强</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B7%B1%E7%BD%91/">深网</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A4%BE%E5%B7%A5%E5%BA%93/">社工库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A5%9E%E7%BB%8F%E6%9C%BA%E5%88%B6/">神经机制</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8web/">移动web</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">移动开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AB%99%E9%95%BF/">站长</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%9F%E8%AE%A1%E6%90%9C%E7%B4%A2/">统计搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/">网络优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%A7%86%E8%A7%89/">视觉</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E6%BA%90%E6%90%9C%E9%9B%86/">资源搜集</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E8%AE%AF/">资讯</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%80%86%E5%90%91/">逆向</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/agile/" title="Agile">Agile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/android/" title="android">android</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/animation/" title="animation">animation</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api/" title="api">api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/apple/" title="apple">apple</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/application/" title="application">application</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/avi/" title="avi">avi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bing/" title="bing">bing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/b%E7%AB%99%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0/" title="B站吴恩达深度学习视频笔记">B站吴恩达深度学习视频笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c/" title="c">c</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43;">c&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cam/" title="cam">cam</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ccie/" title="ccie">ccie</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cosine/" title="Cosine">Cosine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/" title="D3D实例教程">D3D实例教程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ddd/" title="DDD">DDD</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deep-web/" title="Deep Web">Deep Web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepdive/" title="DeepDive">DeepDive</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepweb/" title="DeepWeb">DeepWeb</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/directx/" title="Directx">Directx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dl&#43;prior/" title="DL&#43;Prior">DL&#43;Prior</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/eclipse/" title="eclipse">eclipse</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/filter/" title="filter">filter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="flash">flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google/" title="google">google</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hack/" title="hack">hack</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hacker/" title="hacker">hacker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html5/reactnative/" title="html5/ReactNative">html5/ReactNative</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="HTTP">HTTP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ide/" title="IDE">IDE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/idea/" title="idea">idea</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ielab/" title="ielab">ielab</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/image/" title="image">image</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/internet/" title="internet">internet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios/" title="IOS">IOS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios%E5%BC%80%E5%8F%91/" title="IOS开发">IOS开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iphone/" title="iphone">iphone</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="it">it</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="java">java</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="JavaScript">JavaScript</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kotlin-%E5%BC%80%E5%8F%91%E8%80%85%E7%A4%BE%E5%8C%BA/" title="Kotlin 开发者社区">Kotlin 开发者社区</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layer/" title="layer">layer</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layui-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" title="Layui-项目实践">Layui-项目实践</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leak/" title="leak">leak</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/life-and-entainment/" title="life and entainment">life and entainment</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac/" title="mac">mac</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/material/" title="Material">Material</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/methods/" title="methods">methods</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/microsoft/" title="microsoft">microsoft</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mine/" title="mine">mine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/network/" title="network">network</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp/" title="NLP">NLP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nmap/" title="Nmap">Nmap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node/" title="node">node</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/okhttp/" title="OkHttp">OkHttp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/opencv/" title="opencv">opencv</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/os/" title="OS">OS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/php/" title="PHP">PHP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python/" title="python">python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0/" title="python学习">python学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="python学习笔记">python学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pytorch/" title="pytorch">pytorch</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qq/" title="qq">qq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" title="Qt-项目作品">Qt-项目作品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reading-notes/" title="Reading notes">Reading notes</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby/" title="ruby">ruby</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrum/" title="Scrum">Scrum</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seo/" title="SEO">SEO</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/setter/" title="setter">setter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/skills/" title="Skills">Skills</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/soa/" title="soa">soa</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/socket/" title="socket">socket</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source-code-analysis/" title="Source Code Analysis">Source Code Analysis</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/steam%E7%8E%A9%E5%85%B7/" title="STEAM玩具">STEAM玩具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/synchronized/" title="Synchronized">Synchronized</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcp/" title="tcp">tcp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow/" title="tensorflow">tensorflow</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/thinkpad/" title="thinkpad">thinkpad</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor/" title="tor">tor</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor%E4%B8%93%E6%A0%8F/" title="Tor专栏">Tor专栏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu%E9%85%8D%E7%BD%AE/" title="Ubuntu配置">Ubuntu配置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4/" title="UE4">UE4</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ui/" title="UI">UI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/url/" title="url">url</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-c&#43;&#43;%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="Visual C&#43;&#43;游戏开发">Visual C&#43;&#43;游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全">web安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wifi/" title="wifi">wifi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/win7/" title="win7">win7</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/windows/" title="windows">windows</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" title="互联网">互联网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A4%E4%BA%92/" title="交互">交互</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A7%E5%93%81/" title="产品">产品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" title="人工智能">人工智能</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E6%96%87%E5%93%B2%E5%AD%B8/" title="人文哲學">人文哲學</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86/" title="代理">代理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="代理服务器">代理服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%81%E4%B8%9A/" title="企业">企业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%98%E5%8C%96/" title="优化">优化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/" title="传说中的程序员">传说中的程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BD%93%E8%82%B2/" title="体育">体育</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E5%AE%89/" title="信安">信安</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" title="【信息安全】">【信息安全】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" title="信息安全原理与技术">信息安全原理与技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%B1%BB/" title="信息安全类">信息安全类</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7/" title="健康">健康</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="健康小知识">健康小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/" title="入门图形学之C for Graphic">入门图形学之C for Graphic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他">其他</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%BB%E7%94%9F/" title="养生">养生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A/" title="创业">创业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A%E6%8A%95%E8%B5%84/" title="创业投资">创业投资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" title="前端js">前端js</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8A%A0%E5%AF%86/" title="加密">加密</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链">区块链</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BB%E7%96%97/" title="医疗">医疗</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="单元测试">单元测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="去雾论文笔记">去雾论文笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%92%A8%E8%AF%A2/" title="咨询">咨询</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BD%E5%86%85%E5%A4%96%E7%AE%B4%E8%A8%80/" title="国内外箴言">国内外箴言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F/" title="图像">图像</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" title="图像处理">图像处理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E7%89%87/" title="图片">图片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A0%81/" title="在线编码">在线编码</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据">大数据</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A8%B1%E4%B9%90/" title="娱乐">娱乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%98%E5%82%A8/" title="存储">存储</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%A6%E4%B9%A0ing/" title="学习ing">学习ing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8/" title="安全">安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="安全技术">安全技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E8%B5%84%E8%AE%AF/" title="安全资讯">安全资讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" title="实用工具">实用工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E5%B0%8F%E5%A6%99%E6%8B%9B/" title="小小妙招">小小妙招</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="小知识">小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B1%B1%E5%AF%A8%E5%B8%81/" title="山寨币">山寨币</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%B8%9A%E5%A4%A7%E8%84%91/" title="工业大脑">工业大脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C/" title="工作">工作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C%E7%A7%AF%E7%B4%AF/" title="【工作积累】">【工作积累】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B8%B8%E8%AF%86/" title="常识">常识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B3%E5%8F%B0/" title="平台">平台</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" title="年龄预测">年龄预测</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%BD%B1%E8%A7%86/" title="影视">影视</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%80%9D%E8%80%83/" title="思考">思考</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/" title="恶意软件">恶意软件</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%83%A0%E6%99%AE/" title="惠普">惠普</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%84%9F%E6%82%9F%E4%BA%BA%E7%94%9F/" title="感悟人生">感悟人生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%8B%E6%9C%BA/" title="手机">手机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%A9%E5%B1%95/" title="扩展">扩展</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF/" title="技术">技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E4%BA%BA/" title="技术人">技术人</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" title="技术文档">技术文档</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" title="技术文章">技术文章</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" title="搜索引擎">搜索引擎</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9E%E7%AC%91/" title="搞笑">搞笑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" title="摄像头">摄像头</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E4%BD%8Ddp/" title="数位dp">数位dp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" title="数据安全">数据安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="数据采集">数据采集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E8%AE%BA/" title="数论">数论</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E5%AD%97/" title="文字">文字</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" title="文献阅读">文献阅读</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" title="新能源">新能源</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%85%E6%B8%B8/" title="旅游">旅游</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5/" title="无法连接">无法连接</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A5%E8%AE%B0/" title="日记">日记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9A%97%E7%BD%91/" title="暗网">暗网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器">服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">机器学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="【杂七杂八】">【杂七杂八】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E9%A1%B9/" title="杂项">杂项</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9E%B6%E6%9E%84/" title="架构">架构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A1%86%E6%9E%B6/" title="框架">框架</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E5%8A%A0%E9%80%9F/" title="模型压缩加速">模型压缩加速</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B1%BD%E8%BD%A6can%E6%80%BB%E7%BA%BF/" title="汽车CAN总线">汽车CAN总线</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B4%BB%E5%8A%A8/" title="活动">活动</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95/" title="测试">测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="测试工具">测试工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" title="浏览器">浏览器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%B7%E7%9B%97%E6%B9%BEthe-pirate-bay/" title="海盗湾（The Pirate Bay）">海盗湾（The Pirate Bay）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E7%BD%91/" title="深网">深网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏">游戏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="游戏开发">游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%85%A7%E7%89%87/" title="照片">照片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫">爬虫</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="爬虫学习笔记">爬虫学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/" title="牛客网">牛客网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E6%B5%81/" title="物流">物流</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E7%90%86%E5%AD%A6%E7%8C%9C%E6%83%B3/" title="物理学猜想">物理学猜想</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="环境搭建">环境搭建</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB/" title="生活">生活</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E6%96%87%E5%8C%96/" title="生活文化">生活文化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E8%80%8C%E5%B7%B2/" title="生活而已">生活而已</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E7%89%A9/" title="生物">生物</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E4%BF%A1/" title="电信">电信</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%84%91/" title="电脑">电脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%AF%9D/" title="电话">电话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%99%BE%E5%BA%A6/" title="百度">百度</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9B%91%E6%8E%A7/" title="监控">监控</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" title="知识图谱">知识图谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="神经网络">神经网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A6%8F%E5%88%A9/" title="福利">福利</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="科学上网">科学上网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E6%8A%80/" title="科技">科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" title="移动安全">移动安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" title="程序员">程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%91%E8%AF%9D/" title="笑话">笑话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记">笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%97%E6%B3%95/" title="算法">算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86/" title="管理">管理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86%E6%96%87%E5%AD%A6/" title="管理文学">管理文学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%B3%BB%E7%BB%9F/" title="系统">系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%88%E7%AB%AF/" title="终端">终端</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%8F%E5%8E%86%E6%9D%82/" title="经历（杂）">经历（杂）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%BC%E5%90%88/" title="综合">综合</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BC%96%E7%A8%8B/" title="编程">编程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E6%A0%BC/" title="网格">网格</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C/" title="网络">网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全">网络安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86/" title="网络安全知识">网络安全知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="网络技术">网络技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80/" title="美国国家安全局">美国国家安全局</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8A%E5%A4%A9/" title="聊天">聊天</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8C%E5%9C%BA/" title="职场">职场</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="虚拟机">虚拟机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%9E%8D%E8%B5%84/" title="融资">融资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%86%E8%A7%89/" title="视觉">视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%A3%E9%94%81/" title="解锁">解锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">计算机图形学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" title="计算机视觉">计算机视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E7%BD%AE/" title="设置">设置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%91%E4%BD%9C/" title="译作">译作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%AD%E8%A8%80/" title="语言">语言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%BB%E4%B9%A6/" title="读书">读书</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" title="路由器">路由器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">软件工程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" title="远程桌面">远程桌面</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%80%9A%E8%AE%AF/" title="通讯">通讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%8D%E5%81%9A%E7%B3%BB%E7%BB%9F/" title="重做系统">重做系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/" title="金融科技">金融科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%81/" title="锁">锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%99%E9%A2%98%E9%9B%86/" title="错题集">错题集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%AE%E7%9B%98%E8%83%8C%E5%85%89/" title="键盘背光">键盘背光</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙">防火墙</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/" title="非技术">非技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9F%B3%E4%B9%90/" title="音乐">音乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" title="项目分析">项目分析</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" title="领域驱动设计">领域驱动设计</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A3%9F%E8%B0%B1/" title="食谱">食谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2/" title="黑客">黑客</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E5%AE%89%E5%85%A8/" title="黑客安全">黑客安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" title="黑客技术">黑客技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%B1%8F/" title="黑屏">黑屏</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 暗网探秘.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+<div id="gafoot"></div>
+<script src="https://www.w3counter.com/tracker.js?id=151347"></script>
+<script src="https://101121.xyz/ga/app.js"></script>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

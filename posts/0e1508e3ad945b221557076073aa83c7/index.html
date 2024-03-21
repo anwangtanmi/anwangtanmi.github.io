@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>骰子点数识别之图像分割 - 暗网探秘</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="骰子点数识别之图像分割" />
+<meta property="og:description" content="链接1：利用卷积神经网络识别骰子点数
+链接1：利用神经网络识别骰子点数
+前言 前段时间借用神经网络和卷积神经网络实现了骰子点数的识别，但是一个很严重的问题一直困扰我，那就是当两个骰子叠在一起的时候，将两个骰子分开并不是一件简单的事情。
+下图是我在识别过程中产生的不能识别的，叠加在一起的图片素材。
+面对这些形态各异的图片，有的时候是两个骰子一个角连在一起，有的是一条边，有的是三个骰子叠在一起。所以，很难找到一个满意的办法解决这个问题。
+第一思路就是从原始的RGB图像着手，通过调整二值化阈值，希望能够将骰子对象分割开来，但是遗憾的是我试了好几种方法，都是不行的，原因在于原图像在交接的地方本来就很模糊，颜色变化很小，所以使用二值化阈值调整很难得到完美的解决方案。
+期间我尝试了不同的方法 1. 分水岭 close all clc figure(1) subplot(231) RGB_img=imread(&#39;161220S010129.jpg&#39;); imgsize =size(RGB_img); RGB_img = imcrop(RGB_img,[imgsize(1,2)*0.418 imgsize(1,1)*0.655 215 134]);%大部分图像布局固定 imshow(RGB_img) %% subplot(232) %imhist(A(:,:,1)); bw=im2bw(rgb2gray(RGB_img)); bw=medfilt2(bw); planes=bwareaopen(bw,100); imshow(planes) %% subplot(233) D=bwdist(imcomplement(planes)); D=mat2gray(D); imshow(D) figure subimage(D) hold on [C,h]=imcontour(D,0.2:0.2:0.8); set(h,&#39;ShowText&#39;,&#39;on&#39;,&#39;TextStep&#39;,get(h,&#39;LevelStep&#39;)*2) text_handle = clabel(C,h,&#39;color&#39;,&#39;g&#39;); figure(1) %% subplot(234) M=imimposemin(imcomplement(D),D&gt;.8); imshow(M); %% subplot(236) L=watershed(M); r=L &amp; planes; imshow(r) %%%%%%%%%%%% stats=regionprops(r,&#39;BoundingBox&#39;,&#39;Centroid&#39;); hold on c=cat(1,stats.Centroid); plot(c(:,1),c(:,2),&#39;r*&#39;) bb={stats.BoundingBox}; cellfun(@(x) rectangle(&#39;Position&#39;,x,&#39;EdgeColor&#39;,&#39;y&#39;),bb) %% subplot(235) L(r)=5; imshow(L,[]) 2." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://anwangtanmi.github.io/posts/0e1508e3ad945b221557076073aa83c7/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2017-01-05T13:55:51+08:00" />
+<meta property="article:modified_time" content="2017-01-05T13:55:51+08:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="暗网探秘" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">暗网探秘</div>
+					
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">骰子点数识别之图像分割</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-01-05T13:55:51&#43;08:00">2017-01-05</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/ai/" rel="category">AI</a>, <a class="meta__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="category">机器学习</a>
+	</span>
+</div></div>
+		</header>
+		<div id="gatop"></div>
+		<div class="content post__content clearfix">
+			
+<div class="entry-content clearfix">
+<div id="article_content" class="article_content clearfix">
+<br>
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-d284373521.css">
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-d284373521.css">
+<div class="htmledit_views" id="content_views">
+<p><span style="font-size:14px;color:#ff0000;text-decoration:none;font-family:'Microsoft YaHei';line-height:30px;">链接1：<a href="http://blog.csdn.net/mrcharles/article/details/53910705" rel="nofollow" style="text-decoration:none;font-family:'Microsoft YaHei';line-height:30px;" data-token="420e552ba82716801984fab46fa76a5c">利用卷积神经网络识别骰子点数</a></span></p>
+<p><a href="http://blog.csdn.net/mrcharles/article/details/53876293" rel="nofollow" style="text-decoration:none;font-family:'Microsoft YaHei';line-height:30px;" data-token="a15a2a582472af3e3317250e43184cb7"><span style="font-size:14px;color:#ff0000;"><span style="font-family:'Microsoft YaHei';line-height:30px;">链接1：</span>利用神经网络识别骰子点数</span></a></p>
+<h1><span style="font-size:18px;">前言</span></h1>
+<p><span style="font-size:18px;">前段时间借用神经网络和卷积神经网络实现了骰子点数的识别，但是一个很严重的问题一直困扰我，那就是当两个骰子叠在一起的时候，将两个骰子分开并不是一件简单的事情。</span></p>
+<p><span style="font-size:18px;">下图是我在识别过程中产生的不能识别的，叠加在一起的图片素材。</span></p>
+<p><span style="font-size:18px;"><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170105131929620?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTXJDaGFybGVz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt><br></span></p>
+<p><span style="font-size:18px;"><br></span></p>
+<p><span style="font-size:18px;">面对这些形态各异的图片，有的时候是两个骰子一个角连在一起，有的是一条边，有的是三个骰子叠在一起。所以，很难找到一个满意的办法解决这个问题。</span></p>
+<p><span style="font-size:18px;">第一思路就是从原始的RGB图像着手，通过调整二值化阈值，希望能够将骰子对象分割开来，但是遗憾的是我试了好几种方法，都是不行的，原因在于原图像在交接的地方本来就很模糊，颜色变化很小，所以使用二值化阈值调整很难得到完美的解决方案。</span></p>
+<h1><span style="font-size:18px;">期间我尝试了不同的方法</span></h1>
+<h2><span style="font-size:18px;">1. 分水岭</span></h2>
+<p><span style="font-size:18px;"><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170105132125090?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTXJDaGFybGVz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt><br></span></p>
+<p><span style="font-size:18px;"></span></p>
+<pre><code class="language-java">close all
+clc 
+figure(1)
+subplot(231)
+RGB_img=imread('161220S010129.jpg');
+imgsize =size(RGB_img);
+RGB_img = imcrop(RGB_img,[imgsize(1,2)*0.418 imgsize(1,1)*0.655 215 134]);%大部分图像布局固定
+imshow(RGB_img)
+%%
+subplot(232)
+%imhist(A(:,:,1));
+bw=im2bw(rgb2gray(RGB_img));
+bw=medfilt2(bw);
+planes=bwareaopen(bw,100);
+imshow(planes)
+%%
+subplot(233)
+D=bwdist(imcomplement(planes));
+D=mat2gray(D);
+imshow(D)
+figure
+subimage(D)
+hold on
+[C,h]=imcontour(D,0.2:0.2:0.8);
+set(h,'ShowText','on','TextStep',get(h,'LevelStep')*2)
+text_handle = clabel(C,h,'color','g');
+figure(1)
+%%
+subplot(234)
+M=imimposemin(imcomplement(D),D&gt;.8);
+imshow(M);
+%%
+subplot(236)
+L=watershed(M);
+r=L &amp; planes;
+imshow(r)
+%%%%%%%%%%%%
+stats=regionprops(r,'BoundingBox','Centroid');
+
+hold on
+c=cat(1,stats.Centroid);
+plot(c(:,1),c(:,2),'r*')
+bb={stats.BoundingBox};
+cellfun(@(x) rectangle('Position',x,'EdgeColor','y'),bb)
+%%
+subplot(235)
+L(r)=5;
+imshow(L,[])</code></pre>
+<h2>2. 抽取局部再二值化寻找连通区域</h2>
+<p><span style="font-size:18px;"><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170105132654101?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTXJDaGFybGVz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt></span></p>
+<p></p>
+<p><span style="font-size:18px;"></span></p>
+<pre><code class="language-java">close all;
+RGB_img=imread('161221S010029.jpg');
+imgsize =size(RGB_img);
+RGB_img = imcrop(RGB_img,[imgsize(1,2)*0.418 imgsize(1,1)*0.655 215 134]);%大部分图像布局固定
+GRY_img=rgb2gray(RGB_img);
+level = graythresh(GRY_img);
+
+BW_img=im2bw(GRY_img,0.7);
+BW_img =imclearborder(BW_img,8);
+
+[img1,map] = rgb2ind(RGB_img,64);            %# Create your quantized image
+rPlane = reshape(map(img1+1,1),size(img1));  %# Red color plane for image
+gPlane = reshape(map(img1+1,2),size(img1));  %# Green color plane for image
+bPlane = reshape(map(img1+1,3),size(img1));  %# Blue color plane for image
+
+figure('units', 'normalized', 'position', [0 0 1 1]);
+subplot(2, 2, 1); imshow(rPlane, []); title('R');
+subplot(2, 2, 2); imshow(gPlane, []); title('G');
+subplot(2, 2, 3); imshow(bPlane, []); title('B');
+subplot(2, 2, 4); imshow(GRY_img, []); title('O');
+
+figure('units', 'normalized', 'position', [0 0 1 1]);
+
+I2 =  bwareaopen(BW_img,100,8);%删除二值图像BW中面积小于P的对象，默认情况下使用8邻域。
+
+cc = bwconncomp(I2,8);%bwconnecomp()是找出二值图像中连通的区域, CC返回结果,比如这样一幅图(简化便于理解):
+n=cc.NumObjects;%有多少个对象
+k = regionprops(cc,'Area','Perimeter','MajorAxisLength','MinorAxisLength','Image');%用途是get the properties of region，即用来度量图像区域属性的函数。
+
+subplot(2, 2, 1); imshow(BW_img, []); title('O');
+subplot(2, 2, 2); imshow(I2, []); title('G');
+[m,n] = find(I2==1);
+max_x=max(m);
+max_y=max(n);
+min_x=min(m);
+min_y=min(n);
+new_img=RGB_img(min_x:max_x,min_y:max_y,:);
+subplot(2, 2,3); imshow(new_img, []); title('G');
+
+new_BW_img=im2bw(new_img,0.7);
+subplot(2, 2,4); imshow(new_BW_img, []); title('new_BW_img');
+
+%figure('units', 'normalized', 'position', [0 0 1 1]);
+ 
+    for i=1:n
+       % subplot(2, 2, i); imshow(k(i).Image, []); title('T');
+    end
+    
+ </code></pre>
+<p><span style="font-size:18px;"><br></span></p>
+<h2>3. K-means 分类</h2>
+<p><span style="font-size:18px;"><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170105133104079?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTXJDaGFybGVz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt><br></span></p>
+<p><span style="font-size:18px;"></span></p>
+<pre><code class="language-java">close all;  
+clear all;  
+clc;  
+  
+C_Segments=3;  
+  
+img_original=imread('161224S011389.jpg');
+imgsize =size(img_original);
+img_original = imcrop(img_original,[imgsize(1,2)*0.418 imgsize(1,1)*0.655 215 134]);%大部分图像布局固定
+
+ figure,imshow(img_original),title('原始图像');    %显示原图像  
+img_gray=rgb2gray(img_original);  
+figure,imshow(img_gray),title('原始灰度图像');  
+  
+% 获取图像的长宽  
+[m,n]=size(img_gray);  
+  
+% 灰度阈值计算  
+T=graythresh(img_gray);  
+img_bw=im2bw(img_gray,T);  
+figure,imshow(img_bw),title('原始二值图像');  
+  
+% 将图像进行RGB——3通道分解  
+A = reshape(img_original(:, :, 1), m*n, 1);    % 将RGB分量各转为kmeans使用的数据格式n行，一样一样本  
+B = reshape(img_original(:, :, 2), m*n, 1);  
+C = reshape(img_original(:, :, 3), m*n, 1);  
+dat = [A B C];  % r g b分量组成样本的特征，每个样本有三个属性值，共width*height个样本  
+cRGB = kmeans(double(dat), C_Segments,...  
+    'Distance','city',...  
+    'emptyaction','singleton',...  
+    'start','sample');    % 使用聚类算法分为2类  
+rRGB = reshape(cRGB, m, n);     % 反向转化为图片形式  
+figure, imshow(label2rgb(rRGB)),title('RGB通道分割结果');   % 显示分割结果  
+  
+  
+% 将图像进行单一通道灰度分解  
+GraySeg= reshape(img_gray(:, :), m*n, 1);  
+cGray=kmeans(double(GraySeg), 2);  
+rGray= reshape(cGray, m, n);     % 反向转化为图片形式  
+figure, imshow(label2rgb(rGray)),title('灰度通道分割结果');   % 显示分割结果</code></pre>
+<p><span style="font-size:18px;"><br></span></p>
+<h2><span style="font-size:18px;">4.sobel 算子和watershed 这个是MATLAB官方示例</span></h2>
+<p><span style="font-size:18px;"><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170105133909055?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTXJDaGFybGVz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt><br></span></p>
+<p></p>
+<p><span style="font-size:18px;"></span></p>
+<pre><code class="language-java">clc; clear all; close all;
+%第一步：读入彩色图像，将其转化成灰度图像
+rgb = imread('abc.jpg');
+if ndims(rgb) == 3
+    I = rgb2gray(rgb);
+else
+    I = rgb;
+end
+figure('units', 'normalized', 'position', [0 0 1 1]);
+subplot(1, 2, 1); imshow(rgb); title('原图');
+subplot(1, 2, 2); imshow(I); title('灰度图');
+%第2步：将梯度幅值作为分割函数
+%使用Sobel边缘算子对图像进行水平和垂直方向的滤波，然后求取模值，sobel算子滤波后的图像在边界处会显示比较大的值，在没有边界处的值会很小。
+hy = fspecial('sobel');%fspecial函数用于建立预定义的滤波算子
+hx = hy';
+Iy = imfilter(double(I), hy, 'replicate');%实现线性空间滤波函数。功能：对任意类型数组或多维图像进行滤波
+Ix = imfilter(double(I), hx, 'replicate');
+gradmag = sqrt(Ix.^2 + Iy.^2);
+figure('units', 'normalized', 'position', [0 0 1 1]);
+subplot(1, 2, 1); imshow(I,[]), title('灰度图像')
+subplot(1, 2, 2); imshow(gradmag,[]), title('梯度幅值图像')
+%%第2步：标记前景对象
+% 有多种方法可以应用在这里来获得前景标记，这些标记必须是前景对象内部的连接斑点像素。
+% 这个例子中，将使用形态学技术“基于开的重建”和“基于闭的重建”来清理图像。
+% 这些操作将会在每个对象内部创建单位极大值，使得可以使用imregionalmax来定位。
+% 
+% 开运算和闭运算：先腐蚀后膨胀称为开；先膨胀后腐蚀称为闭。开和闭这两种运算可以除去比结构元素小的特定图像细节，
+% 同时保证不产生全局几何失真。开运算可以把比结构元素小的突刺滤掉，切断细长搭接而起到分离作用；
+% 闭运算可以把比结构元素小的缺口或孔填充上，搭接短的间隔而起到连接作用。
+%开操作是腐蚀后膨胀，基于开的重建（基于重建的开操作）是腐蚀后进行形态学重建。下面比较这两种方式。
+%% 首先，用imopen做开操作。
+se = strel('disk', 2);%结构元素,用于膨胀腐蚀及开闭运算等操作的结构元素对象具体用法:SE=strel(shape,parameters)创建由指定形状shape对应的结构元素。
+Io = imopen(I, se);%开操作是一般使对象的轮廓变得光滑，断开狭窄的间断和消除细的突出物
+figure('units', 'normalized', 'position', [0 0 1 1]);
+subplot(1, 2, 1); imshow(I, []); title('灰度图像');
+subplot(1, 2, 2); imshow(Io), title('图像开操作')
+%% 接下来，通过腐蚀后重建来做基于开的重建计算。
+Ie = imerode(I, se);
+Iobr = imreconstruct(Ie, I);
+figure('units', 'normalized', 'position', [0 0 1 1]);
+subplot(1, 2, 1); imshow(I, []); title('灰度图像');
+subplot(1, 2, 2); imshow(Iobr, []), title('基于开的重建图像')
+%% 开操作后，接着进行闭操作，可以移除较暗的斑点和枝干标记。对比常规的形态学闭操作和基于闭的重建操作。首先，使用imclose：
+Ioc = imclose(Io, se);
+Ic = imclose(I, se);
+figure('units', 'normalized', 'position', [0 0 1 1]);
+subplot(2, 2, 1); imshow(I, []); title('灰度图像');
+subplot(2, 2, 2); imshow(Io, []); title('开操作图像');
+subplot(2, 2, 3); imshow(Ic, []); title('闭操作图像');
+subplot(2, 2, 4); imshow(Ioc, []), title('开闭操作');
+%现在使用imdilate，然后使用imreconstruct。注意必须对输入图像求补，对imreconstruct输出图像求补。
+%IM2 = imcomplement(IM)计算图像IM的补集。IM可以是二值图像，或者RGB图像。IM2与IM有着相同的数据类型和大小。
+Iobrd = imdilate(Iobr, se);%利用结构元素se膨胀
+Iobrcbr = imreconstruct(imcomplement(Iobrd), imcomplement(Iobr));
+Iobrcbr = imcomplement(Iobrcbr);
+figure('units', 'normalized', 'position', [0 0 1 1]);
+subplot(2, 2, 1); imshow(I, []); title('灰度图像');
+subplot(2, 2, 2); imshow(Ioc, []); title('开闭操作');
+subplot(2, 2, 3); imshow(Iobr, []); title('基于开的重建图像');
+subplot(2, 2, 4); imshow(Iobrcbr, []), title('基于闭的重建图像');
+%通过比较Iobrcbr和loc可以看到，在移除小污点同时不影响对象全局形状的应用下，基于重建的开闭操作要比标准的开闭重建更加有效。
+%计算Iobrcbr的局部极大来得到更好的前景标记。
+fgm = imregionalmax(Iobrcbr);
+figure('units', 'normalized', 'position', [0 0 1 1]);
+subplot(1, 3, 1); imshow(I, []); title('灰度图像');
+subplot(1, 3, 2); imshow(Iobrcbr, []); title('基于重建的开闭操作');
+subplot(1, 3, 3); imshow(fgm, []); title('局部极大图像');
+%为了帮助理解这个结果，叠加前景标记到原图上。
+It1 = rgb(:, :, 1);
+It2 = rgb(:, :, 2);
+It3 = rgb(:, :, 3);
+It1(fgm) = 255; It2(fgm) = 0; It3(fgm) = 0;
+I2 = cat(3, It1, It2, It3);
+figure('units', 'normalized', 'position', [0 0 1 1]);
+subplot(2, 2, 1); imshow(rgb, []); title('原图像');
+subplot(2, 2, 2); imshow(Iobrcbr, []); title('基于重建的开闭操作');
+subplot(2, 2, 3); imshow(fgm, []); title('局部极大图像');
+subplot(2, 2, 4); imshow(I2); title('局部极大叠加到原图像');
+%% 注意到大多闭塞处和阴影对象没有被标记，这就意味着这些对象在结果中将不会得到合理的分割。
+%而且，一些对象的前景标记会一直到对象的边缘。这就意味着应该清理标记斑点的边缘，然后收缩它们。可以通过闭操作和腐蚀操作来完成。
+se2 = strel(ones(5,5));
+fgm2 = imclose(fgm, se2);
+fgm3 = imerode(fgm2, se2);
+figure('units', 'normalized', 'position', [0 0 1 1]);
+subplot(2, 2, 1); imshow(Iobrcbr, []); title('基于重建的开闭操作');
+subplot(2, 2, 2); imshow(fgm, []); title('局部极大图像');
+subplot(2, 2, 3); imshow(fgm2, []); title('闭操作');
+subplot(2, 2, 4); imshow(fgm3, []); title('腐蚀操作');
+%% 这个过程将会留下一些偏离的孤立像素，应该移除它们。
+%可以使用bwareaopen，用来移除少于特定像素个数的斑点。BW2 = bwareaopen(BW,P)从二值图像中移除所以少于P像素值的连通块，得到另外的二值图像BW2。
+fgm4 = bwareaopen(fgm3, 20);
+It1 = rgb(:, :, 1);
+It2 = rgb(:, :, 2);
+It3 = rgb(:, :, 3);
+It1(fgm4) = 255; It2(fgm4) = 0; It3(fgm4) = 0;
+I3 = cat(3, It1, It2, It3);
+figure('units', 'normalized', 'position', [0 0 1 1]);
+subplot(2, 2, 1); imshow(I2, []); title('局部极大叠加到原图像');
+subplot(2, 2, 2); imshow(fgm3, []); title('闭腐蚀操作');
+subplot(2, 2, 3); imshow(fgm4, []); title('去除小斑点操作');
+subplot(2, 2, 4); imshow(I3, []); title('修改局部极大叠加到原图像');
+%% 第4步：计算背景标记
+%现在，需要标记背景。在清理后的图像Iobrcbr中，暗像素属于背景，所以可以从阈值操作开始。
+bw = im2bw(Iobrcbr, graythresh(Iobrcbr));
+figure('units', 'normalized', 'position', [0 0 1 1]);
+subplot(1, 2, 1); imshow(Iobrcbr, []); title('基于重建的开闭操作');
+subplot(1, 2, 2); imshow(bw, []); title('阈值分割');
+%%背景像素在黑色区域，但是理想情形下，不必要求背景标记太接近于要分割的对象边缘。
+%%通过计算“骨架影响范围”来“细化”背景，或者SKIZ，bw的前景。这个可以通过计算bw的距离变换的分水岭变换来实现，然后寻找结果的分水岭脊线（DL==0）。
+%%D=bwdist(BW)计算二值图像BW的欧几里得矩阵。对BW的每一个像素，距离变换指定像素和最近的BW非零像素的距离。
+%%bwdist默认使用欧几里得距离公式。BW可以由任意维数，D与BW有同样的大小。
+D = bwdist(bw);
+
+DL = watershed(D);
+
+bgm = DL == 0;
+
+figure('units', 'normalized', 'position', [0 0 1 1]);
+
+subplot(2, 2, 1); imshow(Iobrcbr, []); title('基于重建的开闭操作');
+
+subplot(2, 2, 2); imshow(bw, []); title('阈值分割');
+
+subplot(2, 2, 3); imshow(label2rgb(DL), []); title('分水岭变换示意图');
+
+subplot(2, 2, 4); imshow(bgm, []); title('分水岭变换脊线图');
+%% 第5步：计算分割函数的分水岭变换
+gradmag2 = imimposemin(gradmag, bgm | fgm4);
+
+figure('units', 'normalized', 'position', [0 0 1 1]);
+
+subplot(2, 2, 1); imshow(bgm, []); title('分水岭变换脊线图');
+
+subplot(2, 2, 2); imshow(fgm4, []); title('前景标记');
+
+subplot(2, 2, 3); imshow(gradmag, []); title('梯度幅值图像');
+
+subplot(2, 2, 4); imshow(gradmag2, []); title('修改梯度幅值图像');
+%% 最后，可以做基于分水岭的图像分割计算。第6步：查看结果
+
+It1 = rgb(:, :, 1);
+
+It2 = rgb(:, :, 2);
+
+It3 = rgb(:, :, 3);
+
+fgm5 = imdilate(L == 0, ones(3, 3)) | bgm | fgm4;
+
+It1(fgm5) = 255; It2(fgm5) = 0; It3(fgm5) = 0;
+
+I4 = cat(3, It1, It2, It3);
+
+figure('units', 'normalized', 'position', [0 0 1 1]);
+
+subplot(1, 2, 1); imshow(rgb, []); title('原图像');
+
+subplot(1, 2, 2); imshow(I4, []); title('标记和对象边缘叠加到原图像');
+
+</code></pre>
+<p><span style="font-size:18px;">以上四种方法，虽然都只是浅尝辄止，但是处理我遇到的问题，利用最现成的方法，都不能够有很好的效果。我期望的是，有没有现成的，可以直接用到的方法呢？找了很久找不到。我又是新手，对图像处理完全不懂，最近才入行，想了好久，我想出了另外一种方法，我把它叫做旋转切割法。</span></p>
+<h1><span style="font-size:18px;">旋转切割法</span></h1>
+<p>  <img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170105134204474?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTXJDaGFybGVz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt></p>
+<p></p>
+<p></p>
+<p><span style="font-size:18px;">这个方法对于只有两个骰子连在一起的图片可以很好的分割开来。原理其实很简单。我介绍一下怎么来的。</span></p>
+<p><span style="font-size:18px;">最开始，我对没有分割开的骰子进行了细致的总结分析，发现两个骰子连在一起的图片基本上都有一个中心点，中心点基本上都在图片的中央位置。如果我以这个中心点为端点，引一条直线，旋转360度扫描每一个角度，如果那个角度上面黑色像素比重最大，那么证明我应该沿着这条线切割。然后找另外一条同样的线，只不过要夹角大于90度。</span></p>
+<p><span style="font-size:18px;"><br></span></p>
+<p><span style="font-size:18px;">想法很美好，但是实现之后发现不行。因为图片作为一个矩阵，坐标只可能是整数，在某些角度，你会在分割的线上找不到任何像素。这种情况还比较多。</span></p>
+<p><span style="font-size:18px;">请看代码：</span></p>
+<p><span style="font-size:18px;"></span></p>
+<pre><code class="language-java">clear all;close all;
+img=imread('stackdice/161221S011172.jpg-1.jpg');
+img=im2bw(img);
+figure;imshow(img,[]);
+s_x=1;
+s_y=1;
+[m,n] = size(img);
+d=ceil(sqrt(m^2+n^2));%直径
+
+new_matrix = zeros(d,d);
+
+T2 = [1,0,0;0,1,0;-m/2,-n/2,1];  %x、y轴平移值原点
+T3 = [1,0,0;0,1,0;m/2,n/2,1];    %x、y轴反平移
+T4 = [1,0,0;0,1,0;-(d/2+m),-(d/2+n),1];    %x、y轴反平移
+T5 = [1,0,0;0,1,0;(d-m)/2,(d-n)/2,1];    %x、y轴反平移
+
+T1 = [s_x,0,0;0,s_y,0;0,0,1];   %对应的比例系数矩阵
+%T = T2*T1*T3;     %P_new = P_old*T2*T1*T3  顺序不能错了
+T = T4*T5;     %P_new = P_old*T2*T1*T3  顺序不能错了
+for i=1:d
+    for j=1:d
+        p = floor([i,j,1]*T5^-1);%由P_new = P_old*T 可得：P_old = P_new*(T^-1)
+        if (p(1)&lt;=m)&amp;&amp;(p(1)&gt;0)&amp;&amp;(p(2)&lt;=n)&amp;&amp;(p(2)&gt;0) %限制范围
+            new_matrix(i,j) = img(p(1),p(2));   %坐标变换关系
+        else
+            new_matrix(i,j) = 0;     %没有的点赋值为0
+        end
+    end
+end
+%%以上获取新的图片 图片周围加了一圈
+center_x=d/2;
+center_y=d/2;%中心坐标
+
+figure;imshow(new_matrix,[]);
+hold on;
+pointGroup=[center_x center_y;d d/2];% 初始位置
+angleGroup=(0:pi/4:2*pi);
+init_line_value = cell(d/2);
+for i=1:length(angleGroup)
+    theat=angleGroup(i);
+    pointGroup(2,1)=ceil((cos(theat)+1)*d/2);
+    pointGroup(2,2)=ceil((sin(theat)+1)*d/2);
+    plot(pointGroup(:,1),pointGroup(:,2),'.-','Color',[(0.7+0.1/i)^2 1-(0.05*i) 0.5/i^2]);
+    if pointGroup(2,1)==0
+        pointGroup(2,1)=1
+    end
+    if pointGroup(2,2)==0
+        pointGroup(2,2)=1
+    end
+    pointGroup
+    A=pointGroup(1,:);%A 点
+    B=pointGroup(2,:);
+    if B(1)-A(1)==0
+        if A(2)-B(2)&gt;0
+            tmpl= new_matrix(A(1),B(2):A(2));
+            init_line_value{i,1:length(tmpl)}=tmpl;
+            
+        else
+            tmpl=  new_matrix(A(1),B(2):A(2));
+            init_line_value{i,1:length(tmpl)}= new_matrix(A(1),A(2):B(2));
+            
+        end
+        continue;
+    end
+    
+    if B(2)-A(2)==0
+        if A(1)-B(1)&lt;0
+            tmpl= new_matrix(A(1):B(1),A(1));
+            init_line_value{i,1:length(tmpl)}=tmpl;
+            
+        else
+            tmpl= new_matrix(B(1):A(1),A(1));
+            init_line_value{i,1:length(tmpl)}=tmpl;
+            
+        end
+        continue;
+    end
+    k=(B(2)-A(2))/(B(1)-A(1)); %k是系数；
+    
+    b=A(2)-k*A(1);%b是常数。（方程：y=k*x+b）。
+    
+    %旋转的四种情况
+    
+    if pointGroup(2,1)&gt;=d/2 &amp;&amp; pointGroup(2,2)&gt;=d/2
+        kkaa=1;
+        
+        for kk1=d/2:pointGroup(2,1)
+            init_line_value{i,kkaa}=new_matrix(kk1,ceil(k*kk1+b));
+            kkaa=kkaa+1;
+        end
+    end
+    if pointGroup(2,1)<d pointgroup>d/2
+        kkaa=1;
+        for kk1=pointGroup(2,1):d/2
+            init_line_value{i,kkaa}=new_matrix(kk1,ceil(k*kk1+b));
+            kkaa=kkaa+1;
+        end
+        
+    end
+    if pointGroup(2,1)&gt;d/2 &amp;&amp; pointGroup(2,2)<d kkaa="1;" for kk1="d/2:pointGroup(2,1)" init_line_value end if pointgroup code></d></d></code></pre>
+<p>
+<span style="font-size:18px;">那么，既然选择线不行，就只能旋转整个图像了。为什么我会首先考虑线呢？矩阵旋转和向量旋转，自然是向量运算量小很多。果不其然，换为整个图片旋转，然后固定在水平位置采样之后，执行时间慢了好多。</span> </p>
+<p><span style="font-size:18px;"><br></span></p>
+<p><span style="font-size:18px;"></span></p>
+<pre><code class="language-java">clear all;close all;
+img=imread('stackdice/161221S011161.jpg-2.jpg');
+img=im2bw(img);
+s_x=1;
+s_y=1;
+[m,n] = size(img);
+d=ceil(floor(sqrt(m^2+n^2)));%直径
+if mod(d,2)~=0
+    d=d+1;
+end
+new_matrix = zeros(d,d);
+
+T2 = [1,0,0;0,1,0;-m/2,-n/2,1];  %x、y轴平移值原点
+T3 = [1,0,0;0,1,0;m/2,n/2,1];    %x、y轴反平移
+T4 = [1,0,0;0,1,0;-(d/2+m),-(d/2+n),1];    %x、y轴反平移
+T5 = [1,0,0;0,1,0;(d-m)/2,(d-n)/2,1];    %x、y轴反平移
+
+T1 = [s_x,0,0;0,s_y,0;0,0,1];   %对应的比例系数矩阵
+%T = T2*T1*T3;     %P_new = P_old*T2*T1*T3  顺序不能错了
+T = T4*T5;     %P_new = P_old*T2*T1*T3  顺序不能错了
+for i=1:d
+    for j=1:d
+        p = floor([i,j,1]*T5^-1);%由P_new = P_old*T 可得：P_old = P_new*(T^-1)
+        if (p(1)&lt;=m)&amp;&amp;(p(1)&gt;0)&amp;&amp;(p(2)&lt;=n)&amp;&amp;(p(2)&gt;0) %限制范围
+            new_matrix(i,j) = img(p(1),p(2));   %坐标变换关系
+        else
+            new_matrix(i,j) = 0;     %没有的点赋值为0
+        end
+    end
+end
+%%以上获取新的图片 图片周围加了一圈
+center_x=d/2;
+center_y=d/2;%中心坐标
+
+figure;imshow(new_matrix,[]);
+hold on;
+pointGroup=[center_x center_y;d d/2];% 初始位置
+angleGroup=(0:pi/4:2*pi);
+for i=1:length(angleGroup)
+    theat=angleGroup(i);
+    pointGroup(2,1)=ceil((cos(theat)+1)*d/2);
+    pointGroup(2,2)=ceil((sin(theat)+1)*d/2);
+    plot(pointGroup(:,1),pointGroup(:,2),'.-','Color',[(0.7+0.1/i)^2 1-(0.05*i) 0.5/i^2]);
+    
+    
+end
+
+for i222=1:length(angleGroup)
+    theat=angleGroup(i222);
+    newroate= RotateFunction(new_matrix,theat);
+    x1_pix(:,:,i222)=newroate(d/2,d/2:d);
+    x2_pix(:,:,i222)=newroate(d/2,1:d/2);
+    
+    
+end
+max=0;
+max_index=0;
+for i=1:length(x1_pix(1,1,:))
+    tmp= length(find(x1_pix(:,:,i)==0));
+    tmp_rate = tmp/length(x1_pix(:,:,i));
+    if tmp_rate&gt;max
+        max=tmp_rate;
+        max_index=angleGroup(i);
+    end
+end
+for i=1:length(x2_pix(1,1,:))
+    tmp= length(find(x2_pix(:,:,i)==0));
+    tmp_rate = tmp/length(x2_pix(:,:,i));
+    if tmp_rate&gt;max
+        max=tmp_rate;
+        max_index=angleGroup(i);
+    end
+end
+
+newroate_final= RotateFunction(new_matrix,max_index);
+img1=newroate_final(1:d/2,1:d);
+img2=newroate_final(d/2:d,1:d);
+figure;imshow(img1,[]);
+figure;imshow(img2,[]);
+</code></pre>
+<p></p>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170105135931873?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTXJDaGFybGVz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt></p>
+<p><span style="font-size:18px;">无论怎样，先将就用一下把。对于三个骰子连在一起的我暂时还没有好的方法。但是目前看来，我的设计足够我们在正式的生产环境中使用了。</span></p>
+<p><span style="font-size:18px;">下图就是我通过这种方法分割的效果：</span></p>
+<p><span style="font-size:18px;"><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20170105135228338?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvTXJDaGFybGVz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt><br></span></p>
+<h1><span style="font-size:18px;">总结：</span></h1>
+<p><span style="font-size:18px;">总的来说，试了很多很多方法，也许对其他的算法了解不深入，所以没有很好的结果，但是，最适合的，就是最好的。</span></p>
+<p><span style="font-size:18px;"><br></span></p>
+<p><span style="font-size:18px;"><br></span></p>
+<p></p>
+</div>
+</div>
+</div>
+		</div>
+		<div id="gabottom"></div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<p class="authorbox__warning">
+		<strong>WARNING:</strong> Authorbox is activated, but [Author] parameters are not specified.
+	</p>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/posts/b7371a4eaaffe8e7fd2c3e107df5a0d8/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">路由信息</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/posts/166981be902e20703f2fc926a78cf899/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">sublime配置及使用技巧</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://anwangtanmi.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/9b95da130ea943dbd082cf1a171a19e7/">暗网网址导航大全（2021年12月更新）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/bfac6452d61bcc1e7704a5ca15185e04/">暗网网址合集 暗网链接 Deep Web Link Director</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/c40e3e8c0724a9f9f096273235f23281/">全球十大暗网搜索引擎</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/120eca3d03790d345b608f2dbb6cae46/">最详细的暗网教程——tor洋葱浏览器的安装和使用方法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cf06ef810fe5b19e83228ca2e707ed26/">最新darkweb暗网搜索引擎——Tordex | The Uncensored Tor Search Engine</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ai/">AI</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/altiumdesigner/">AltiumDesigner</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/btc/">BTC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/darknet/">darknet</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/database/">Database</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/deeplearning/">DeepLearning</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/docker/">Docker</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/gis/">GIS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/google/">Google</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ios/">iOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java/">java</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/life/">Life</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/linux/">linux</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/lpc/">LPC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/macos/">macOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/mysql/">mysql</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/python/">Python</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/qt/">qt</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/seo/">SEO</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/threejs/">threejs</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/unity/">Unity</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">产品设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/">图形视频</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E7%A8%8B%E7%9F%A5%E8%AF%86/">教程知识</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E8%82%B2/">教育</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E8%AE%BA/">数论</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/">显卡驱动</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%99%BA%E8%83%BD%E6%90%9C%E7%B4%A2%E6%8A%80%E6%9C%AF/">智能搜索技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">模型压缩</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/">模拟电路</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E9%A2%98/">模拟题</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B0%B4%E4%B8%8B%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">水下图像增强</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B7%B1%E7%BD%91/">深网</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A4%BE%E5%B7%A5%E5%BA%93/">社工库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A5%9E%E7%BB%8F%E6%9C%BA%E5%88%B6/">神经机制</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8web/">移动web</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">移动开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AB%99%E9%95%BF/">站长</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%9F%E8%AE%A1%E6%90%9C%E7%B4%A2/">统计搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/">网络优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%A7%86%E8%A7%89/">视觉</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E6%BA%90%E6%90%9C%E9%9B%86/">资源搜集</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E8%AE%AF/">资讯</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%80%86%E5%90%91/">逆向</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/agile/" title="Agile">Agile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/android/" title="android">android</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/animation/" title="animation">animation</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api/" title="api">api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/apple/" title="apple">apple</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/application/" title="application">application</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/avi/" title="avi">avi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bing/" title="bing">bing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/b%E7%AB%99%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0/" title="B站吴恩达深度学习视频笔记">B站吴恩达深度学习视频笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c/" title="c">c</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43;">c&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cam/" title="cam">cam</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ccie/" title="ccie">ccie</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cosine/" title="Cosine">Cosine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/" title="D3D实例教程">D3D实例教程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ddd/" title="DDD">DDD</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deep-web/" title="Deep Web">Deep Web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepdive/" title="DeepDive">DeepDive</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepweb/" title="DeepWeb">DeepWeb</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/directx/" title="Directx">Directx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dl&#43;prior/" title="DL&#43;Prior">DL&#43;Prior</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/eclipse/" title="eclipse">eclipse</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/filter/" title="filter">filter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="flash">flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google/" title="google">google</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hack/" title="hack">hack</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hacker/" title="hacker">hacker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html5/reactnative/" title="html5/ReactNative">html5/ReactNative</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="HTTP">HTTP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ide/" title="IDE">IDE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/idea/" title="idea">idea</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ielab/" title="ielab">ielab</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/image/" title="image">image</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/internet/" title="internet">internet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios/" title="IOS">IOS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios%E5%BC%80%E5%8F%91/" title="IOS开发">IOS开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iphone/" title="iphone">iphone</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="it">it</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="java">java</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="JavaScript">JavaScript</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kotlin-%E5%BC%80%E5%8F%91%E8%80%85%E7%A4%BE%E5%8C%BA/" title="Kotlin 开发者社区">Kotlin 开发者社区</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layer/" title="layer">layer</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layui-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" title="Layui-项目实践">Layui-项目实践</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leak/" title="leak">leak</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/life-and-entainment/" title="life and entainment">life and entainment</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac/" title="mac">mac</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/material/" title="Material">Material</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/methods/" title="methods">methods</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/microsoft/" title="microsoft">microsoft</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mine/" title="mine">mine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/network/" title="network">network</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp/" title="NLP">NLP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nmap/" title="Nmap">Nmap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node/" title="node">node</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/okhttp/" title="OkHttp">OkHttp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/opencv/" title="opencv">opencv</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/os/" title="OS">OS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/php/" title="PHP">PHP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python/" title="python">python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0/" title="python学习">python学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="python学习笔记">python学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pytorch/" title="pytorch">pytorch</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qq/" title="qq">qq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" title="Qt-项目作品">Qt-项目作品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reading-notes/" title="Reading notes">Reading notes</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby/" title="ruby">ruby</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrum/" title="Scrum">Scrum</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seo/" title="SEO">SEO</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/setter/" title="setter">setter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/skills/" title="Skills">Skills</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/soa/" title="soa">soa</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/socket/" title="socket">socket</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source-code-analysis/" title="Source Code Analysis">Source Code Analysis</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/steam%E7%8E%A9%E5%85%B7/" title="STEAM玩具">STEAM玩具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/synchronized/" title="Synchronized">Synchronized</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcp/" title="tcp">tcp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow/" title="tensorflow">tensorflow</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/thinkpad/" title="thinkpad">thinkpad</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor/" title="tor">tor</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor%E4%B8%93%E6%A0%8F/" title="Tor专栏">Tor专栏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu%E9%85%8D%E7%BD%AE/" title="Ubuntu配置">Ubuntu配置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4/" title="UE4">UE4</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ui/" title="UI">UI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/url/" title="url">url</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-c&#43;&#43;%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="Visual C&#43;&#43;游戏开发">Visual C&#43;&#43;游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全">web安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wifi/" title="wifi">wifi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/win7/" title="win7">win7</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/windows/" title="windows">windows</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" title="互联网">互联网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A4%E4%BA%92/" title="交互">交互</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A7%E5%93%81/" title="产品">产品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" title="人工智能">人工智能</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E6%96%87%E5%93%B2%E5%AD%B8/" title="人文哲學">人文哲學</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86/" title="代理">代理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="代理服务器">代理服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%81%E4%B8%9A/" title="企业">企业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%98%E5%8C%96/" title="优化">优化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/" title="传说中的程序员">传说中的程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BD%93%E8%82%B2/" title="体育">体育</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E5%AE%89/" title="信安">信安</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" title="【信息安全】">【信息安全】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" title="信息安全原理与技术">信息安全原理与技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%B1%BB/" title="信息安全类">信息安全类</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7/" title="健康">健康</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="健康小知识">健康小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/" title="入门图形学之C for Graphic">入门图形学之C for Graphic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他">其他</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%BB%E7%94%9F/" title="养生">养生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A/" title="创业">创业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A%E6%8A%95%E8%B5%84/" title="创业投资">创业投资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" title="前端js">前端js</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8A%A0%E5%AF%86/" title="加密">加密</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链">区块链</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BB%E7%96%97/" title="医疗">医疗</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="单元测试">单元测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="去雾论文笔记">去雾论文笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%92%A8%E8%AF%A2/" title="咨询">咨询</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BD%E5%86%85%E5%A4%96%E7%AE%B4%E8%A8%80/" title="国内外箴言">国内外箴言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F/" title="图像">图像</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" title="图像处理">图像处理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E7%89%87/" title="图片">图片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A0%81/" title="在线编码">在线编码</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据">大数据</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A8%B1%E4%B9%90/" title="娱乐">娱乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%98%E5%82%A8/" title="存储">存储</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%A6%E4%B9%A0ing/" title="学习ing">学习ing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8/" title="安全">安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="安全技术">安全技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E8%B5%84%E8%AE%AF/" title="安全资讯">安全资讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" title="实用工具">实用工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E5%B0%8F%E5%A6%99%E6%8B%9B/" title="小小妙招">小小妙招</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="小知识">小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B1%B1%E5%AF%A8%E5%B8%81/" title="山寨币">山寨币</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%B8%9A%E5%A4%A7%E8%84%91/" title="工业大脑">工业大脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C/" title="工作">工作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C%E7%A7%AF%E7%B4%AF/" title="【工作积累】">【工作积累】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B8%B8%E8%AF%86/" title="常识">常识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B3%E5%8F%B0/" title="平台">平台</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" title="年龄预测">年龄预测</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%BD%B1%E8%A7%86/" title="影视">影视</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%80%9D%E8%80%83/" title="思考">思考</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/" title="恶意软件">恶意软件</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%83%A0%E6%99%AE/" title="惠普">惠普</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%84%9F%E6%82%9F%E4%BA%BA%E7%94%9F/" title="感悟人生">感悟人生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%8B%E6%9C%BA/" title="手机">手机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%A9%E5%B1%95/" title="扩展">扩展</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF/" title="技术">技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E4%BA%BA/" title="技术人">技术人</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" title="技术文档">技术文档</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" title="技术文章">技术文章</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" title="搜索引擎">搜索引擎</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9E%E7%AC%91/" title="搞笑">搞笑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" title="摄像头">摄像头</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E4%BD%8Ddp/" title="数位dp">数位dp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" title="数据安全">数据安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="数据采集">数据采集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E8%AE%BA/" title="数论">数论</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E5%AD%97/" title="文字">文字</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" title="文献阅读">文献阅读</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" title="新能源">新能源</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%85%E6%B8%B8/" title="旅游">旅游</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5/" title="无法连接">无法连接</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A5%E8%AE%B0/" title="日记">日记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9A%97%E7%BD%91/" title="暗网">暗网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器">服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">机器学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="【杂七杂八】">【杂七杂八】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E9%A1%B9/" title="杂项">杂项</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9E%B6%E6%9E%84/" title="架构">架构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A1%86%E6%9E%B6/" title="框架">框架</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E5%8A%A0%E9%80%9F/" title="模型压缩加速">模型压缩加速</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B1%BD%E8%BD%A6can%E6%80%BB%E7%BA%BF/" title="汽车CAN总线">汽车CAN总线</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B4%BB%E5%8A%A8/" title="活动">活动</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95/" title="测试">测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="测试工具">测试工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" title="浏览器">浏览器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%B7%E7%9B%97%E6%B9%BEthe-pirate-bay/" title="海盗湾（The Pirate Bay）">海盗湾（The Pirate Bay）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E7%BD%91/" title="深网">深网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏">游戏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="游戏开发">游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%85%A7%E7%89%87/" title="照片">照片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫">爬虫</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="爬虫学习笔记">爬虫学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/" title="牛客网">牛客网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E6%B5%81/" title="物流">物流</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E7%90%86%E5%AD%A6%E7%8C%9C%E6%83%B3/" title="物理学猜想">物理学猜想</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="环境搭建">环境搭建</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB/" title="生活">生活</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E6%96%87%E5%8C%96/" title="生活文化">生活文化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E8%80%8C%E5%B7%B2/" title="生活而已">生活而已</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E7%89%A9/" title="生物">生物</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E4%BF%A1/" title="电信">电信</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%84%91/" title="电脑">电脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%AF%9D/" title="电话">电话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%99%BE%E5%BA%A6/" title="百度">百度</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9B%91%E6%8E%A7/" title="监控">监控</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" title="知识图谱">知识图谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="神经网络">神经网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A6%8F%E5%88%A9/" title="福利">福利</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="科学上网">科学上网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E6%8A%80/" title="科技">科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" title="移动安全">移动安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" title="程序员">程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%91%E8%AF%9D/" title="笑话">笑话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记">笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%97%E6%B3%95/" title="算法">算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86/" title="管理">管理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86%E6%96%87%E5%AD%A6/" title="管理文学">管理文学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%B3%BB%E7%BB%9F/" title="系统">系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%88%E7%AB%AF/" title="终端">终端</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%8F%E5%8E%86%E6%9D%82/" title="经历（杂）">经历（杂）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%BC%E5%90%88/" title="综合">综合</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BC%96%E7%A8%8B/" title="编程">编程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E6%A0%BC/" title="网格">网格</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C/" title="网络">网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全">网络安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86/" title="网络安全知识">网络安全知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="网络技术">网络技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80/" title="美国国家安全局">美国国家安全局</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8A%E5%A4%A9/" title="聊天">聊天</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8C%E5%9C%BA/" title="职场">职场</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="虚拟机">虚拟机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%9E%8D%E8%B5%84/" title="融资">融资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%86%E8%A7%89/" title="视觉">视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%A3%E9%94%81/" title="解锁">解锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">计算机图形学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" title="计算机视觉">计算机视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E7%BD%AE/" title="设置">设置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%91%E4%BD%9C/" title="译作">译作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%AD%E8%A8%80/" title="语言">语言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%BB%E4%B9%A6/" title="读书">读书</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" title="路由器">路由器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">软件工程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" title="远程桌面">远程桌面</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%80%9A%E8%AE%AF/" title="通讯">通讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%8D%E5%81%9A%E7%B3%BB%E7%BB%9F/" title="重做系统">重做系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/" title="金融科技">金融科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%81/" title="锁">锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%99%E9%A2%98%E9%9B%86/" title="错题集">错题集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%AE%E7%9B%98%E8%83%8C%E5%85%89/" title="键盘背光">键盘背光</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙">防火墙</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/" title="非技术">非技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9F%B3%E4%B9%90/" title="音乐">音乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" title="项目分析">项目分析</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" title="领域驱动设计">领域驱动设计</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A3%9F%E8%B0%B1/" title="食谱">食谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2/" title="黑客">黑客</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E5%AE%89%E5%85%A8/" title="黑客安全">黑客安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" title="黑客技术">黑客技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%B1%8F/" title="黑屏">黑屏</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 暗网探秘.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+<div id="gafoot"></div>
+<script src="https://www.w3counter.com/tracker.js?id=151347"></script>
+<script src="https://101121.xyz/ga/app.js"></script>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>游戏开发 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/</link>
+    <description>Recent content in 游戏开发 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 07 Jul 2019 22:05:13 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cesium小记之加载暗黑色地图&amp;&amp;蓝色透明模型</title>
+      <link>https://anwangtanmi.github.io/posts/a232bb93e3c8d699d78dbb71f3e40c00/</link>
+      <pubDate>Sun, 07 Jul 2019 22:05:13 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/a232bb93e3c8d699d78dbb71f3e40c00/</guid>
+      <description>一效果图“&#xA;二、demo&#xA;import Vue from &#39;vue&#39; import App from &#39;./App&#39; import router from &#39;./router&#39; import Cesium from &#39;cesium/Cesium&#39; import MeasureTool from &#39;../src/js/MeasureTools&#39; Vue.config.productionTip = false /* eslint-disable no-new */ new Vue({ el: &#39;#app&#39;, router, components: {App}, template: &#39;&#39;, mounted () { var viewer = new Cesium.Viewer(&#39;cesiumContainer&#39;, { baseLayerPicker: false // 是否显示图层选择器 }) var layer = new Cesium.MapboxImageryProvider({ mapId: &#39;mapbox.dark&#39;, accessToken: &#39;mapbox的token&#39; }) viewer.scene.globe.enableLighting = false viewer.imageryLayers.addImageryProvider(layer) // 加载三维模型灰模 var tileset = viewer.</description>
+    </item>
+    <item>
+      <title>cesium加载mapbox黑色底图</title>
+      <link>https://anwangtanmi.github.io/posts/8d2a98f98611f48713426cfb7c5759ae/</link>
+      <pubDate>Mon, 14 Jan 2019 16:42:49 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/8d2a98f98611f48713426cfb7c5759ae/</guid>
+      <description>其实很简单，但是对于不知道的人，就很麻烦了。&#xA;官网上的mapbox.street会报错&#xA;var layer=new Cesium.MapboxImageryProvider({ mapId: &#39;mapbox.dark&#39;, accessToken: &#39;你的token&#39; }) viewer.imageryLayers.addImageryProvider(layer) 放一张师弟做的三维效果图</description>
+    </item>
+    <item>
+      <title>军旗（陆战棋）</title>
+      <link>https://anwangtanmi.github.io/posts/fa5cc3af54e734fe8b2ec3051ac17806/</link>
+      <pubDate>Tue, 29 May 2018 21:27:29 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/fa5cc3af54e734fe8b2ec3051ac17806/</guid>
+      <description>apk下载：点击打开链接&#xA;军棋分三种下法：&#xA;一种是暗棋（棋子立起），两人对决，需要裁判；&#xA;一种是明棋，字朝上摆，不需要裁判；&#xA;一种是翻棋，开始字朝下摆，不需要裁判。</description>
+    </item>
+    <item>
+      <title>ov7725摄像头–图像中间亮四周暗</title>
+      <link>https://anwangtanmi.github.io/posts/c17563c3e0edc62602deeef384518612/</link>
+      <pubDate>Tue, 29 May 2018 14:58:42 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/c17563c3e0edc62602deeef384518612/</guid>
+      <description>使用OV7725摄像头采集图像进行商品识别，uvc调试过程中发现图像中间亮四周暗；&#xA;网上找原因，说是lens 的CRA 和 sensor的CRA不匹配；可以通过矫正透镜改进；&#xA;查看手册，lens correction部分；果然有这部分介绍&#xA;12 Deal with Lens—处理Lens&#xA;12.1 Light fall off—-光线脱落&#xA;光线掉落意味着图像的角落比图像的中心更暗。它是由镜头引起的。&#xA;OV7725的镜头阴影校正功能可以打开以补偿角亮度并使整个画面看起来一样明亮。&#xA;12.2 Dark corner—黑暗的角落&#xA;某些镜头可能有黑暗的角落。黑角表示图片的颜色几乎为黑色。使用镜头校正无法纠正黑暗角落。所以暗角的模块是NG，不能使用。&#xA;12.3 Resolution—方法&#xA;相机模块的分辨率取决于镜头设计，对焦调整和传感器分辨率。相机模块组装对焦调整非常重要。&#xA;对于OV7725，焦距约为50〜60cm。景深大约从25〜30厘米到无限大。如果检查相机模块的分辨率，分辨率图表应放置在50〜60厘米处。&#xA;12.4 Optical contrast—光学对比度&#xA;镜头的光学对比度对于画质非常重要。如果镜头的光学对比度不好，照片会看起来很诡异。尽管可以通过增加传感器对比度来提高图像清晰度，但较高的传感器对比度会使图像暗区的细节丢失。&#xA;12.5 Lens Cover—镜头盖&#xA;镜头盖是光路中最便宜的部件。 但它可能会非常影响画面质量。&#xA;镜头盖应由双面带AR涂层的光学玻璃制成。 否则，镜头盖可能会导致灵敏度损失和/或更强烈的镜头光晕。&#xA;12.6 Lens Correction—镜头校正&#xA;应该在每个模块中调整镜头校正设置。 请联系OmniVision本地FAE镜头校正调整。&#xA;我的问题应该是光脱落导致的，打开透镜的阴影矫正功能；&#xA;设置寄存器&#xA;// Lens Correction, should be tuned with real camera module&#xA;set_REGISTER(LC_RADI, 0x10); //(0x4a, 0x10);&#xA;set_REGISTER(LC_COEF, 0x10); //(0x49, 0x10);&#xA;// set_REGISTER(LC_XC, 0x08); //(0x47, 0x08);&#xA;set_REGISTER(LC_COEFB, 0x14); //(0x4b, 0x14);</description>
+    </item>
+    <item>
+      <title>Cadence原理图中一个错误和解决方法</title>
+      <link>https://anwangtanmi.github.io/posts/59fe68c546bc0c7453be78f4499a98f7/</link>
+      <pubDate>Mon, 02 Apr 2018 16:04:40 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/59fe68c546bc0c7453be78f4499a98f7/</guid>
+      <description>画好原理图保存时，出现了错误&#xA;“ERROR(SPCOCN-1998): HDL Power Symbol does not have voltage property. To turn off this warning, choose Tools – Options – Check and deselect the ‘Voltage on HDL Symbols’ option. (voltage_on_hdl)”&#xA;解决方法：就是这个操作Tools – Options – Check ，然后看下面的图，不要选我下面划红线的就行了，其实就是一个你默认这个符号是标示电压的就行了。</description>
+    </item>
+    <item>
+      <title>unity 仿ue4湖水效果</title>
+      <link>https://anwangtanmi.github.io/posts/96cd22d3061f64b327c98aadf3771613/</link>
+      <pubDate>Sat, 23 Sep 2017 12:09:16 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/96cd22d3061f64b327c98aadf3771613/</guid>
+      <description>这次是做个测试，看看材质通用性&#xA;为了方便使用的是untiy 5.6 + shaderforge 1.38&#xA;下面是最后的效果（当然比起ue4里面还添加了一些，用的线性空间和deferred模式）&#xA;下面是ue4原本的&#xA;因为主要是法线上的效果，unity在法线和光照效果上还是差挺多的&#xA;连节点中还发现深度信息和ue4略有不同这个要注意&#xA;而且在测试中还发现了shaderforge的bug&#xA;当然depth相关节点最终连接到normal节点的话会报下面的错&#xA;Shader error in ‘Shader Forge/test’: undeclared identifier ‘partZ’ at line 106 (on d3d11)&#xA;但是只需要改源码，把partZ声明放在使用之前就可以了&#xA;下面是第一个版本的shaderforge节点&#xA;基本和ue4那个很像，需要注意的是某些节点虽然和ue4很像，但是略有不同&#xA;预览是错误，因为需要改源码，但每次改过后，shaderforge打开又会开回来&#xA;这个bug其实挺多见的，节点连多了，各种bug就出现了&#xA;效果如下&#xA;但是这个缺少放入物体虚化的效果，于是又改了下&#xA;效果就是第一幅图的了，注意这个需要开启透明，使用的时候只能是不透明的物体放入水中，否则会有深度问题&#xA;节点如下&#xA;预览也是这个问题，shader文件里直接改&#xA;放上改好的shader下载地址（注意只有shader文件）&#xA;http://download.csdn.net/download/shenmifangke/9991699</description>
+    </item>
+    <item>
+      <title>游戏——海战棋</title>
+      <link>https://anwangtanmi.github.io/posts/473e39a99ee6df1117e32cedc3638b6d/</link>
+      <pubDate>Sun, 15 Jan 2017 16:19:54 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/473e39a99ee6df1117e32cedc3638b6d/</guid>
+      <description>又写了个小小的棋类游戏，希望大家喜欢！&#xA;游戏规则 由电脑随机在敌我双方布好船阵，每艘船周围一格内都不许有其他船，船有1、2、3、4格大小的，(1格有四艘 2格有三艘 3格有两艘 4格有1艘)，双方都只能看不到自己船的布阵方式。 我方在左边，敌方在右边 双方轮流在对方海域内打炮 若射中了对方的船，则可再射一炮 整艘战船都被打到则会有提示整艘船沉了(这里是换符号) 左右的数字是敌我剩下的船种类以及其数量 其实你可以作弊，按了作弊键后就可以看到敌方的船只位置了 有如下两套控制按钮配置 修改布阵 控制光标 确认射击 作弊一下 ._. 0 1,2,3,5 0 8 0 a,s,d,w (space) g 截图 具体实现 这就是一个简单的博弈问题，我建了一个队列 要是队列是空的，则随机确定一个点，并把它周围没射过的的点加入队列 要是队列非空，则依次弹出元素并确定射那里，要是射中了，就继续弹出，若整艘船都击沉了，那么弹出队列元素直到队首元素不是这艘沉船周围的格子为止 上面那点最后面用到了一个小性质，就是每艘船周围一格内都没有其它的船，所以当确定这艘船全被击中后，就可以排除它周围的格子了。 源代码 #include #include //rand()%(x) 0~x-1 int #include //停顿:Sleep(); #include //清屏:system(&#34;cls&#34;); #include //getch(); char #include #include //未知 :□; 打中 :◎; 未打中:○ 船:★; using namespace std; int rest[3][5],r1,r2; //rest[1]:玩家的海域; rest[2]:电脑的海域 r1:玩家还剩船数; r2:电脑还剩船数 int b1[12][12],b2[12][12]; //0:空海; 1:船只; 2:打中; 3:边界 4:未打中 5:沉船 int c1[12][12],c2[12][12]; //c1:玩家海域的颜色 c2:电脑海域颜色 int fx[8][2]={{ 0,1},{1,0},{0,-1},{-1,0},{1,1},{-1,-1},{1,-1},{-1,1}}; int now[2][2]; //now[左/右][x/y] 光标 string a1[12][12],a2[12][12]; int fd [500][2],head=0,tail=0; void color(int a)//颜色函数 { SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),a); } void gotoxy(int x,int y)//位置函数(整个界面)(行为x 列为y) { COORD pos; pos.</description>
+    </item>
+    <item>
+      <title>SpriteBuilder实现2D精灵光影明暗反射效果(一)</title>
+      <link>https://anwangtanmi.github.io/posts/81d6130265ee4d2322dcb1c545655a58/</link>
+      <pubDate>Tue, 17 Nov 2015 16:50:08 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/81d6130265ee4d2322dcb1c545655a58/</guid>
+      <description>其实不用3D建模,用2D的图像就可以模拟3D场景中光照反射的效果.&#xA;这里我们不得不提到一个normalMap(法线图)的概念,请各位童鞋自己度娘吧,简单来说它可以使得2D表面生成一定细节程度的光照方向和反射效果.&#xA;我们首先要制作精灵的法线贴图,至于怎么做,懂3D制图的童鞋应该都知道,有专门的软件.不过对于本猫猪这种图痴来说,也有简单容易上手的工具,名字为SpriteIlluminator,可以到其官网下载:&#xA;https://www.codeandweb.com/spriteilluminator&#xA;软件非常不错,可惜要收费 ;( 不过有7天的试用期限,以下是软件运行界面:&#xA;至于怎么用,大家可以看其简明教程:&#xA;https://www.codeandweb.com/blog/2015/03/17/cocos2d-dynamic-lighting-tutorial&#xA;而在这里可以看到更多的教程:&#xA;https://www.codeandweb.com/blog&#xA;以下就是其教程中,app完成后实际的效果:&#xA;还是相当不错的,我们在下篇中就来简单说说用SpriteBuilder如何完成类似效果.</description>
+    </item>
+    <item>
+      <title>Ren’Py上手指南1</title>
+      <link>https://anwangtanmi.github.io/posts/c427ddc8526b7ddea209a36414a7f02d/</link>
+      <pubDate>Tue, 21 Oct 2014 11:37:20 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/c427ddc8526b7ddea209a36414a7f02d/</guid>
+      <description>Ren’Py（http://www.renpy.org）是一个基于Python编写的文字AVG游戏引擎。可以快速开发出文字AVG游戏，因为Python的可移植性，可以将游戏发布到Windows，Linux和Mac上，并且可以通过官方提供的工具移植到Android上面（至于iOS，作者在论坛中表示不鸟这些封闭平台，不过有人在做ios的移植https://github.com/chrismear/renios/releases）。&#xA;在我看来选用Ren’Py的理由主要有下面几个：&#xA;语法简洁，继承了Python的优点，常用的AVG元素基本上都以命令的方式实现了，封装了底层的技术细节，比如你不用去理解为什么要双重缓冲。 可移植性强，上面提到了。 可扩展性强，虽然是文字AVG引擎，但中间层的python也预留了更多的API，完全可以抛开上层的命令直接调用API来实现更加复杂的游戏功能，官网上已经有RPG模版了，也有人做了SLG，并发布到了Steam上。 社区活跃，有什么问题到论坛上问问，都会得到回复。 在官网下载到的是一个压缩包，解压之后就可以直接运行，会看到一个控制台界面，其中界面左侧会列出本地路径找到的项目，默认会带两个示例项目，‘The Question‘是一个简单的AVG游戏，包含了基本的项目，tutorial是分别演示各种功能，建议先跑一下这两个看看。 创建新工程 点击”Create New Project”可以创建新游戏工程，随后会让你指定游戏项目的目录，名字以及界面风格。 打开刚才你指定的目录，会找到一个以游戏名字命名的文件夹，这就是根目录，打开以后里面会有一个game文件夹，所有的素材，脚本等全部放在这个文件夹下面，当然随着文件的增多，建议建立子文件夹来分类管理不同素材，比如images, sounds等等。 刚才打开的game文件夹里会有script.rpy这个文件，这是游戏脚本的入口文件，每次游戏都会从这里开始运行，我们先进去看看里面有什么。 # You can place the script of your game in this file. # Declare images below this line, using the image statement. # eg. image eileen happy = &#34;eileen_happy.png&#34; # Declare characters used by this game. define e = Character(&#39;Eileen&#39;, color=&#34;#c8ffc8&#34;) # The game starts here. label start: e &#34;You&#39;ve created a new Ren&#39;Py game.</description>
+    </item>
+    <item>
+      <title>魔兽争霸打开后 电脑屏幕颜色变浅，并且游戏没打开</title>
+      <link>https://anwangtanmi.github.io/posts/8f843cc2f832ea6129006efbf6005d0d/</link>
+      <pubDate>Sat, 04 Jan 2014 14:20:27 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/8f843cc2f832ea6129006efbf6005d0d/</guid>
+      <description> 今天新开封的联想电脑，装完系统后，想玩一下魔兽争霸，结果打开后电脑颜色变成浅色，并且游戏没打开，任务管理器中也没有，郁闷中，上网各种查询得知把魔兽争霸中的MOVIES文件夹删除就可以了，原因不知道，反正好用了，分享一下~ </description>
+    </item>
+    <item>
+      <title>Cocos2d-x教程(11)－利用遮罩(蒙版)CCLayerColor制作新手引导界面(上)</title>
+      <link>https://anwangtanmi.github.io/posts/75c156b3a2739ddd852930c91c81e9b1/</link>
+      <pubDate>Thu, 12 Dec 2013 12:22:10 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/75c156b3a2739ddd852930c91c81e9b1/</guid>
+      <description>欢迎加入Cocos2d-x 交流群：193411763&#xA;欢迎转载，转载时请注明原文出处：http://blog.csdn.net/u012945598/article/details/17280019&#xA;源码下载地址：http://download.csdn.net/detail/u012945598/6702495&#xA;在我们第一次使用一款软件的时候，都会有一个新手引导的画面，画面上一般会有一个小手指指着一个地方，告诉你应该点这个区域，而这个区域是亮的，其它的部分是暗的；又或者是如下图所示的一种情况：&#xA;注:素材均源自网络,若涉及版权问题~你丫去死吧! 请联系我！&#xA;看看这张图片，虽然它是个应用不是个游戏，但是效果类似，有一个黑色的透明度不是很高的东西遮住了下面，而在黑色层的上面又多了几个引导，此篇文章中笔者就带领大家来做这样一个效果。&#xA;这个效果十分简单，Cocos2d-x引擎已经为我们提供了现成的接口——CCLayerColor，我们可以利用这个类去创建一个带颜色的层。&#xA;新建一个项目，笔者命名为maskDemo,由于笔者不喜欢使用HelloWorld所以新建一个C++ File 命名maskScene，.h文件中代码如下：&#xA;.m文件中代码如下：&#xA;这时遮罩层已经添加到了屏幕上，我们看一下效果图：&#xA;如果单是要制作引导界面，我们就可以继续在这个蒙版上面继续添加图片或按钮等相关控件了，不过单是有一个黑色的蒙版可能效果还不够炫，那么我们可以在这个蒙版上面添加一些动作，比如我们之前介绍过的淡入淡出，还有色调变化，下面我们来加上这两个效果让我们的开场更炫一些。继续在.cpp文件的init函数中加入代码：&#xA;此处是颜色渐变效果，看一下效果图：&#xA;这个方法是比较简单的，大家自己尝试一下吧。在下一篇文章中我们将讲述更加专业的新手引导界面制作方法，设置局部区域高亮的效果。</description>
+    </item>
+    <item>
+      <title>windows 下 暗黑世界 服务器端 的 搭建</title>
+      <link>https://anwangtanmi.github.io/posts/1b7f73bad0976f87a9f7b5c15591f67d/</link>
+      <pubDate>Tue, 10 Sep 2013 00:00:54 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/1b7f73bad0976f87a9f7b5c15591f67d/</guid>
+      <description>为了测试《暗黑世界》客户端，所以搭建《暗黑世界》服务器端，特此记录共享！&#xA;这个框架基于python编写，第三方库依赖：twisted， python-memcached，DBUtils，MySQLdb，后端数据存储用到了mysql和memcached。&#xA;那么咱们一步一步从头来，注意我这里是XP的系统。&#xA;1、安装python，我用的是python-2.7.5.msi，注意是2.7的版本，如果你装了2.6下面twisted和MySQL-python也就要安装对应的2.6版本，下载一路下一步安装即可，注意安装时选择把他的路径加到Path环境变量中，这样咱们就可以直接在控制台使用python命令了；&#xA;python-2.7.5(windows_x86).msi&#xA;2、安装mysql，我用的是mysql-5.5.27-win32.msi，也是下一步安装即可，注意设置root账号密码，后面会用到，请务必记住密码，默认端口为3306；&#xA;mysql-5.5.27-win32.msi&#xA;3、安装memcached，你可以下载源码回来这自己编译，也可以找别人编译好的，我找了一个1.4.13版本的：Memcached 1.4.13 For Windows 32or64.zip&#xA;memcached.exe&#xA;关于memcached：&#xA;安装：运行cmd，进入memcached.exe所在路径，运行memcached.exe -d install -m 500 即可安装完毕，你可以去windows服务里查看是否有memcached服务；&#xA;启动：memcached.exe -d start&#xA;停止：memcached.exe -d stop&#xA;memcached的基本设置：&#xA;-p 监听的端口 默认端口：11211&#xA;-l 连接的IP地址, 默认是本机&#xA;-d start 启动memcached服务&#xA;-d restart 重起memcached服务&#xA;-d stop|shutdown 关闭正在运行的memcached服务&#xA;-d install 安装memcached服务&#xA;-d uninstall 卸载memcached服务&#xA;-u 以的身份运行 (仅在以root运行的时候有效)&#xA;-m 最大内存使用，单位MB。默认64MB&#xA;-M 内存耗尽时返回错误，而不是删除项&#xA;-c 最大同时连接数，默认是1024&#xA;-f 块大小增长因子，默认是1.25&#xA;-n 最小分配空间，key+value+flags默认是48&#xA;-h 显示帮助&#xA;4、安装setuptools，装这个其实就是方便使用easy_install来安装python第三方库，下载：setuptools-0.6c11.win32-py2.7.exe，安装完毕后，把python下Scripts路径也添加到path环境变量里，我这里是path：C:\Python27\Scripts；&#xA;setuptools-0.6c11.win32-py2.7.exe&#xA;5、安装twisted，其实可以用easy_install twisted命令来安装，我这里是下载Twisted-12.2.0.win32-py2.7.exe来安装；&#xA;Twisted-12.3.0.win32-py2.7.exe</description>
+    </item>
+    <item>
+      <title>gl库的函数</title>
+      <link>https://anwangtanmi.github.io/posts/18c174b4555e07d67a5818f9b932fa61/</link>
+      <pubDate>Fri, 03 Apr 2009 13:09:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/18c174b4555e07d67a5818f9b932fa61/</guid>
+      <description>第一章使用颜色 l. l glshadeModel–选择平面明暗模式或光滑明暗模式 1. 2 glColor–设置当前颜色 1. 3 glColorPointer–定义颜色数组 1. 4 gllndex–设置当前颜色索引 1. 5 gllndexPointer–定义颜色索引数组 1. 6 glCOforTableEXT–为目标调色板纹理指定调色板的格式和大小 1. 7 glColorsubTableEXT–指定需要替代的目标纹理调色板的一部分 第二章 绘制几何图原及物体 2. l glVertex–指定顶点 2. 2 glVertexPointer–定义顶点数据数组 2. 3 glArrayElement–指定用来绘制顶点的数组元素 2. 4 glBegin, glEnd–限定一个或多个图原顶点的绘制 2. 5 glEdgeFlag, glEdgeFlagy–指定边界标记 2. 6 glPointsize–指定光栅化点的直径 2. 7 glLinewidth–指定光栅化直线的宽度 2. 8 glLinestipple–指定点划线 2. 9 glPolygonMode–选择多边形光栅化模式 2. 10 glFrontFace–定义正面多边形和反反面多边形 2. 11 glPolygonstipple–设置多边形点划图 2. 12 glDrawElements–从数组数据绘制图原 2. 13 glRect–绘制矩形 第三章 坐标转换 3. l glTranslate–用平移矩阵乘以当前矩阵 3.</description>
+    </item>
+    <item>
+      <title>孙婷采访</title>
+      <link>https://anwangtanmi.github.io/posts/de0674a8747b9e1750a3df965742b97b/</link>
+      <pubDate>Mon, 28 Mar 2005 21:04:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/de0674a8747b9e1750a3df965742b97b/</guid>
+      <description>“她是有丁香一样的颜色，丁香一样的芬芳。”&#xA;江南烟雨忆丁香&#xA;－－“唯晶宝贝”孙婷访谈录&#xA;第一次见到孙婷，是在去年的CHINAJOY展会上。那是记者暗金色月亮首次代表《消费电子世界》赴外地采访，偏偏遇上了首次以形象代言人身份出镜的“唯晶宝贝”孙婷。喜欢她不仅是因为她楚楚可怜的精致容貌，更因为她在展台前一站就是一天，始终保持职业笑容，对玩家没有一丝不耐的敬业精神。大半年过去，孙婷已戴上了“网游第一美少女”的耀眼光环，这朵已大放异彩的丁香，是否还固守着当初那淡淡的芬芳呢？&#xA;关于Cosplay、代言人和游戏&#xA;暗金色月亮（以下简称月）：怎样走上代言人道路的？你心中的cosplay（即角色扮演，通过自己制作道具服装来模仿电影、电视、动漫、游戏中的各种人物）应该是什么样子？&#xA;孙婷（以下简称婷）：刚开始我的一个女性朋友，到我家来装了一款网络游戏，带我一起玩，之后一发不可收拾，变成了游戏狂人……后来我觉得光玩游戏还不够，希望有更多途径接近游戏，甚至从事游戏类的工作。正好一些游戏开展了选秀活动，我就借此机会走上了自己梦想的舞台。后来机缘巧合，签约唯晶科技，正式接受了形象代言人的工作。&#xA;我觉得cosplay并不仅仅是单纯地穿漂亮衣服。大家都是因为热爱漫画、热爱游戏才幻想自己能够扮演其中的某个人物。至于如何把握游戏人物的神韵，我认为和个人气质有关，也有一点点天份的影响。例如我自己比较适合女性化的角色，因此特别偏爱公主类的cos秀。&#xA;月：玩过哪些游戏？最喜欢的游戏类型是什么？&#xA;婷：我今天所拥有的很多东西都是游戏带给我的，所以游戏对我来说，算是半个生命。我最喜欢在不同类型的游戏中体验不同类型的角色。在《Dungeon Keeper》（《地下城守护者》）中我是一个大魔王，在《Baldur’s Gate》（《博得之门》）中我是游荡于奇幻的费伦大陆上的救世主，在《Fallout》（《辐射》）中我又成为拯救世界的神选者。每次玩RPG，都觉得好像在看自己演电影，随着情节忽悲忽喜，感受不同的人生体验。 月：代言公司的网游之后，会亲自去玩吗？到时候会不会公布自己所在的服务器和人物ID？&#xA;婷：好的形象代言人必须了解代言的产品，所以当然要亲自体验游戏，否则就是欺骗玩家。将来游戏里的某个NPC可能就是我的作品哦！在游戏中我还是会用我经常用的名字，如果大家有兴趣知道更多的话，就多多关注我的动态吧。&#xA;关于恋爱、朋友和Fans&#xA;月：有男性玩家要我代问，目前有没有男朋友？心中好男孩的标准是怎样？&#xA;婷：实话实说，目前还没有。就像一句大家都知道的台词里说的那样，“曾经有份真挚的感情放在我的面前，我没有好好珍惜”……将来我一定要牢牢抓住幸福。对于未来的他，我并没有一个明确的标准，因为好的男生各有各的优点，只要性格和得来就行了。不过我很希望他是一个孝顺的孩子，这样的人一定比较懂事、善良（握手，咱俩想到一块儿去了――月亮注）。&#xA;月：除了玩游戏还有别的爱好吗？&#xA;婷：射手座的女生很厉害的哦！我喜欢骑马、卡丁车、唱歌、篮球、跳舞、滑雪、网球、钓鱼……当然最喜欢的还是吃（严重握手，好同志呀！――月亮注）。特长是书法，有7年书龄。对语言也颇有兴趣，目前会日语，还有一点点的葡萄牙语、法语和韩语。&#xA;月：家里人支持你的选择吗？身边的朋友有什么看法？&#xA;婷：我从小就很独立，初中就开始盘算打工什么的，妈妈非常开明，基本上都会尊重我的想法，最多给我提些建议。朋友们刚开始当然会感到十分好奇，但大家还是和过去一样相处，时间长了也就习惯了。毕竟这只是一个职业，和医生、老师没什么区别，不过还比较新鲜而已。&#xA;月：作为偶像人物，有没有被疯狂的Fans吓到过？&#xA;婷：我觉得不能用疯狂来形容啦，因为都是很可爱的人呀。每到过节的时候就有很多Fans送我礼物，真的很开心。最让我难忘的是我的第一个Fans，当时是我在CHINAJOY的最后一天，累得眼睛都睁不开了。那个男生一直坐在对过EA的展台上看我，陪了我4、5个小时。后来公司同事怕他对我图谋不轨，跑过去问他究竟想干嘛，他很不好意思地说，只是想和我握个手……还有类似在洗手间门口等我，追着我满场飞奔的行为，都很好玩。希望今年的CHINAJOY仍然能看到他们的身影。我在这里邀请大家了，看到这个访问的朋友记得再来看我！&#xA;关于美丽、个性和生活&#xA;月：你觉得女玩家在网游中应该注意些什么？你对网游中的婚姻持什么看法？&#xA;婷：女孩子玩游戏首先要注意游戏时间的长度。我刚开始玩游戏的时候由于太投入了，早上睁开眼睛开始玩，一直玩到第2天凌晨睡觉，醒了接着玩，脸色变得很憔悴，还长豆豆……那段时间都不太敢出门，后来还生病了，去医院挂着盐水回家，插着针头的手继续玩游戏。我这里提醒大家尽量控制好玩游戏的度。此外还要警惕网络里的一些坏人，学会保护自己。网游中的婚姻，因为存在一定的虚幻性，可以说是最单纯的爱情，也可以说是最不牢固的爱情。单纯是因为大家都没见过面，相爱纯粹是欣赏对方的性格。可一旦走到现实中来，会出现许多不定因素，所以说是不牢固的。我以前也有过这样的经历，游戏里的爱情投入过就好，不要太在乎结果如何。&#xA;月：美丽的女生常被人称作“花瓶”，你打算如何改变别人的这种成见？&#xA;婷：我从来不认为自己是个“花瓶”，从上面我提到的兴趣爱好就可以说明我各方面发展得非常均衡，只是欠缺机会让大家了解。在普通人眼里，长得漂亮的多半没脑子，这是偏见！相信以后等我出了单曲，大家对我的整体印象会有所改观。这里再透露一个秘密，今年的CHINAJOY我将协助美术设计方面的工作，到时候欢迎大家来考察我的成果，我会用实力说话的。&#xA;月：学校里学到的知识对你从事代言人职业有帮助吗？这个职业又让你学到了什么？&#xA;婷：我在学校主修服装设计和装饰设计，对自己的造型创意还是很有帮助的。去年的CHINAJOY就是我自己做的造型，虽然在网上被骂得很惨，不过是我第一次在自己身上做实验，相信今年一定会更好！至于现在这份工作，我从中学到了很多东西，毕竟我体验的可能是许多人一辈子也无法经历的感觉。在工作中我不断成长着。&#xA;月：生活中的你和舞台上有什么区别？&#xA;婷：平面的照片容易给人安静的感觉，其实我在现实里是非常活泼的人，个性爽朗，完全符合射手座的性格特征，这一点相信见过我的人都有感触吧。&#xA;月：有什么特别的话要对女性玩家说吗？&#xA;婷：希望所有女孩子都活得开心、快乐。自强自信是我们最有力的翅膀！</description>
+    </item>
+    <item>
+      <title>起点即终点――访雷爵资讯副总杨瑞琨</title>
+      <link>https://anwangtanmi.github.io/posts/d2fb5cde1f7bdc3714b244f68f1f5de8/</link>
+      <pubDate>Wed, 24 Nov 2004 23:38:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/d2fb5cde1f7bdc3714b244f68f1f5de8/</guid>
+      <description>收到雷爵公司发来的媒体交流邀请函的时候，月亮以为这又是一次《万王之王2》的产品开发进度展示会。实际情况并非如此。尽管在公司一楼大批技术人员正紧锣密鼓地埋头苦干，二楼的会议室里探讨的话题却与这个游戏的内容本身没有太多联系。&#xA;“从2000年到2004年，中国玩家迅速成长起来了。”&#xA;暗金色月亮（以下简称月）：请问杨先生，为什么认为现在的网络游戏玩家已经发生了“质变”？对于“质变”你的定义是？&#xA;杨瑞琨（以下简称杨）：我们可以看到，现在的网游市场，和当年《万王之王》（简称KOK）等第一批网络游戏刚刚兴起时的情形已经完全不同了。市场被打开后，玩家从刚接触这种新的游戏形式时的惊喜，慢慢转变为对产品同质化现象的麻木和厌恶，直至开始四处寻找一款真正适合自己的游戏。简单的说，我觉得他们经历了从无可选择到有太多选择再到理性选择的成长过程，我将这个过程定义为玩家的“质变”。&#xA;月：玩家的成熟是否是厂商成熟的必然结果呢？&#xA;杨：不，我预言明年的网游市场将会非常混乱。2003年4月，中国还只有38家游戏公司，57款网络游戏。可现在呢？这个数字翻了3倍不止。想要入场分杯羹的国内外厂商越来越多，这里面必然会有不少极易破灭的泡沫。&#xA;“面对外资巨鳄，生存还是灭亡？这是个难题。”&#xA;月：雷爵在网游产品研发方面起步很早，应该不会惧怕来自国内外同行的竞争吧？&#xA;杨：作为中国大陆第一款大型多人在线角色扮演类网络游戏，KOK曾创造过注册会员60万人的奇迹，这在当时的网络条件下是相当惊人的成就。但KOK的辉煌毕竟已成过去，我们需要一款作品重拾昔日荣光。从2001年8月，KOK走下坡路开始，我们就已经着手准备KOK2的产品策划。历时3年的制作，都是为了更有把握面对来自玩家的苛刻考验。&#xA;月：据说雷爵不打算自己运营KOK2？&#xA;杨：在今年的CHINAJOY上大家都注意到了，一些国际游戏巨头纷纷表现出对中国市场的勃勃野心。他们进入中国，要么是直接并购现有的行业佼佼者，要么是独立成立技术资金实力雄厚的独资企业，总之一定会给目前的游戏企业带来很大冲击。即使有政策保护，一批尚在褓襁的中小企业也有可能遭遇灭顶之灾。&#xA;这样的情况下，雷爵希望能找到真诚的战略合作伙伴，互相扶持，共同进退，增强产品的核心竞争力。当年华彩在运营KOK时出现过一些决策失误，其中部分原因在于当时没有多少可资借鉴的成功经验。现在国内运营的各个环节上都涌现出不少经验丰富的强势企业，我相信强强联手能让我们在面对外资巨鳄时更加底气十足。&#xA;“和WoW、EQ2这样的作品比，我们最大的优势在于本土化。”&#xA;月：部分玩家始终认为，奇幻文化来自西方，也只有西方出产的网络游戏才能展现出奇幻文化的精髓，你怎么看？&#xA;杨：网络游戏的内涵并不仅仅来自于它的文化背景。KOK之所以曾经吸引过那么多忠实玩家，是因为它的主体在于城邦，而城邦的主体在于人民，游戏中的一切事物都是玩家亲手创造。对于我们来说，提供给玩家一个创造自己历史的工具，比追究是否体现了奇幻文化背景，是否遵循了龙与地下城规则，要重要得多，也实在得多。&#xA;月：难道KOK2能完全无视WoW和EQ2的挑战？&#xA;杨：我们起码有3点优势是这两款游戏所无法回避的。首先是目前的网吧和家庭硬件配置是否能支撑那样庞大复杂的游戏？其次，在运营成本上，我们起码能从架设服务器的成本方面节省出一大笔开支，从而降低游戏售价。最值得一提的是，中国人更了解中国人，前两款游戏是针对全球发行设计的，不可能根据中国国情进行太多调整。KOK2却完全可以跳出纯西方风格，探索更贴近玩家需求的中国模式。&#xA;“我们希望成为玩家最初和最终的选择。”&#xA;月：你预测将有多少KOK的老玩家会在KOK2公测时回来看看呢？&#xA;杨：起码80％吧……毕竟这是他们的最初感动。而且我想他们会带着自己的新朋友一起回来。&#xA;月：期望值太高会不会成为一把双刃剑呢？&#xA;杨：当然，这样的风险肯定存在。KOK2与KOK相比，上手门槛将会低很多。同时我们的职业不再有一转二转的概念，取而代之的是徽章系统。这个系统可以让玩家在技能选择和使用方面更加灵活，戴什么徽章就能拥有什么技能，变成什么职业，在国战中起到改变局势的关键作用。这些改变都将给KOK的老玩家带来惊喜。&#xA;月：玩家的“质变”将对雷爵公司产生怎样的影响？&#xA;杨：在无数网络游戏间流浪的玩家也许很快就会发现，KOK系列是他们最初，也可能是最终，最好的选择。</description>
+    </item>
+  </channel>
+</rss>

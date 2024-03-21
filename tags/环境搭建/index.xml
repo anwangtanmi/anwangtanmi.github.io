@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>环境搭建 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
+    <description>Recent content in 环境搭建 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 06 Apr 2019 15:53:15 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>tor的使用</title>
+      <link>https://anwangtanmi.github.io/posts/769a5c47ca245b6ea997a0def64de421/</link>
+      <pubDate>Sat, 06 Apr 2019 15:53:15 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/769a5c47ca245b6ea997a0def64de421/</guid>
+      <description> 使用tor的目的：保护隐私防止被追踪。&#xA;之前长城防火墙将tor的协议封闭掉了。但是现在tor利用云端技术，使得一部分人能够使用tor。tor由于使用的路由较大，延迟较大，网速较慢。&#xA;建议直接使用集成好的tor浏览器使用，避免了繁杂的配置过程。下面介绍linux环境下的使用。&#xA;下载tor：https://www.torproject.org/download/download-easy.html.en#linux（可能需要翻墙，否则长城防火墙会通过DNS重定向将网址变换到其他地址）这是一个集成了浏览器的tor包，不需要依赖包的安装&#xA;问题1：should not be run as root；&#xA;问题2：服务启动错误&#xA;下载好后打开文件夹，点击浏览器图标会发现在kali下禁止使用root账号登录。解决办法是进入子目录Browser，找到start-tor-browser，用gedit打开。点击“ctral+f”查找“root ”，将“-eq 0”改为“-eq 1” （“-eq 0”表示root账号），保存后再次双击浏览器图标，会提示又一个错误。这个错误是由于权限造成的，在终端切入相应路径查看tor的权限，可以发现这个文件的所有者不是root账户，要将其改成root账户。使用命令“chown -R root:root tor-browser_zh-CN” （加-R参数是子目录下也做相应改变）。然后再次点击浏览器图标可以发现没有提示错误，点击“连接”会没有反应，应为长城防火墙已将其封锁。需要点击配置，选择“是”，下一步后选择“使用集成的网桥进行连接，传输协议只有三个云端的能够使用，即meek-amazon、meek-azure和meek-google（亚马逊、azure和谷歌提供的桥接云）。点击下一步，“是否需要本地代理访问互联网，选择否”。之后点击连接即可。&#xA;当然也可以使用本地浏览器来使用tor，通过设置代理服务器。&#xA;注：最大化Tor Browser窗口之后，网站可获取显示器尺寸信息，从而跟踪客户，建议使用默认窗口大小。&#xA;暗网wiki（暗网一般使用onion作为根域名）&#xA;http://zqktlwi4fecvo6ri.onion/wiki/index.php/Main_Page（这个网站收集了大量暗网的地址)&#xA;注意：浏览暗网遵守道德法律规范，只看和技术相关的内容，其他不要涉及，否则后果自负。&#xA;点赞 2 收藏 分享 文章举报 若雨溪 发布了13 篇原创文章 ·&#xA;获赞 11 ·&#xA;访问量 7580 私信 关注 </description>
+    </item>
+  </channel>
+</rss>

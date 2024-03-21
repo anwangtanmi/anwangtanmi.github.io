@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>去雾论文笔记 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/</link>
+    <description>Recent content in 去雾论文笔记 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 16 Mar 2020 16:31:58 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>MultiScaleConvNets</title>
+      <link>https://anwangtanmi.github.io/posts/e9e5a59fe2ede6b960bed3ac8b933994/</link>
+      <pubDate>Mon, 16 Mar 2020 16:31:58 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/e9e5a59fe2ede6b960bed3ac8b933994/</guid>
+      <description>1. 概述 网络结构如图1所示。作者训练一个融合多尺度特征的网络来预测透射图，通过选择传输图t(x)中0.1%最暗像素来估计大气光 A 。在这些像素中，选取对应的朦胧图像 I 中强度最高的像素作为大气光。&#xA;网络输出的透射图尺寸与GT相同，去掉上、下采样虽能达到同样效果但是损害了模型性能。作者通过将前一层的一个像素点赋予后一层4个像素点同样的值来实现上采样。&#xA;图1 网络结构&#xA;作者修改了原始大气散射模型公式来进行预测：&#xA;2. 损失函数 损失函数如下：&#xA;作者利用数据集提供的景深来创建透射图，并用将其与模型预测的透射图计算MSE。&#xA;3. 数据集 NYU Depth dataset Middlebury stereo database 这两个数据集都提供了景深，作者分别生成了18000张雾图和透射图作训练集，所有的训练图像都被调整为320×240像素的标准尺寸；50张雾图作验证集。&#xA;4. 参考文献 [1] Wenqi Ren, Si Liu, Hua Zhang, Jinshan Pan, Xiaochun Cao1(B),&#xA;and Ming-Hsuan Yang3. “Single Image Dehazing via Multi-scale Convolutional Neural Networks”. Springer International Publishing AG 2016, B. Leibe et al. (Eds.): ECCV 2016, Part II, LNCS 9906, pp. 154–169, 2016.DOI: 10.1007/978-3-319-46475-6 10.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>信安 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E4%BF%A1%E5%AE%89/</link>
+    <description>Recent content in 信安 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 08 Jun 2018 16:43:38 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E4%BF%A1%E5%AE%89/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DNS反弹Shell</title>
+      <link>https://anwangtanmi.github.io/posts/4ab91dc469ba151e20e23c918fd4a454/</link>
+      <pubDate>Fri, 08 Jun 2018 16:43:38 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/4ab91dc469ba151e20e23c918fd4a454/</guid>
+      <description> 0X01 引子 反弹Shell广泛应用于远程控制下的权限维持，通过反转攻（客户端）和受（服务端）的角色，来实现条件限制，尤其是内网情况下的远程连接。&#xA;反弹Shell的工具和实现方法多种多样，只要能够让被控端通过网络发送数据到控制端，并且实现数据的解析即可完成控制过程。&#xA;最近在继续了解网络协议，于是突然想在DNS数据包中插入一些伪造的命令来实现解析，本来准备自己尝试写一个DNS服务器和DNS请求程序来实现反弹，不过刚动笔就看到了别人开源的程序，于是直接使用别人的程序来学习了。&#xA;https://github.com/ahhh/Reverse_DNS_Shell&#xA;为了运行测试更方便，去掉了程序中的加解密功能，额外的Python包只需要dns和dnslib&#xA;0X02 DNS 为了关联主机和IP地址对应关系而诞生的DNS本身，不需要我在这里赘述了。跳过域名构成、查询过程等可以轻松在网络查询到的内容，我们直接来看看DNS的包构成&#xA;在smtp那篇文章中，我们提过一层一层洋葱状的协议包裹，在这里，我们跳过以太、IP、UDP头，直接到DNS数据的部分。&#xA;标志着数据开始的是Tran ID段，所有的问答信息都需要一定的机制来保证对应，这部分应该就是对应机制中的一部分。 紧接着的Flags，0x0100表明了一些查询属性。 Queries中是我们所要查询的host，查询类型。作为A类型查询，得到的是host的IP，这里也是我们做手脚的地方，不过TXT类型可以插入一些附加的信息，更适合我们用来构造命令语句。 服务器回应包如下：&#xA;作为回应的Tran ID，它和查询包相同。 Flags中标准回应标志位 重复显示的Queries 回应的Answers信息。通过CNAME查取主机规范名，再通过规范名查取对应IP。 利用这种相互应答的特性，我们初步计划通过以下流程来实现我们的反弹Shell&#xA;0X03 程序 原始的程序可以在上面的github中找到，这里贴出我们去掉加解密的部分程序。&#xA;先说DNS服务器的部分&#xA;这一部分封装了对DNS的应答，payload里是被控端发来的查询信息，也就是上一次命令执行后的回显，而out是我们这一次的命令，封装成了TXT的应答包&#xA;这部分对于被控端的查询包进行解析，从中获取到地址和数据，对于数据，解析出其中的命令回显，并且初始化一个应答包。&#xA;主函数中使用socket监听相关端口，对于监听到的包按照预定流程进行处理。&#xA;再来看看被控端发送的部分&#xA;首先是整个流程一览，从程序中可以很清晰的看到建立连接，解析命令，执行命令，发送回显的过程。&#xA;构造的url，也就是命令回显，对于没有命令的，会返回nxt。利用回显构造查询语句。&#xA;这两段程序对于收到的文本格式的命令进行解析和执行，没有太多的东西可以讲。只是注意格式的截取，并且考虑对Linux和Windows的命令之间转换。&#xA;这部分负责发送DNS查询，按照与服务器约定的格式构造包并且进行发送。&#xA;0X04 测试 我们需要先执行服务器端程序，然后执行被控端程序。我的服务端程序在一台Ubuntu主机上，被控端在我的Win10机器上。&#xA;这是被控端第一次连接时发送的包，因为控制端还没有指令，第一次连接发送的是空包，其中Name的值bnh0就是我之前所说的NXT&#xA;而第二个包就是控制端发送的指令，在TXT中发送的就是指令whoami的base64编码，&#xA;可以对比和我之前实际抓包的不同之处，对照可以看出我们在DNS包的哪些地方做过修改。&#xA;0X05 延伸 其实相关的DNS隧道技术原理应该差不多，都是在本来应该放DNS规定信息的地方放入了其他的东西，来达到一些意想不到的结果。&#xA;当然，RFC还有许多协议可以让我随意构造去做测试，下一步考虑写一个多协议支持的Fuzzing工具 ：）&#xA;点赞 收藏 分享 文章举报 FLy_鹏程万里&#xA;博客专家 发布了937 篇原创文章 ·&#xA;获赞 1031 ·&#xA;访问量 173万+ 他的留言板 关注 </description>
+    </item>
+  </channel>
+</rss>

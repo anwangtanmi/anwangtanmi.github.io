@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>网络安全 - 暗网探秘</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="网络安全" />
+<meta property="og:description" content="揭露暗网的秘密" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://anwangtanmi.github.io/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="alternate" type="application/rss+xml" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/index.xml" title="暗网探秘">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="暗网探秘" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">暗网探秘</div>
+					
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">网络安全</h1>
+	</header><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/10820da14b0d75ce0948c8cf661ee8ec/" rel="bookmark">
+			通过SSL证书公开ToR服务的公共IP
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-11-30T21:42:01&#43;08:00">2018-11-30</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="category">网络安全</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		洋葱路由器 也被称为ToR，是一种互联网服务，通过在多个中继上跳跃连接，为用户提供匿名互联网冲浪。通过这样做，ToR用户可以避免向他们访问的服务器公开他们的IP地址。相反，这些服务器只看到Tor的一个退出节点的IP地址。但TOR不仅在用户访问Google.com或Facebook.com等网站时保护他们。
+对于希望保持匿名的用户来说，Tor网络上的另一个选项是Tor隐藏服务。
+只能使用Tor技术访问它们，您可以通过它们使用.onon扩展名来识别它们。
+与人们的普遍看法相反，这些网站不仅用于可疑活动，而且还用于正当目的。
+事实上，您每天使用的许多网站也可以使用类似的隐藏服务访问，以便为重视匿名的用户提供服务。
+例如，只要您目前正在使用ToR，就可以通过https://www.nytimes3xbfgragh.onion或https://facebookcorewwwi.onion，访问“纽约时报”。
+网站所有者的另一个优势是，您的用户无法找到您的服务器的真正IP。
+这对隐私来说是一个巨大的胜利，使得审查或删除隐藏的服务变得很困难。
+为了运行这样的服务，除了调整ToR的一系列设置外，您还需要在将托管您的网站的计算机上设置一个类似Apache或Nginx的Web服务器。
+我们讨论的漏洞将允许任何人查找隐藏服务的真实IP，该漏洞是由于ToR设置中的错误配置而产生的。
+Tor上SSL设置中的常见错误 好的，如果你在使用Tor，那么你很明显关心保持网络上的匿名性。
+让我们假设您实现了TLS/SSL来保护ToR服务。
+要做到这一点，您必须获得由证书颁发机构签名的.onon扩展名的网站证书。
+让我们假设您的服务URL是examplewwwi.onon。
+当有人请求网站时，服务器向ClientHello请求发送ServerHello响应中的加密数据和证书。
+证书中的公共名称(CN)区域将说明您的域examplewwwi.onon。
+假设您使用的是Web服务器服务，例如Apache、Nginx或类似的服务，但是您错误地配置它来侦听到达网络接口(0.0.0.0)的所有连接，而不是环回地址(127.0.0.1)。
+这将对您的Web服务器的匿名性产生灾难性的影响。
+在下一节中，让我们来看看原因。
+公开您正在使用的ToR服务的公共IP 任何试图从您的服务器的公共非ToR IP地址到达端口443的人都将看到证书和CN中的.onon域，该域位于提供给ClientHello消息的ServerHello响应中。
+您可能想知道，当您使用ToR时，人们如何才能发现您的公共IP。
+如果我们假设攻击者使用此方法访问您的个人数据：
+它们通过端口443向IP范围(例如75.30.203.1-75.30.203.254)发送连接请求。 他们发送ClientHello消息。 他们提取ServerHello消息中的CN。 他们将IP与.onon域相匹配。 通过反复这样做，他们能够使用ToR网络访问许多网站的数据。
+结论 确保你的安全需要注意和注意新的攻击方法。根据RosselynBarRoyeta最近的研究，即使在使用最安全的服务时，错误的配置也会使您暴露。她对错误配置可能产生的影响以及如何导致IP地址泄漏进行了现场演示。
+详情请见IP‘s públicas de Tor son Expuestas mediantCertiados SSL。
+译自：https://www.netsparker.com/blog/web-security/exposing-public-ips-tor-services-through-ssl-certificates/
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/09f802d99b47ddeddd5f6bd6d0da6ff4/" rel="bookmark">
+			你的人生只值50美元，HTTP早已是黑客驰骋的“游乐场”
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-11-29T16:58:00&#43;08:00">2018-11-29</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="category">网络安全</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		你想过我们的个人数据在黑市上能值多少钱吗？1万？5万？还是10万？
+近日，卡巴斯基实验室(Kaspersky Lab)对暗网市场进行了调查，研究人员发现，罪犯可以用低于50美元的价格出售某人的完整数字生活，比单个被黑账户的价格要低得多，大多数账户的售价约为1美元一个，而黑客竟然为团购提供折扣。
+数据价值由隐私决定，钓鱼网站成数据窃取高发地
+这些数据包括被盗的社交账户、银行信息、远程访问服务器或台式机数据，甚至还有从打车、视频、游戏、约会等热门服务和可能存储信用卡信息的购物网站处获得的数据。
+在黑市上，越是隐秘的数据就越值钱。比如，一个初期孕妇的隐私大约0.11美元。然而，一个人健康状况如何，服用某种处方药的这种信息则价值0.26美元。可是，就算你把这些数据都加起来，大多数人的隐私价格也不到1美元。
+这就像菜市场里的牛肉，牛里脊比牛上脑贵、牛上脑比牛肋条贵、牛肋条比牛腱子贵，不同的部位价值也各有不同。
+荒谬的是，一些销售数据的黑客甚至为他们的买家提供终身保修！如果一个账户停止工作，黑客将为买家免费提供一个新账户。
+而此次卡巴斯基实验室调查发现，黑客大都是通过网络钓鱼活动或利用应用程序软件与网页中相关的安全漏洞来窃取此类数据。
+例如，钓鱼网站大多数会使用“购物超低价”、“高折扣”等充满诱惑力的标题来吸引点击，诱导进入事先设计的钓鱼网站中，从而进一步攻击用户邮箱、银行账户、微信钱包等。
+SSL为网站安全加道“保险” 让你的数据不再“裸奔”
+面对黑客的攻击，其实我们可以采取一些措施来防止这种情况的发生。在你点击任何东西之前，一定要检查链接地址和发件人的电子邮件是否真实。另外，当你登录网站时，留心观察一下网站是否安全，比如：在谷歌、火狐等浏览器中“HTTPS”的网站地址栏，前面有一把琐，并且会显示“安全”字样；而“HTTP”网站则会显示“不安全”字样。
+千万不要小看https对数据隐私的保护。HTTPS是由“HTTP协议+SSL证书”构建的可进行加密传输、身份认证的一种网络通信协议。HTTPS对网站起到两个作用，一是将传输中的数据进行记录、封装、加密；二是在数据传输开始前，通讯双方进行身份真实性认证并协商加密算法、交换加密密钥等。
+可能你会认为上面的解释比较晦涩，别急，咱们举例说明：
+HTTP在传输信息的过程中是不存在安全性的，有人形象地比喻为信息在“裸奔”，而有了SSL证书加密的HTTPS则不同，它相当于给互联网信息撑上了安全的保护伞，使信息不再被暴露在太阳之下，信息有了一定的安全性，保障用户信息不被窃取。
+今天，各大浏览器纷纷要求网站部署SSL证书，将HTTP明文访问升级成HTTPS加密访问。比如谷歌Chrome为所有HTTP网站打红叉；火狐Firefox对“使用非HTTPS提交密码”的页面进行警告；苹果宣布所有提交到App Store的应用强制通过HTTPS连接网络服务，通过SSL证书加密保障用户数据安全；微信小程序也不再支持HTTP方式，必须使用HTTPS加密。
+虽然网站启用SSL证书已成必然趋势，但也一定要选择权威的CA机构申请。知名CA机构的根证书广泛存在于大多数浏览器和操作系统中，可以被客户端用来校验网站SSL证书是否合法。
+目前，80%的企业多采用全球知名SSL品牌证书来保障业务安全，比如：DigiCert &amp; Symantec、Entrust、GeoTrust等。国内则是通过直接授权的方式将这些证书引入，如天威诚信就是唯一一家由DigiCert &amp; Symantec直接授权的CA机构，经其签发的SSL证书，已应用于工商银行、建设银行、腾讯、阿里巴巴等众多企业和网站，给用户的网络生活增加了一道“保险”。
+全球互联网使用HTTPS加密已成不可逆的趋势，不管对企业还是对个人用户而言，安装由权威CA机构颁发的SSL证书，访问HTTPS加密网站，可以避免很多风险的发生，成为网站与终端用户之间的一座“信任之桥”。
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/4e0a2249bf13089a066487370149b89f/" rel="bookmark">
+			使用tor之后本地连不上网
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-11-15T17:57:11&#43;08:00">2018-11-15</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="category">网络安全</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		问题：使用tor连接成功之后，再断开本机就无法联网了，用别的电脑测试，网络线路没有问题
+解决：将驱动回退到之前版本再更新，亲测问题解决。
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/8a3542e26846ccb23f3df19ce8dc4e90/" rel="bookmark">
+			网络安全博客与文章分享：
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-10-08T01:07:27&#43;08:00">2018-10-08</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="category">网络安全</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		网络安全博客分享：
+kali 渗透笔记博客：https://www.cnblogs.com/jsl7kun/p/8269962.html
+雨苁-暗网|黑客|极客|渗透测试|专注信息安全：http://www.ddosi.com/
+ctf 逆向网站 https://paper.seebug.org/348/
+https://www.hackread.com/hacking-news/ 翻墙看，多为一些比较新鲜的安全咨询
+https://github.com/kbandla/APTnotes 收集了从2008年到最近的APT事件，有人维护
+https://badcyber.com 一群想要成为研究员的人和记者维护的网站，每个月都会收集几次与网络安全相关的咨询
+http://securityaffairs.co/wordpress/ 主打信息安全咨询的一家国外公司，主题分类很全面
+http://cysinfo.com/category/articles/ 是一个开放的网络安全社区维护的博客，包含安全沙龙，培训，以及技术分享 https://citizenlab.ca/category/research/ 加拿大公民实验室，对数字间谍比较感兴趣
+https://www.secureworks.com/blog/ 全球提供安全解决方案的领导者（DELL的安全团队），博客中的内容比较宏观
+VIM教程 https://coolshell.cn/articles/5426.html
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/cb340455fe0b12f967145c27d6391f4b/" rel="bookmark">
+			安全杂谈|五亿开房数据泄露，你的账户突然被清空？！
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-09-28T15:40:39&#43;08:00">2018-09-28</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E6%95%99%E8%82%B2/" rel="category">教育</a>, <a class="meta__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="category">网络安全</a>, <a class="meta__link" href="/categories/%E8%B5%84%E8%AE%AF/" rel="category">资讯</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		随着互联网应用的普及和人们对互联网的依赖，互联网的安全问题也日益凸显。恶意程序、各类钓鱼和欺诈继续保持高速增长，同时黑客攻击和大规模的个人信息泄露事件频发，与各种网络攻击大幅增长相伴的，是大量网民个人信息的泄露与财产损失的不断增加。
+2018年8月28日上午，网曝威胁猎人监测到暗网上出现了华住旗下多个连锁酒店开房信息数据的交易行为，数据标价8个比特币，约等于人民币35万人民币，数据泄露涉及到1.3亿个人信息及开房记录。
+据卖家自己公布的内容来看，数据包含的酒店列表清单如下：汉庭酒店、美爵、禧玥、漫心、诺富特、美居、CitiGo、桔子、全季、星程、宜必思、怡莱、海友。泄露的信息字段包括：姓名、手机号、邮箱、身份证号、登录账号密码、家庭地址、生日、同房间关联号、卡号、入住时间、离开时间、房间号、消费金额等。
+近日，在刷帖的时候发现有网友称，自己手机在凌晨的时候突然没有了信号，自己以为是自己手机的问题就没有在意，醒来后发现收到了100多条验证码，支付宝及关联银行卡的钱一笔笔全被转走了。
+当不法分子知道你的部分信息之后，你手机里的钱还是安全的吗？
+近日，网络安全通联合好奇实验室，我们团队的专家向他们展示了不法分子犯罪的全过程，让我们一起来看看吧。
+实验时间：2018年9月4日
+实验场地：网络安全通实验室
+实验人员：网络安全通安全工程师郑毓波、好奇实验室大史
+实验内容：不碰大史手机，郑毓波从大史绑定支付宝的银行卡里“盗走”5000元
+为了证明信息泄露的危害，我们预设郑毓波知道大史的手机号、身份证号与支付宝绑定的银行卡号。为了模拟第二种手机失去信号的情况，郑毓波手头有不可描述的软件、信号屏蔽器（2台老式摩托罗拉C118手机改装成的伪基站）。
+实验的过程在大史这个“受害者”的眼中是很简单的，就是收到了带修改支付宝密码的短信校验码，但是大史并不担心，因为手机在自己的手上，别人看不到。但是接下来大史收到的就是银行APP的转账通知了，一条条的扣款短信代表着自己的钱被刷走了。
+这是为什么呢？
+让我们来看看郑毓波工程师是如何操作的吧。
+首先，他打开了信号屏蔽器，将实验室附近的手机信号从4G降到了2G，而2G网络在这些高手面前，是没有任何秘密的。
+用旧手机改装的伪基站劫持、接收了大史手机的2G信号，所以当大史手机收到修改支付宝密码校验码时，郑毓波的电脑软件上同时也收到了。
+实验中，我们还同时接收到附近的人手机上的燃气账号绑定信息。
+郑毓波工程师说，这类利用伪基站短信嗅探技术，对硬件要求并不高，专业的“背包式”伪基站，信号接收范围在100~200米，像摩托罗拉C118这类老手机改装的伪基站，虽然接收距离只有20多米，但价格非常便宜，50元就能买一部，因为主板预留了一些接口，可以直接改造成伪基站。买的基本就两类人，搞研究的、做伪基站的。
+另外，如果你的信息泄露之后，即便不用伪基站，同样有被转账的风险，行业里把这个叫为撞库。A网站数据泄露可以获得A网站的账户和密码，拿这些去B网站尝试，如果能碰撞成功，也就获得了B网站的用户和密码。
+那我们应该怎么样去防范数据的泄露呢？
+1、生活中要注意，比如你购买的火车票、飞机票、业务单、水电费账单等反正与身份信息相关的都不要乱扔。
+2、对于淘宝快递地址不必留的大详细，尽量填写你附近周边的代收点，接收快递的名字，不要用真实的姓名，签收的单子不要乱扔。
+3、做一下网络问卷调查时，有的会以有奖的形式让您填写您的地址，姓名，手机号等等信息，参加这种活动，需要选择可靠的官网，其他的尽量不要去填写。
+4、去工作面试，当然简历是必不可少的，建议大家简历上只要提供必要信息，不要过于详细的写你的家庭住址，身份证号，父母联系电话等。
+5、尽量避免在网上借贷平台上借款，因为他要你的全部信息哦，有时候，你添完之后他还不给您放款。这也是一种骗取我们信息的一种手段。如果实在需要建议大家去权威的网站借贷。
+6、出门在外，我们一般都会选择用手机连接周边的wifi。其实WiFi有好多是会盗取我们的手机信息的哦。尽量不要去连接一下，无密码的wifi。
+7、不要轻易的用自己的头像。不要晒你的火车票、准考证号等信息。这样会确保你信息的安全。
+​其实生活中有许多网络安全的威胁和隐患，但是只要你有足够的网络安全知识和意识，就可以尽情的去享受网络遨游的乐趣了~
+更多网络安全的相关小知识和课程可以关注我们了解哦~
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/2d776496cb49d2522c39a3b0672c0b3f/" rel="bookmark">
+			【匿名通信】在Debian上安装运行tor和nyx并使用stem库
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-09-10T14:00:03&#43;08:00">2018-09-10</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" rel="category">信息安全</a>, <a class="meta__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="category">网络安全</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		 #1.安装运行tor apt-get install tor #2.安装python apt-get install python-pip #3.更新全部pip库，写一个更新脚本 vim pipupgrade.py import pip from subprocess import call for dist in pip.get_installed_distributions(): call("pip install --upgrade " + dist.project_name, shell=True) python pipupgrade.py #4.安装 stem和pymysql pip install stem pymysql #5.在目录/etc/tor下添加多用户base配置文件torrc.1 #如果只有单用户这步可以不要 vim /etc/tor/torrc.1 SocksPort 9060 ControlPort 9061 DataDirectory /var/lib/tor1 CookieAuthentication 1 #6.安装nyx apt-get update apt-get upgrade pip install nyx #7.运行nyx nyx #重启tor kill pidoftor /usr/bin/tor 
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/06a9ee4f22c4ff6ceb62286a884dd52b/" rel="bookmark">
+			暗网，一个比你想象中恐怖100倍的互联网世界
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-08-22T22:00:13&#43;08:00">2018-08-22</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="category">网络安全</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		真的勾起了我的欲望，我准备先去看看。。。
+这是一篇转载于网上多年的文章，原作者已无迹可寻。帖子里的自述就像小说一样险象环生，虽然并不能说完全可信，但至少他告诉了我们暗网世界的存在。在那里，有着许多不可想象的黑暗与恐怖，残忍与血腥。在表面上欣欣向荣的互联网自由世界背后，就是一团人性恶爆发后的残骸。什么是暗网? 暗网就是黑暗网络，又称深层网络或隐形网络，英文名Deep web或Invisible Web， Hidden Web。通俗的讲，就是我们用常规的搜索引擎(谷歌、百度、雅虎等)搜索不到的网站。这么说你可能会认为既然这些网站都搜索不到，那一定没有人用，数量很少吧，那你就大错特错了。
+废话有点多，先给大家张姿势
+暗网和表层网络的比例: 暗网这个概念是在1994年由美国军方科学家提出的，1996年5月，美国海军研究实验所的3名科学家提交了一篇论文，题目是《隐藏路径信息》，提出打造一个系统， 使用者在连接因特网时不会向服务器泄露身份。他们称之为“洋葱路由”，因为保护数据的口令像洋葱一样层层迭迭。2003年10月，这一想法开始正式实施。系统最初被命名为Tor，是“洋葱路由”英文首字母缩写，后来被称为“深网”。它设计高度精密，以至于设计者本人都无法摧毁它。 在因特网早期，使用者可以利用假名在网络上创造“另一个自己”，与生活中的真实身份毫无瓜葛。但随着网络的发展，尤其是“ 脸谱”网站的出现，网民的在线身份与真实 身份日趋重合。如今，我们无论到哪，都在散播自己的信息：我们的浏览痕迹、视 频喜好、社交圈，甚至具体在哪。但“深网” 上不是。
+美国政府为何要建造这样一个系统?原因很多。利用它，警方可以调查非法网站而不打草惊蛇;军方和情报机构可以进行秘密联络;国务院可以培训国外异见人士…… 暗网的特性就是“绝对隐形”，网站隐形，用户身份隐形，IP地址隐形。当我们每天都在各种网站游走，随意的暴露着我们的身份和行踪时，这些暗网用户正在网络世界中为所欲为。 很多人就是看中了暗网的隐形特征，于是开始在暗网上干着各种各样在表层网络和现实生活中干不了的事情，真就应万维网发明初始宣告的那样——无所不能。 现如今的暗网上充斥着各种毒品、军火交易、走私、器官买卖、人口贩卖、杀手、 黑客、邪教、恐怖组织、儿童SE情、X变态 、金融犯罪、洗黑钱等，这是一个真正无法无天的世界。 尤其是当比特币这种虚拟货币发明之后，和暗网的二者结合更是如虎添翼，现在暗网上几乎所有的黑市交易都是使用比特币。
+从2009年开始，暗网上出现了一个叫做“丝绸之路”(Silk Road)的黑市网站，贩卖各种毒品、枪支和违禁品，整个网站的交易就是用比特币进行。在我们中国的话，就可以比作是暗网上的T宝。而且这个网站还 真的就像常规购物网站一样拥有买卖双方评价，售后保障等功能。2013年的时候这个网站被FBI查封，查封过程非常曲折，最后还是网站创办者自己在表层网络的推特等社交网站上露出马脚，才被逮住的，唉，NO ZUO NO DIE啊!不过最近”丝绸之路2.0“又开张了，听说是之前的老用户做的，毕竟有需求就有市场嘛!
+对不起，你知道的太多了
+可能现在有人觉得很有趣，很想看看。不过还是别看为好，以前就有人在暗网里挖的太深，看到了不该看的，最后命丧黄泉。
+作为「Deep Web之旅」的第一篇，今天在和大家分享一个网友因太过沉默于「 暗黑网络」而遇到的可怕经历…
+在故事开始之始，先说明一下「Deep Web」和「Shadow Web」的分别。「 Deep Web 」中文名叫暗黑网络、隐形网络或深层网络。它泛指一些不能由传统搜寻器找到的网站。这些隐藏的网站须通过动态请求才可进入，或由特定的搜寻器(例 如TOR browser)才可以找到。据非正式统计，暗黑网络占网络全部信息的90%有多。但是，正由于其隐蔽性质，有不少非法网站都藏匿在这个「暗黑网络」之中，例如毒品交易、儿童色情、人口贩卖等。这些数以千计的非法网站充斥在「暗黑网络」 ，令到人们对「暗黑网络」的印象就好像电影「罪恶城」里头的老城般，生人勿近。 那么「Shadow Web(影子网络)」又是什么来? 在电脑学上，「影子网络」的网络结构上和「暗黑网络」一模一样，也算是「 暗黑网络」的一种。但在字面意思上，「 影子网络」是指那些比「暗黑网络」还深入、更病态的网站，里头变态的内容即使是毒品头子或恋童魔也会捏一把冷汗。 其实「Shadow Web(影子网络)」这个词语是今年年初才出现，而这个词语的起源是来自Reddit(类似香港高登论坛)的帖子，这也是笔者今天要和大家介绍的故事…… 一个可怕的警告。
+其实我们是不是真的熟悉我们每天接触的网络世界? 在两星期前，我一定会笃定地答你「是」，因为我以前一直认为自己是个「网络老手」。毕竟，我在Fortune City 和IRC channels 97年刚刚成立时，便已经是它们的资深会员。之后由2008年开始，我几乎每天都花12个小时在Reddit和4chan ，而且不会放过浏览任何一张最新最红的Memes。 直到我在两星期前上过「影子网络」后，便发现自己其实由如至终都不曾熟悉整个网络世界，甚至不熟悉整个人类世界…。
+大约一年前，有人向我介绍一种叫「Shadow Web(影子网络)」的东西—一些埋藏在网络最深层的网站，一些正规搜寻引擎不会找到的网站。虽然也有人曾经对我说过，即使「影子网络」也不算是最深层，但那些不在我们这次讨论范围内。简单来说，影子网络就是一些没有任何「超连结」可以经由「表网络」进入到的网站，而且那些网站里头的内容也不是那些普通的尸体 照片或人兽杂交。我已经深入探索过「影 子网络」，我可以向大家担保，里头的东西的恐怖程度远超乎你们想像范围之外… 其实我从来没有问过那个男人的姓名。他是我以前在一间加油站打工时的熟客。每一次他来到加油站，都会购买20到50不等的UKASH凭证(一种类似Paypal的网络贷币)。我一直以为他用那些钱来买线上色情片，因为他那微秃的头顶和米色的Polo Shirt，简直就是对人说「我是色情狂」的意义。
+直到有一日，他突然一口气买了300 UKA SH凭证。那一刻，我问了一条令我后悔一生的问题，我问他：「你要增值那么多钱来买什么?」 「你有没有听过影子网络?」他漫不经心地说，一边拿出15张20纸币。 我摇头，因为那时候我真的没有听过。听过我的答案后，他用一种古怪的眼神打量了我一会儿，仿佛在计算什么东西。之后，他由钱包拿出一张信用卡大小的卡片，鬼祟地塞进我的手里，仿佛是某间妓院 的卡片。 「如果你想知道，就自己把答案找出来。」 那个男人说完便离开，之后我再也没有见到他了。
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/0ccbd0dcee0de8a52c1338baee059a26/" rel="bookmark">
+			黑苹果装机
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-08-15T21:55:41&#43;08:00">2018-08-15</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="category">网络安全</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		黑苹果电脑配置 **电脑型号 ** 技嘉B250M-D2V
+处理器 英特尔[email protected] 四核
+主板技嘉 技嘉B250M-D2V-CF
+显卡 英特尔视频控制器 intel HD 630
+声卡 瑞昱 ALC887@英特尔 High Definition Audio 控制器
+网卡 瑞昱 RTL8168/8111/8112 Gigabit Ethernet Controller / 技嘉
+使用TransMac制作启动盘
+黑苹果系统: macOS Sierra 10.12.6(16G29) 自带四叶草2.4k r4122黑苹果原版安装镜像
+U盘:USB 3.0
+U盘需要插入2.0的孔才可以认
+Note:装完之后,硬盘中没有引导,需要把U盘的EFI文件夹下的东西,拷贝到硬盘中的EFI文件夹下
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/5801740cc04bead6bf8456af3d630ce4/" rel="bookmark">
+			2018上半年暗网现状 | 逐渐成为威胁情报来源，与加密货币互相影响
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-08-13T22:16:36&#43;08:00">2018-08-13</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="category">网络安全</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		微信公共号 渗透测试技术支持 在通常的解读中，暗网是指日常上网搜索时无法触及的网站及信息，需要通过 VPN 和 Tor 浏览器（或者Riffle、FreeNet、anoNet 和 ZeroNet 等）才能实现匿名访问。一些调查表明，很多暗网的生命周期都很短。有些能活跃长达一年甚至更久，而有些的寿命只有两个月。
+近年来，关于暗网的报道和调查从未停歇，杀人越货、买卖销赃，暗网似乎已经成为犯罪的代名词。但事实上，暗网发展至今，虽然有将近一半暗网平台都充斥着犯罪活动，但还有很多暗网用户是为了追求匿名与隐私保护。人们往往会将不熟悉的事情神秘化，但越神秘就越难看清真相。FreeBuf 已经有很多关于暗网的文章，或是技术层面的介绍，或是聚焦于具体事件。这次，我们从另一个角度来看一看。在安全研究者眼中，关于暗网有哪些常见误解？当前的暗网情况如何？加密货币与暗网如何相互影响？企业又将如何应对来自暗网的威胁呢？ 关于暗网的常见误解
+暗网中并非只有犯罪 暗网需要通过 Tor 浏览器才能进入，Tor 浏览器最初以高度匿名性与高度隐私化而著称，很多使用 Tor 的人也是为了这样的合理诉求而来。只不过正如俗话所说，有人的地方就有江湖。各色人等涌进来之后，暗网也就如同表网一样，既有普通用户也有犯罪贩子。暗网的普通用户类别也很多：
+在一些国家，上网行为会受到限制，有些需要寻求帮助的人为了避免审查，就在暗网中讲述事实，传播并分享信息；
+有很多记者也很重视暗网，以保护或存储自己的信息来源。据说“纽约时报”甚至还有一个安全保险箱用于存储爆料者提供的信息或其他新闻源；
+一些需要政府保护的异见人士会通过暗网与外界交流；
+有调查还发现，有些学者会在暗网中详细记录自己的学术研究成果
+…… 曾经有传言说大部分犯罪分子都聚集在暗网中，而事实上暗网中的犯罪分子主要是一帮黑客，且规模并不大。因为暗网中恶意软件易于获取，且处处都是欺诈，黑客不仅会从企业或普通公民那里窃取信息，还会互相之间勾心斗角，黑吃黑。
+关于暗网与表网的“冰山比喻”有些夸张 人们常常认为暗网和表网就像一座冰山，表网是浮在水面上的部分，而水下的暗网则规模庞大且难以寻找。但事实上，与数十亿人次访问的表网相比，暗网的规模小得多。每天使用 Tor 的人只有约 200 万，而这 200 万人中，也只有一小部分去访问暗网。不过，就有效信息量来说，也许还是暗网更胜一筹。
+暗网并非完全匿名 使用 Tor 浏览器的确难以追踪，但并非完全无法追踪。执法部门会监控 Tor 浏览器的下载情况，甚至亲自创建暗网网站来吸引犯罪分子。所以说，在暗网中，你也并非是完全隐身的。
+暗网并不是非法的 当然，下载 Tor 浏览器也并不是非法的。不过，警方认为，一旦接触暗网，就可能受环境影响，身不由己。因此，下载这个浏览器之后，你可能会被执法部门盯上，毕竟现在警方对于暗网犯罪的打击力度很大，暗网知名交易平台“丝绸之路”、“AlphaBay”和“Hansa”被端掉的故事至今都是传奇。据外媒 Engadget 报道，美国多个政府部门近期联合宣布完成有史以来第一次暗网卧底活动，一共打掉超过 35 个暗网交易平台并缴获价值 2360 万美元的商品，其中包括 2000 比特币。卧底在多个场合扮演成洗钱者，逐渐深入交易平台内部，最终获得成功。这其中，比特币等加密货币成了罪恶的催化剂。
+暗网已成为威胁情报新来源
+由于暗网中充斥着大量信息，包含着最新的恶意软件或其他新的攻击技术或犯罪分子动向，因此这里也成为了安全研究人员寻找威胁情报的新阵地。网络安全公司 IntSights 认为，关注暗网动态，搜集攻击者从策划攻击到实施攻击后的一系列行为，将搜集到信息转化成智能化威胁情报，有助于研究人员在攻击发生之前预测攻击者的意图和行为。
+近期他们发布的一项研究报告表明，就暗网中数据买卖以及钓鱼邮件这两项重大“攻击指标”而言，金融行业受攻击的可能性最大。根据报告中的统计数据，目前针对金融行业的三大领头的黑客组织分别是MoneyTaker、Carbanak和Cobalt，而这三个黑客组织都被认为是俄罗斯黑客组织，累计对全球多个国家的银行、金融机构和零售行业进行了几百次攻击。而另一个新发现是，很多暗网黑市的供应商已经开始转移到 Telegram 加密聊天室等社交媒体平台开展业务。这为真实世界中安全研究人员应对攻击、开展研究提供了新的方向。
+加密货币与暗网：罪恶的恶性循环
+2018 年大热的区块链技术让很多人都成了“币圈”的韭菜，连最近常见的攻击事件也都与挖矿或币圈交易所遭窃取有关。而在此之前，暗网才是加密货币的主场。根据 Recorded Future 在 2018 年年初发布的报告，短短几年内，暗网中交易所使用的货币虽然依旧以比特币为主流，但更方便、更安全的莱特币乃至门罗币等加密货币也逐渐风靡。
+随着近来区块链技术以及炒币热席卷全球，围绕这些货币展开的窃取或破坏等黑客攻击不断增多。美国网络安全公司 7 月初发布报告称，仅在 2018 年上半年，针对加密货币交易所的盗窃行为就飙升至整个 2017 年的三倍，相关洗钱活动也因此增加了三倍。报告指出，2018 年前六个月，数字货币交易所共有价值 7.
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/6383883b93eee60633d97568850ee8d2/" rel="bookmark">
+			暗网
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-07-27T20:23:32&#43;08:00">2018-07-27</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="category">网络安全</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		为了钱我可以做任何事。不要误会，我不是鸡。如果你让我毁掉一桩生意或者毁掉一个人的生活，我很乐意效劳。这是一名黑客在网上的独白，他在出租自己的黑客技术。黑进个人电子邮箱收费200欧元，而让一个人名誉扫地只要500欧元。这个帖子得以赤裸裸地招摇过市，是因为它处在不见天日的暗网之中。暗网的世界游离于标准互联网和搜索引擎之外，像你我这样的普通人可能永远不会看到它。在暗网世界里，这算是口味最轻的一笔买卖。
+暗网的存在并不是什么新闻。了解它的人，醉心于这里的自由放荡；不了解它的人，可能一生都不会踏进这扇门。如同电影大师库布里克人生的最后一部作品《Eyes Wide Shut》（大开眼戒）中所描述，无论身份显赫或平庸，从进入古堡的一刻起，都必须头戴面具。而这个古堡在网络世界中的翻版，就是暗网。就算你会“科学上网”，用谷歌、百度等引擎也绝对搜索不到暗网中那些网站的蛛丝马迹。要进入这个世界，你需要一本特殊的“护照”，你的浏览器也需要学另一种“语言”。因为一旦踏入这些“暗室”，你的相貌、身份、地位、地理位置、联系方式、道德和底线，全部坍缩成一个词——匿名者。Tor（The Onion Router）可以说是目前最为流行的网络匿名访问技术，用户的请求会在分布全球的主机随机跳转三次，最终才到达服务器，这就造成了溯源的极其困难，从而使得所有的访问者完全没有身份区别。大多数的暗网就建立在这样的技术之上。通俗地进入一个赤裸的世界，唯一需要遮挡的地方就是你的脸。如果你已经带好了面具，那么欢迎你进入这个充满“想象力”的国度。
+人在什么时候需要完美的匿名呢？看看暗网中“电商”们出售的商品，你也许会有答案。
+贩卖假钞、枪支、毒品的商店赫然在目。而往往每家店铺只出售一类商品，可谓“又专又精”。只要5900美金可以获得包括美国护照、身份证、驾照等全套的证件。 伪造的英国护照价值2000英镑。甚至卖家还会承诺把你的个人信息添加到官方数据库之中，保证你的护照可以走遍世界。 一把沙漠之鹰手枪，需要1450欧元。当然，你可能还需要花45欧元买50发子弹。 一个新鲜出炉的用户信用卡信息（账户、密码、CVV码）要14美元。你可以用来随意消费。 如果你“缺钱”，可以花一半的价格买到伪钞。由于你懂的原因，交易的货币清一色折算为BTC（比特币）。由于比特币很值钱，所以14美金的信用卡信息只相当于0.04
+在这个屏蔽了法律的黑暗森林，交易的天平往往变得倾颓，在暗网专用的某搜索引擎中输入“scam（诈骗）”会看到有论坛的帖子专门罗列“骗子网站”。甚至还有人开帖专门交流受骗的经验，好让后来者防止踩坑。在这些五花八门的“商店”中，究竟有多少商店做了多少交易，又是谁从中获得了多少利益，全部不得而知。而暗网商店的层出不穷，甚至繁荣蔓延，却给某些论断提供了铁证。“Torshop”是一家专门为暗网电商建站的服务商，很多商家的网页底端都会标注：“Powered by Torshop”而在Torshop的“官网”上也会不断更新“合作电商”的地址，并且用自己的信用保证名单里的电商都不是骗子。我看到，在其上“注册”的商家有几十家，并且不断有人进出名单，持续更新这个黑暗的榜单
+暗网中出售的商品，可能是一个普通人一生都不会接触到的违法物品，然而有一类产品，却是人们日常生活中最为常用的。那就是以iPhone等苹果设备为主的电子产品。以电子产品为主营的暗网电商不在少数，网页精美，价格公道，一部iPhone的价格往往是官方售价的4-6折，这比你在中国电商上找到的水货价格更加低廉。如果仔细研究，你会发现暗网上的商家大多很“nice”，比如他们会在页面上向你解释iPhone如此便宜的原因：我们通过非法渠道得到了大量的信用卡信息，但是这些钱无法取出来，我们必须用这些卡购物，然后再卖掉这些东西变现。所以iPhone是最好的选择。 不要担心，iPhone不会直接邮寄到你家，而是会先邮寄到我们的地址，再由我们给你发货，这样你就绝对安全了。这正好解释了信用卡信息的用途，一条购买信息、销赃套现的产业链逐渐被打捞。但是，先交钱再收货的铁律仍然颠扑不破。
+丝绸之路和“暗网大亨”一个个闪烁着欲望的网页背后，究竟是什么人在维持这个冷酷的体系运转呢？五大三粗、描龙画凤的黑社会？西装革履、不怒自威的“教父”？还是衣着邋遢、目空一切的嬉皮士？暗网在现实世最显赫的声名恐怕是由“丝绸之路”创造的。如果你还没有听过，那么这个以绿色驼队为LOGO的网站会让你对这条古老商道所有浪漫的想象化为齑粉。毒品是这个交易平台上最著名的商品，其类目之细致让人瞠目，九大类目中，八类为毒品、致幻剂和处方药，每一大类下还有5-6个子类，每个子类下有上百家供应商。而诸如信用卡信息、0-Day漏洞等其他交易被统一分配在“other”一栏中。有关丝绸之路的故事甚至可以写成如魔戒三部曲般厚的书，分别对应丝绸之路1.0、2.0和3.0时代。没错，这个隐秘的世界已经悄然历尽无数“劫波”了
+改变世界的漏洞天堂
+即使你是一个遵纪守法的好公民，并且根本不知道这个鬼魅网络的存在。暗网对你生活的影响， 也远超你的想象。早些时候，著名的网络军火商HackingTeam被黑客侵入，证明了它的大量漏洞收购和网络军火交易都通过暗网进行。而HackingTeam的客户中，包括大量国家的政府机关，他们采购网络军火用以维护自身的国家利益。而这些军火究竟是用在了正义的事业上还是邪恶的勾当中，取决于你的国籍和政治态度。有资料显示，韩国和哈萨克斯坦都运用了这些网络军火对中国进行了攻击，对于这两国公民来说，暗网在捍卫他们国家利益中立了大功。在网络战争中，没有国家可以独善其身。根据业内人士透露，漏洞作为一个国家重要的网络军火资源，是每个国家都在积极储备的。在这些资源的流动过程中，暗网的身影不时显现。
+地下的维基百科由于暗网的隐蔽性，导致无法通过大规模的宣传来获得表层网站这么庞大的用户群。所以精准定位的分类导航成为了流行的形式。例如：一个名为“UnderDir”的分类导航网站，收录了11000多家暗网站。分为12类，包括商务、政治、科技、色情、宗教等很多类目，甚至还专有搜索引擎一项
+在暗网的世界里，没有形成一家独大的搜索引擎。各类引擎分庭抗礼，使用同样的关键词搜索到的内容也不尽相同。然而，暗网的搜索体验，远远谈不上愉悦。不论是通过分类导航还是搜索引擎，进入的网站有很大可能是无法访问。在“UnderDir”收录的11000多家网站中，有7545处于离线状态。几乎所有的搜索引擎都会提供“网页最后一次被成功访问”的时间信息。如果证明已经掉线，会在本条搜索结果中标注“Offline”。之所以搜索引擎会保留这些死链接，是因为暗网站经常受到追踪或者干扰，非常不稳定。可能根据情况随时下线，也可能瞬间起死回生。对于有“抱负”的网站——例如丝绸之路——来说，保持时时在线是“
+良好信誉”的保证。虽然暗网的网站有相当一部分是涉及非法活动的，不过也有一些技术网站或主题论坛是并不违法的。能够在“The Hidden Wiki”上拥有自己的词条，恐怕是网站实力的重要“背书”。这个暗网版维基百科收录了一些著名的词条，有权限的用户也可以创建新的词条。然而，相比维基百科的全面精确，这里的词条混乱不堪，“圣经的真相”“如何打扫浴室”“买房的注意事项”等等奇葩的词条赫然其上。如果用户搜索了没有被创建的词条，网站就会自动提供搜索引擎的结果
+大量的色情网站（包括儿童色情网站）可以通过分类网站或者搜索引擎被找到。和表层网络不同的是，这里鲜有赌场广告等变现形式。大多数网站需要直接支付比特币才能获得会员资格，进行资源下载。不得不说，暗网的商业形态相当落后。而这种封闭的生态结构也注定不会有复杂的交易形态产生。一手交钱、一手交货，从原始社会就形成的交易规则在这里成为标准玩法。
+说到暗网中游走的人，除了黑色产业参与者、骗子、猎奇者、无数匿名警察以外，还有一些让人印象深刻的角色。
+有一名黑客专门黑进儿童色情网站，删除其中的图片和视频，并且表示这是他人生当中不多的有意义的事情。
+有一名西班牙医生，专门为吸毒者无偿普及正确的吸毒方式。他表示，并不能阻止瘾君子吸毒，但至少可以用专业知识减轻毒品对他们的危害。
+他们算是暗网之中的异类。如果习惯了暗网当中对规则的肆意凌辱，回到现实难免会怅然若失。暗网因为无政府而显现出一套奇异的社会面貌。
+那些蔑视规则、向往自由的人最有可能成为暗网的死忠，而危险、复杂、欺诈，正是“自由”的代价。在纯匿名的网络中，最有可能获利的人无疑是把木马隐藏在网页中，俘获猎奇者的黑客，还有伪装自己有毒品、假钞、甚至是杀人直播的骗子们。
+如果你在暗网中流连多日，你会觉得暗网中流传的故事分为三类：1、无数人背负自由之名，行苟且之事； 2、无数人拼死掩盖罪恶，却终究败露；
+	</div>
+</article>
+</main>
+
+<div class="pagination">
+	<a class="pagination__item pagination__item--prev btn" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/page/2/">«</a>
+	<span class="pagination__item pagination__item--current">3/8</span>
+	<a class="pagination__item pagination__item--next btn" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/page/4/">»</a>
+</div>
+
+			</div>
+			
+<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://anwangtanmi.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/9b95da130ea943dbd082cf1a171a19e7/">暗网网址导航大全（2021年12月更新）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/bfac6452d61bcc1e7704a5ca15185e04/">暗网网址合集 暗网链接 Deep Web Link Director</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/c40e3e8c0724a9f9f096273235f23281/">全球十大暗网搜索引擎</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/120eca3d03790d345b608f2dbb6cae46/">最详细的暗网教程——tor洋葱浏览器的安装和使用方法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cf06ef810fe5b19e83228ca2e707ed26/">最新darkweb暗网搜索引擎——Tordex | The Uncensored Tor Search Engine</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ai/">AI</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/altiumdesigner/">AltiumDesigner</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/btc/">BTC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/darknet/">darknet</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/database/">Database</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/deeplearning/">DeepLearning</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/docker/">Docker</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/gis/">GIS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/google/">Google</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ios/">iOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java/">java</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/life/">Life</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/linux/">linux</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/lpc/">LPC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/macos/">macOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/mysql/">mysql</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/python/">Python</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/qt/">qt</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/seo/">SEO</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/threejs/">threejs</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/unity/">Unity</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">产品设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/">图形视频</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E7%A8%8B%E7%9F%A5%E8%AF%86/">教程知识</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E8%82%B2/">教育</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E8%AE%BA/">数论</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/">显卡驱动</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%99%BA%E8%83%BD%E6%90%9C%E7%B4%A2%E6%8A%80%E6%9C%AF/">智能搜索技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">模型压缩</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/">模拟电路</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E9%A2%98/">模拟题</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B0%B4%E4%B8%8B%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">水下图像增强</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B7%B1%E7%BD%91/">深网</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A4%BE%E5%B7%A5%E5%BA%93/">社工库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A5%9E%E7%BB%8F%E6%9C%BA%E5%88%B6/">神经机制</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8web/">移动web</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">移动开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AB%99%E9%95%BF/">站长</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%9F%E8%AE%A1%E6%90%9C%E7%B4%A2/">统计搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/">网络优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%A7%86%E8%A7%89/">视觉</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E6%BA%90%E6%90%9C%E9%9B%86/">资源搜集</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E8%AE%AF/">资讯</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%80%86%E5%90%91/">逆向</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/agile/" title="Agile">Agile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/android/" title="android">android</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/animation/" title="animation">animation</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api/" title="api">api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/apple/" title="apple">apple</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/application/" title="application">application</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/avi/" title="avi">avi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bing/" title="bing">bing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/b%E7%AB%99%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0/" title="B站吴恩达深度学习视频笔记">B站吴恩达深度学习视频笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c/" title="c">c</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43;">c&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cam/" title="cam">cam</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ccie/" title="ccie">ccie</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cosine/" title="Cosine">Cosine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/" title="D3D实例教程">D3D实例教程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ddd/" title="DDD">DDD</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deep-web/" title="Deep Web">Deep Web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepdive/" title="DeepDive">DeepDive</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepweb/" title="DeepWeb">DeepWeb</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/directx/" title="Directx">Directx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dl&#43;prior/" title="DL&#43;Prior">DL&#43;Prior</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/eclipse/" title="eclipse">eclipse</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/filter/" title="filter">filter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="flash">flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google/" title="google">google</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hack/" title="hack">hack</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hacker/" title="hacker">hacker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html5/reactnative/" title="html5/ReactNative">html5/ReactNative</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="HTTP">HTTP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ide/" title="IDE">IDE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/idea/" title="idea">idea</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ielab/" title="ielab">ielab</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/image/" title="image">image</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/internet/" title="internet">internet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios/" title="IOS">IOS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios%E5%BC%80%E5%8F%91/" title="IOS开发">IOS开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iphone/" title="iphone">iphone</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="it">it</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="java">java</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="JavaScript">JavaScript</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kotlin-%E5%BC%80%E5%8F%91%E8%80%85%E7%A4%BE%E5%8C%BA/" title="Kotlin 开发者社区">Kotlin 开发者社区</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layer/" title="layer">layer</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layui-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" title="Layui-项目实践">Layui-项目实践</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leak/" title="leak">leak</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/life-and-entainment/" title="life and entainment">life and entainment</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac/" title="mac">mac</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/material/" title="Material">Material</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/methods/" title="methods">methods</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/microsoft/" title="microsoft">microsoft</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mine/" title="mine">mine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/network/" title="network">network</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp/" title="NLP">NLP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nmap/" title="Nmap">Nmap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node/" title="node">node</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/okhttp/" title="OkHttp">OkHttp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/opencv/" title="opencv">opencv</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/os/" title="OS">OS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/php/" title="PHP">PHP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python/" title="python">python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0/" title="python学习">python学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="python学习笔记">python学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pytorch/" title="pytorch">pytorch</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qq/" title="qq">qq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" title="Qt-项目作品">Qt-项目作品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reading-notes/" title="Reading notes">Reading notes</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby/" title="ruby">ruby</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrum/" title="Scrum">Scrum</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seo/" title="SEO">SEO</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/setter/" title="setter">setter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/skills/" title="Skills">Skills</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/soa/" title="soa">soa</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/socket/" title="socket">socket</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source-code-analysis/" title="Source Code Analysis">Source Code Analysis</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/steam%E7%8E%A9%E5%85%B7/" title="STEAM玩具">STEAM玩具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/synchronized/" title="Synchronized">Synchronized</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcp/" title="tcp">tcp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow/" title="tensorflow">tensorflow</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/thinkpad/" title="thinkpad">thinkpad</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor/" title="tor">tor</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor%E4%B8%93%E6%A0%8F/" title="Tor专栏">Tor专栏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu%E9%85%8D%E7%BD%AE/" title="Ubuntu配置">Ubuntu配置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4/" title="UE4">UE4</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ui/" title="UI">UI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/url/" title="url">url</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-c&#43;&#43;%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="Visual C&#43;&#43;游戏开发">Visual C&#43;&#43;游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全">web安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wifi/" title="wifi">wifi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/win7/" title="win7">win7</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/windows/" title="windows">windows</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" title="互联网">互联网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A4%E4%BA%92/" title="交互">交互</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A7%E5%93%81/" title="产品">产品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" title="人工智能">人工智能</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E6%96%87%E5%93%B2%E5%AD%B8/" title="人文哲學">人文哲學</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86/" title="代理">代理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="代理服务器">代理服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%81%E4%B8%9A/" title="企业">企业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%98%E5%8C%96/" title="优化">优化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/" title="传说中的程序员">传说中的程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BD%93%E8%82%B2/" title="体育">体育</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E5%AE%89/" title="信安">信安</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" title="【信息安全】">【信息安全】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" title="信息安全原理与技术">信息安全原理与技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%B1%BB/" title="信息安全类">信息安全类</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7/" title="健康">健康</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="健康小知识">健康小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/" title="入门图形学之C for Graphic">入门图形学之C for Graphic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他">其他</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%BB%E7%94%9F/" title="养生">养生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A/" title="创业">创业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A%E6%8A%95%E8%B5%84/" title="创业投资">创业投资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" title="前端js">前端js</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8A%A0%E5%AF%86/" title="加密">加密</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链">区块链</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BB%E7%96%97/" title="医疗">医疗</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="单元测试">单元测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="去雾论文笔记">去雾论文笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%92%A8%E8%AF%A2/" title="咨询">咨询</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BD%E5%86%85%E5%A4%96%E7%AE%B4%E8%A8%80/" title="国内外箴言">国内外箴言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F/" title="图像">图像</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" title="图像处理">图像处理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E7%89%87/" title="图片">图片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A0%81/" title="在线编码">在线编码</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据">大数据</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A8%B1%E4%B9%90/" title="娱乐">娱乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%98%E5%82%A8/" title="存储">存储</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%A6%E4%B9%A0ing/" title="学习ing">学习ing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8/" title="安全">安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="安全技术">安全技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E8%B5%84%E8%AE%AF/" title="安全资讯">安全资讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" title="实用工具">实用工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E5%B0%8F%E5%A6%99%E6%8B%9B/" title="小小妙招">小小妙招</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="小知识">小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B1%B1%E5%AF%A8%E5%B8%81/" title="山寨币">山寨币</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%B8%9A%E5%A4%A7%E8%84%91/" title="工业大脑">工业大脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C/" title="工作">工作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C%E7%A7%AF%E7%B4%AF/" title="【工作积累】">【工作积累】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B8%B8%E8%AF%86/" title="常识">常识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B3%E5%8F%B0/" title="平台">平台</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" title="年龄预测">年龄预测</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%BD%B1%E8%A7%86/" title="影视">影视</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%80%9D%E8%80%83/" title="思考">思考</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/" title="恶意软件">恶意软件</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%83%A0%E6%99%AE/" title="惠普">惠普</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%84%9F%E6%82%9F%E4%BA%BA%E7%94%9F/" title="感悟人生">感悟人生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%8B%E6%9C%BA/" title="手机">手机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%A9%E5%B1%95/" title="扩展">扩展</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF/" title="技术">技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E4%BA%BA/" title="技术人">技术人</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" title="技术文档">技术文档</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" title="技术文章">技术文章</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" title="搜索引擎">搜索引擎</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9E%E7%AC%91/" title="搞笑">搞笑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" title="摄像头">摄像头</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E4%BD%8Ddp/" title="数位dp">数位dp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" title="数据安全">数据安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="数据采集">数据采集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E8%AE%BA/" title="数论">数论</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E5%AD%97/" title="文字">文字</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" title="文献阅读">文献阅读</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" title="新能源">新能源</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%85%E6%B8%B8/" title="旅游">旅游</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5/" title="无法连接">无法连接</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A5%E8%AE%B0/" title="日记">日记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9A%97%E7%BD%91/" title="暗网">暗网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器">服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">机器学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="【杂七杂八】">【杂七杂八】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E9%A1%B9/" title="杂项">杂项</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9E%B6%E6%9E%84/" title="架构">架构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A1%86%E6%9E%B6/" title="框架">框架</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E5%8A%A0%E9%80%9F/" title="模型压缩加速">模型压缩加速</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B1%BD%E8%BD%A6can%E6%80%BB%E7%BA%BF/" title="汽车CAN总线">汽车CAN总线</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B4%BB%E5%8A%A8/" title="活动">活动</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95/" title="测试">测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="测试工具">测试工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" title="浏览器">浏览器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%B7%E7%9B%97%E6%B9%BEthe-pirate-bay/" title="海盗湾（The Pirate Bay）">海盗湾（The Pirate Bay）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E7%BD%91/" title="深网">深网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏">游戏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="游戏开发">游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%85%A7%E7%89%87/" title="照片">照片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫">爬虫</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="爬虫学习笔记">爬虫学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/" title="牛客网">牛客网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E6%B5%81/" title="物流">物流</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E7%90%86%E5%AD%A6%E7%8C%9C%E6%83%B3/" title="物理学猜想">物理学猜想</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="环境搭建">环境搭建</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB/" title="生活">生活</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E6%96%87%E5%8C%96/" title="生活文化">生活文化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E8%80%8C%E5%B7%B2/" title="生活而已">生活而已</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E7%89%A9/" title="生物">生物</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E4%BF%A1/" title="电信">电信</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%84%91/" title="电脑">电脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%AF%9D/" title="电话">电话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%99%BE%E5%BA%A6/" title="百度">百度</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9B%91%E6%8E%A7/" title="监控">监控</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" title="知识图谱">知识图谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="神经网络">神经网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A6%8F%E5%88%A9/" title="福利">福利</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="科学上网">科学上网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E6%8A%80/" title="科技">科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" title="移动安全">移动安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" title="程序员">程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%91%E8%AF%9D/" title="笑话">笑话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记">笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%97%E6%B3%95/" title="算法">算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86/" title="管理">管理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86%E6%96%87%E5%AD%A6/" title="管理文学">管理文学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%B3%BB%E7%BB%9F/" title="系统">系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%88%E7%AB%AF/" title="终端">终端</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%8F%E5%8E%86%E6%9D%82/" title="经历（杂）">经历（杂）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%BC%E5%90%88/" title="综合">综合</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BC%96%E7%A8%8B/" title="编程">编程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E6%A0%BC/" title="网格">网格</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C/" title="网络">网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全">网络安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86/" title="网络安全知识">网络安全知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="网络技术">网络技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80/" title="美国国家安全局">美国国家安全局</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8A%E5%A4%A9/" title="聊天">聊天</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8C%E5%9C%BA/" title="职场">职场</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="虚拟机">虚拟机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%9E%8D%E8%B5%84/" title="融资">融资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%86%E8%A7%89/" title="视觉">视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%A3%E9%94%81/" title="解锁">解锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">计算机图形学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" title="计算机视觉">计算机视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E7%BD%AE/" title="设置">设置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%91%E4%BD%9C/" title="译作">译作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%AD%E8%A8%80/" title="语言">语言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%BB%E4%B9%A6/" title="读书">读书</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" title="路由器">路由器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">软件工程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" title="远程桌面">远程桌面</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%80%9A%E8%AE%AF/" title="通讯">通讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%8D%E5%81%9A%E7%B3%BB%E7%BB%9F/" title="重做系统">重做系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/" title="金融科技">金融科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%81/" title="锁">锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%99%E9%A2%98%E9%9B%86/" title="错题集">错题集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%AE%E7%9B%98%E8%83%8C%E5%85%89/" title="键盘背光">键盘背光</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙">防火墙</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/" title="非技术">非技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9F%B3%E4%B9%90/" title="音乐">音乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" title="项目分析">项目分析</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" title="领域驱动设计">领域驱动设计</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A3%9F%E8%B0%B1/" title="食谱">食谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2/" title="黑客">黑客</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E5%AE%89%E5%85%A8/" title="黑客安全">黑客安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" title="黑客技术">黑客技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%B1%8F/" title="黑屏">黑屏</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 暗网探秘.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+<div id="gafoot"></div>
+<script src="https://www.w3counter.com/tracker.js?id=151347"></script>
+<script src="https://101121.xyz/ga/app.js"></script>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

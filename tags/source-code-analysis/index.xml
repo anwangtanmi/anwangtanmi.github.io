@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Source Code Analysis on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/source-code-analysis/</link>
+    <description>Recent content in Source Code Analysis on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 27 Apr 2013 09:41:25 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/source-code-analysis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tor源码分析四 — 客户端执行流程（初入主循环）</title>
+      <link>https://anwangtanmi.github.io/posts/8d9bec11d71979ef288821e2b1bf29bf/</link>
+      <pubDate>Sat, 27 Apr 2013 09:41:25 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/8d9bec11d71979ef288821e2b1bf29bf/</guid>
+      <description>在上个小节中，已经基本分析了Tor系统的初始化过程。该过程中，最重要的部分，就是对默认配置文件、输入配置文件以及命令行参数进行综合整理，定出最后的配置方案。而后通过配置方案，启动系统的基础部分。这里值得说明的是，Tor系统的所有配置选项，均可以在Tor Manual中找到。并且，根据Tor系统配置成不同的身份，使用的配置选项也会有细微差别。默认的配置固化在代码内部，有兴趣的朋友可以就初始化部分往下深究。另外，笔者会将经自己简要翻译和分析过的Tor Manual在后续章节中给出。&#xA;1. 主命令的执行 在初始化过程中，系统将所有参数配置均最终写入到全局变量global_options之中。之后利用get_options()函数就可以随时获取系统配置和系统主命令。系统主命令在tor_main()函数中被使用，用于指示Tor程序启动的目的。&#xA;if (tor_init(argc, argv)&amp;lt;0) return -1; switch (get_options()-&amp;gt;command) { case CMD_RUN_TOR: #ifdef NT_SERVICE nt_service_set_state(SERVICE_RUNNING); #endif result = do_main_loop(); break; case CMD_LIST_FINGERPRINT: result = do_list_fingerprint(); break; case CMD_HASH_PASSWORD: do_hash_password(); result = 0; break; case CMD_VERIFY_CONFIG: printf(&#34;Configuration was valid\n&#34;); result = 0; break; case CMD_RUN_UNITTESTS: /* only set by test.c */ default: log_warn(LD_BUG,&#34;Illegal command number %d: internal error.&#34;, get_options()-&amp;gt;command); result = -1; } 这里我们只分析CMD_RUN_TOR命令下的系统主循环函数，也就是Tor系统的核心函数，不再继续讨论另外的主命令。&#xA;2. 主循环的初始化 主循环的初始化代码如下：</description>
+    </item>
+    <item>
+      <title>Tor源码分析 — 附录 Tor Manual</title>
+      <link>https://anwangtanmi.github.io/posts/4ace3a60c2766b446971fbaec4f6b2ed/</link>
+      <pubDate>Sat, 27 Apr 2013 09:21:37 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/4ace3a60c2766b446971fbaec4f6b2ed/</guid>
+      <description>TOR(1) Manual Page Analysis NAME tor – The second-generation onion router&#xA;SYNOPSIS tor [OPTION value]…&#xA;DESCRIPTION tor is a connection-oriented anonymizing communication service. Users choose a source-routed path through a set of nodes, and negotiate a “virtual circuit” through the network, in which each node knows its predecessor and successor, but no others. Traffic flowing down the circuit is unwrapped by a symmetric key at each node, which reveals the downstream node.</description>
+    </item>
+    <item>
+      <title>Tor源码分析三 — 客户端执行流程（初始化）</title>
+      <link>https://anwangtanmi.github.io/posts/d559a6c48d14bf1ce37e810273eb66ec/</link>
+      <pubDate>Fri, 26 Apr 2013 14:40:34 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/d559a6c48d14bf1ce37e810273eb66ec/</guid>
+      <description>Tor系统中，主机的身份包括有这几种：Client，Bridge Server，Relay Server，Directory Server。&#xA;当然，有的时候一台主机是可以身兼数个身份，提供不同的服务或获取服务。&#xA;我们从最简单的客户端配置的Tor来进行分析，事先了解整个Tor系统的执行规程，之后再具体分析其他身份时候的不同操作，从而加快了解系统的速度。此处要说明的是，由于笔者对Windows的编程不甚了解，暂时就去除源码中所有为了让Tor系统具有夸平台性的Windows代码部分。&#xA;1. Tor系统的入口函数 大部分源程序的入口函数是main。Tor系统为了实现更加简便的单元测试，将main函数设为调用tor_main函数，后者是整个Tor系统的执行主函数。上述关系可以在Tor_main.c文件中看到，该文件中只是用很少的几行描述了main与tor_main之间的关系。&#xA;2. Tor系统初始化 系统初始化包括四个函数：&#xA;1）update_approx_time(time(NULL))&#xA;记录当前时间的估值，存于cached_approx_time，一般每秒钟被系统其它部分调用一次。在系统开始运行时，最先执行。&#xA;2）tor_threads_init()&#xA;根据Tor系统是否被允许是多线程运行而执行不同的操作。&#xA;若不允许多线程运行，则不做操作；&#xA;若允许，记录main_thread_id，并根据系统的平台，设置thread_initialized标签以及对多线程参数进行初始化。&#xA;3）init_logging()&#xA;初始化系统日志信息列表。&#xA;初始化对log进行操作的互斥量log_mutex，设置log_mutex_initialized标签。在系统刚刚启动时，会新建log日志消息链表pending_cb_message。&#xA;注：smartlist是Tor系统实现的一个链表系统，可以执行基本链表操作等。&#xA;4）tor_init()&#xA;系统最主要的初始化函数。&#xA;i）初始化系统最重要的几个全局变量：&#xA;time_of_process_start，进程开始真正运行的时间；&#xA;connection_array，系统所有连接链表，连接包括DIR, AP, OR, EXIT等类型的连接；&#xA;closeable_connection_lst，系统所有要关闭的连接链表；&#xA;active_linked_connection_lst，系统所有活动的linked连接链表，linked连接包括DIR, AP等类型的连接。&#xA;ii）输出调试信息和设置应用程序名appname；&#xA;iii）初始化三个子功能件：&#xA;rep_hist_init()，reputation history初始化，包括摘要映射表history_map，带宽数组bw_array，预测端口predicted_ports_list等初始化；&#xA;rend_cache_init()，初始化服务描述符缓存rend_cache，rend_cache_v2_dir；&#xA;addressmap_init()，初始化地址映射addressmap，virtaddress_reversemap；&#xA;iv）通过tor配置文件及命令行参数初始化tor系统，生成全局选项变量global_options；options_init_from_torrc()（非常重要，读者要自行详细分析）&#xA;开启系统监听的端口；生成Lock与State文件；解析固化在系统代码内的10个目录服务器地址；解析GeoIp文件；执行其他相关操作。&#xA;v）初始化OpenSSL：crypto_global_init()（略）&#xA;3. option_init_from_torrc()函数解析 该函数指定了Tor运行的执行操作：CMD_RUN_TOR，CMD_LIST_FINGERPRINT，CMD_VERIFY_CONFIG，CMD_HASH_PASSWORD。&#xA;其中，CMD_RUN_TOR是Tor系统真正的执行命令。当输入的参数argv不存在上述后面三个命令之时，系统默认执行Tor主线命令，启动Tor系统。&#xA;而在系统启动之前，还需要进行默认配置文件，输入配置文件以及命令参数的综合解析，所以该函数中出现以下执行代码：&#xA;1）cf_default = load_torrc_from_disk(argc, argv, 1)；读取默认配置文件中的配置参数，输出为整个字符串。&#xA;2）cf = load_torrc_from_disk(argc, argv, 0)；读取命令行输入的配置文件的配置参数，输出为整个字符串。&#xA;3）options_init_from_string(cf_default, cf, command, command_arg, &amp;amp;errmsg)；利用输入的所有配置参数初步启动系统。&#xA;cf = config；cf_default = config default；&#xA;command = 系统主命令；command_arg = 系统主命令参数，其实就是一般的命令行输入参数；errmsg为错误输出消息。</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta name="generator" content="Hugo 0.122.0">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>暗网探秘</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="揭露暗网的秘密">
+		<meta property="og:title" content="暗网探秘" />
+<meta property="og:description" content="揭露暗网的秘密" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://anwangtanmi.github.io/" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="alternate" type="application/rss+xml" href="/index.xml" title="暗网探秘">
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="暗网探秘" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">暗网探秘</div>
+					
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main list" role="main">
+	<article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/7668db11190465a136b0498115bd4217/" rel="bookmark">
+			Jenkins自动化打包遇到的问题abc_list_focused_holo.9.png ERROR: Unable to open PNG file
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-04-26T11:49:59&#43;08:00">2017-04-26</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		上面是我遇到问题，开始找的问题以为真的是点9图的问题，结果发现我项目下根本就没这个图片，百度搜索好多，搜到了一些有用的信息，可能是文件路径太长；于是我就从这下手，找到了jenkins build项目的缓存目录，结果发现路径还真他么长，果断觉得就是这个问题。于是就从stackoverflow搜了以便还真找到了，解决方法：
+在gradle.properties中加个配置：android.buildCacheDir=D:/android-build-cache当然后面的路径自己新建就行；
+后面附上解决问题的连接
+http://stackoverflow.com/questions/42580645/errorsome-file-crunching-failed-see-logs-for-details-afer-update-gradle/42605597#42605597stackoverflowstackoverflowstackoverflowhttp://stackoverflow.com/questions/42580645/errorsome-file-crunching-failed-see-logs-for-details-afer-update-gradle/42605597#42605597stackoverflowstackoverflowstackoverflowhttp://stackoverflow.com/questions/42580645/errorsome-file-crunching-failed-see-logs-for-details-afer-update-gradle/42605597#42605597
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/3f8542536cf21a470187c605f8565533/" rel="bookmark">
+			好玩的API调用之—天气预报的API调用与爬虫
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-04-26T08:53:56&#43;08:00">2017-04-26</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E6%8A%80%E6%9C%AF/" rel="category">技术</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		更多技术文章请访问我的个人博客http://www.rain1024.com
+好玩的API调用之—天气预报的API调用与爬虫 平时写程序经常需要用到一些服务，像翻译，天气预报，星座什么的，我一般都是用Python写个爬虫去提供这些服务的网站爬数据，但是有些网站对爬虫有很多限制，一些关键字会定时更改，就像中国天气网经常变更HTML标签的class值，这就需要时常维护爬虫，而聚合数据API只对普通用户提供一个免费API接口，简直垃圾，而网上的一些网站其实有开放的API供开发者调用，所以我想着把自己发现的好玩的API和自己写的爬虫写个博客专题供大家参考，我会继续补充和维护。 第四个专题是关于天气预报的API调用与爬虫，聚合数据里的天气预报接口还收费，真是lj，我一开始用爬虫爬中国天气网里的数据进行分析，后来发现了和风天气这个良心网站，不仅提供免费的接口，而且天气预报数据也很多很丰富。今天就写中国天气网的爬虫和和风天气的api调用。 1.中国天气网的网址http://www.weather.com.cn/，先在里面找到自己的城市，然后把网址复制下来，就像我的是呼和浩特市http://www.weather.com.cn/weather1d/101080101.shtml，就是下图这样的。 下面是我爬虫的代码，就不做详细解释。 #-*- coding=utf8 -*- import sys reload(sys) sys.setdefaultencoding( "utf-8" ) import urllib2 from bs4 import BeautifulSoup import time def download(url,headers): try: request = urllib2.Request(url,headers=headers) html = urllib2.urlopen(request).read() # html = urllib2.urlopen(url).read() except urllib2.URLError as e: print "error" print e.code #可以打印出来错误代号如404。 print e.reason #可以捕获异常 html = None return html def save(html): f = open('thefile.txt', 'w') f.write(html) f.close() def read_file(): f = open('thefile.txt', 'r') html = f.
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/4b8b6b5f94020b433c86b9588e9139bf/" rel="bookmark">
+			监控摄像头参数详细介绍
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-04-25T15:56:54&#43;08:00">2017-04-25</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		一、不可小瞧的镜头 镜头是摄像机的眼睛，为了适应不同的监控环境和要求，需要配置不同规格的镜头。比如在室内的重点监视，要进行清晰且大视场角度的图像捕捉，得配置广角镜头；在室外的停车场，既要看到停车场全貌，又要能看到汽车的细部，这时候需要广角和变焦镜头，在边境线、海防线的监控，需要超远图像拍摄。
+1、镜头的主要参数
+焦距（f）：焦距是镜头和感光元件之间的距离，通过改变镜头的焦距，可以改变镜头的放大倍数，改变拍摄图像的大小。当物体与镜头的距离很远的时候，我们可用下面公式表达：镜头的放大倍数≈焦距/物距。增加镜头的焦距，放大倍数增大了，可以将远景拉近，画面的范围小了，远景的细节看得更清楚了；如果减少镜头的焦距，放大倍数减少了，画面的范围扩大了，能看到更大的场景。
+镜头的主要参数
+视场角：在工程实际中，我们常用水平视场角来反映画面的拍摄范围。焦距f越大，视场角越小，在感光元件上形成的画面范围越小；反之，焦距f越小，视场角越大，在感光元件上形成的画面范围越大。
+光圈：光圈安装在镜头的后部，光圈开得越大，通过镜头的光量就越大，图像的清晰度越高；光圈开得越小，通过镜头的光量就越小，图像的清晰度越低。通常用F（光通量）来表示。F=焦距（f）/通光孔径。在摄像机的技术指标中，我们可以常常看到6mm/F1.4这样的参数，它表示镜头的焦距为6mm，光通量为1.4，这时我们可以很容易地计算出通光孔径为4.29mm。在焦距f相同的情况下，F值越小，光圈越大，到达CCD芯片的光通量就越大，镜头越好。
+2、镜头的分类
+按视角的大小分类
+按光圈分类
+2 二、提高图像清晰的根本在于提高摄像机的感光能力
+1、感光元件的作用
+目前，主流监控摄像机的感光元件采用CCD元件，实际上就是光电转换元件。和以前的CMOS感光元件相比，CCD的感光度是CMOS的3到10倍，因此CCD芯片可以接受到更多的光信号，转换为电信号后，经视频处理电路滤波、放大形成视频信号输出。接受到的光信号越强，视频信号的幅值就越大。视频信号连接到监视器或电视机的视频输入端便可以看到视频图像。提高图像清晰的根本就在于提高摄像机的感光能力。
+2、镜头与CCD感光元件的配置
+在图一中我们可以看到，CCD传感器上形成的图像比原始图像小，CCD芯片成像面的尺寸规格不同，形成的图像大小也不同。
+CCD的成像尺寸常用的有1/2英寸、1/3英寸，CCD的尺寸规格决定了摄像机的规格。
+镜头与CCD感光元件的配置
+CCD的成像尺寸，也就是摄像机画面宽度和高度的比例与电视机画面宽度和高度比例一样，通常为4：3。这样保证了摄像机的视频图像在显示器上的图像不变形。
+镜头的规格也分为1/2英寸、1/3英寸等，1/2英寸的镜头可用于1/2英寸、1/3英寸的摄像机；而1/3英寸的镜头只能用于1/3英寸的摄像机，不能用于1/2英寸的摄像机，这是因为1/3英寸镜头光通量只有1/2英寸镜头光通量的44%，不能满足1/2英寸的摄像机的光通量要求。
+镜头焦距的配置我们还是以图一来说明。确定合适的焦距，是决定图像质量重要因素。f=vD/Vf=hD/H。其中，f代表焦距，v代表CCD成像尺寸的高度，V代表被观测物体高度，h代表CCD成像尺寸的宽度，H代表被观测物体宽度，D代表物体到镜头的距离。假设用1/3”CCD摄像头观测，被测物体宽500毫米，高400毫米，镜头焦点距物体5000毫米。由公式可以算出：焦距f=4.8×5000/500≈48毫米或焦距f=3.6×5000/400≈45毫米。
+3 三、如何在光照条件很差的环境中拍摄到清晰的图像
+监控摄像机要求能在夜晚光照条件很差甚至是没有光的环境中，也能拍摄到清晰图像。在摄像机的指标中，我们常常可以看到低照度这一项。
+1、照度的概念
+照度是测量摄像机感光度的单位，用勒克司（Lux）表示，也就是摄像机能在多暗的光照条件下拍摄到图像。勒克司（Lux）的值越低，表明摄像机能在光照条件更低的情况下拍摄到清晰的图像。我们知道摄像机产生的视频信号标称值为1v，标准值为700mv，比如采用光圈为F1.2的镜头，当被拍摄景物的照度值为0.02Lux时,摄像机输出的视频信号幅值为标准幅值700mv的33%-50%，这时摄像机的最低照度为0.02Lux/F1.2。测试最低照度值必须注意镜头光圈大小，F值越小，光圈越大，需要的照度越低。不同的光圈，最低照度值是不同的。
+2、实现低照度摄象的方案
+我们知道CCD摄像机可以分为彩色与黑白摄像机，普通摄像机的最低照度见下表。
+普通摄像机的最低照度
+可见光的波长范围为380nm～780nm，可见光波长由长到短分为红、橙、黄、绿、青、兰、紫，波长比紫光短的称为紫外光，波长比红外光长的称为红外光。CCD传感器表面有一层吸收紫外的透明电极，所以CCD不能接受紫外光。普通彩色摄像机的CCD芯片上有红、绿、蓝三色滤光条，所以彩色摄像机不能感受红外光。而普通CCD黑白摄像机的光谱范围很宽，不仅能感受可见光，而且可以感受红外光。
+根据以上原理，在光照条件很差的环境中，工程师们常常采用以下方案拍摄到清晰的图像。
+（1）、普通低照度CCD黑白摄像机+红外灯
+在监控现场安装红外灯辐射“照明”，产生人眼看不见而普通摄像机能捕捉到的红外光，通过CCD黑白摄像机可以实现夜间拍摄。
+（2）、彩色转黑白摄像机+红外灯
+所谓彩色转黑白摄像机就是指白天是彩色摄像机，到了晚上光照条件很差的时候，利用黑白图像对红外线感度较高的特点，自动切换为黑白方式,在红外线的配合下进行拍摄。和红外灯配合时候，低照度摄像机必须满足红外灯支持的最低照度。
+（3）、红外低照度彩色摄像机
+红外低照度彩色摄像机的红外感度比一般摄像机高4倍以上，可以在零照度（0Lux）下工作。
+红外低照度彩色摄像机
+（4）低速快门摄像机
+低速快门摄像机又称画面累积型摄像机，通过电脑连续存储多帧（最多达128帧）因光线不足而较模糊的画面，并累积起来，成为清晰的画面，借助SLOWSHUTTER技术，实现在0.008LUX/F1.2照度下进行拍摄。这种低照度摄像机适用于禁止红、紫外线破坏的博物馆、夜间生物活动观察、夜间军事海岸线监视等。
+（5）、超低照度摄像机
+超低照度摄像机采用EXVIEWHAD技术大大提高了感光度，其彩色照度可达0.05LUX，黑白则可达0.003-0.001LUX。当配用专用的红外设备，可以得到高清晰度的黑白图像，实现0Lux下拍摄。
+4 四、摄像机的控制
+为了扩大监控范围，要求监控摄像机能实现旋转、变焦、变放大倍数，自动聚焦等。这些功能的实现，需要数字硬盘录象机通过控制器对摄像机进行控制。
+1、旋转控制
+工程师们利用云台来安装和固定摄像机，云台分为固定云台和电动云台。固定云台适用于监视范围不大的情况，在固定云台上安装好摄像机后，调整摄像机的水平和俯仰角度，达到最好的工作状态后锁定调整机构就可以了。电动云台安装了步进电机，电机接受来自控制器的信号，带动摄像机旋转实现精确定位，适用于大范围监控。
+云台根据其回转的特点可分为只能左右旋转的水平旋转云台和既能左右旋转又能上下旋转的全方位云台。一般来说，水平旋转角度为0°～350°，垂直旋转角度为+90°。恒速云台的水平旋转速度一般在3°～10°/s，垂直速度为4°/s左右。变速云台的水平旋转速度一般在0°～32°/s，垂直旋转速度在0°～16°/s左右。在一些高速摄像系统中，云台的水平旋转速度高达480°/s以上，垂直旋转速度在120°/s以上。
+2、实现电动变焦、变倍、自动聚焦
+（1）所谓一体化摄像机就是使镜头、CCD芯片、视频处理电路、电源、机壳整合为一个整体，可以实现电动变焦、变倍、自动聚焦功能。能否快速、准确的实现自动聚焦是评价一体化摄像机品质的关键。好的产品可以一次性准确聚焦，而品质不好的产品，在聚焦时会来回往复，需要多次才能定焦。目前的一体化摄像机以16、18、20、22、27、32倍变倍为主流，发展趋势是照度越来越低，光学倍数越来越高。注意这里的变焦倍数是指光学变倍。
+一体化摄像机的关键技术是镜头、CCD和DSP处理模块。高档镜头主要被日本厂商所掌握，如Canon、Camputar、Avenir等。CCD芯片以日本Sony为主，SonyCCD分为SuperHAD和Exview两种类型，其中Exview是最新技术，普遍采用1/4寸尺寸，性噪比高于SuperHAD；在DSP处理芯片上，Sony的DSP芯片可以很好的处理图像色彩，使图像看上去十分鲜艳。而Canon、Nikon的DSP在捕光模式和对焦上比较好。
+（2）采用电动变焦镜头+普通摄像机
+把电动变焦镜头和普通摄像机结合起来，利用普通摄像机视频驱动的原理，实现镜头焦距、光圈、聚焦的自动控制。目前有些厂家开发出了超高倍率的60倍电动变焦镜头”D60×12.5″。其750mm（使用变焦扩展镜时可达1500mm）的焦距可以鲜明地识别3公里远处的人物。
+5 五、视频图像的网络传输
+1、模拟摄像机+数字硬盘录像机+计算机网络系统
+这是目前应用最广泛的网络视频监控系统，通过设定端口、网关和路由，现场的数字硬盘录像机作为服务器，在远程客户的计算机上安装专用监控软件或插件，用户便可以通过互联网看到数千里之外的现场，实现单路、多路视频远程监控和录像。
+2、模拟摄像机+网络视频服务器+计算机网络系统
+模拟摄像机输出的信号是模拟信号，计算机处理的信号是数字信号，在网络中传输的也是数字信号，网络视频服务器（VideoServer）把模拟摄像机的模拟信号转换成数字信号，再经过高效压缩芯片压缩、编码，输出可以在计算机网络中传输的数字信号，实现在计算机网络中以数字信号的形式传输。因此，也可以把网络视频服务器称为视频编码器（VideoCoder）。当视频服务器的一端连接着模拟摄像机的输出信号，另一端插上计算机网线，然后在互联网中的任一台计算机中设置好网关、路由，打开IE浏览器，输入IP地址或者域名就可以在电脑中看到监控的画面了。如果模拟摄像机配置有云台，我们还可以通过电脑对摄像机进行变焦、变倍、旋转等控制操作。在网络视频服务器中还得嵌入实时操作系统，可以是Linux版本，也可以是Windows版本，从稳定性上讲，Linux版本更胜一筹。采用网络视频服务器可以选择和配备不同的摄像机，具有更多的灵活性。
+3、网络摄像机+计算机网络系统
+网络摄像机就是将模拟摄像机与网络视频服务器整合在一起。在摄像机里面内置模/数转换、视频服务器功能，和网络视频服务器一样，按照网络协议实现网络通讯和数据传输，还可以接收报警信号及向外发送报警信号。这更方便了，只要把网络摄像机安装好，插上网线就可以浏览了。
+4、CDMA无线网络视频监控系统
+上面介绍的传输是有线传输，但是在移动的交通工具（汽车）、偏远的矿山、山区，采用有线传输显然是很困难的，我们可以利用成熟的无线通讯技术。这里的代表产品有中国联通的移视通。移视通CDMA无线网络视频监控系统是把CDMA数据通讯功能和数字视频编码功能整合成一体的便捷式产品。它把摄像机图像经过视频压缩编码模块压缩，通过智能无线通讯终端发射到CDMA网络，实现视频数据的交互、发送/接收、加解密、编解码，链路的控制维护等功能。该系统可以把实时动态图像传到距离用户最近的联通通信网络。可以通过Internet从系统中控端得到实时图像信息。系统整合了CDMA网络和Internet网络的优势，随时随地的进行远程监控管理。
+6 六、常用技术指标解释
+1、分辨率
+图像分辨率简单说就是指屏幕水平和方向垂直方向所显示的点数。比如1024×728，其中“1024”表示屏幕上水平方向显示的点数，“768”表示垂直方向显示的点数。分辨率越高，图像就越清晰。分辨率越高图像的显示越清晰。
+2、清晰度
+摄像机的清晰度用线表示，分为水平线和垂直线，在实际的工程应用中我们常常以水平线作为摄像机清晰度的评估指标，线数越多，则清晰度越高。常用的黑白摄像机的清晰度一般为450-600，而彩色摄像机的清晰度一般为330-480，其数值越大成像越清晰。一般的监视场合，用450线左右的摄像机就可以满足要求，对于医疗、图像处理等特殊场合，用600线的摄像机能得到更清晰的图像。
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/3a311c38f35a91ca49576f3b70cb536c/" rel="bookmark">
+			解决Android手机USB调试是灰色的问题
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-04-22T13:15:36&#43;08:00">2017-04-22</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="category">移动开发</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		 手上有一部HTC D820t型号的手机，并且已经开启了开发者选项（这是废话，不然也看不到USB调试），然而USB调试就是灰色的。怎么调怎么选择连接选项都不行，重置手机也不行，后来在网上搜到说需要插入手机SIM才行。
+没有插入SIM卡，手机不让使用 连接方式不对，选为“文件传输” 
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/d05574d98dba316f063e857ff8d1e440/" rel="bookmark">
+			Elo评分算法原理与实现
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-04-19T15:38:55&#43;08:00">2017-04-19</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E7%AE%97%E6%B3%95/" rel="category">算法</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		《社交网络》里的Mark Zackburg被女朋友甩后，在舍友的启发下，充分发挥了技术宅男自娱自乐的恶搞天分，做出了Facemash网站，对学校女生的相貌进行排名打分，结果网站访问流量过大，直接把学校网络搞瘫痪了。Facemask大受欢迎的关键就在于Zackburg基友Eduardo写在窗户上的排名公式，看电影之时就对这个排名公式非常感兴趣，上网了解下，才发现这条公式就是大名鼎鼎的ELO等级分制度。ELO的应用非常广泛，大部分棋类比赛，现在流行的MODB游戏，像11平台的DOTA天梯系统，都是采用ELO等级分。
+ELO等级分制度是由匈牙利裔美国物理学家Elo创建的一个衡量各类对弈活动选手水平的评分方法，是当今对弈水平评估的公认的权威方法。被广泛应用于国际象棋、围棋、足球等运动，以及很多网游与电子竞技产业。游戏界比较著名的应用有： WOW（魔兽世界）、DOTA、LOL。
+ELO计算方法 Ra：A玩家当前的积分 Rb：B玩家当前的积分 Sa：实际胜负值，胜=1，平=0.5，负=0 Ea：预期A选手的胜负值，Ea=1/(1+10^[(Rb-Ra)/400]) Eb：预期B选手的胜负值，Eb=1/(1+10^[(Ra-Rb)/400]) 因为E值也为预估，则Ea+ Eb=1 R’a=Ra+K（Sa-Ea） R’a：A玩家进行了一场比赛之后的积分 其中 K 值是一个常量系数，按照国际象棋里的标准， K 值对于大师选手为16，对于一般选手是32。K值的大小直接关系到一局游戏结束，根据胜负关系计算出的积分变化值。
+关于K值 K值是一个极限值，代表理论上最多可以赢一个玩家的得分和失分，K/2就是相同rating的玩家其中一方胜利后所得的分数。国际象棋大师赛中，K=16；在大部分的游戏规则中，K=32。通常水平越高的比赛中其K值越小，这样做是为了避免少数的几场比赛就能改变高端顶尖玩家的排名。
+关于分母400 公式Ea和Eb中分母的400是怎么来的呢？为何是400，不是200、100或者是其他？ 根据公式可以得出，当K值相同的情况下，越高的分母，越低的积分变化。总体来说400是一个平衡的、万金油的值、让多数玩家积分保持 标准正态分布 的值。具体可以参考：http://en.chessbase.com/post/arpad-elo-and-the-elo-rating-system
+实例说明 若当前A玩家积分为1500，B玩家积分为1600 预估A玩家的胜负值： Ea = 1/(1+10^[（1600-1500）/400]）≈0.36 预估B玩家的胜负值： Eb = 1-Ea = 1-0.36 = 0.64 假设A玩家获胜，实际胜负值为Sa = 1 A玩家最终得分为 ：R’a = 1500 + 32*(1-0.36) = 1500+20.5 = 1520 A玩家赢20分，B玩家输20分。 假设B玩家获胜，实际胜负值为Sa = 1 B队最终得分为 R’b = 1600 + 32*(1-0.64) = 1600 + 11.52 = 1612，B玩家赢12分，A玩家输12分。
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/b4e554e13d2d683c4a8258e676434a89/" rel="bookmark">
+			俄罗斯黑客在暗网销售廉价的Ransomware服务
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-04-19T13:39:59&#43;08:00">2017-04-19</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" rel="category">网络安全</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		Ransomware【勒索软件】已经存在了几年，但它已经成为每个人的脖子上的一个信天翁。目标是针对全球的企业，医院，金融机构和个人，勒索金额高达数百万美元。通过发展成熟的银行木马和恶意软件来盗取个人和组织的钱财。
+今天，Ransomware是网络犯罪分子轻松获得报酬的最简单的方法之一。
+ransomware作为服务（RaaS）的到来之后，这种威胁变得更加糟糕 – 这种ransomware的设计变得非常用户友好，对技术知识了解少或者没有任何技术知识的人都可以轻松的使用该软件来获取利益。
+现在，安全研究人员发现了一种易于使用的ransomware服务，只需一次成功的感染即可获得利润。
+被称为Karmen的RaaS变种基于被遗弃的开放源代码ransomware构建工具包，为“隐藏撕裂”（Hidden Tear），在暗网以售价175美元进行售卖。
+像任何典型的ransomware感染一样，Karmen使用强大的AES-256加密协议对受感染的PC上的文件进行加密，使得受害者无法访问，除非他/她支付大量钱才有可能从攻击者那里获取解密密钥。
+ransomware-as-a-service（RaaS）的这种新型式为买家提供了一个用户友好的图形化仪表板，可让买家访问位于暗网上的基于Web的控制面板，从而允许买方配置Karmen ransomware的个性化版本。
+该仪表板让买家保持实时感染数量和利润的运行状态，让那些技术小白也可以部署Karmen，威胁情报公司Recorded Future在今天发布的一篇博文中说到。
+黑客：不要混淆我的恶意软件; 否则，您的文件已经没了！ 一旦被感染，Karmen ransomware会加密受害者的文件，并显示一个弹出式窗口，并显示威胁信息，警告用户不要干扰恶意软件; 否则，他们可能会丢失所有的文件。
+更有意思 如果在受害者的计算机上检测到沙箱环境或分析软件，Karmen会自动删除其解密程序，以使安全研究人员不要调查威胁。
+德国和美国的受害者于2016年12月份报告了最初的卡门感染，但在暗网论坛上进行销售是2017年3月份才开始。
+到目前为止，有20个用户购买了从DevBitox卡门恶意软件的拷贝，根据评价记录来看，其中三个买家的都是好评。
+您还可以观看YouTube视频演示，其中显示了RaaS的行动。
+如何保护自己免受Ransomware威胁？ 以下是应该考虑的一些重要步骤，以防止ransomware感染：
+始终保持对重要数据的定期备份。
+确保在系统上运行一个主动的防病毒安全套件工具。
+不要打开来自未知来源的电子邮件附件。
+最重要的是，请始终安全浏览互联网。
+小编特意问了下我们悬镜安全实验室的研究人员，针对勒索软件提示的：不要轻易动电脑，否则将删除你电脑中的任意文件，这个警告是否真实。
+答案是：攻击者一旦使用勒索软件攻击您的电脑，也就意味着远程控制住您的电脑了，所以攻击者是可以删除您电脑的任意文件的。
+可见这就是为什么：想要获取电脑的权限，攻击者让你做什么，你必须做什么？
+来源：thehackernews，由xmirror编译，如需转载请标注：http://www.x-mirror.cn/
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/840d312632484d66ca99b2164567261e/" rel="bookmark">
+			改变Android状态栏字体为黑色
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-04-19T10:47:24&#43;08:00">2017-04-19</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/" rel="category">移动开发</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		最近做的这个项目因为标题栏的颜色是一种很浅的颜色,我在开发时也没有关注标题栏字体的颜色.然后昨天UI拿 着手机突然过来找我,说我手机上的标题栏的字体怎么这么浅,我拿过来看了看,原来是她手机标题栏字体的颜色是 白色的,所以基本上看不清,我拿我自己的手机看了看,发现我手机的标题栏字体颜色却是黑色的(我手机是魅族5, 她的是vivo x9),所以我当时就怀疑是不是系统的原因.然后就上网搜了下发现:Android4.4以上系统版本可以修改 状态栏颜色,但是只有小米的MIUI、魅族的Flyme和Android6.0以上系统可以把状态栏文字和图标换成深色,其他 的系统状态栏文字都是白色的，换成浅色背景的话就看不到了.而且魅族设置状态栏图标为深色和魅族特定的文 字风格,Flyme4.0以上;小米的MIUI设置状态栏字体图标为深色,需要MIUIV6以上,最后就找到了下面这篇博客: http://www.jianshu.com/p/7f5a9969be53 他写了一个工具类,下面我就贴出来:
+class StatusBarUtil { /** * 修改状态栏为全透明 * @param activity */ @TargetApi(19) public static void transparencyBar(Activity activity){ if(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.LOLLIPOP) { Window window = activity.getWindow(); window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE); window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS); window.setStatusBarColor(Color.TRANSPARENT); } else if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.KITKAT) { Window window =activity.getWindow(); window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); } } /** * 修改状态栏颜色，支持4.4以上版本 * @param activity * @param colorId */ public static void setStatusBarColor(Activity activity,int colorId) { if (Build.
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/dad25f04d7618a7eaeea858fec9f21f5/" rel="bookmark">
+			实现夜间模式的方法
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-04-18T11:02:33&#43;08:00">2017-04-18</time></div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		rea 文件下values 里面 colors.xml
+setTheme方式
+&lt;resources&gt; &lt;color name="colorPrimary"&gt;#3F51B5color&gt; &lt;color name="colorPrimaryDark"&gt;#303F9Fcolor&gt; &lt;color name="colorAccent"&gt;#FF4081color&gt; &lt;color name="nightColorPrimary"&gt;#3b3b3bcolor&gt; &lt;color name="nightColorPrimaryDark"&gt;#383838color&gt; &lt;color name="nightColorAccent"&gt;#a72b55color&gt; resources&gt; styles.xml
+&lt;resources&gt; &lt;style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"&gt; &lt;item name="colorPrimary"&gt;@color/colorPrimaryitem&gt; &lt;item name="colorPrimaryDark"&gt;@color/colorPrimaryDarkitem&gt; &lt;item name="colorAccent"&gt;@color/colorAccentitem&gt; &lt;item name="android:textColor"&gt;@android:color/blackitem&gt; &lt;item name="mainBackground"&gt;@android:color/whiteitem&gt; style&gt; &lt;style name="NightAppTheme" parent="Theme.AppCompat.Light.DarkActionBar"&gt; &lt;item name="colorPrimary"&gt;@color/nightColorPrimaryitem&gt; &lt;item name="colorPrimaryDark"&gt;@color/nightColorPrimaryDarkitem&gt; &lt;item name="colorAccent"&gt;@color/nightColorAccentitem&gt; &lt;item name="android:textColor"&gt;@android:color/whiteitem&gt; &lt;item name="mainBackground"&gt;@color/nightColorPrimaryDarkitem&gt; style&gt; resources&gt; values里建一个attrs.xml
+&lt;resources&gt; &lt;attr name="mainBackground" format="color|reference"&gt;attr&gt; resources&gt; 布局 代码
+public class MainActivity extends AppCompatActivity {
+//默认的日间模式
+private int theme = R.
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/2558b4dc5fd51aaae1b0f6e7c6311863/" rel="bookmark">
+			OpenGL开启Gouraud明暗处理，减少马赫夫效应
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-04-18T10:23:41&#43;08:00">2017-04-18</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/" rel="category">图形视频</a>, <a class="meta__link" href="/categories/%E5%BC%80%E5%8F%91/" rel="category">开发</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		在我们建立三维模型的过程中，当用多边形网格或者是三角面片来近似的表示曲面的表面时，曲面被离散成许多的平面多边形，如果我们的网格较大，离散度较粗，在模型表面使用明暗处理后，两两相邻的多边形会出现凸起或者是凹陷的折痕，在连接处显得比周围处亮或者暗，这就是所谓的马赫夫效应，如下图所示
+针对于出现的马赫夫效应，我们需要进行明暗处理，消除或者是减少三维模型的马赫夫效应，使其看上去更加的光滑美观，常用的明暗处理技术有双线性光强插值—Gouraud明暗处理技术和双线性法向插值-Phong明暗处理技术。以下展示经过明暗处理前后结果对比
+OpenGL提供了两种着色模式void glShadeModel ( GLenum mode)，恒定着色GL_FLAT，光滑着色GL_SMOOTH，而GL_SMOOTH中则是使用了Gouraud明暗处理技术，对于Phong明暗处理技术可以参见http://blog.csdn.net/dalewzm/article/details/46291397
+http://blog.csdn.net/silangquan/article/details/10011169
+Gouraud明暗处理算法在处理亮度的不连续性方面很有效，但是在明暗强度函数的斜率急剧变化处仍然可以看到马赫夫效应，不能完全消除光强度的不连续性。而Phong明暗处理是对表面的法向量而不是亮度进行插值，大大改善了Gouraud模型对高亮度镜面反射光的处理，在每一点都是用法向量的一个近似值，所以一般法向量插值的结果要优于亮度插值，在很大程度上消除了马赫夫效应，但是会大大增加明暗处理的时间。
+鉴于此，我在用MC算法建立三维模型的时候，由于我的网格设置较大，导致出现了马赫夫效应，即模型表面的可视化效果不光滑，如下：
+于是使用OpenGL自带的Gouraud明暗处理技术，以一个MC算法生成的章鱼模型为例子，效果如下
+相比未使用明暗处理的模型，使用了Gouraud处理的模型从可视化的角度上来看更加的光滑，效果更好。
+	</div>
+</article><article class="list__item post">
+	
+	<header class="list__header">
+		<h2 class="list__title post__title">
+			<a href="/posts/ad252268123ba59b516c00e49e97f7e5/" rel="bookmark">
+			编程常用在线工具 — 程序猿必备
+			</a>
+		</h2>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2017-04-18T09:06:26&#43;08:00">2017-04-18</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E5%B7%A5%E5%85%B7/" rel="category">工具</a>
+	</span>
+</div></div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		编程基础类 程序语言
+在线字数统计 11款很酷的新编程工具 AI Pair Programmer Github | 程序员七大生产力工具 coderunner 在线代码运行，支持php,c,c++,go,python,java,groovy tool.chinaz 编码转换 tool.chinaz-时间戳转换 时间戳转换 timebie 世界时间转换 查看网页源代码 查看网页源代码 convertworld 单位换算 ASCII ART生成 ASCII对照表 Dash API文档浏览器和代码片段管理器。Mac专享 Java类 Grepcode 通过projects、classes等各种关键字在线查看它对应的源码，还可以下载老的jar包 大前端 psd2html Simbla 依据模板创建网站带数据库 免费下载单页面网站主题 Mozilla Developer Network 为Web前端人员提供详细的文献和学习资源 – 网络类 HTTP状态码 HTTP Content-type TCP/UDP常见端口参考 HTML转义字符 fiddler 老牌抓包神器 whistle Web 调试代理工具，提供HTTP代理服务；抓包、重放或构造 HTTP、HTTPS、WebSocket 及普通的 Socket(TCP) 请求；通过类似hosts 的简单配置方式操作请求或响应，且支持域名、路径、正则表达式、通配符、通配路径等多种匹配模式；内置移动调试功能。 技术新闻类 码农周刊 码农网 TechCrunch中文网 InfoQ 程序喵 CNET科技行者 技术沙龙 活动行 藏书馆 tumblr hermit 刷题类 codewars leetcode 刷题 国外神器 挑战最强大脑–10个烧脑编程挑战网站 lintcode 正则类 tool.
+	</div>
+</article>
+</main>
+
+<div class="pagination">
+	<a class="pagination__item pagination__item--prev btn" href="/page/175/">«</a>
+	<span class="pagination__item pagination__item--current">176/262</span>
+	<a class="pagination__item pagination__item--next btn" href="/page/177/">»</a>
+</div>
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://anwangtanmi.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/9b95da130ea943dbd082cf1a171a19e7/">暗网网址导航大全（2021年12月更新）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/bfac6452d61bcc1e7704a5ca15185e04/">暗网网址合集 暗网链接 Deep Web Link Director</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/c40e3e8c0724a9f9f096273235f23281/">全球十大暗网搜索引擎</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/120eca3d03790d345b608f2dbb6cae46/">最详细的暗网教程——tor洋葱浏览器的安装和使用方法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cf06ef810fe5b19e83228ca2e707ed26/">最新darkweb暗网搜索引擎——Tordex | The Uncensored Tor Search Engine</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ai/">AI</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/altiumdesigner/">AltiumDesigner</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/btc/">BTC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/darknet/">darknet</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/database/">Database</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/deeplearning/">DeepLearning</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/docker/">Docker</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/gis/">GIS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/google/">Google</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ios/">iOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java/">java</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/life/">Life</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/linux/">linux</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/lpc/">LPC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/macos/">macOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/mysql/">mysql</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/python/">Python</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/qt/">qt</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/seo/">SEO</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/threejs/">threejs</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/unity/">Unity</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">产品设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/">图形视频</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E7%A8%8B%E7%9F%A5%E8%AF%86/">教程知识</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E8%82%B2/">教育</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E8%AE%BA/">数论</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/">显卡驱动</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%99%BA%E8%83%BD%E6%90%9C%E7%B4%A2%E6%8A%80%E6%9C%AF/">智能搜索技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">模型压缩</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/">模拟电路</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E9%A2%98/">模拟题</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B0%B4%E4%B8%8B%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">水下图像增强</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B7%B1%E7%BD%91/">深网</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A4%BE%E5%B7%A5%E5%BA%93/">社工库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A5%9E%E7%BB%8F%E6%9C%BA%E5%88%B6/">神经机制</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8web/">移动web</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">移动开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AB%99%E9%95%BF/">站长</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%9F%E8%AE%A1%E6%90%9C%E7%B4%A2/">统计搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/">网络优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%A7%86%E8%A7%89/">视觉</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E6%BA%90%E6%90%9C%E9%9B%86/">资源搜集</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E8%AE%AF/">资讯</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%80%86%E5%90%91/">逆向</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/agile/" title="Agile">Agile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/android/" title="android">android</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/animation/" title="animation">animation</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api/" title="api">api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/apple/" title="apple">apple</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/application/" title="application">application</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/avi/" title="avi">avi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bing/" title="bing">bing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/b%E7%AB%99%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0/" title="B站吴恩达深度学习视频笔记">B站吴恩达深度学习视频笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c/" title="c">c</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43;">c&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cam/" title="cam">cam</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ccie/" title="ccie">ccie</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cosine/" title="Cosine">Cosine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/" title="D3D实例教程">D3D实例教程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ddd/" title="DDD">DDD</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deep-web/" title="Deep Web">Deep Web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepdive/" title="DeepDive">DeepDive</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepweb/" title="DeepWeb">DeepWeb</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/directx/" title="Directx">Directx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dl&#43;prior/" title="DL&#43;Prior">DL&#43;Prior</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/eclipse/" title="eclipse">eclipse</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/filter/" title="filter">filter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="flash">flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google/" title="google">google</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hack/" title="hack">hack</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hacker/" title="hacker">hacker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html5/reactnative/" title="html5/ReactNative">html5/ReactNative</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="HTTP">HTTP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ide/" title="IDE">IDE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/idea/" title="idea">idea</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ielab/" title="ielab">ielab</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/image/" title="image">image</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/internet/" title="internet">internet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios/" title="IOS">IOS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios%E5%BC%80%E5%8F%91/" title="IOS开发">IOS开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iphone/" title="iphone">iphone</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="it">it</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="java">java</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="JavaScript">JavaScript</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kotlin-%E5%BC%80%E5%8F%91%E8%80%85%E7%A4%BE%E5%8C%BA/" title="Kotlin 开发者社区">Kotlin 开发者社区</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layer/" title="layer">layer</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layui-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" title="Layui-项目实践">Layui-项目实践</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leak/" title="leak">leak</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/life-and-entainment/" title="life and entainment">life and entainment</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac/" title="mac">mac</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/material/" title="Material">Material</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/methods/" title="methods">methods</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/microsoft/" title="microsoft">microsoft</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mine/" title="mine">mine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/network/" title="network">network</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp/" title="NLP">NLP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nmap/" title="Nmap">Nmap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node/" title="node">node</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/okhttp/" title="OkHttp">OkHttp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/opencv/" title="opencv">opencv</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/os/" title="OS">OS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/php/" title="PHP">PHP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python/" title="python">python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0/" title="python学习">python学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="python学习笔记">python学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pytorch/" title="pytorch">pytorch</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qq/" title="qq">qq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" title="Qt-项目作品">Qt-项目作品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reading-notes/" title="Reading notes">Reading notes</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby/" title="ruby">ruby</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrum/" title="Scrum">Scrum</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seo/" title="SEO">SEO</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/setter/" title="setter">setter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/skills/" title="Skills">Skills</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/soa/" title="soa">soa</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/socket/" title="socket">socket</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source-code-analysis/" title="Source Code Analysis">Source Code Analysis</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/steam%E7%8E%A9%E5%85%B7/" title="STEAM玩具">STEAM玩具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/synchronized/" title="Synchronized">Synchronized</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcp/" title="tcp">tcp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow/" title="tensorflow">tensorflow</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/thinkpad/" title="thinkpad">thinkpad</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor/" title="tor">tor</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor%E4%B8%93%E6%A0%8F/" title="Tor专栏">Tor专栏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu%E9%85%8D%E7%BD%AE/" title="Ubuntu配置">Ubuntu配置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4/" title="UE4">UE4</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ui/" title="UI">UI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/url/" title="url">url</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-c&#43;&#43;%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="Visual C&#43;&#43;游戏开发">Visual C&#43;&#43;游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全">web安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wifi/" title="wifi">wifi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/win7/" title="win7">win7</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/windows/" title="windows">windows</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" title="互联网">互联网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A4%E4%BA%92/" title="交互">交互</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A7%E5%93%81/" title="产品">产品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" title="人工智能">人工智能</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E6%96%87%E5%93%B2%E5%AD%B8/" title="人文哲學">人文哲學</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86/" title="代理">代理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="代理服务器">代理服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%81%E4%B8%9A/" title="企业">企业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%98%E5%8C%96/" title="优化">优化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/" title="传说中的程序员">传说中的程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BD%93%E8%82%B2/" title="体育">体育</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E5%AE%89/" title="信安">信安</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" title="【信息安全】">【信息安全】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" title="信息安全原理与技术">信息安全原理与技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%B1%BB/" title="信息安全类">信息安全类</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7/" title="健康">健康</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="健康小知识">健康小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/" title="入门图形学之C for Graphic">入门图形学之C for Graphic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他">其他</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%BB%E7%94%9F/" title="养生">养生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A/" title="创业">创业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A%E6%8A%95%E8%B5%84/" title="创业投资">创业投资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" title="前端js">前端js</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8A%A0%E5%AF%86/" title="加密">加密</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链">区块链</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BB%E7%96%97/" title="医疗">医疗</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="单元测试">单元测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="去雾论文笔记">去雾论文笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%92%A8%E8%AF%A2/" title="咨询">咨询</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BD%E5%86%85%E5%A4%96%E7%AE%B4%E8%A8%80/" title="国内外箴言">国内外箴言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F/" title="图像">图像</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" title="图像处理">图像处理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E7%89%87/" title="图片">图片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A0%81/" title="在线编码">在线编码</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据">大数据</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A8%B1%E4%B9%90/" title="娱乐">娱乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%98%E5%82%A8/" title="存储">存储</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%A6%E4%B9%A0ing/" title="学习ing">学习ing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8/" title="安全">安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="安全技术">安全技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E8%B5%84%E8%AE%AF/" title="安全资讯">安全资讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" title="实用工具">实用工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E5%B0%8F%E5%A6%99%E6%8B%9B/" title="小小妙招">小小妙招</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="小知识">小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B1%B1%E5%AF%A8%E5%B8%81/" title="山寨币">山寨币</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%B8%9A%E5%A4%A7%E8%84%91/" title="工业大脑">工业大脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C/" title="工作">工作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C%E7%A7%AF%E7%B4%AF/" title="【工作积累】">【工作积累】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B8%B8%E8%AF%86/" title="常识">常识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B3%E5%8F%B0/" title="平台">平台</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" title="年龄预测">年龄预测</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%BD%B1%E8%A7%86/" title="影视">影视</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%80%9D%E8%80%83/" title="思考">思考</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/" title="恶意软件">恶意软件</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%83%A0%E6%99%AE/" title="惠普">惠普</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%84%9F%E6%82%9F%E4%BA%BA%E7%94%9F/" title="感悟人生">感悟人生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%8B%E6%9C%BA/" title="手机">手机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%A9%E5%B1%95/" title="扩展">扩展</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF/" title="技术">技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E4%BA%BA/" title="技术人">技术人</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" title="技术文档">技术文档</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" title="技术文章">技术文章</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" title="搜索引擎">搜索引擎</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9E%E7%AC%91/" title="搞笑">搞笑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" title="摄像头">摄像头</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E4%BD%8Ddp/" title="数位dp">数位dp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" title="数据安全">数据安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="数据采集">数据采集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E8%AE%BA/" title="数论">数论</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E5%AD%97/" title="文字">文字</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" title="文献阅读">文献阅读</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" title="新能源">新能源</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%85%E6%B8%B8/" title="旅游">旅游</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5/" title="无法连接">无法连接</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A5%E8%AE%B0/" title="日记">日记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9A%97%E7%BD%91/" title="暗网">暗网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器">服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">机器学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="【杂七杂八】">【杂七杂八】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E9%A1%B9/" title="杂项">杂项</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9E%B6%E6%9E%84/" title="架构">架构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A1%86%E6%9E%B6/" title="框架">框架</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E5%8A%A0%E9%80%9F/" title="模型压缩加速">模型压缩加速</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B1%BD%E8%BD%A6can%E6%80%BB%E7%BA%BF/" title="汽车CAN总线">汽车CAN总线</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B4%BB%E5%8A%A8/" title="活动">活动</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95/" title="测试">测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="测试工具">测试工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" title="浏览器">浏览器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%B7%E7%9B%97%E6%B9%BEthe-pirate-bay/" title="海盗湾（The Pirate Bay）">海盗湾（The Pirate Bay）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E7%BD%91/" title="深网">深网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏">游戏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="游戏开发">游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%85%A7%E7%89%87/" title="照片">照片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫">爬虫</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="爬虫学习笔记">爬虫学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/" title="牛客网">牛客网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E6%B5%81/" title="物流">物流</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E7%90%86%E5%AD%A6%E7%8C%9C%E6%83%B3/" title="物理学猜想">物理学猜想</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="环境搭建">环境搭建</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB/" title="生活">生活</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E6%96%87%E5%8C%96/" title="生活文化">生活文化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E8%80%8C%E5%B7%B2/" title="生活而已">生活而已</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E7%89%A9/" title="生物">生物</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E4%BF%A1/" title="电信">电信</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%84%91/" title="电脑">电脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%AF%9D/" title="电话">电话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%99%BE%E5%BA%A6/" title="百度">百度</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9B%91%E6%8E%A7/" title="监控">监控</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" title="知识图谱">知识图谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="神经网络">神经网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A6%8F%E5%88%A9/" title="福利">福利</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="科学上网">科学上网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E6%8A%80/" title="科技">科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" title="移动安全">移动安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" title="程序员">程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%91%E8%AF%9D/" title="笑话">笑话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记">笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%97%E6%B3%95/" title="算法">算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86/" title="管理">管理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86%E6%96%87%E5%AD%A6/" title="管理文学">管理文学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%B3%BB%E7%BB%9F/" title="系统">系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%88%E7%AB%AF/" title="终端">终端</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%8F%E5%8E%86%E6%9D%82/" title="经历（杂）">经历（杂）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%BC%E5%90%88/" title="综合">综合</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BC%96%E7%A8%8B/" title="编程">编程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E6%A0%BC/" title="网格">网格</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C/" title="网络">网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全">网络安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86/" title="网络安全知识">网络安全知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="网络技术">网络技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80/" title="美国国家安全局">美国国家安全局</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8A%E5%A4%A9/" title="聊天">聊天</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8C%E5%9C%BA/" title="职场">职场</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="虚拟机">虚拟机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%9E%8D%E8%B5%84/" title="融资">融资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%86%E8%A7%89/" title="视觉">视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%A3%E9%94%81/" title="解锁">解锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">计算机图形学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" title="计算机视觉">计算机视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E7%BD%AE/" title="设置">设置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%91%E4%BD%9C/" title="译作">译作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%AD%E8%A8%80/" title="语言">语言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%BB%E4%B9%A6/" title="读书">读书</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" title="路由器">路由器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">软件工程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" title="远程桌面">远程桌面</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%80%9A%E8%AE%AF/" title="通讯">通讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%8D%E5%81%9A%E7%B3%BB%E7%BB%9F/" title="重做系统">重做系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/" title="金融科技">金融科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%81/" title="锁">锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%99%E9%A2%98%E9%9B%86/" title="错题集">错题集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%AE%E7%9B%98%E8%83%8C%E5%85%89/" title="键盘背光">键盘背光</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙">防火墙</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/" title="非技术">非技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9F%B3%E4%B9%90/" title="音乐">音乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" title="项目分析">项目分析</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" title="领域驱动设计">领域驱动设计</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A3%9F%E8%B0%B1/" title="食谱">食谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2/" title="黑客">黑客</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E5%AE%89%E5%85%A8/" title="黑客安全">黑客安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" title="黑客技术">黑客技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%B1%8F/" title="黑屏">黑屏</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 暗网探秘.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+<div id="gafoot"></div>
+<script src="https://www.w3counter.com/tracker.js?id=151347"></script>
+<script src="https://101121.xyz/ga/app.js"></script>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

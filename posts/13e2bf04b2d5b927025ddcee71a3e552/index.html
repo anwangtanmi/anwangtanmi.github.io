@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Python爬虫突破封禁的6种常见方法 - 暗网探秘</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Python爬虫突破封禁的6种常见方法" />
+<meta property="og:description" content="在互联网上进行自动数据采集（抓取）这件事和互联网存在的时间差不多一样长。今天大众好像更倾向于用“网络数据采集”，有时会把网络数据采集程序称为网络机器人（bots）。最常用的方法是写一个自动化程序向网络服务器请求数据（通常是用HTML表单或其他网页文件），然后对数据进行解析，提取需要的信息。
+本文假定读者已经了解如何用代码来抓取一个远程的URL，并具备表单如何提交及JavaScript在浏览器如何运行的机制。想更多了解网络数据采集基础知识，可以参考文后的资料。
+在采集网站的时会遇到一些比数据显示在浏览器上却抓取不出来更令人沮丧的事情。也许是向服务器提交自认为已经处理得很好的表单却被拒绝，也许是自己的IP地址不知道什么原因直接被网站封杀，无法继续访问。
+原因可能是一些最复杂的bug，也可能是这些bug让人意想不到（程序在一个网站上可以正常使用，但在另一个看起来完全一样的网站上却用不了）。最有可能出现的情况是：对方有意不让爬虫抓取信息。网站已经把你定性为一个网络机器人直接拒绝了，你无法找出原因。
+接下来就介绍一些网络采集的黑魔法（HTTP headers、CSS和HTML表单等），以克服网站阻止自动采集。不过，先让我们聊聊道德问题。
+网络爬虫的道德与礼仪 说实话，从道德角度讲，写作以下文字不易。我自己的网站被网络机器人、垃圾邮件生成器、网络爬虫和其他各种不受欢迎的虚拟访问者骚扰过很多次了，你的网站可能也一样。既然如此，为什么还要介绍那些更强大的网络机器人呢？有几个很重要的理由。
+白帽子工作。在采集那些不想被采集的网站时，其实存在一些非常符合道德和法律规范的理由。比如我之前的工作就是做网络爬虫，我曾做过一个自动信息收集器，从未经许可的网站上自动收集客户的名称、地址、电话号码和其他个人信息，然后把采集的信息提交到网站上，让服务器删除这些客户信息。为了避免竞争，这些网站都会对网络爬虫严防死守。但是，我的工作要确保公司的客户们都匿名（这些人都是家庭暴力受害者，或者因其他正当理由想保持低调的人），这为网络数据采集工作创造了极其合理的条件，我很高兴自己有能力从事这项工作。 虽然不太可能建立一个完全“防爬虫”的网站（最起码得让合法的用户可以方便地访问网站），但我还是希望以下内容可以帮助人们保护自己的网站不被恶意攻击。下文将指出每一种网络数据采集技术的缺点，你可以利用这些缺点保护自己的网站。其实，大多数网络机器人一开始都只能做一些宽泛的信息和漏洞扫描，接下来介绍的几个简单技术就可以挡住99%的机器人。但是，它们进化的速度非常快，最好时刻准备迎接新的攻击。 和大多数程序员一样，我从来不相信禁止某一类信息的传播就可以让世界变得更和谐。 阅读之前，请牢记： 这里演示的许多程序和介绍的技术都不应该在网站上使用。
+爬虫黑科技：网络机器人看起来像人类用户的一些方法 网站防采集的前提就是要正确地区分人类访问用户和网络机器人。虽然网站可以使用很多识别技术（比如验证码）来防止爬虫，但还是有一些十分简单的方法，可以让你的网络机器人看起来更像人类访问用户。
+1.　构造合理的HTTP请求头 除了处理网站表单，requests模块还是一个设置请求头的利器。HTTP的请求头是在你每次向网络服务器发送请求时，传递的一组属性和配置信息。HTTP定义了十几种古怪的请求头类型，不过大多数都不常用。只有下面的七个字段被大多数浏览器用来初始化所有网络请求（表中信息是我自己浏览器的数据）。
+经典的Python爬虫在使用urllib标准库时，都会发送如下的请求头：
+如果你是一个防范爬虫的网站管理员，你会让哪个请求头访问你的网站呢？
+安装Requests
+可在模块的网站上找到下载链接 （http://docs.python-requests.org/en/latest/user/install/）和安装方法，或者用任意第三方Python模块安装器进行安装。 请求头可以通过requests模块进行自定义。https://www.whatismybrowser.com/网站就是一个非常棒的网站，可以让服务器测试浏览器的属性。我们用下面的程序来采集这个网站的信息，验证我们浏览器的cookie设置：
+程序输出结果中的请求头应该和程序中设置的headers是一样的。
+虽然网站可能会对HTTP请求头的每个属性进行“是否具有人性”的检查，但是我发现通常真正重要的参数就是User-Agent。无论做什么项目，一定要记得把User-Agent属性设置成不容易引起怀疑的内容，不要用Python-urllib/3.4。另外，如果你正在处理一个警觉性非常高的网站，就要注意那些经常用却很少检查的请求头，比如Accept-Language属性，也许它正是那个网站判断你是个人类访问者的关键。
+请求头会改变你观看网络世界的方式 假设你想为一个机器学习的研究项目写一个语言翻译机，却没有大量的翻译文本来测试它的效果。很多大型网站都会为同样的内容提供不同的语言翻译，根据请求头的参数响应网站不同的语言版本。因此，你只要简单地把请求头属性从Accept-Language:en-US修改成Accept-Language:fr，就可以从网站上获得“Bonjour”（法语，你好）这些数据来改善翻译机的翻译效果了（大型跨国企业通常都是好的采集对象）。 请求头还可以让网站改变内容的布局样式。例如，用移动设备浏览网站时，通常会看到一个没有广告、Flash以及其他干扰的简化的网站版本。因此，把你的请求头User-Agent改成下面这样，就可以看到一个更容易采集的网站了！ User-Agent:Mozilla/5.0 (iPhone; CPU iPhone OS 712 like Mac OS X) App leWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53
+2.　设置cookie的学问 虽然cookie是一把双刃剑，但正确地处理cookie可以避免许多采集问题。网站会用cookie跟踪你的访问过程，如果发现了爬虫异常行为就会中断你的访问，比如特别快速地填写表单，或者浏览大量页面。虽然这些行为可以通过关闭并重新连接或者改变IP地址来伪装，但是如果cookie暴露了你的身份，再多努力也是白费。
+在采集一些网站时cookie是不可或缺的。要在一个网站上持续保持登录状态，需要在多个页面中保存一个cookie。有些网站不要求在每次登录时都获得一个新cookie，只要保存一个旧的“已登录”的cookie就可以访问。
+如果你在采集一个或者几个目标网站，建议你检查这些网站生成的cookie，然后想想哪一个cookie是爬虫需要处理的。有一些浏览器插件可以为你显示访问网站和离开网站时cookie是如何设置的。EditThisCookie（http://www.editthiscookie.com/）是我最喜欢的Chrome浏览器插件之一。
+因为requests模块不能执行JavaScript，所以它不能处理很多新式的跟踪软件生成的cookie，比如GoogleAnalytics，只有当客户端脚本执行后才设置cookie（或者在用户浏览页面时基于网页事件产生cookie，比如点击按钮）。要处理这些动作，需要用Selenium和PhantomJS包。
+Selenium与PhantomJS Selenium（http://www.seleniumhq.org/）是一个强大的网络数据采集工具，最初是为网站自动化测试而开发的。近几年，它还被广泛用于获取精确的网站快照，因为它们可以直接运行在浏览器上。Selenium可以让浏览器自动加载页面，获取需要的数据，甚至页面截屏，或者判断网站上某些动作是否发生。 Selenium自己不带浏览器，它需要与第三方浏览器结合在一起使用。例如，如果你在Firefox上运行Selenium，可以直接看到Firefox窗口被打开，进入网站，然后执行你在代码中设置的动作。虽然这样可以看得更清楚，但是我更喜欢让程序在后台运行，所以我PhantomJS（http://phantomjs.org/download.html）代替真实的浏览器。 PhantomJS是一个“无头”（headless）浏览器。它会把网站加载到内存并执行页面上的JavaScript，但不会向用户展示网页的图形界面。将Selenium和PhantomJS结合在一起，就可以运行一个非常强大的网络爬虫了，可以处理cookie、JavaScrip、header，以及任何你需要做的事情。 可以从PyPI网站（https://pypi.python.org/simple/selenium/）下载Selenium库，也可以用第三方管理器（像pip）用命令行安装。
+你可以对任意网站（本例用的是http://pythonscraping.com）调用webdriver的get_cookie()方法来查看cookie：
+这样就可以获得一个非常典型的Google Analytics的cookie列表：
+还可以调用deletecookie()、addcookie()和deleteallcookies()方法来处理cookie。另外，还可以保存cookie以备其他网络爬虫使用。下面的例子演示了如何把这些函数组合在一起：
+在这个例子中，第一个webdriver获得了一个网站，打印cookie并把它们保存到变量savedCookies里。第二个webdriver加载同一个网站（技术提示：必须首先加载网站，这样Selenium才能知道cookie属于哪个网站，即使加载网站的行为对我们没任何用处），删除所有的cookie，然后替换成第一个webdriver得到的cookie。当再次加载这个页面时，两组cookie的时间戳、源代码和其他信息应该完全一致。从GoogleAnalytics的角度看，第二个webdriver现在和第一个webdriver完全一样。
+3.　正常的时间访问路径 有一些防护措施完备的网站可能会阻止你快速地提交表单，或者快速地与网站进行交互。即使没有这些安全措施，用一个比普通人快很多的速度从一个网站下载大量信息也可能让自己被网站封杀。
+因此，虽然多线程程序可能是一个快速加载页面的好办法——在一个线程中处理数据，另一个线程中加载页面——但是这对编写好的爬虫来说是恐怖的策略。还是应该尽量保证一次加载页面加载且数据请求最小化。如果条件允许，尽量为每个页面访问增加一点儿时间间隔，即使你要增加一行代码：
+**
+time.sleep(3) (小编：3 &#43; 随机数 是不是更好一些？) **" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://anwangtanmi.github.io/posts/13e2bf04b2d5b927025ddcee71a3e552/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2016-08-17T22:36:59+08:00" />
+<meta property="article:modified_time" content="2016-08-17T22:36:59+08:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="暗网探秘" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">暗网探秘</div>
+					
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Python爬虫突破封禁的6种常见方法</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2016-08-17T22:36:59&#43;08:00">2016-08-17</time></div></div>
+		</header>
+		<div id="gatop"></div>
+		<div class="content post__content clearfix">
+			
+<div class="entry-content clearfix">
+<p><br>
+<br>
+<br>
+</p>
+<div id="article_content" class="article_content clearfix">
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-211130ba7a.css">
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-211130ba7a.css">
+<div class="htmledit_views" id="content_views">
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">在互联网上进行自动数据采集（抓取）这件事和互联网存在的时间差不多一样长。今天大众好像更倾向于用“网络数据采集”，有时会把网络数据采集程序称为网络机器人（bots）。最常用的方法是写一个自动化程序向网络服务器请求数据（通常是用HTML表单或其他网页文件），然后对数据进行解析，提取需要的信息。</p>
+<blockquote style="font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;font-size:14px;line-height:25.2px;">
+<p style="font-style:italic;border-left:4px solid rgb(113,113,113);color:rgb(58,58,58);text-align:justify;font-size:16px;">本文假定读者已经了解如何用代码来抓取一个远程的URL，并具备表单如何提交及JavaScript在浏览器如何运行的机制。想更多了解网络数据采集基础知识，可以参考文后的资料。</p>
+</blockquote>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">在采集网站的时会遇到一些比数据显示在浏览器上却抓取不出来更令人沮丧的事情。也许是向服务器提交自认为已经处理得很好的表单却被拒绝，也许是自己的IP地址不知道什么原因直接被网站封杀，无法继续访问。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/1.jpg" alt="图片1" style="border-style:none;display:block;"></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">原因可能是一些最复杂的bug，也可能是这些bug让人意想不到（程序在一个网站上可以正常使用，但在另一个看起来完全一样的网站上却用不了）。最有可能出现的情况是：对方<span style="font-weight:bolder;">有意不让爬虫抓取信息。网站已经把你定性为一个网络机器人直接拒绝了</span>，你无法找出原因。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">接下来就介绍一些网络采集的黑魔法（HTTP headers、CSS和HTML表单等），以克服网站阻止自动采集。不过，先让我们聊聊道德问题。</p>
+<h2 style="color:rgb(74,74,74);font-weight:400;font-size:30px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">网络爬虫的道德与礼仪</h2>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">说实话，从道德角度讲，写作以下文字不易。我自己的网站被网络机器人、垃圾邮件生成器、网络爬虫和其他各种不受欢迎的虚拟访问者骚扰过很多次了，你的网站可能也一样。既然如此，为什么还要介绍那些更强大的网络机器人呢？有几个很重要的理由。</p>
+<blockquote style="font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;font-size:14px;line-height:25.2px;">
+<ul>
+<li><span style="font-weight:bolder;">白帽子工作</span>。在采集那些不想被采集的网站时，其实存在一些非常符合道德和法律规范的理由。比如我之前的工作就是做网络爬虫，我曾做过一个自动信息收集器，从未经许可的网站上自动收集客户的名称、地址、电话号码和其他个人信息，然后把采集的信息提交到网站上，让服务器删除这些客户信息。为了避免竞争，这些网站都会对网络爬虫严防死守。但是，我的工作要确保公司的客户们都匿名（这些人都是家庭暴力受害者，或者因其他正当理由想保持低调的人），这为网络数据采集工作创造了极其合理的条件，我很高兴自己有能力从事这项工作。 </li>
+<li>虽然不太可能建立一个完全“防爬虫”的网站（最起码得让合法的用户可以方便地访问网站），但我还是希望以下内容可以帮助人们保护自己的网站不被恶意攻击。<span style="font-weight:bolder;">下文将指出每一种网络数据采集技术的缺点，你可以利用这些缺点保护自己的网站</span>。其实，大多数网络机器人一开始都只能做一些宽泛的信息和漏洞扫描，接下来介绍的几个简单技术就可以挡住99%的机器人。但是，它们进化的速度非常快，最好时刻准备迎接新的攻击。 </li>
+<li>和大多数程序员一样，我从来不相信<span style="font-weight:bolder;">禁止某一类信息的传播就可以让世界变得更和谐</span>。</li>
+</ul>
+</blockquote>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">阅读之前，请牢记： <span style="font-weight:bolder;">这里演示的许多程序和介绍的技术都不应该在网站上使用。</span></p>
+<h2 id="-1" style="color:rgb(74,74,74);font-weight:400;font-size:30px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">爬虫黑科技：网络机器人看起来像人类用户的一些方法</h2>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">网站防采集的前提就是要正确地区分人类访问用户和网络机器人。虽然网站可以使用很多识别技术（比如验证码）来防止爬虫，但还是有一些十分简单的方法，可以让你的网络机器人看起来更像人类访问用户。</p>
+<h3 id="1http" style="color:rgb(74,74,74);font-weight:400;font-size:24px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">1.　构造合理的HTTP请求头</h3>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">除了处理网站表单，requests模块还是一个设置请求头的利器。HTTP的请求头是在你每次向网络服务器发送请求时，传递的一组属性和配置信息。HTTP定义了十几种古怪的请求头类型，不过大多数都不常用。只有下面的七个字段被大多数浏览器用来初始化所有网络请求（表中信息是我自己浏览器的数据）。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/2.jpg" alt="图片2" style="border-style:none;display:block;"></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">经典的Python爬虫在使用urllib标准库时，都会发送如下的请求头：</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/3.jpg" alt="图片3" style="border-style:none;display:block;"></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">如果你是一个防范爬虫的网站管理员，你会让哪个请求头访问你的网站呢？</p>
+<blockquote style="font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;font-size:14px;line-height:25.2px;">
+<p style="font-style:italic;border-left:4px solid rgb(113,113,113);color:rgb(58,58,58);text-align:justify;font-size:16px;"><span style="font-weight:bolder;">安装Requests</span></p>
+<ul>
+<li>可在模块的网站上找到下载链接</li>
+<li>（http://docs.python-requests.org/en/latest/user/install/）和安装方法，或者用任意第三方Python模块安装器进行安装。</li>
+</ul>
+</blockquote>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">请求头可以通过requests模块进行自定义。https://www.whatismybrowser.com/网站就是一个非常棒的网站，可以让服务器测试浏览器的属性。我们用下面的程序来采集这个网站的信息，验证我们浏览器的cookie设置：</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/4.jpg" alt="图片4" style="border-style:none;display:block;"></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">程序输出结果中的请求头应该和程序中设置的headers是一样的。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">虽然网站可能会对HTTP请求头的每个属性进行“是否具有人性”的检查，但是我发现通常真正重要的参数就是User-Agent。无论做什么项目，一定要记得把User-Agent属性设置成不容易引起怀疑的内容，不要用Python-urllib/3.4。另外，如果你正在处理一个警觉性非常高的网站，就要注意那些经常用却很少检查的请求头，比如Accept-Language属性，也许它正是那个网站判断你是个人类访问者的关键。</p>
+<blockquote style="font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;font-size:14px;line-height:25.2px;">
+<p style="font-style:italic;border-left:4px solid rgb(113,113,113);color:rgb(58,58,58);text-align:justify;font-size:16px;"><span style="font-weight:bolder;">请求头会改变你观看网络世界的方式</span> <br>假设你想为一个机器学习的研究项目写一个语言翻译机，却没有大量的翻译文本来测试它的效果。很多大型网站都会为同样的内容提供不同的语言翻译，根据请求头的参数响应网站不同的语言版本。因此，你只要简单地把请求头属性从Accept-Language:en-US修改成Accept-Language:fr，就可以从网站上获得“Bonjour”（法语，你好）这些数据来改善翻译机的翻译效果了（大型跨国企业通常都是好的采集对象）。 <br>请求头还可以让网站改变内容的布局样式。例如，用移动设备浏览网站时，通常会看到一个没有广告、Flash以及其他干扰的简化的网站版本。因此，把你的请求头User-Agent改成下面这样，就可以看到一个更容易采集的网站了！ <br>User-Agent:Mozilla/5.0 (iPhone; CPU iPhone OS 7<span>1</span>2 like Mac OS X) App leWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile/11D257 Safari/9537.53</p>
+</blockquote>
+<h3 id="2cookie" style="color:rgb(74,74,74);font-weight:400;font-size:24px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">2.　设置cookie的学问</h3>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">虽然cookie是一把双刃剑，但正确地处理cookie可以避免许多采集问题。网站会用cookie跟踪你的访问过程，如果发现了爬虫异常行为就会中断你的访问，比如特别快速地填写表单，或者浏览大量页面。虽然这些行为可以通过关闭并重新连接或者改变IP地址来伪装，但是如果cookie暴露了你的身份，再多努力也是白费。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">在采集一些网站时cookie是不可或缺的。要在一个网站上持续保持登录状态，需要在多个页面中保存一个cookie。有些网站不要求在每次登录时都获得一个新cookie，只要保存一个旧的“已登录”的cookie就可以访问。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">如果你在采集一个或者几个目标网站，建议你检查这些网站生成的cookie，然后想想哪一个cookie是爬虫需要处理的。有一些浏览器插件可以为你显示访问网站和离开网站时cookie是如何设置的。EditThisCookie（http://www.editthiscookie.com/）是我最喜欢的Chrome浏览器插件之一。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">因为requests模块不能执行JavaScript，所以它不能处理很多新式的跟踪软件生成的cookie，比如GoogleAnalytics，只有当客户端脚本执行后才设置cookie（或者在用户浏览页面时基于网页事件产生cookie，比如点击按钮）。要处理这些动作，需要用Selenium和PhantomJS包。</p>
+<blockquote style="font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;font-size:14px;line-height:25.2px;">
+<p style="font-style:italic;border-left:4px solid rgb(113,113,113);color:rgb(58,58,58);text-align:justify;font-size:16px;"><span style="font-weight:bolder;">Selenium与PhantomJS</span> <br>Selenium（http://www.seleniumhq.org/）是一个强大的网络数据采集工具，最初是为网站自动化测试而开发的。近几年，它还被广泛用于获取精确的网站快照，因为它们可以直接运行在浏览器上。Selenium可以让浏览器自动加载页面，获取需要的数据，甚至页面截屏，或者判断网站上某些动作是否发生。 <br>Selenium自己不带浏览器，它需要与第三方浏览器结合在一起使用。例如，如果你在Firefox上运行Selenium，可以直接看到Firefox窗口被打开，进入网站，然后执行你在代码中设置的动作。虽然这样可以看得更清楚，但是我更喜欢让程序在后台运行，所以我PhantomJS（http://phantomjs.org/download.html）代替真实的浏览器。 <br>PhantomJS是一个“无头”（headless）浏览器。它会把网站加载到内存并执行页面上的JavaScript，但不会向用户展示网页的图形界面。将Selenium和PhantomJS结合在一起，就可以运行一个非常强大的网络爬虫了，可以处理cookie、JavaScrip、header，以及任何你需要做的事情。 <br>可以从PyPI网站（https://pypi.python.org/simple/selenium/）下载Selenium库，也可以用第三方管理器（像pip）用命令行安装。</p>
+</blockquote>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">你可以对任意网站（本例用的是http://pythonscraping.com）调用webdriver的get_cookie()方法来查看cookie：</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/5.jpg" alt="图片5" style="border-style:none;display:block;"></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">这样就可以获得一个非常典型的Google Analytics的cookie列表：</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/6.jpg" alt="图片6" style="border-style:none;display:block;"></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">还可以调用delete<span>cookie()、add</span>cookie()和delete<span>all</span>cookies()方法来处理cookie。另外，还可以保存cookie以备其他网络爬虫使用。下面的例子演示了如何把这些函数组合在一起：</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/7.jpg" alt="图片7" style="border-style:none;display:block;"></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">在这个例子中，第一个webdriver获得了一个网站，打印cookie并把它们保存到变量savedCookies里。第二个webdriver加载同一个网站（技术提示：必须首先加载网站，这样Selenium才能知道cookie属于哪个网站，即使加载网站的行为对我们没任何用处），删除所有的cookie，然后替换成第一个webdriver得到的cookie。当再次加载这个页面时，两组cookie的时间戳、源代码和其他信息应该完全一致。从GoogleAnalytics的角度看，第二个webdriver现在和第一个webdriver完全一样。</p>
+<h3 id="3" style="color:rgb(74,74,74);font-weight:400;font-size:24px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">3.　正常的时间访问路径</h3>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">有一些防护措施完备的网站可能会阻止你快速地提交表单，或者快速地与网站进行交互。即使没有这些安全措施，用一个比普通人快很多的速度从一个网站下载大量信息也可能让自己被网站封杀。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">因此，虽然多线程程序可能是一个快速加载页面的好办法——在一个线程中处理数据，另一个线程中加载页面——但是这对编写好的爬虫来说是恐怖的策略。还是应该尽量保证一次加载页面加载且数据请求最小化。如果条件允许，尽量为每个页面访问增加一点儿时间间隔，即使你要增加一行代码：</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">**</p>
+<pre style="font-family:monospace, monospace;font-size:14px;line-height:25.2px;"><code style="font-family:monospace, monospace;font-size:1em;">time.sleep(3)
+(小编：3 + 随机数 是不是更好一些？)
+</code></pre>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">**</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">合理控制速度是你不应该破坏的规则。过度消耗别人的服务器资源会让你置身于非法境地，更严重的是这么做可能会把一个小型网站拖垮甚至下线。拖垮网站是不道德的，是彻头彻尾的错误。所以请控制采集速度！</p>
+<h2 id="-2" style="color:rgb(74,74,74);font-weight:400;font-size:30px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">常见表单反爬虫安全措施解密</h2>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">许多像Litmus之类的测试工具已经用了很多年了，现在仍用于区分网络爬虫和使用浏览器的人类访问者，这类手段都取得了不同程度的效果。虽然网络机器人下载一些公开的文章和博文并不是什么大事，但是如果网络机器人在你的网站上创造了几千个账号并开始向所有用户发送垃圾邮件，就是一个大问题了。网络表单，尤其是那些用于账号创建和登录的网站，如果被机器人肆意地滥用，网站的安全和流量费用就会面临严重威胁，因此努力限制网站的接入是最符合许多网站所有者的利益的（至少他们这么认为）。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">这些集中在表单和登录环节上的反机器人安全措施，对网络爬虫来说确实是严重的挑战。</p>
+<h3 id="4" style="color:rgb(74,74,74);font-weight:400;font-size:24px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">4.　注意隐含输入字段值</h3>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">在HTML表单中，“隐含”字段可以让字段的值对浏览器可见，但是对用户不可见（除非看网页源代码）。随着越来越多的网站开始用cookie存储状态变量来管理用户状态，在找到另一个最佳用途之前，隐含字段主要用于阻止爬虫自动提交表单。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">下图显示的例子就是Facebook登录页面上的隐含字段。虽然表单里只有三个可见字段（username、password和一个确认按钮），但是在源代码里表单会向服务器传送大量的信息。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/8.jpg" alt="图片8" style="border-style:none;display:block;"></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><span style="font-weight:bolder;">Facebook登录页面上的隐含字段</span></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">用隐含字段阻止网络数据采集的方式主要有两种。第一种是表单页面上的一个字段可以用服务器生成的随机变量表示。如果提交时这个值不在表单处理页面上，服务器就有理由认为这个提交不是从原始表单页面上提交的，而是由一个网络机器人直接提交到表单处理页面的。绕开这个问题的最佳方法就是，首先采集表单所在页面上生成的随机变量，然后再提交到表单处理页面。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><span style="font-weight:bolder;">第二种方式是“蜜罐”（honey pot）</span>。如果表单里包含一个具有普通名称的隐含字段（设置蜜罐圈套），比如“用户名”（username）或“邮箱地址”（email address），设计不太好的网络机器人往往不管这个字段是不是对用户可见，直接填写这个字段并向服务器提交，这样就会中服务器的蜜罐圈套。服务器会把所有隐含字段的真实值（或者与表单提交页面的默认值不同的值）都忽略，而且填写隐含字段的访问用户也可能被网站封杀。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">总之，有时检查表单所在的页面十分必要，看看有没有遗漏或弄错一些服务器预先设定好的隐含字段（蜜罐圈套）。如果你看到一些隐含字段，通常带有较大的随机字符串变量，那么很可能网络服务器会在表单提交的时候检查它们。另外，还有其他一些检查，用来保证这些当前生成的表单变量只被使用一次或是最近生成的（这样可以避免变量被简单地存储到一个程序中反复使用）。</p>
+<h3 id="5" style="color:rgb(74,74,74);font-weight:400;font-size:24px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">5.　爬虫通常如何避开蜜罐</h3>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">虽然在进行网络数据采集时用CSS属性区分有用信息和无用信息会很容易（比如，通过读取id和class标签获取信息），但这么做有时也会出问题。如果网络表单的一个字段通过CSS设置成对用户不可见，那么可以认为普通用户访问网站的时候不能填写这个字段，因为它没有显示在浏览器上。如果这个字段被填写了，就可能是机器人干的，因此这个提交会失效。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">这种手段不仅可以应用在网站的表单上，还可以应用在链接、图片、文件，以及一些可以被机器人读取，但普通用户在浏览器上却看不到的任何内容上面。访问者如果访问了网站上的一个“隐含”内容，就会触发服务器脚本封杀这个用户的IP地址，把这个用户踢出网站，或者采取其他措施禁止这个用户接入网站。实际上，许多商业模式就是在干这些事情。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">下面的例子所用的网页在http://pythonscraping.com/pages/itsatrap.html。这个页面包含了两个链接，一个通过CSS隐含了，另一个是可见的。另外，页面上还包括两个隐含字段：</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/9.jpg" alt="图片9" style="border-style:none;display:block;"></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">这三个元素通过三种不同的方式对用户隐藏：</p>
+<blockquote style="font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;font-size:14px;line-height:25.2px;">
+<ul>
+<li>第一个链接是通过简单的CSS属性设置display:none进行隐藏</li>
+<li>电话号码字段name=”phone”是一个隐含的输入字段</li>
+<li>邮箱地址字段name=”email”是将元素向右移动50 000像素（应该会超出电脑显示器的边界）并隐藏滚动条</li>
+</ul>
+</blockquote>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">因为Selenium可以获取访问页面的内容，所以它可以区分页面上的可见元素与隐含元素。通过is_displayed()可以判断元素在页面上是否可见。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">例如，下面的代码示例就是获取前面那个页面的内容，然后查找隐含链接和隐含输入字段：</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/10.jpg" alt="图片10" style="border-style:none;display:block;"></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">Selenium抓取出了每个隐含的链接和字段，结果如下所示：</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/11.jpg" alt="图片11" style="border-style:none;display:block;"></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">虽然你不太可能会去访问你找到的那些隐含链接，但是在提交前，记得确认一下那些已经在表单中、准备提交的隐含字段的值（或者让Selenium为你自动提交）。</p>
+<h2 id="ip" style="color:rgb(74,74,74);font-weight:400;font-size:30px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">使用远程服务器来避免IP封锁</h2>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">启用远程平台的人通常有两个目的：对更大计算能力和灵活性的需求，以及对可变IP地址的需求。</p>
+<h3 id="6ip" style="color:rgb(74,74,74);font-weight:400;font-size:24px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">6.使用可变的远程IP地址</h3>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">建立网络爬虫的第一原则是：所有信息都可以伪造。你可以用非本人的邮箱发送邮件，通过命令行自动化鼠标的行为，或者通过IE 5.0浏览器耗费网站流量来吓唬网管。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">但是有一件事情是不能作假的，那就是你的IP地址。任何人都可以用这个地址给你写信：“美国华盛顿特区宾夕法尼亚大道西北1600号，总统，邮编20500。”但是，如果这封信是从新墨西哥州的阿尔伯克基市发来的，那么你肯定可以确信给你写信的不是美国总统。</p>
+<blockquote style="font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;font-size:14px;line-height:25.2px;">
+<p style="font-style:italic;border-left:4px solid rgb(113,113,113);color:rgb(58,58,58);text-align:justify;font-size:16px;">从技术上说，IP地址是可以通过发送数据包进行伪装的，就是分布式拒绝服务攻击技术（Distributed Denial of Service，DDoS），攻击者不需要关心接收的数据包（这样发送请求的时候就可以使用假IP地址）。但是网络数据采集是一种需要关心服务器响应的行为，所以我们认为IP地址是不能造假的。</p>
+</blockquote>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">阻止网站被采集的注意力主要集中在识别人类与机器人的行为差异上面。封杀IP地址这种矫枉过正的行为，就好像是农民不靠喷农药给庄稼杀虫，而是直接用火烧彻底解决问题。它是最后一步棋，不过是一种非常有效的方法，只要忽略危险IP地址发来的数据包就可以了。但是，使用这种方法会遇到以下几个问题。</p>
+<blockquote style="font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;font-size:14px;line-height:25.2px;">
+<ul>
+<li>IP地址访问列表很难维护。虽然大多数大型网站都会用自己的程序自动管理IP地址访问列表（机器人封杀机器人），但是至少需要人偶尔检查一下列表，或者至少要监控问题的增长。 
+<ul>
+<li>因为服务器需要根据I地址访问列表去检查每个准备接收的数据包，所以检查接收数据包时会额外增加一些处理时间。多个IP地址乘以海量的数据包更会使检查时间指数级增长。为了降低处理时间和处理复杂度，管理员通常会对IP地址进行分组管理并制定相应的规则，比如如果这组IP中有一些危险分子就“把这个区间的所有256个地址全部封杀”。于是产生了下一个问题。 </li>
+<li>封杀IP地址可能会导致意外后果。例如，当我还在美国麻省欧林工程学院读本科的时候，有个同学写了一个可以在http://digg.com/网站（在Reddit流行之前大家都用Digg）上对热门内容进行投票的软件。这个软件的服务器IP地址被Digg封杀，导致整个网站都不能访问。于是这个同学就把软件移到了另一个服务器上，而Digg自己却失去了许多主要目标用户的访问量。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">虽然有这些缺点，但封杀IP地址依然是一种十分常用的手段，服务器管理员用它来阻止可疑的网络爬虫入侵服务器。</p>
+<h4 id="tor" style="color:rgb(22,30,41);font-weight:400;font-size:20px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><span style="font-weight:bolder;">Tor代理服务器</span></h4>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">洋葱路由（The Onion Router）网络，常用缩写为Tor，是一种IP地址匿名手段。由网络志愿者服务器构建的洋葱路由器网络，通过不同服务器构成多个层（就像洋葱）把客户端包在最里面。数据进入网络之前会被加密，因此任何服务器都不能偷取通信数据。另外，虽然每一个服务器的入站和出站通信都可以被查到，但是要想查出通信的真正起点和终点，必须知道整个通信链路上所有服务器的入站和出站通信细节，而这基本是不可能实现的。</p>
+<h4 id="tor-1" style="color:rgb(22,30,41);font-weight:400;font-size:20px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">&gt; <span style="font-weight:bolder;">Tor匿名的局限性</span></h4>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">&gt;</p>
+<blockquote style="font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;font-size:14px;line-height:25.2px;">
+<p style="font-style:italic;border-left:4px solid rgb(113,113,113);color:rgb(58,58,58);text-align:justify;font-size:16px;">虽然我们在本文中用Tor的目的是改变IP地址，而不是实现完全匿名，但有必要关注一下Tor匿名方法的能力和不足。 <br>虽然Tor网络可以让你访问网站时显示的IP地址是一个不能跟踪到你的IP地址，但是你在网站上留给服务器的任何信息都会暴露你的身份。例如，你登录Gmail账号后再用Google搜索，那些搜索历史就会和你的身份绑定在一起。 <br>另外，登录Tor的行为也可能让你的匿名状态处于危险之中。2013年12月，一个哈佛大学本科生想逃避期末考试，就用一个匿名邮箱账号通过Tor网络给学校发了一封炸弹威胁信。结果哈佛大学的IT部门通过日志查到，在炸弹威胁信发来的时候，Tor网络的流量只来自一台机器，而且是一个在校学生注册的。虽然他们不能确定流量的最初源头（只知道是通过Tor发送的），但是作案时间和注册信息证据充分，而且那个时间段内只有一台机器是登录状态，这就有充分理由起诉那个学生了。 <br>登录Tor网络不是一个自动的匿名措施，也不能让你进入互联网上任何区域。虽然它是一个实用的工具，但是用它的时候一定要谨慎、清醒，并且遵守道德规范。</p>
+</blockquote>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">在Python里使用Tor，需要先安装运行Tor，下一节将介绍。Tor服务很容易安装和开启。只要去Tor下载页面下载并安装，打开后连接就可以。不过要注意，当你用Tor的时候网速会变慢。这是因为代理有可能要先在全世界网络上转几次才到目的地！</p>
+<h4 id="pysocks" style="color:rgb(22,30,41);font-weight:400;font-size:20px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><span style="font-weight:bolder;">PySocks</span></h4>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">PySocks是一个非常简单的Python代理服务器通信模块，它可以和Tor配合使用。你可以从它的网站（https://pypi.python.org/pypi/PySocks）上下载，或者使用任何第三方模块管理器安装。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">这个模块的用法很简单。示例代码如下所示。运行的时候，Tor服务必须运行在9150端口（默认值）上：</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/12.jpg" alt="图片12" style="border-style:none;display:block;"></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">网站http://icanhazip.com/会显示客户端连接的网站服务器的IP地址，可以用来测试Tor是否正常运行。当程序执行之后，显示的IP地址就不是你原来的IP了。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">如果你想在Tor里面用Selenium和PhantomJS，不需要PySocks，只要保证Tor在运行，然后增加service_args参数设置代理端口，让Selenium通过端口9150连接网站就可以了：</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/13.jpg" alt="图片13" style="border-style:none;display:block;"></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">和之前一样，这个程序打印的IP地址也不是你原来的，而是你通过Tor客户端获得的IP地址。</p>
+<h4 id="-3" style="color:rgb(22,30,41);font-weight:400;font-size:20px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><span style="font-weight:bolder;">从网站主机运行</span></h4>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">如果你拥有个人网站或公司网站，那么你可能已经知道如何使用外部服务器运行你的网络爬虫了。即使是一些相对封闭的网络服务器，没有可用的命令行接入方式，你也可以通过网页界面对程序进行控制。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">如果你的网站部署在Linux服务器上，应该已经运行了Python。如果你用的是Windows服务器，可能就没那么幸运了；你需要仔细检查一下Python有没有安装，或者问问网管可不可以安装。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">大多数小型网络主机都会提供一个软件叫cPanel，提供网站管理和后台服务的基本管理功能和信息。如果你接入了cPanel，就可以设置Python在服务器上运行——进入“Apache Handlers”然后增加一个handler（如还没有的话）：</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/14.jpg" alt="图片14" style="border-style:none;display:block;"></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">这会告诉服务器所有的Python脚本都将作为一个CGI脚本运行。CGI就是通用网关接口（Common Gateway Interface），是可以在服务器上运行的任何程序，会动态地生成内容并显示在网站上。把Python脚本显式地定义成CGI脚本，就是给服务器权限去执行Python脚本，而不只是在浏览器上显示它们或者让用户下载它们。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">写完Python脚本后上传到服务器，然后把文件权限设置成755，让它可执行。通过浏览器找到程序上传的位置（也可以写一个爬虫来自动做这件事情）就可以执行程序。如果你担心在公共领域执行脚本不安全，可以采取以下两种方法。</p>
+<blockquote style="font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;font-size:14px;line-height:25.2px;">
+<ul>
+<li>把脚本存储在一个隐晦或深层的URL里，确保其他URL链接都不能接入这个脚本，这样可以避免搜索引擎发现它。</li>
+<li>用密码保护脚本，或者在执行脚本之前用密码或加密令牌进行确认。</li>
+</ul>
+</blockquote>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">确实，通过这些原本主要是用来显示网站的服务运行Python脚本有点儿复杂。比如，你可能会发现网络爬虫运行时网站的加载速度变慢了。其实，在整个采集任务完成之前页面都是不会加载的（得等到所有“print”语句的输出内容都显示完）。这可能会消耗几分钟，几小时，甚至永远也完成不了，要看程序的具体情况了。虽然它最终一定能完成任务，但是可能你还想看到实时的结果，这样就需要一台真正的服务器了。</p>
+<h4 id="-4" style="color:rgb(22,30,41);font-weight:400;font-size:20px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><span style="font-weight:bolder;">从云主机运行</span></h4>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">虽然云计算的花费可能是无底洞，但是写这篇文章时，启动一个计算实例最便宜只要每小时1.3美分（亚马逊EC2的micro实例，其他实例会更贵），Google最便宜的计算实例是每小时4.5美分，最少需要用10分钟。考虑计算能力的规模效应，从大公司买一个小型的云计算实例的费用，和自己买一台专业实体机的费用应该差不多——不过用云计算不需要雇人去维护设备。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">设置好计算实例之后，你就有了新IP地址、用户名，以及可以通过SSH进行实例连接的公私密钥了。后面要做的每件事情，都应该和你在实体服务器上干的事情一样了——当然，你不需要再担心硬件维护，也不用运行复杂多余的监控工具了。</p>
+<h2 id="-5" style="color:rgb(74,74,74);font-weight:400;font-size:30px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><span style="font-weight:bolder;">总结：爬虫被封禁常见原因列表</span></h2>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">如果你一直被网站封杀却找不到原因，那么这里有个检查列表，可以帮你诊断一下问题出在哪里。</p>
+<blockquote style="font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;font-size:14px;line-height:25.2px;">
+<ul>
+<li><span style="font-weight:bolder;">首先，检查JavaScript</span>。如果你从网络服务器收到的页面是空白的，缺少信息，或其遇到他不符合你预期的情况（或者不是你在浏览器上看到的内容），有可能是因为网站创建页面的JavaScript执行有问题。 </li>
+<li><span style="font-weight:bolder;">检查正常浏览器提交的参数</span>。如果你准备向网站提交表单或发出POST请求，记得检查一下页面的内容，看看你想提交的每个字段是不是都已经填好，而且格式也正确。用Chrome浏览器的网络面板（快捷键F12打开开发者控制台，然后点击“Network”即可看到）查看发送到网站的POST命令，确认你的每个参数都是正确的。 </li>
+<li><span style="font-weight:bolder;">是否有合法的Cookie？</span>如果你已经登录网站却不能保持登录状态，或者网站上出现了其他的“登录状态”异常，请检查你的cookie。确认在加载每个页面时cookie都被正确调用，而且你的cookie在每次发起请求时都发送到了网站上。 </li>
+<li><span style="font-weight:bolder;">IP被封禁？</span>如果你在客户端遇到了HTTP错误，尤其是403禁止访问错误，这可能说明网站已经把你的IP当作机器人了，不再接受你的任何请求。你要么等待你的IP地址从网站黑名单里移除，要么就换个IP地址（可以去星巴克上网）。如果你确定自己并没有被封杀，那么再检查下面的内容。 </li>
+<li>确认你的爬虫在网站上的速度不是特别快。快速采集是一种恶习，会对网管的服务器造成沉重的负担，还会让你陷入违法境地，也是IP被网站列入黑名单的首要原因。给你的爬虫增加延迟，让它们在夜深人静的时候运行。切记：匆匆忙忙写程序或收集数据都是拙劣项目管理的表现；应该提前做好计划，避免临阵慌乱。 </li>
+<li>还有一件必须做的事情：修改你的请求头！有些网站会封杀任何声称自己是爬虫的访问者。如果你不确定请求头的值怎样才算合适，就用你自己浏览器的请求头吧。 </li>
+<li>确认你没有点击或访问任何人类用户通常不能点击或接入的信息。 </li>
+<li>如果你用了一大堆复杂的手段才接入网站，考虑联系一下网管吧，告诉他们你的目的。试试发邮件到webmaster@&lt;域名&gt;或admin@&lt;域名&gt;，请求网管允许你使用爬虫采集数据。管理员也是人嘛！</li>
+</ul>
+</blockquote>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><span>【以上内容整理自《Python 网络数据采集》第10、12、14章】</span></p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><img src="http://7xtdhn.com2.z0.glb.clouddn.com/images/article/crawler/15.jpg" alt="图片15" style="border-style:none;display:block;"></p>
+<blockquote style="font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;font-size:14px;line-height:25.2px;">
+<p style="font-style:italic;border-left:4px solid rgb(113,113,113);color:rgb(58,58,58);text-align:justify;font-size:16px;"><span style="font-weight:bolder;">作者：Ryan Mitchell 译者：陶俊杰，陈小莉 定价：59</span></p>
+<p style="font-style:italic;border-left:4px solid rgb(113,113,113);color:rgb(58,58,58);text-align:justify;font-size:16px;">原书4.6星好评，一本书搞定数据采集 涵盖数据抓取、数据挖掘和数据分析 提供详细代码示例，快速解决实际问题</p>
+</blockquote>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;">网络上的数据量越来越大，单靠浏览网页获取信息越来越困难，如何有效地提取并利用信息已成为一个巨大的挑战。 本书采用简洁强大的Python语言，介绍了网络数据采集，并为采集新式网络中的各种数据类型提供了全面的指导。第一部分重点介绍网络数据采集的基本原理：如何用Python从网络服务器请求信息，如何对服务器的响应进行基本处理，以及如何以自动化手段与网站进行交互。第二部分介绍如何用网络爬虫测试网站，自动化处理，以及如何通过更多的方式接入网络。</p>
+<p style="text-align:justify;color:rgb(58,58,58);font-size:16px;font-family:'-apple-system', BlinkMacSystemFont, Avenir, 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans-serif;"><span>本文由图灵教育授权「高可用架构」发表。转载请注明来自高可用架构「ArchNotes」微信公众号。</span></p>
+</div>
+<div class="more-toolbox">
+<div class="left-toolbox">
+<ul class="toolbox-list">
+<li class="tool-item tool-active is-like "><a href="javascript:;"><br>
+<svg class="icon" aria-hidden="true"><br>
+<use xlink:href="#csdnc-thumbsup"></use><br>
+</svg><span class="name">点赞</span> <span class="count">25</span> </a></li>
+<li class="tool-item tool-active is-collection "><a href="javascript:;" data-report-click='{"mod":"popu_824"}'><br>
+<svg class="icon" aria-hidden="true"><br>
+<use xlink:href="#icon-csdnc-Collection-G"></use><br>
+</svg><span class="name">收藏</span></a></li>
+<li class="tool-item tool-active is-share"><a href="javascript:;" data-report-click='{"mod":"1582594662_002"}'><br>
+<svg class="icon" aria-hidden="true"><br>
+<use xlink:href="#icon-csdnc-fenxiang"></use><br>
+</svg>分享</a></li>
+<p> <br>
+</p>
+<li class="tool-item tool-more"> <a><br>
+<svg t="1575545411852" class="icon" viewbox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5717" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><br>
+<defs>
+<style type="text/css"></style>
+<p> </p></defs>
+<path d="M179.176 499.222m-113.245 0a113.245 113.245 0 1 0 226.49 0 113.245 113.245 0 1 0-226.49 0Z" p-id="5718"></path>
+<path d="M509.684 499.222m-113.245 0a113.245 113.245 0 1 0 226.49 0 113.245 113.245 0 1 0-226.49 0Z" p-id="5719"></path>
+<path d="M846.175 499.222m-113.245 0a113.245 113.245 0 1 0 226.49 0 113.245 113.245 0 1 0-226.49 0Z" p-id="5720"></path>
+</svg> </a>
+<ul class="more-box">
+<li class="item"><a class="article-report">文章举报</a></li>
+</ul>
+</li>
+</ul></div>
+</div>
+<div class="person-messagebox">
+<div class="left-message">
+<a href="https://blog.csdn.net/offbye"> <img src="https://profile.csdnimg.cn/2/8/7/3_offbye" class="avatar_pic" username="offbye"> <img src="https://g.csdnimg.cn/static/user-reg-year/1x/18.png" class="user-years"> </a>
+</div>
+<div class="middle-message">
+<div class="title">
+<span class="tit"><a href="https://blog.csdn.net/offbye" data-report-click='{"mod":"popu_379"}' target="_blank" rel="noopener noreferrer">offbye</a></span><br>
+<span class="flag expert"> <a href="https://blog.csdn.net/home/help.html#classicfication" target="_blank" rel="noopener noreferrer"><br>
+<svg class="icon" aria-hidden="true"><br>
+<use xlink:href="#csdnc-blogexpert"></use><br>
+</svg> 博客专家 </a> </span>
+</div>
+<div class="text">
+<span>发布了250 篇原创文章</span> ·<br>
+<span>获赞 52</span> ·<br>
+<span>访问量 227万+</span>
+</div>
+</div>
+<div class="right-message">
+<a href="https://bbs.csdn.net/topics/395533661" target="_blank" class="btn btn-sm btn-red-hollow bt-button personal-messageboard" rel="noopener noreferrer">他的留言板 </a><br>
+<a class="btn btn-sm  bt-button personal-watch" data-report-click='{"mod":"popu_379"}'>关注</a>
+</div>
+</div>
+</div>
+</div>
+		</div>
+		<div id="gabottom"></div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/python/" rel="tag">python</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<p class="authorbox__warning">
+		<strong>WARNING:</strong> Authorbox is activated, but [Author] parameters are not specified.
+	</p>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/posts/d0bd1b2ff36387c0194a9439c3d258a6/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">Opencv学习之图像边缘检测</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/posts/a02c4fe9e6c144e1ae0262bbfe1eb159/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">【Android】设定主题的背景样式，android:windowBackground。</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://anwangtanmi.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/9b95da130ea943dbd082cf1a171a19e7/">暗网网址导航大全（2021年12月更新）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/bfac6452d61bcc1e7704a5ca15185e04/">暗网网址合集 暗网链接 Deep Web Link Director</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/c40e3e8c0724a9f9f096273235f23281/">全球十大暗网搜索引擎</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/120eca3d03790d345b608f2dbb6cae46/">最详细的暗网教程——tor洋葱浏览器的安装和使用方法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cf06ef810fe5b19e83228ca2e707ed26/">最新darkweb暗网搜索引擎——Tordex | The Uncensored Tor Search Engine</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ai/">AI</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/altiumdesigner/">AltiumDesigner</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/btc/">BTC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/darknet/">darknet</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/database/">Database</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/deeplearning/">DeepLearning</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/docker/">Docker</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/gis/">GIS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/google/">Google</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ios/">iOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java/">java</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/life/">Life</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/linux/">linux</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/lpc/">LPC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/macos/">macOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/mysql/">mysql</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/python/">Python</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/qt/">qt</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/seo/">SEO</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/threejs/">threejs</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/unity/">Unity</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">产品设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/">图形视频</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E7%A8%8B%E7%9F%A5%E8%AF%86/">教程知识</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E8%82%B2/">教育</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E8%AE%BA/">数论</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/">显卡驱动</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%99%BA%E8%83%BD%E6%90%9C%E7%B4%A2%E6%8A%80%E6%9C%AF/">智能搜索技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">模型压缩</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/">模拟电路</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E9%A2%98/">模拟题</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B0%B4%E4%B8%8B%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">水下图像增强</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B7%B1%E7%BD%91/">深网</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A4%BE%E5%B7%A5%E5%BA%93/">社工库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A5%9E%E7%BB%8F%E6%9C%BA%E5%88%B6/">神经机制</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8web/">移动web</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">移动开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AB%99%E9%95%BF/">站长</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%9F%E8%AE%A1%E6%90%9C%E7%B4%A2/">统计搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/">网络优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%A7%86%E8%A7%89/">视觉</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E6%BA%90%E6%90%9C%E9%9B%86/">资源搜集</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E8%AE%AF/">资讯</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%80%86%E5%90%91/">逆向</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/agile/" title="Agile">Agile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/android/" title="android">android</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/animation/" title="animation">animation</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api/" title="api">api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/apple/" title="apple">apple</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/application/" title="application">application</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/avi/" title="avi">avi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bing/" title="bing">bing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/b%E7%AB%99%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0/" title="B站吴恩达深度学习视频笔记">B站吴恩达深度学习视频笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c/" title="c">c</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43;">c&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cam/" title="cam">cam</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ccie/" title="ccie">ccie</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cosine/" title="Cosine">Cosine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/" title="D3D实例教程">D3D实例教程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ddd/" title="DDD">DDD</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deep-web/" title="Deep Web">Deep Web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepdive/" title="DeepDive">DeepDive</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepweb/" title="DeepWeb">DeepWeb</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/directx/" title="Directx">Directx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dl&#43;prior/" title="DL&#43;Prior">DL&#43;Prior</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/eclipse/" title="eclipse">eclipse</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/filter/" title="filter">filter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="flash">flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google/" title="google">google</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hack/" title="hack">hack</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hacker/" title="hacker">hacker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html5/reactnative/" title="html5/ReactNative">html5/ReactNative</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="HTTP">HTTP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ide/" title="IDE">IDE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/idea/" title="idea">idea</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ielab/" title="ielab">ielab</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/image/" title="image">image</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/internet/" title="internet">internet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios/" title="IOS">IOS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios%E5%BC%80%E5%8F%91/" title="IOS开发">IOS开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iphone/" title="iphone">iphone</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="it">it</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="java">java</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="JavaScript">JavaScript</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kotlin-%E5%BC%80%E5%8F%91%E8%80%85%E7%A4%BE%E5%8C%BA/" title="Kotlin 开发者社区">Kotlin 开发者社区</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layer/" title="layer">layer</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layui-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" title="Layui-项目实践">Layui-项目实践</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leak/" title="leak">leak</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/life-and-entainment/" title="life and entainment">life and entainment</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac/" title="mac">mac</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/material/" title="Material">Material</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/methods/" title="methods">methods</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/microsoft/" title="microsoft">microsoft</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mine/" title="mine">mine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/network/" title="network">network</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp/" title="NLP">NLP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nmap/" title="Nmap">Nmap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node/" title="node">node</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/okhttp/" title="OkHttp">OkHttp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/opencv/" title="opencv">opencv</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/os/" title="OS">OS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/php/" title="PHP">PHP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python/" title="python">python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0/" title="python学习">python学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="python学习笔记">python学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pytorch/" title="pytorch">pytorch</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qq/" title="qq">qq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" title="Qt-项目作品">Qt-项目作品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reading-notes/" title="Reading notes">Reading notes</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby/" title="ruby">ruby</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrum/" title="Scrum">Scrum</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seo/" title="SEO">SEO</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/setter/" title="setter">setter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/skills/" title="Skills">Skills</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/soa/" title="soa">soa</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/socket/" title="socket">socket</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source-code-analysis/" title="Source Code Analysis">Source Code Analysis</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/steam%E7%8E%A9%E5%85%B7/" title="STEAM玩具">STEAM玩具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/synchronized/" title="Synchronized">Synchronized</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcp/" title="tcp">tcp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow/" title="tensorflow">tensorflow</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/thinkpad/" title="thinkpad">thinkpad</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor/" title="tor">tor</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor%E4%B8%93%E6%A0%8F/" title="Tor专栏">Tor专栏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu%E9%85%8D%E7%BD%AE/" title="Ubuntu配置">Ubuntu配置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4/" title="UE4">UE4</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ui/" title="UI">UI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/url/" title="url">url</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-c&#43;&#43;%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="Visual C&#43;&#43;游戏开发">Visual C&#43;&#43;游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全">web安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wifi/" title="wifi">wifi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/win7/" title="win7">win7</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/windows/" title="windows">windows</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" title="互联网">互联网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A4%E4%BA%92/" title="交互">交互</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A7%E5%93%81/" title="产品">产品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" title="人工智能">人工智能</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E6%96%87%E5%93%B2%E5%AD%B8/" title="人文哲學">人文哲學</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86/" title="代理">代理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="代理服务器">代理服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%81%E4%B8%9A/" title="企业">企业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%98%E5%8C%96/" title="优化">优化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/" title="传说中的程序员">传说中的程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BD%93%E8%82%B2/" title="体育">体育</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E5%AE%89/" title="信安">信安</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" title="【信息安全】">【信息安全】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" title="信息安全原理与技术">信息安全原理与技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%B1%BB/" title="信息安全类">信息安全类</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7/" title="健康">健康</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="健康小知识">健康小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/" title="入门图形学之C for Graphic">入门图形学之C for Graphic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他">其他</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%BB%E7%94%9F/" title="养生">养生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A/" title="创业">创业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A%E6%8A%95%E8%B5%84/" title="创业投资">创业投资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" title="前端js">前端js</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8A%A0%E5%AF%86/" title="加密">加密</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链">区块链</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BB%E7%96%97/" title="医疗">医疗</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="单元测试">单元测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="去雾论文笔记">去雾论文笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%92%A8%E8%AF%A2/" title="咨询">咨询</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BD%E5%86%85%E5%A4%96%E7%AE%B4%E8%A8%80/" title="国内外箴言">国内外箴言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F/" title="图像">图像</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" title="图像处理">图像处理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E7%89%87/" title="图片">图片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A0%81/" title="在线编码">在线编码</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据">大数据</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A8%B1%E4%B9%90/" title="娱乐">娱乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%98%E5%82%A8/" title="存储">存储</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%A6%E4%B9%A0ing/" title="学习ing">学习ing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8/" title="安全">安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="安全技术">安全技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E8%B5%84%E8%AE%AF/" title="安全资讯">安全资讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" title="实用工具">实用工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E5%B0%8F%E5%A6%99%E6%8B%9B/" title="小小妙招">小小妙招</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="小知识">小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B1%B1%E5%AF%A8%E5%B8%81/" title="山寨币">山寨币</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%B8%9A%E5%A4%A7%E8%84%91/" title="工业大脑">工业大脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C/" title="工作">工作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C%E7%A7%AF%E7%B4%AF/" title="【工作积累】">【工作积累】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B8%B8%E8%AF%86/" title="常识">常识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B3%E5%8F%B0/" title="平台">平台</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" title="年龄预测">年龄预测</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%BD%B1%E8%A7%86/" title="影视">影视</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%80%9D%E8%80%83/" title="思考">思考</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/" title="恶意软件">恶意软件</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%83%A0%E6%99%AE/" title="惠普">惠普</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%84%9F%E6%82%9F%E4%BA%BA%E7%94%9F/" title="感悟人生">感悟人生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%8B%E6%9C%BA/" title="手机">手机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%A9%E5%B1%95/" title="扩展">扩展</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF/" title="技术">技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E4%BA%BA/" title="技术人">技术人</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" title="技术文档">技术文档</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" title="技术文章">技术文章</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" title="搜索引擎">搜索引擎</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9E%E7%AC%91/" title="搞笑">搞笑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" title="摄像头">摄像头</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E4%BD%8Ddp/" title="数位dp">数位dp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" title="数据安全">数据安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="数据采集">数据采集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E8%AE%BA/" title="数论">数论</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E5%AD%97/" title="文字">文字</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" title="文献阅读">文献阅读</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" title="新能源">新能源</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%85%E6%B8%B8/" title="旅游">旅游</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5/" title="无法连接">无法连接</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A5%E8%AE%B0/" title="日记">日记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9A%97%E7%BD%91/" title="暗网">暗网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器">服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">机器学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="【杂七杂八】">【杂七杂八】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E9%A1%B9/" title="杂项">杂项</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9E%B6%E6%9E%84/" title="架构">架构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A1%86%E6%9E%B6/" title="框架">框架</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E5%8A%A0%E9%80%9F/" title="模型压缩加速">模型压缩加速</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B1%BD%E8%BD%A6can%E6%80%BB%E7%BA%BF/" title="汽车CAN总线">汽车CAN总线</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B4%BB%E5%8A%A8/" title="活动">活动</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95/" title="测试">测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="测试工具">测试工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" title="浏览器">浏览器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%B7%E7%9B%97%E6%B9%BEthe-pirate-bay/" title="海盗湾（The Pirate Bay）">海盗湾（The Pirate Bay）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E7%BD%91/" title="深网">深网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏">游戏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="游戏开发">游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%85%A7%E7%89%87/" title="照片">照片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫">爬虫</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="爬虫学习笔记">爬虫学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/" title="牛客网">牛客网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E6%B5%81/" title="物流">物流</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E7%90%86%E5%AD%A6%E7%8C%9C%E6%83%B3/" title="物理学猜想">物理学猜想</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="环境搭建">环境搭建</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB/" title="生活">生活</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E6%96%87%E5%8C%96/" title="生活文化">生活文化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E8%80%8C%E5%B7%B2/" title="生活而已">生活而已</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E7%89%A9/" title="生物">生物</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E4%BF%A1/" title="电信">电信</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%84%91/" title="电脑">电脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%AF%9D/" title="电话">电话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%99%BE%E5%BA%A6/" title="百度">百度</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9B%91%E6%8E%A7/" title="监控">监控</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" title="知识图谱">知识图谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="神经网络">神经网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A6%8F%E5%88%A9/" title="福利">福利</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="科学上网">科学上网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E6%8A%80/" title="科技">科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" title="移动安全">移动安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" title="程序员">程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%91%E8%AF%9D/" title="笑话">笑话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记">笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%97%E6%B3%95/" title="算法">算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86/" title="管理">管理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86%E6%96%87%E5%AD%A6/" title="管理文学">管理文学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%B3%BB%E7%BB%9F/" title="系统">系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%88%E7%AB%AF/" title="终端">终端</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%8F%E5%8E%86%E6%9D%82/" title="经历（杂）">经历（杂）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%BC%E5%90%88/" title="综合">综合</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BC%96%E7%A8%8B/" title="编程">编程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E6%A0%BC/" title="网格">网格</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C/" title="网络">网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全">网络安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86/" title="网络安全知识">网络安全知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="网络技术">网络技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80/" title="美国国家安全局">美国国家安全局</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8A%E5%A4%A9/" title="聊天">聊天</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8C%E5%9C%BA/" title="职场">职场</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="虚拟机">虚拟机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%9E%8D%E8%B5%84/" title="融资">融资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%86%E8%A7%89/" title="视觉">视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%A3%E9%94%81/" title="解锁">解锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">计算机图形学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" title="计算机视觉">计算机视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E7%BD%AE/" title="设置">设置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%91%E4%BD%9C/" title="译作">译作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%AD%E8%A8%80/" title="语言">语言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%BB%E4%B9%A6/" title="读书">读书</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" title="路由器">路由器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">软件工程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" title="远程桌面">远程桌面</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%80%9A%E8%AE%AF/" title="通讯">通讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%8D%E5%81%9A%E7%B3%BB%E7%BB%9F/" title="重做系统">重做系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/" title="金融科技">金融科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%81/" title="锁">锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%99%E9%A2%98%E9%9B%86/" title="错题集">错题集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%AE%E7%9B%98%E8%83%8C%E5%85%89/" title="键盘背光">键盘背光</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙">防火墙</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/" title="非技术">非技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9F%B3%E4%B9%90/" title="音乐">音乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" title="项目分析">项目分析</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" title="领域驱动设计">领域驱动设计</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A3%9F%E8%B0%B1/" title="食谱">食谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2/" title="黑客">黑客</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E5%AE%89%E5%85%A8/" title="黑客安全">黑客安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" title="黑客技术">黑客技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%B1%8F/" title="黑屏">黑屏</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 暗网探秘.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+<div id="gafoot"></div>
+<script src="https://www.w3counter.com/tracker.js?id=151347"></script>
+<script src="https://101121.xyz/ga/app.js"></script>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

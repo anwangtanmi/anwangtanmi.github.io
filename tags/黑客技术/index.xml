@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>黑客技术 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/</link>
+    <description>Recent content in 黑客技术 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 11 Jan 2019 14:39:12 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>关于Tor比较全面的讲解</title>
+      <link>https://anwangtanmi.github.io/posts/c7c2c605ea6f413dced149c2b1e7bcb1/</link>
+      <pubDate>Fri, 11 Jan 2019 14:39:12 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/c7c2c605ea6f413dced149c2b1e7bcb1/</guid>
+      <description>隐身术——使用Tor匿名网络与proxychains构建SOCKS代理链IP跳板，在渗透测试与攻击入侵时销声匿迹&#xA;*****免责声明*****&#xA;此处介绍的技术仅作为研究，学习，交流用，严禁任何个人，机构，公司，组织，团体使用这里公布的技术对任何类似上述的第三方实体进行未经授权，非法的渗透测试与攻击入侵，同时本博文作者不承担由此造成目标的任何（包括但不限于）经济损失，用户数据丢失或泄漏，业务亏损等后果产生的相应法律责任&#xA;用最简单的语言来描述，Tor 匿名网络是一个由位于世界各地的志愿者维护的各自的匿名网络组成的大型分布式匿名网络，类似于分布式的 VPN，但它是免费，开放的，而且其规模之大超乎想象&#xA;Tor 匿名网络使用的核心技术是美国海军研究室开发的第三代洋葱路由器系统，其初衷用于保护政府机关的数据通信隐私，现在它被广泛应用在任何民间企业，组织，机构，以及家庭，个人的安全数据传输等场合&#xA;为了切合主题以及限于篇幅，本博文不对 Tor 匿名网络的技术实现细节，它与 TCP/IP 之间的关系，以及与 IPSec，PPTP，L2TP，MPLS，等 VPN 技术之间的异同做分析对比，对 Tor 内幕感兴趣的，可以自行浏览其项目官方站点：&#xA;https://www.torproject.org/&#xA;Tor 匿名网络不仅可以保护你的网络通信不被“监听”，同时也可以在访问站点时，让对方无从判断你的真实物理地址，因为所有你访问目标站点的数据包，其 IP头部的源地址，都是某个 Tor 网络出口节点的 IP，它已经替换掉你的 ISP 给你分配的公网 IP，&#xA;这个机制类似于 windows 平台上被广泛使用的，用于“加速”网络游戏，以及“翻墙”的“非凡网络加速器”，后者实质上就是连接到某个非凡 VPN 节点的客户端程序，但它的 VPN 服务是收费的，尽管它也提供免费的测试账户连接到测试服务器，但相同的“原始” IP ，一天仅能连接3次，每次20分钟，超时即断开，&#xA;这对于要长期且稳定进行渗透测试计划而言，不是很方便，而且需要随时注意连接状态，否则真实 IP 就会曝露，尽管如此，对于有明确目标和丰富经验的攻击者而言，总共一小时的时间也足够作坏事了，关于非凡网络加速器的使用教程，以后有机会再发布&#xA;回到主题，测试环境为 BackTrack 5 Release 3 32-bits ，首先，将浏览器指向&#xA;https://www.torproject.org/download/download.html.en&#xA;下载 GNU/Linux ，BSD ，UNIX 通用的 “Tor Browser”软件包，&#xA;例如，我们下载的软件包名称为&#xA;tor-browser-linux32-4.0_zh-CN.tar.xz&#xA;（也可以访问下面这个页面，根据你的处理器以及操作系统版本，体系结构，选择相应的版本下载：&#xA;https://www.torproject.org/projects/torbrowser.html.en ）&#xA;（或者，从下面这个地址，一次性下载适用于你系统的 Tor browser 版本，对应的 sha256sums.txt ，以及开发者数字签名这三个文件（如果你要验证软件包来源的合法性）&#xA;https://dist.torproject.org/torbrowser/4.0/&#xA;）&#xA;一，进入下载目录：</description>
+    </item>
+  </channel>
+</rss>

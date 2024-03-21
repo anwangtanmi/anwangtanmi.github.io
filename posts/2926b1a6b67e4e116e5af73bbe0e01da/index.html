@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>VTK相机类vtkCamera原理及用法 - 暗网探秘</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="VTK相机类vtkCamera原理及用法" />
+<meta property="og:description" content="vtk是著名的开源三维渲染库，在三维渲染过程中的一个非常重要的内容就是相机即vtkCamera类的设置。在VTK中，相机的实质是一个观测点。VTK的官方Doc对vtkCamera写的十分简略，暗坑很多。在学习和使用vtkCamera的过程中，我走了很多弯路。在我的应用中，我希望能够根据现实中相机的Transform Matrix完全模拟设置vtkCamera。下面根据我的经验和理解，介绍一下vtkCamera，希望对被人能有帮助。
+vtkCamera参数 上图是vtkCamera模型示意图，虽然这个图来自于另一个3D库的文档，但是原理一样。要注意的是虽然左边画了个摄像机，但是其实图示的包括焦点在内都是在相机内部的。下面利用这个图来解释一下vtkCamera的各个成员变量的含义。
+WindowCenter WindowCenter按照字面意思是窗口的中心。在相机制造过程中难免存在一定的装配误差，所以透镜的中心往往不能完全对准传感器的中心，而是有非常微小的误差。所以我们在用vtk相机模拟现实中相机时也应该体现这一现象。WindowCenter实质上就是成像的一个offset偏移量。在vtk中WindowCenter的坐标范围是([-1,&#43;1], [-1,&#43;1])。比方说，如果理想情况，图像成像中心（Focal Point）就在窗口的中心，那么WindowCenter就是(0, 0)。如果希望把成像平移到窗口的右上角，那么就应该设置成(1, 1)。根据官方文档，这个量一般在同一窗口显示多个渲染器时才需要设置。但实际上，如果你需要vtk完全模拟现实相机，也要考虑设置这个量，否则永远有一个偏移量。反过来，如果希望图像平移也可以修改这个参数。
+这里要注意的是，WindowCenter的正方向是向右向上的。而成像平面的坐标系往往是向右向下的。小心正负号的设置。另外，平移的对象是图像，而不是在三维空间移动相机。
+FocalPoint FocalPoint即焦点位置。在现实相机中焦点在成像平面中心，即在光心的后面（与被摄物体在光心的两侧）。但是在建模时为了简化我们往往对称到光心前面（与被摄物体在光心同侧）。注意这里要求的是焦点的三维坐标，而不仅仅是焦距。因为焦点不仅确定了成像平面的位置，还与光心位置Position一同确定了相机镜头的朝向。
+Position 这里的Position指的实际上是光心的位置，或者说对应小孔相机模型中小孔的位置。
+ViewUp ViewUp指图像的正方向。由Position和FocalPoint我们可以确定5个自由度，相机仍然可以沿着主光轴任意旋转。所以这里要指定正方向，即ViewUp。这里注意，ViewUp是一个方向向量，不存在位置，或者说起点永远在原点。
+ViewAngle ViewAngle是视角。默认是30°。其实这个是一个很重要的参数，它决定了图像中内容的比例大小。或者说，通过设置这一变量可以实现图像的放缩。
+ClippingRange ClippingRange即剪切平面，分为前后两个。只有在这两个剪切平面之间的内容才会被渲染和显示。默认值是(0.1,1000)。这个量一般不需要修改，而是在vtkRenderer对象中调用ResetCameraClippingRange()方法来自动重设渲染范围。如果你的图像显示不完整，但是稍微用鼠标旋转或平移一下又变完整了。建议试一下调用一次这个方法。
+ParallelProjection 如果为True那么按照平行投影进行渲染，否则默认是按照透视投影PerspectiveProjection进行渲染。透视投影即近大远小的投影，平行投影即用平行光照射得到的投影，没有近大远小的透视效应。如图所示： DirectionOfProjection DirectionOfProjection即一个三维矢量，从光心位置Position指向焦点位置FocalPoint。
+ViewPlaneNormal ViewPlaneNormal是投影面（成像面）的法向量。与DirectionOfProjection矢量正好相反。
+Distance Distance即焦距，即上面两个向量的模长。如果使用SetDistance()会沿着主光轴移动焦点FocalPoint，从而使FocalPoint与Position达到给定距离。
+ModelTransformMatrix 这个变换矩阵将移动场景里除了相机的所有物体，然后渲染。理论上可以通过“ 相机不动物体动” 获得与 “物体不动相机动”一样的图片。但是标准的方法应该还是使相机移动，这样更符合实际。
+ViewTransform 这个矩阵是相机矩阵的逆矩阵。相机矩阵是相机坐标系（原点Position，Z轴指向FocalPoint，Y轴与ViewUp平行）相对于世界坐标系的位置，而这个矩阵是世界坐标系相对于相机坐标系的位置。如果相机矩阵 T=[0R00t1]
+T
+=
+[
+R
+t
+0
+0
+0
+1
+]
+那么ViewTransform为
+T−1=[0RT00−RTt1]
+T
+−
+1
+=
+[
+R
+T
+−
+R
+T
+t
+0
+0
+0
+1
+]
+单位正交矩阵的逆等于其转置矩阵。
+CameraLightTransform 当我们设置了Position，FocalPoint和ViewUp后就会得到一个唯一的变换矩阵（相机矩阵），即从世界坐标系到相机坐标系的坐标变换矩阵，这个相机也就确定了唯一的位置。假设设置另一个相机起始值为Positon = (0, 0, 1)，FocalPoint = (0, 0, 0)，ViewUp = (0, 1, 0)。对这个相机施加一个怎样的变换，才能得到我们目前当前相机矩阵。这个变换就是CameraLightTransform。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://anwangtanmi.github.io/posts/2926b1a6b67e4e116e5af73bbe0e01da/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-04-14T00:08:53+08:00" />
+<meta property="article:modified_time" content="2018-04-14T00:08:53+08:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="暗网探秘" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">暗网探秘</div>
+					
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">VTK相机类vtkCamera原理及用法</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-04-14T00:08:53&#43;08:00">2018-04-14</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/" rel="category">未分类</a>
+	</span>
+</div></div>
+		</header>
+		<div id="gatop"></div>
+		<div class="content post__content clearfix">
+			
+<div class="entry-content clearfix">
+<div id="article_content" class="article_content clearfix">
+<br>
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-d284373521.css">
+<div id="content_views" class="markdown_views prism-atom-one-dark">
+<br>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+<path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+</svg>
+<p>vtk是著名的开源三维渲染库，在三维渲染过程中的一个非常重要的内容就是相机即vtkCamera类的设置。在VTK中，相机的实质是一个观测点。VTK的官方Doc对vtkCamera写的十分简略，暗坑很多。在学习和使用vtkCamera的过程中，我走了很多弯路。在我的应用中，我希望能够根据现实中相机的Transform Matrix完全模拟设置vtkCamera。下面根据我的经验和理解，介绍一下vtkCamera，希望对被人能有帮助。</p>
+<h2 id="vtkcamera参数">vtkCamera参数</h2>
+<p><img src="https://uzshare.com/_p?https://img-blog.csdn.net/20180413214759125?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d6aGVuZzky/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="vtkCamera相机模型示意图" title></p>
+<p>上图是vtkCamera模型示意图，虽然这个图来自于另一个3D库的文档，但是原理一样。要注意的是虽然左边画了个摄像机，但是其实图示的包括焦点在内都是在相机内部的。下面利用这个图来解释一下vtkCamera的各个成员变量的含义。</p>
+<hr>
+<h4 id="windowcenter">WindowCenter</h4>
+<p>WindowCenter按照字面意思是窗口的中心。在相机制造过程中难免存在一定的装配误差，所以透镜的中心往往不能完全对准传感器的中心，而是有非常微小的误差。所以我们在用vtk相机模拟现实中相机时也应该体现这一现象。WindowCenter实质上就是成像的一个offset偏移量。在vtk中WindowCenter的坐标范围是([-1,+1], [-1,+1])。比方说，如果理想情况，图像成像中心（Focal Point）就在窗口的中心，那么WindowCenter就是(0, 0)。如果希望把成像平移到窗口的右上角，那么就应该设置成(1, 1)。根据官方文档，这个量一般在同一窗口显示多个渲染器时才需要设置。但实际上，如果你需要vtk完全模拟现实相机，也要考虑设置这个量，否则永远有一个偏移量。反过来，如果希望图像平移也可以修改这个参数。</p>
+<p>这里要注意的是，WindowCenter的正方向是向右向上的。而成像平面的坐标系往往是向右向下的。小心正负号的设置。另外，平移的对象是图像，而不是在三维空间移动相机。</p>
+<hr>
+<h4 id="focalpoint">FocalPoint</h4>
+<p>FocalPoint即焦点位置。在现实相机中焦点在成像平面中心，即在光心的后面（与被摄物体在光心的两侧）。但是在建模时为了简化我们往往对称到光心前面（与被摄物体在光心同侧）。注意这里要求的是焦点的三维坐标，而不仅仅是焦距。因为焦点不仅确定了成像平面的位置，还与光心位置Position一同确定了相机镜头的朝向。</p>
+<hr>
+<h4 id="position">Position</h4>
+<p>这里的Position指的实际上是光心的位置，或者说对应小孔相机模型中小孔的位置。</p>
+<hr>
+<h4 id="viewup">ViewUp</h4>
+<p>ViewUp指图像的正方向。由Position和FocalPoint我们可以确定5个自由度，相机仍然可以沿着主光轴任意旋转。所以这里要指定正方向，即ViewUp。这里注意，ViewUp是一个方向向量，不存在位置，或者说起点永远在原点。</p>
+<hr>
+<h4 id="viewangle">ViewAngle</h4>
+<p>ViewAngle是视角。默认是30°。其实这个是一个很重要的参数，它决定了图像中内容的比例大小。或者说，通过设置这一变量可以实现图像的放缩。</p>
+<hr>
+<h4 id="clippingrange">ClippingRange</h4>
+<p>ClippingRange即剪切平面，分为前后两个。只有在这两个剪切平面之间的内容才会被渲染和显示。默认值是(0.1,1000)。这个量一般不需要修改，而是在vtkRenderer对象中调用<code>ResetCameraClippingRange()</code>方法来自动重设渲染范围。如果你的图像显示不完整，但是稍微用鼠标旋转或平移一下又变完整了。建议试一下调用一次这个方法。</p>
+<hr>
+<h4 id="parallelprojection">ParallelProjection</h4>
+<p>如果为<code>True</code>那么按照平行投影进行渲染，否则默认是按照透视投影PerspectiveProjection进行渲染。透视投影即近大远小的投影，平行投影即用平行光照射得到的投影，没有近大远小的透视效应。如图所示： <br> <img src="https://uzshare.com/_p?https://img-blog.csdn.net/20180413223035391?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d6aGVuZzky/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="透视投影" title> <br> <img src="https://uzshare.com/_p?https://img-blog.csdn.net/20180413223048786?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d6aGVuZzky/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="平行投影" title></p>
+<hr>
+<h4 id="directionofprojection">DirectionOfProjection</h4>
+<p>DirectionOfProjection即一个三维矢量，从光心位置Position指向焦点位置FocalPoint。</p>
+<hr>
+<h4 id="viewplanenormal">ViewPlaneNormal</h4>
+<p>ViewPlaneNormal是投影面（成像面）的法向量。与DirectionOfProjection矢量正好相反。</p>
+<hr>
+<h4 id="distance">Distance</h4>
+<p>Distance即焦距，即上面两个向量的模长。如果使用<code>SetDistance()</code>会沿着主光轴移动焦点FocalPoint，从而使FocalPoint与Position达到给定距离。</p>
+<hr>
+<h4 id="modeltransformmatrix">ModelTransformMatrix</h4>
+<p>这个变换矩阵将移动场景里除了相机的所有物体，然后渲染。理论上可以通过“ 相机不动物体动” 获得与 “物体不动相机动”一样的图片。但是标准的方法应该还是使相机移动，这样更符合实际。</p>
+<hr>
+<h4 id="viewtransform">ViewTransform</h4>
+<p>这个矩阵是相机矩阵的逆矩阵。相机矩阵是相机坐标系（原点Position，Z轴指向FocalPoint，Y轴与ViewUp平行）相对于世界坐标系的位置，而这个矩阵是世界坐标系相对于相机坐标系的位置。如果相机矩阵 <br> <span class="MathJax_Preview" style="color: inherit; display: none;"></span></p>
+<div class="MathJax_Display" style="text-align: center;">
+<span class="MathJax" id="MathJax-Element-1-Frame" tabindex="0" style="text-align: center; position: relative;" data-mathml='
+
+&lt;math xmlns="http://www.w3.org/1998/Math/MathML" display="block"&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mrow&gt;&lt;mo&gt;[&lt;/mo&gt;&lt;mtable rowspacing="4pt" columnspacing="1em"&gt;&lt;mtr&gt;&lt;mtd /&gt;&lt;mtd&gt;&lt;mi&gt;R&lt;/mi&gt;&lt;/mtd&gt;&lt;mtd /&gt;&lt;mtd&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;/mtable&gt;&lt;mo&gt;]&lt;/mo&gt;&lt;/mrow&gt;&lt;/math&gt;
+&lt;p&gt;” role=”presentation”&gt;&lt;br /&gt;
+    &lt;nobr aria-hidden=' true><br>
+<span class="math" id="MathJax-Span-1" style="width: 10.471em; display: inline-block;"><span style="display: inline-block; position: relative; width: 8.698em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.831em, 1008.45em, 4.544em, -1000em); top: -3.438em; left: 0em;"><span class="mrow" id="MathJax-Span-2"><span class="mi" id="MathJax-Span-3" style="font-family: MathJax_Math; font-style: italic;">T<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.12em;"></span></span><span class="mo" id="MathJax-Span-4" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="mrow" id="MathJax-Span-5" style="padding-left: 0.278em;"><span class="mo" id="MathJax-Span-6" style="vertical-align: 0em;"><span style="font-family: MathJax_Size3;">[</span></span><span class="mtable" id="MathJax-Span-7" style="padding-right: 0.167em; padding-left: 0.167em;"><span style="display: inline-block; position: relative; width: 5.259em; height: 0px;"><span style="position: absolute; clip: rect(3.204em, 1000.46em, 4.939em, -1000em); top: -4.01em; left: 0em;"><span style="display: inline-block; position: relative; width: 0.5em; height: 0px;"><span style="position: absolute; clip: rect(3.854em, 1000em, 4.167em, -1000em); top: -4.66em; left: 50%; margin-left: 0em;"><span class="mtd" id="MathJax-Span-8"><span class="mrow" id="MathJax-Span-9"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.188em, 1000.46em, 4.189em, -1000em); top: -3.26em; left: 50%; margin-left: -0.25em;"><span class="mtd" id="MathJax-Span-18"><span class="mrow" id="MathJax-Span-19"><span class="mn" id="MathJax-Span-20" style="font-family: MathJax_Main;">0</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(2.521em, 1000.76em, 4.939em, -1000em); top: -4.01em; left: 1.5em;"><span style="display: inline-block; position: relative; width: 0.759em; height: 0px;"><span style="position: absolute; clip: rect(3.171em, 1000.76em, 4.188em, -1000em); top: -4.66em; left: 50%; margin-left: -0.38em;"><span class="mtd" id="MathJax-Span-10"><span class="mrow" id="MathJax-Span-11"><span class="mi" id="MathJax-Span-12" style="font-family: MathJax_Math; font-style: italic;">R</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.188em, 1000.46em, 4.189em, -1000em); top: -3.26em; left: 50%; margin-left: -0.25em;"><span class="mtd" id="MathJax-Span-21"><span class="mrow" id="MathJax-Span-22"><span class="mn" id="MathJax-Span-23" style="font-family: MathJax_Main;">0</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.204em, 1000.46em, 4.939em, -1000em); top: -4.01em; left: 3.259em;"><span style="display: inline-block; position: relative; width: 0.5em; height: 0px;"><span style="position: absolute; clip: rect(3.854em, 1000em, 4.167em, -1000em); top: -4.66em; left: 50%; margin-left: 0em;"><span class="mtd" id="MathJax-Span-13"><span class="mrow" id="MathJax-Span-14"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.188em, 1000.46em, 4.189em, -1000em); top: -3.26em; left: 50%; margin-left: -0.25em;"><span class="mtd" id="MathJax-Span-24"><span class="mrow" id="MathJax-Span-25"><span class="mn" id="MathJax-Span-26" style="font-family: MathJax_Main;">0</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(2.578em, 1000.43em, 4.917em, -1000em); top: -4.01em; left: 4.759em;"><span style="display: inline-block; position: relative; width: 0.5em; height: 0px;"><span style="position: absolute; clip: rect(3.228em, 1000.33em, 4.178em, -1000em); top: -4.66em; left: 50%; margin-left: -0.18em;"><span class="mtd" id="MathJax-Span-15"><span class="mrow" id="MathJax-Span-16"><span class="mi" id="MathJax-Span-17" style="font-family: MathJax_Math; font-style: italic;">t</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.188em, 1000.43em, 4.167em, -1000em); top: -3.26em; left: 50%; margin-left: -0.25em;"><span class="mtd" id="MathJax-Span-27"><span class="mrow" id="MathJax-Span-28"><span class="mn" id="MathJax-Span-29" style="font-family: MathJax_Main;">1</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="mo" id="MathJax-Span-30" style="vertical-align: 0em;"><span style="font-family: MathJax_Size3;">]</span></span></span></span><span style="display: inline-block; width: 0px; height: 3.438em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -1.202em; border-left: 0px solid; width: 0px; height: 3.005em;"></span></span><br>
+<span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation">
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+<mi><br>
+T<br>
+</mi><br>
+<mo><br>
+=<br>
+</mo><br>
+<mrow><br>
+<mo><br>
+[<br>
+</mo><br>
+<mtable rowspacing="4pt" columnspacing="1em"><br>
+<mtr><br>
+<mtd></mtd><br>
+<mtd><br>
+<mi><br>
+R<br>
+</mi><br>
+</mtd><br>
+<mtd></mtd><br>
+<mtd><br>
+<mi><br>
+t<br>
+</mi><br>
+</mtd><br>
+</mtr><br>
+<mtr><br>
+<mtd><br>
+<mn><br>
+0<br>
+</mn><br>
+</mtd><br>
+<mtd><br>
+<mn><br>
+0<br>
+</mn><br>
+</mtd><br>
+<mtd><br>
+<mn><br>
+0<br>
+</mn><br>
+</mtd><br>
+<mtd><br>
+<mn><br>
+1<br>
+</mn><br>
+</mtd><br>
+</mtr><br>
+</mtable><br>
+<mo><br>
+]<br>
+</mo><br>
+</mrow><br>
+</math>
+<p></p></span></span>
+</div>
+<p> 那么ViewTransform为<br>
+<br> <br>
+<span class="MathJax_Preview" style="color: inherit; display: none;"></span></p>
+<div class="MathJax_Display" style="text-align: center;">
+<span class="MathJax" id="MathJax-Element-2-Frame" tabindex="0" style="text-align: center; position: relative;" data-mathml='
+
+&lt;math xmlns="http://www.w3.org/1998/Math/MathML" display="block"&gt;&lt;msup&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mrow class="MJX-TeXAtom-ORD"&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mrow&gt;&lt;mo&gt;[&lt;/mo&gt;&lt;mtable rowspacing="4pt" columnspacing="1em"&gt;&lt;mtr&gt;&lt;mtd /&gt;&lt;mtd&gt;&lt;msup&gt;&lt;mi&gt;R&lt;/mi&gt;&lt;mrow class="MJX-TeXAtom-ORD"&gt;&lt;mrow class="MJX-TeXAtom-ORD"&gt;&lt;mi mathvariant="bold"&gt;T&lt;/mi&gt;&lt;/mrow&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;/mtd&gt;&lt;mtd /&gt;&lt;mtd&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;msup&gt;&lt;mi&gt;R&lt;/mi&gt;&lt;mrow class="MJX-TeXAtom-ORD"&gt;&lt;mrow class="MJX-TeXAtom-ORD"&gt;&lt;mi mathvariant="bold"&gt;T&lt;/mi&gt;&lt;/mrow&gt;&lt;/mrow&gt;&lt;/msup&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;mtr&gt;&lt;mtd&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;&lt;mtd&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mtd&gt;&lt;/mtr&gt;&lt;/mtable&gt;&lt;mo&gt;]&lt;/mo&gt;&lt;/mrow&gt;&lt;/math&gt;
+&lt;p&gt;” role=”presentation”&gt;&lt;br /&gt;
+    &lt;nobr aria-hidden=' true><br>
+<span class="math" id="MathJax-Span-31" style="width: 14.951em; display: inline-block;"><span style="display: inline-block; position: relative; width: 12.448em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(1.811em, 1012.2em, 4.564em, -1000em); top: -3.438em; left: 0em;"><span class="mrow" id="MathJax-Span-32"><span class="msubsup" id="MathJax-Span-33"><span style="display: inline-block; position: relative; width: 1.769em; height: 0px;"><span style="position: absolute; clip: rect(3.177em, 1000.7em, 4.167em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-34" style="font-family: MathJax_Math; font-style: italic;">T<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.12em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.423em; left: 0.79em;"><span class="texatom" id="MathJax-Span-35"><span class="mrow" id="MathJax-Span-36"><span class="mo" id="MathJax-Span-37" style="font-size: 70.7%; font-family: MathJax_Main;">−</span><span class="mn" id="MathJax-Span-38" style="font-size: 70.7%; font-family: MathJax_Main;">1</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="mo" id="MathJax-Span-39" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="mrow" id="MathJax-Span-40" style="padding-left: 0.278em;"><span class="mo" id="MathJax-Span-41" style="vertical-align: 0em;"><span style="font-family: MathJax_Size3;">[</span></span><span class="mtable" id="MathJax-Span-42" style="padding-right: 0.167em; padding-left: 0.167em;"><span style="display: inline-block; position: relative; width: 7.938em; height: 0px;"><span style="position: absolute; clip: rect(3.224em, 1000.46em, 4.959em, -1000em); top: -4.01em; left: 0em;"><span style="display: inline-block; position: relative; width: 0.5em; height: 0px;"><span style="position: absolute; clip: rect(3.854em, 1000em, 4.167em, -1000em); top: -4.64em; left: 50%; margin-left: 0em;"><span class="mtd" id="MathJax-Span-43"><span class="mrow" id="MathJax-Span-44"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.188em, 1000.46em, 4.189em, -1000em); top: -3.24em; left: 50%; margin-left: -0.25em;"><span class="mtd" id="MathJax-Span-67"><span class="mrow" id="MathJax-Span-68"><span class="mn" id="MathJax-Span-69" style="font-family: MathJax_Main;">0</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(2.384em, 1001.4em, 4.959em, -1000em); top: -4.01em; left: 1.5em;"><span style="display: inline-block; position: relative; width: 1.4em; height: 0px;"><span style="position: absolute; clip: rect(3.014em, 1001.4em, 4.188em, -1000em); top: -4.64em; left: 50%; margin-left: -0.7em;"><span class="mtd" id="MathJax-Span-45"><span class="mrow" id="MathJax-Span-46"><span class="msubsup" id="MathJax-Span-47"><span style="display: inline-block; position: relative; width: 1.4em; height: 0px;"><span style="position: absolute; clip: rect(3.171em, 1000.76em, 4.188em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-48" style="font-family: MathJax_Math; font-style: italic;">R</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.373em; left: 0.759em;"><span class="texatom" id="MathJax-Span-49"><span class="mrow" id="MathJax-Span-50"><span class="texatom" id="MathJax-Span-51"><span class="mrow" id="MathJax-Span-52"><span class="mi" id="MathJax-Span-53" style="font-size: 70.7%; font-family: MathJax_Main; font-weight: bold;">T</span></span></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.188em, 1000.46em, 4.189em, -1000em); top: -3.24em; left: 50%; margin-left: -0.25em;"><span class="mtd" id="MathJax-Span-70"><span class="mrow" id="MathJax-Span-71"><span class="mn" id="MathJax-Span-72" style="font-family: MathJax_Main;">0</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.224em, 1000.46em, 4.959em, -1000em); top: -4.01em; left: 3.9em;"><span style="display: inline-block; position: relative; width: 0.5em; height: 0px;"><span style="position: absolute; clip: rect(3.854em, 1000em, 4.167em, -1000em); top: -4.64em; left: 50%; margin-left: 0em;"><span class="mtd" id="MathJax-Span-54"><span class="mrow" id="MathJax-Span-55"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.188em, 1000.46em, 4.189em, -1000em); top: -3.24em; left: 50%; margin-left: -0.25em;"><span class="mtd" id="MathJax-Span-73"><span class="mrow" id="MathJax-Span-74"><span class="mn" id="MathJax-Span-75" style="font-family: MathJax_Main;">0</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(2.384em, 1002.51em, 4.937em, -1000em); top: -4.01em; left: 5.4em;"><span style="display: inline-block; position: relative; width: 2.539em; height: 0px;"><span style="position: absolute; clip: rect(3.014em, 1002.51em, 4.249em, -1000em); top: -4.64em; left: 50%; margin-left: -1.269em;"><span class="mtd" id="MathJax-Span-56"><span class="mrow" id="MathJax-Span-57"><span class="mo" id="MathJax-Span-58" style="font-family: MathJax_Main;">−</span><span class="msubsup" id="MathJax-Span-59"><span style="display: inline-block; position: relative; width: 1.4em; height: 0px;"><span style="position: absolute; clip: rect(3.171em, 1000.76em, 4.188em, -1000em); top: -4.01em; left: 0em;"><span class="mi" id="MathJax-Span-60" style="font-family: MathJax_Math; font-style: italic;">R</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; top: -4.373em; left: 0.759em;"><span class="texatom" id="MathJax-Span-61"><span class="mrow" id="MathJax-Span-62"><span class="texatom" id="MathJax-Span-63"><span class="mrow" id="MathJax-Span-64"><span class="mi" id="MathJax-Span-65" style="font-size: 70.7%; font-family: MathJax_Main; font-weight: bold;">T</span></span></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="mi" id="MathJax-Span-66" style="font-family: MathJax_Math; font-style: italic;">t</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.188em, 1000.43em, 4.167em, -1000em); top: -3.24em; left: 50%; margin-left: -0.25em;"><span class="mtd" id="MathJax-Span-76"><span class="mrow" id="MathJax-Span-77"><span class="mn" id="MathJax-Span-78" style="font-family: MathJax_Main;">1</span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span></span></span><span class="mo" id="MathJax-Span-79" style="vertical-align: 0em;"><span style="font-family: MathJax_Size3;">]</span></span></span></span><span style="display: inline-block; width: 0px; height: 3.438em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -1.227em; border-left: 0px solid; width: 0px; height: 3.053em;"></span></span><br>
+<span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation">
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+<msup><br>
+<mi><br>
+T<br>
+</mi><br>
+<mrow class="MJX-TeXAtom-ORD"><br>
+<mo><br>
+−<br>
+</mo><br>
+<mn><br>
+1<br>
+</mn><br>
+</mrow><br>
+</msup><br>
+<mo><br>
+=<br>
+</mo><br>
+<mrow><br>
+<mo><br>
+[<br>
+</mo><br>
+<mtable rowspacing="4pt" columnspacing="1em"><br>
+<mtr><br>
+<mtd></mtd><br>
+<mtd><br>
+<msup><br>
+<mi><br>
+R<br>
+</mi><br>
+<mrow class="MJX-TeXAtom-ORD"><br>
+<mrow class="MJX-TeXAtom-ORD"><br>
+<mi mathvariant="bold"><br>
+T<br>
+</mi><br>
+</mrow><br>
+</mrow><br>
+</msup><br>
+</mtd><br>
+<mtd></mtd><br>
+<mtd><br>
+<mo><br>
+−<br>
+</mo><br>
+<msup><br>
+<mi><br>
+R<br>
+</mi><br>
+<mrow class="MJX-TeXAtom-ORD"><br>
+<mrow class="MJX-TeXAtom-ORD"><br>
+<mi mathvariant="bold"><br>
+T<br>
+</mi><br>
+</mrow><br>
+</mrow><br>
+</msup><br>
+<mi><br>
+t<br>
+</mi><br>
+</mtd><br>
+</mtr><br>
+<mtr><br>
+<mtd><br>
+<mn><br>
+0<br>
+</mn><br>
+</mtd><br>
+<mtd><br>
+<mn><br>
+0<br>
+</mn><br>
+</mtd><br>
+<mtd><br>
+<mn><br>
+0<br>
+</mn><br>
+</mtd><br>
+<mtd><br>
+<mn><br>
+1<br>
+</mn><br>
+</mtd><br>
+</mtr><br>
+</mtable><br>
+<mo><br>
+]<br>
+</mo><br>
+</mrow><br>
+</math>
+<p></p></span></span>
+</div>
+<p> 单位正交矩阵的逆等于其转置矩阵。</p>
+<hr>
+<h4 id="cameralighttransform">CameraLightTransform</h4>
+<p>当我们设置了Position，FocalPoint和ViewUp后就会得到一个唯一的变换矩阵（相机矩阵），即从世界坐标系到相机坐标系的坐标变换矩阵，这个相机也就确定了唯一的位置。假设设置另一个相机起始值为Positon = (0, 0, 1)，FocalPoint = (0, 0, 0)，ViewUp = (0, 1, 0)。对这个相机施加一个怎样的变换，才能得到我们目前当前相机矩阵。这个变换就是CameraLightTransform。</p>
+<hr>
+<h2 id="成像过程">成像过程</h2>
+<p>VTK背后的渲染过程非常复杂，这里只是简单解释一下原理。</p>
+<p>人眼或相机的视野可以想象成一个圆椎体。这个圆椎体的尖端是我们的眼球中心或者说相机的光心，底端朝向被摄物体。这个视锥体将决定我们能看到什么，以及看到的物体的透视变形幅度是怎样的（见下图）。最右边图片中棍子的倾斜角度就是圆锥体的张角。所以在图像中，棍子恰好重合为一个圆点。 <br> 。<img src="https://uzshare.com/_p?https://img-blog.csdn.net/20180413233637435?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d6aGVuZzky/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="透视变形" title> <br> 我们知道，可以通过顶点位置、张角和底面中心来唯一确定一个圆锥体。这里顶点位置对应光心Position，张角对应ViewAngle，底面中心就是焦点FocalPoint。（请看上面的模型图）这样一来，ViewAngle的计算也就一目了然了。 <br> <span class="MathJax_Preview" style="color: inherit; display: none;"></span></p>
+<div class="MathJax_Display" style="text-align: center;">
+<span class="MathJax" id="MathJax-Element-4-Frame" tabindex="0" style="text-align: center; position: relative;" data-mathml='
+
+&lt;math xmlns="http://www.w3.org/1998/Math/MathML" display="block"&gt;&lt;mtext&gt;ViewAngle&lt;/mtext&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;⋅&lt;/mo&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;r&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mfrac&gt;&lt;mrow&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mrow class="MJX-TeXAtom-ORD"&gt;&lt;mo&gt;/&lt;/mo&gt;&lt;/mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mo&gt;⋅&lt;/mo&gt;&lt;mtext&gt;height of image plane&lt;/mtext&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mrow class="MJX-TeXAtom-ORD"&gt;&lt;mo stretchy="false"&gt;|&lt;/mo&gt;&lt;/mrow&gt;&lt;mtext&gt;FocalPoint&lt;/mtext&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mtext&gt;Position&lt;/mtext&gt;&lt;mrow class="MJX-TeXAtom-ORD"&gt;&lt;mo stretchy="false"&gt;|&lt;/mo&gt;&lt;/mrow&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;mo&gt;⋅&lt;/mo&gt;&lt;mfrac&gt;&lt;mn&gt;180&lt;/mn&gt;&lt;mi&gt;π&lt;/mi&gt;&lt;/mfrac&gt;&lt;/math&gt;
+&lt;p&gt;” role=”presentation”&gt;&lt;br /&gt;
+    &lt;nobr aria-hidden=' true><br>
+<span class="math" id="MathJax-Span-115" style="width: 29.482em; display: inline-block;"><span style="display: inline-block; position: relative; width: 24.531em; height: 0px; font-size: 120%;"><span style="position: absolute; clip: rect(0.717em, 1024.53em, 3.469em, -1000em); top: -2.344em; left: 0em;"><span class="mrow" id="MathJax-Span-116"><span class="mtext" id="MathJax-Span-117" style="font-family: MathJax_Main;">ViewAngle</span><span class="mo" id="MathJax-Span-118" style="font-family: MathJax_Main; padding-left: 0.278em;">=</span><span class="mn" id="MathJax-Span-119" style="font-family: MathJax_Main; padding-left: 0.278em;">2</span><span class="mo" id="MathJax-Span-120" style="font-family: MathJax_Main; padding-left: 0.222em;">⋅</span><span class="mi" id="MathJax-Span-121" style="font-family: MathJax_Math; font-style: italic; padding-left: 0.222em;">a</span><span class="mi" id="MathJax-Span-122" style="font-family: MathJax_Math; font-style: italic;">r</span><span class="mi" id="MathJax-Span-123" style="font-family: MathJax_Math; font-style: italic;">c</span><span class="mi" id="MathJax-Span-124" style="font-family: MathJax_Math; font-style: italic;">t</span><span class="mi" id="MathJax-Span-125" style="font-family: MathJax_Math; font-style: italic;">a</span><span class="mi" id="MathJax-Span-126" style="font-family: MathJax_Math; font-style: italic;">n</span><span class="mfrac" id="MathJax-Span-127"><span style="display: inline-block; position: relative; width: 11.51em; height: 0px; margin-right: 0.12em; margin-left: 0.12em;"><span style="position: absolute; clip: rect(3.104em, 1011.36em, 4.417em, -1000em); top: -4.731em; left: 50%; margin-left: -5.695em;"><span class="mrow" id="MathJax-Span-128"><span class="mn" id="MathJax-Span-129" style="font-family: MathJax_Main;">1</span><span class="texatom" id="MathJax-Span-130"><span class="mrow" id="MathJax-Span-131"><span class="mo" id="MathJax-Span-132" style="font-family: MathJax_Main;">/</span></span></span><span class="mn" id="MathJax-Span-133" style="font-family: MathJax_Main;">2</span><span class="mo" id="MathJax-Span-134" style="font-family: MathJax_Main; padding-left: 0.222em;">⋅</span><span class="mtext" id="MathJax-Span-135" style="font-family: MathJax_Main; padding-left: 0.222em;">height of image plane</span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.104em, 1010.01em, 4.416em, -1000em); top: -3.29em; left: 50%; margin-left: -5.067em;"><span class="mrow" id="MathJax-Span-136"><span class="texatom" id="MathJax-Span-137"><span class="mrow" id="MathJax-Span-138"><span class="mo" id="MathJax-Span-139" style="font-family: MathJax_Main;">|</span></span></span><span class="mtext" id="MathJax-Span-140" style="font-family: MathJax_Main;">FocalPoint</span><span class="mo" id="MathJax-Span-141" style="font-family: MathJax_Main; padding-left: 0.222em;">−</span><span class="mtext" id="MathJax-Span-142" style="font-family: MathJax_Main; padding-left: 0.222em;">Position</span><span class="texatom" id="MathJax-Span-143"><span class="mrow" id="MathJax-Span-144"><span class="mo" id="MathJax-Span-145" style="font-family: MathJax_Main;">|</span></span></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(0.82em, 1011.51em, 1.198em, -1000em); top: -1.262em; left: 0em;"><span style="display: inline-block; overflow: hidden; vertical-align: 0em; border-top: 1.3px solid; width: 11.51em; height: 0px;"></span><span style="display: inline-block; width: 0px; height: 1.042em;"></span></span></span></span><span class="mo" id="MathJax-Span-146" style="font-family: MathJax_Main; padding-left: 0.222em;">⋅</span><span class="mfrac" id="MathJax-Span-147" style="padding-left: 0.222em;"><span style="display: inline-block; position: relative; width: 1.62em; height: 0px; margin-right: 0.12em; margin-left: 0.12em;"><span style="position: absolute; clip: rect(3.188em, 1001.46em, 4.189em, -1000em); top: -4.687em; left: 50%; margin-left: -0.75em;"><span class="mn" id="MathJax-Span-148" style="font-family: MathJax_Main;">180</span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(3.423em, 1000.57em, 4.178em, -1000em); top: -3.324em; left: 50%; margin-left: -0.286em;"><span class="mi" id="MathJax-Span-149" style="font-family: MathJax_Math; font-style: italic;">π<span style="display: inline-block; overflow: hidden; height: 1px; width: 0.003em;"></span></span><span style="display: inline-block; width: 0px; height: 4.01em;"></span></span><span style="position: absolute; clip: rect(0.82em, 1001.62em, 1.198em, -1000em); top: -1.262em; left: 0em;"><span style="display: inline-block; overflow: hidden; vertical-align: 0em; border-top: 1.3px solid; width: 1.62em; height: 0px;"></span><span style="display: inline-block; width: 0px; height: 1.042em;"></span></span></span></span></span><span style="display: inline-block; width: 0px; height: 2.344em;"></span></span></span><span style="display: inline-block; overflow: hidden; vertical-align: -1.226em; border-left: 0px solid; width: 0px; height: 3.052em;"></span></span><br>
+<span class="MJX_Assistive_MathML MJX_Assistive_MathML_Block" role="presentation">
+<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+<mtext><br>
+ViewAngle<br>
+</mtext><br>
+<mo><br>
+=<br>
+</mo><br>
+<mn><br>
+2<br>
+</mn><br>
+<mo><br>
+⋅<br>
+</mo><br>
+<mi><br>
+a<br>
+</mi><br>
+<mi><br>
+r<br>
+</mi><br>
+<mi><br>
+c<br>
+</mi><br>
+<mi><br>
+t<br>
+</mi><br>
+<mi><br>
+a<br>
+</mi><br>
+<mi><br>
+n<br>
+</mi><br>
+<mfrac><br>
+<mrow><br>
+<mn><br>
+1<br>
+</mn><br>
+<mrow class="MJX-TeXAtom-ORD"><br>
+<mo><br>
+/<br>
+</mo><br>
+</mrow><br>
+<mn><br>
+2<br>
+</mn><br>
+<mo><br>
+⋅<br>
+</mo><br>
+<mtext><br>
+height of image plane<br>
+</mtext><br>
+</mrow><br>
+<mrow><br>
+<mrow class="MJX-TeXAtom-ORD"><br>
+<mo stretchy="false"><br>
+|<br>
+</mo><br>
+</mrow><br>
+<mtext><br>
+FocalPoint<br>
+</mtext><br>
+<mo><br>
+−<br>
+</mo><br>
+<mtext><br>
+Position<br>
+</mtext><br>
+<mrow class="MJX-TeXAtom-ORD"><br>
+<mo stretchy="false"><br>
+|<br>
+</mo><br>
+</mrow><br>
+</mrow><br>
+</mfrac><br>
+<mo><br>
+⋅<br>
+</mo><br>
+<mfrac><br>
+<mn><br>
+180<br>
+</mn><br>
+<mi><br>
+π<br>
+</mi><br>
+</mfrac><br>
+</math>
+<p></p></span></span>
+</div>
+<p>其中的<strong>成像平面高度“height of image plane”</strong>在现实相机中就对应传感器的高度。可能有人疑惑为什么不是焦距除以成像平面宽度。其实在vtk中我们也可以设置<code>UseHorizontalViewAngle</code>来决定是使用横向比例还是纵向比例。默认以及习惯上都是纵向比例。</p>
+<p>所以，根据我们设置的Position，ViewAngle和FocalPoint VTK已经可以完全确定视锥体了。也就是说到目前为止，相机内到底拍到什么（或者说视野中到底能看到什么）已经确定了。注意，到目前为止，所有量都是没有单位的。没有单位也就意味着任意单位，你可以假设所有都是毫米，也可以说所有都是米甚至是英寸。那么如何将其转化为像素呢？这里就需要用到vtkRenderWindows。 <br> <img src="https://uzshare.com/_p?https://img-blog.csdn.net/20180427201651752?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d6aGVuZzky/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="视锥体模型示意图" title></p>
+<p>在VTK中，相机vtkCamera可以视作胶片相机，也就是说分辨率可以达到无限高。而vtkRenderWindows对象的作用就是数字化。我们通过<code>vtkRenderWindows::SetSize()</code>来设置图像的分辨率。然后VTK会像切蛋糕一样，用一个长方形把视锥体底面套住（高度对齐），然后按照设置的分辨率把长方形内框住的内容切成一个一个的小像素，变成数字化的图片显示到屏幕上完成了渲染。下图为视锥体套上了一个高度对齐底面直径的渲染窗口RenderWindow。 <br> <img src="https://uzshare.com/_p?https://img-blog.csdn.net/20180427202528471?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d6aGVuZzky/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="为视锥体套上渲染窗口RenderWindow" title></p>
+<p>由渲染窗口RenderWindow完成对图像的分割，形成一个又一个的像素点。如下图所示。（因为手头只有系统自带的画图工具，没有办法把成的像画在示意图里面，见谅。） <br> <img src="https://uzshare.com/_p?https://img-blog.csdn.net/20180427203358309?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d6aGVuZzky/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="渲染窗口RenderWindow完成对图像的分割" title></p>
+<p>这一过程也就解释了，为什么增加VTK中的焦距时，图片内容没有放大的原因。当更改焦距(FocusPoint-Position)时，ViewAngle没有改变。所以对应的成像平面向外平移，视锥体底面成比例的放大了。vtkRenderWindows只能用一个更大的长方形套住视锥体体面。但是分辨率不变的，所以长方形被切分成同样多的小像素。虽然成像变大了，但是每个像素的大小也成比例变大了。所以最后表现在屏显图片上没有发生任何改变。 <br> <img src="https://uzshare.com/_p?https://img-blog.csdn.net/2018042720462895?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d6aGVuZzky/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="放大视锥体" title></p>
+<h2 id="从相机矩阵到vtkcamera">从相机矩阵到vtkCamera</h2>
+<p>如果已经知道相机外矩阵（可以通过标定Calibration获得）和硬件参数（焦距，传感器大小，传感器中心与镜头中心的偏移量），如何让vtkCamera完全模拟这个相机呢？根据上面的内容，这个问题应该不难解决。具体代码如下：</p>
+<pre class="prettyprint"><code class=" hljs avrasm">// 新建一个相机对象
+vtkSmartPointer<vtkcamera> camera = 
+        vtkSmartPointer<vtkcamera>::New()<span class="hljs-comment">;</span>
+
+// 根据相机外矩阵，设置相机（光心）位置
+camera-&gt;SetPosition(camTrans<span class="hljs-preprocessor">.at</span><double>(<span class="hljs-number">0</span>),
+                    camTrans<span class="hljs-preprocessor">.at</span><double>(<span class="hljs-number">1</span>),
+                    camTrans<span class="hljs-preprocessor">.at</span><double>(<span class="hljs-number">2</span>))<span class="hljs-comment">;</span>
+
+// 根据相机外矩阵，设置焦点位置。设置完这两项成像平面已经唯一确定。
+camera-&gt;SetFocalPoint(camRot<span class="hljs-preprocessor">.at</span><double>(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>) + camTrans<span class="hljs-preprocessor">.at</span><double>(<span class="hljs-number">0</span>),
+                      camRot<span class="hljs-preprocessor">.at</span><double>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>) + camTrans<span class="hljs-preprocessor">.at</span><double>(<span class="hljs-number">1</span>),
+                      camRot<span class="hljs-preprocessor">.at</span><double>(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>) + camTrans<span class="hljs-preprocessor">.at</span><double>(<span class="hljs-number">2</span>))<span class="hljs-comment">;</span>
+
+// 根据相机外矩阵，设置成像<span class="hljs-built_in">y</span>正方向。是否有负号取决于原始的相机坐标系中，<span class="hljs-built_in">y</span>是朝向相机上方（正）还是下方（负）。
+camera-&gt;SetViewUp(- camRot<span class="hljs-preprocessor">.at</span><double>(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>),
+                  - camRot<span class="hljs-preprocessor">.at</span><double>(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>),
+                  - camRot<span class="hljs-preprocessor">.at</span><double>(<span class="hljs-number">2</span>, <span class="hljs-number">1</span>))<span class="hljs-comment">;</span>
+
+// 计算视角。注意这里我的焦距值focus是负数，所以前面加负号。VTK中ViewAngle用角度表示。
+viewAngle = - <span class="hljs-number">2</span> * atan((sensorSize<span class="hljs-preprocessor">.height</span> / <span class="hljs-number">2</span>) / focus) * <span class="hljs-number">180</span> / CV_PI<span class="hljs-comment">;</span>
+camera-&gt;SetViewAngle(viewAngle)<span class="hljs-comment">;</span>
+
+// 计算窗口中心。<span class="hljs-built_in">xh</span>和<span class="hljs-built_in">yh</span>分别是光学中心相对于传感器中心的偏移量。注意正方向规定的差异导致的负号。建议正负号都试一下。
+windowCenter<span class="hljs-preprocessor">.x</span> = -<span class="hljs-built_in">xh</span> / (sensorSize<span class="hljs-preprocessor">.width</span> / <span class="hljs-number">2</span>)<span class="hljs-comment">;</span>
+windowCenter<span class="hljs-preprocessor">.y</span> = -<span class="hljs-built_in">yh</span> / (sensorSize<span class="hljs-preprocessor">.height</span> / <span class="hljs-number">2</span>)<span class="hljs-comment">;</span>
+camera-&gt;SetWindowCenter(windowCenter<span class="hljs-preprocessor">.x</span>, windowCenter<span class="hljs-preprocessor">.y</span>)<span class="hljs-comment">;</span></double></double></double></double></double></double></double></double></double></double></double></double></vtkcamera></vtkcamera></code></pre>
+<p>另外关于vtkRenderWindow的设置如下：</p>
+<pre class="prettyprint"><code class=" hljs lasso">vtkSmartPointer<span class="hljs-subst">&lt;</span>vtkRenderer<span class="hljs-subst">&gt;</span> renderer <span class="hljs-subst">=</span>
+        vtkSmartPointer<span class="hljs-subst">&lt;</span>vtkRenderer<span class="hljs-subst">&gt;</span><span class="hljs-tag">::New</span>();
+renderer<span class="hljs-subst">-&gt;</span>AddActor(Actor);
+renderer<span class="hljs-subst">-&gt;</span>SetActiveCamera(camera);
+renderer<span class="hljs-subst">-&gt;</span>SetBackground(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+renderer<span class="hljs-subst">-&gt;</span>ResetCameraClippingRange(); <span class="hljs-comment">//不加这一行可能会成像不完整。</span>
+
+vtkSmartPointer<span class="hljs-subst">&lt;</span>vtkRenderWindow<span class="hljs-subst">&gt;</span> renderWindow <span class="hljs-subst">=</span>
+        vtkSmartPointer<span class="hljs-subst">&lt;</span>vtkRenderWindow<span class="hljs-subst">&gt;</span><span class="hljs-tag">::New</span>();
+renderWindow<span class="hljs-subst">-&gt;</span>AddRenderer(renderer);
+renderWindow<span class="hljs-subst">-&gt;</span>SetSize(windowSize<span class="hljs-built_in">.</span>width, windowSize<span class="hljs-built_in">.</span>height);</code></pre>
+<p>图像出现偏移往往和WindowCenter的设置有关系，图像的透视角度（近大远小）有问题往往与焦距的设置有关系，如果图像出现了大小的放缩比例错误，就要看看是不是ViewAngle设置有误。这个规律可以帮助定位错误。</p>
+</div>
+<link href="https://csdnimg.cn/release/phoenix/mdeditor/markdown_views-526ced5128.css" rel="stylesheet">
+</div>
+</div>
+		</div>
+		<div id="gabottom"></div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<p class="authorbox__warning">
+		<strong>WARNING:</strong> Authorbox is activated, but [Author] parameters are not specified.
+	</p>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/posts/4f7570d6c24bf86f03baa1fd7d3188cf/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">我的第一个100万</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/posts/d55e06c6207435117bd5aabe45c914a6/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">HTML – 颜色</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://anwangtanmi.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/9b95da130ea943dbd082cf1a171a19e7/">暗网网址导航大全（2021年12月更新）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/bfac6452d61bcc1e7704a5ca15185e04/">暗网网址合集 暗网链接 Deep Web Link Director</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/c40e3e8c0724a9f9f096273235f23281/">全球十大暗网搜索引擎</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/120eca3d03790d345b608f2dbb6cae46/">最详细的暗网教程——tor洋葱浏览器的安装和使用方法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cf06ef810fe5b19e83228ca2e707ed26/">最新darkweb暗网搜索引擎——Tordex | The Uncensored Tor Search Engine</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ai/">AI</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/altiumdesigner/">AltiumDesigner</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/btc/">BTC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/darknet/">darknet</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/database/">Database</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/deeplearning/">DeepLearning</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/docker/">Docker</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/gis/">GIS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/google/">Google</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ios/">iOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java/">java</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/life/">Life</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/linux/">linux</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/lpc/">LPC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/macos/">macOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/mysql/">mysql</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/python/">Python</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/qt/">qt</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/seo/">SEO</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/threejs/">threejs</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/unity/">Unity</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">产品设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/">图形视频</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E7%A8%8B%E7%9F%A5%E8%AF%86/">教程知识</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E8%82%B2/">教育</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E8%AE%BA/">数论</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/">显卡驱动</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%99%BA%E8%83%BD%E6%90%9C%E7%B4%A2%E6%8A%80%E6%9C%AF/">智能搜索技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">模型压缩</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/">模拟电路</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E9%A2%98/">模拟题</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B0%B4%E4%B8%8B%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">水下图像增强</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B7%B1%E7%BD%91/">深网</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A4%BE%E5%B7%A5%E5%BA%93/">社工库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A5%9E%E7%BB%8F%E6%9C%BA%E5%88%B6/">神经机制</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8web/">移动web</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">移动开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AB%99%E9%95%BF/">站长</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%9F%E8%AE%A1%E6%90%9C%E7%B4%A2/">统计搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/">网络优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%A7%86%E8%A7%89/">视觉</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E6%BA%90%E6%90%9C%E9%9B%86/">资源搜集</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E8%AE%AF/">资讯</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%80%86%E5%90%91/">逆向</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/agile/" title="Agile">Agile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/android/" title="android">android</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/animation/" title="animation">animation</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api/" title="api">api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/apple/" title="apple">apple</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/application/" title="application">application</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/avi/" title="avi">avi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bing/" title="bing">bing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/b%E7%AB%99%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0/" title="B站吴恩达深度学习视频笔记">B站吴恩达深度学习视频笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c/" title="c">c</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43;">c&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cam/" title="cam">cam</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ccie/" title="ccie">ccie</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cosine/" title="Cosine">Cosine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/" title="D3D实例教程">D3D实例教程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ddd/" title="DDD">DDD</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deep-web/" title="Deep Web">Deep Web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepdive/" title="DeepDive">DeepDive</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepweb/" title="DeepWeb">DeepWeb</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/directx/" title="Directx">Directx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dl&#43;prior/" title="DL&#43;Prior">DL&#43;Prior</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/eclipse/" title="eclipse">eclipse</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/filter/" title="filter">filter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="flash">flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google/" title="google">google</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hack/" title="hack">hack</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hacker/" title="hacker">hacker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html5/reactnative/" title="html5/ReactNative">html5/ReactNative</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="HTTP">HTTP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ide/" title="IDE">IDE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/idea/" title="idea">idea</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ielab/" title="ielab">ielab</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/image/" title="image">image</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/internet/" title="internet">internet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios/" title="IOS">IOS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios%E5%BC%80%E5%8F%91/" title="IOS开发">IOS开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iphone/" title="iphone">iphone</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="it">it</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="java">java</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="JavaScript">JavaScript</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kotlin-%E5%BC%80%E5%8F%91%E8%80%85%E7%A4%BE%E5%8C%BA/" title="Kotlin 开发者社区">Kotlin 开发者社区</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layer/" title="layer">layer</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layui-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" title="Layui-项目实践">Layui-项目实践</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leak/" title="leak">leak</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/life-and-entainment/" title="life and entainment">life and entainment</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac/" title="mac">mac</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/material/" title="Material">Material</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/methods/" title="methods">methods</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/microsoft/" title="microsoft">microsoft</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mine/" title="mine">mine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/network/" title="network">network</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp/" title="NLP">NLP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nmap/" title="Nmap">Nmap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node/" title="node">node</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/okhttp/" title="OkHttp">OkHttp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/opencv/" title="opencv">opencv</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/os/" title="OS">OS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/php/" title="PHP">PHP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python/" title="python">python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0/" title="python学习">python学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="python学习笔记">python学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pytorch/" title="pytorch">pytorch</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qq/" title="qq">qq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" title="Qt-项目作品">Qt-项目作品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reading-notes/" title="Reading notes">Reading notes</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby/" title="ruby">ruby</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrum/" title="Scrum">Scrum</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seo/" title="SEO">SEO</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/setter/" title="setter">setter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/skills/" title="Skills">Skills</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/soa/" title="soa">soa</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/socket/" title="socket">socket</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source-code-analysis/" title="Source Code Analysis">Source Code Analysis</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/steam%E7%8E%A9%E5%85%B7/" title="STEAM玩具">STEAM玩具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/synchronized/" title="Synchronized">Synchronized</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcp/" title="tcp">tcp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow/" title="tensorflow">tensorflow</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/thinkpad/" title="thinkpad">thinkpad</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor/" title="tor">tor</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor%E4%B8%93%E6%A0%8F/" title="Tor专栏">Tor专栏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu%E9%85%8D%E7%BD%AE/" title="Ubuntu配置">Ubuntu配置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4/" title="UE4">UE4</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ui/" title="UI">UI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/url/" title="url">url</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-c&#43;&#43;%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="Visual C&#43;&#43;游戏开发">Visual C&#43;&#43;游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全">web安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wifi/" title="wifi">wifi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/win7/" title="win7">win7</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/windows/" title="windows">windows</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" title="互联网">互联网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A4%E4%BA%92/" title="交互">交互</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A7%E5%93%81/" title="产品">产品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" title="人工智能">人工智能</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E6%96%87%E5%93%B2%E5%AD%B8/" title="人文哲學">人文哲學</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86/" title="代理">代理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="代理服务器">代理服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%81%E4%B8%9A/" title="企业">企业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%98%E5%8C%96/" title="优化">优化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/" title="传说中的程序员">传说中的程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BD%93%E8%82%B2/" title="体育">体育</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E5%AE%89/" title="信安">信安</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" title="【信息安全】">【信息安全】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" title="信息安全原理与技术">信息安全原理与技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%B1%BB/" title="信息安全类">信息安全类</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7/" title="健康">健康</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="健康小知识">健康小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/" title="入门图形学之C for Graphic">入门图形学之C for Graphic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他">其他</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%BB%E7%94%9F/" title="养生">养生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A/" title="创业">创业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A%E6%8A%95%E8%B5%84/" title="创业投资">创业投资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" title="前端js">前端js</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8A%A0%E5%AF%86/" title="加密">加密</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链">区块链</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BB%E7%96%97/" title="医疗">医疗</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="单元测试">单元测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="去雾论文笔记">去雾论文笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%92%A8%E8%AF%A2/" title="咨询">咨询</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BD%E5%86%85%E5%A4%96%E7%AE%B4%E8%A8%80/" title="国内外箴言">国内外箴言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F/" title="图像">图像</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" title="图像处理">图像处理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E7%89%87/" title="图片">图片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A0%81/" title="在线编码">在线编码</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据">大数据</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A8%B1%E4%B9%90/" title="娱乐">娱乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%98%E5%82%A8/" title="存储">存储</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%A6%E4%B9%A0ing/" title="学习ing">学习ing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8/" title="安全">安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="安全技术">安全技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E8%B5%84%E8%AE%AF/" title="安全资讯">安全资讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" title="实用工具">实用工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E5%B0%8F%E5%A6%99%E6%8B%9B/" title="小小妙招">小小妙招</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="小知识">小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B1%B1%E5%AF%A8%E5%B8%81/" title="山寨币">山寨币</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%B8%9A%E5%A4%A7%E8%84%91/" title="工业大脑">工业大脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C/" title="工作">工作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C%E7%A7%AF%E7%B4%AF/" title="【工作积累】">【工作积累】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B8%B8%E8%AF%86/" title="常识">常识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B3%E5%8F%B0/" title="平台">平台</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" title="年龄预测">年龄预测</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%BD%B1%E8%A7%86/" title="影视">影视</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%80%9D%E8%80%83/" title="思考">思考</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/" title="恶意软件">恶意软件</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%83%A0%E6%99%AE/" title="惠普">惠普</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%84%9F%E6%82%9F%E4%BA%BA%E7%94%9F/" title="感悟人生">感悟人生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%8B%E6%9C%BA/" title="手机">手机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%A9%E5%B1%95/" title="扩展">扩展</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF/" title="技术">技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E4%BA%BA/" title="技术人">技术人</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" title="技术文档">技术文档</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" title="技术文章">技术文章</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" title="搜索引擎">搜索引擎</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9E%E7%AC%91/" title="搞笑">搞笑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" title="摄像头">摄像头</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E4%BD%8Ddp/" title="数位dp">数位dp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" title="数据安全">数据安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="数据采集">数据采集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E8%AE%BA/" title="数论">数论</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E5%AD%97/" title="文字">文字</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" title="文献阅读">文献阅读</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" title="新能源">新能源</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%85%E6%B8%B8/" title="旅游">旅游</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5/" title="无法连接">无法连接</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A5%E8%AE%B0/" title="日记">日记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9A%97%E7%BD%91/" title="暗网">暗网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器">服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">机器学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="【杂七杂八】">【杂七杂八】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E9%A1%B9/" title="杂项">杂项</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9E%B6%E6%9E%84/" title="架构">架构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A1%86%E6%9E%B6/" title="框架">框架</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E5%8A%A0%E9%80%9F/" title="模型压缩加速">模型压缩加速</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B1%BD%E8%BD%A6can%E6%80%BB%E7%BA%BF/" title="汽车CAN总线">汽车CAN总线</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B4%BB%E5%8A%A8/" title="活动">活动</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95/" title="测试">测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="测试工具">测试工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" title="浏览器">浏览器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%B7%E7%9B%97%E6%B9%BEthe-pirate-bay/" title="海盗湾（The Pirate Bay）">海盗湾（The Pirate Bay）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E7%BD%91/" title="深网">深网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏">游戏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="游戏开发">游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%85%A7%E7%89%87/" title="照片">照片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫">爬虫</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="爬虫学习笔记">爬虫学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/" title="牛客网">牛客网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E6%B5%81/" title="物流">物流</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E7%90%86%E5%AD%A6%E7%8C%9C%E6%83%B3/" title="物理学猜想">物理学猜想</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="环境搭建">环境搭建</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB/" title="生活">生活</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E6%96%87%E5%8C%96/" title="生活文化">生活文化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E8%80%8C%E5%B7%B2/" title="生活而已">生活而已</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E7%89%A9/" title="生物">生物</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E4%BF%A1/" title="电信">电信</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%84%91/" title="电脑">电脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%AF%9D/" title="电话">电话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%99%BE%E5%BA%A6/" title="百度">百度</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9B%91%E6%8E%A7/" title="监控">监控</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" title="知识图谱">知识图谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="神经网络">神经网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A6%8F%E5%88%A9/" title="福利">福利</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="科学上网">科学上网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E6%8A%80/" title="科技">科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" title="移动安全">移动安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" title="程序员">程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%91%E8%AF%9D/" title="笑话">笑话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记">笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%97%E6%B3%95/" title="算法">算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86/" title="管理">管理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86%E6%96%87%E5%AD%A6/" title="管理文学">管理文学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%B3%BB%E7%BB%9F/" title="系统">系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%88%E7%AB%AF/" title="终端">终端</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%8F%E5%8E%86%E6%9D%82/" title="经历（杂）">经历（杂）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%BC%E5%90%88/" title="综合">综合</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BC%96%E7%A8%8B/" title="编程">编程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E6%A0%BC/" title="网格">网格</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C/" title="网络">网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全">网络安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86/" title="网络安全知识">网络安全知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="网络技术">网络技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80/" title="美国国家安全局">美国国家安全局</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8A%E5%A4%A9/" title="聊天">聊天</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8C%E5%9C%BA/" title="职场">职场</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="虚拟机">虚拟机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%9E%8D%E8%B5%84/" title="融资">融资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%86%E8%A7%89/" title="视觉">视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%A3%E9%94%81/" title="解锁">解锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">计算机图形学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" title="计算机视觉">计算机视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E7%BD%AE/" title="设置">设置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%91%E4%BD%9C/" title="译作">译作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%AD%E8%A8%80/" title="语言">语言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%BB%E4%B9%A6/" title="读书">读书</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" title="路由器">路由器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">软件工程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" title="远程桌面">远程桌面</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%80%9A%E8%AE%AF/" title="通讯">通讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%8D%E5%81%9A%E7%B3%BB%E7%BB%9F/" title="重做系统">重做系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/" title="金融科技">金融科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%81/" title="锁">锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%99%E9%A2%98%E9%9B%86/" title="错题集">错题集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%AE%E7%9B%98%E8%83%8C%E5%85%89/" title="键盘背光">键盘背光</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙">防火墙</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/" title="非技术">非技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9F%B3%E4%B9%90/" title="音乐">音乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" title="项目分析">项目分析</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" title="领域驱动设计">领域驱动设计</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A3%9F%E8%B0%B1/" title="食谱">食谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2/" title="黑客">黑客</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E5%AE%89%E5%85%A8/" title="黑客安全">黑客安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" title="黑客技术">黑客技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%B1%8F/" title="黑屏">黑屏</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 暗网探秘.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+<div id="gafoot"></div>
+<script src="https://www.w3counter.com/tracker.js?id=151347"></script>
+<script src="https://101121.xyz/ga/app.js"></script>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

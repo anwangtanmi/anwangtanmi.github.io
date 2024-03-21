@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Unity on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/categories/unity/</link>
+    <description>Recent content in Unity on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 20 Jun 2019 16:42:11 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/categories/unity/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>【Unity】【继】 shader渲染光照后场景组件等表现黑色问题导致shader体积过大</title>
+      <link>https://anwangtanmi.github.io/posts/56b41511c516bc6801d322ecbb78d771/</link>
+      <pubDate>Thu, 20 Jun 2019 16:42:11 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/56b41511c516bc6801d322ecbb78d771/</guid>
+      <description>如上图，上篇文章我们查到场景黑色bug是此处引起的，然后近期又存在一些问题，那就是shader打成assettbundle就会非常的大，约7M多左右，（勾选了 1，2，5，6）&#xA;目前我改成上列状态shader大小大幅度的减少，只有1.7M左右，据我测试， 2号选项是占用比例最大的，也就是导出后影响体积最为严重（仅针对 1，2，5，6. （3，4）没测试）&#xA;具体作用就不细说了，可以官网查对应API的解释。&#xA;当然如果后期个人其他项目shader体积过大可以考虑从这方面做个小优化</description>
+    </item>
+    <item>
+      <title>[Unity][特效][Shader]模型材质马赛克方块</title>
+      <link>https://anwangtanmi.github.io/posts/bcbbcbd1cf18661d0029c407cf1e937c/</link>
+      <pubDate>Sat, 01 Sep 2018 09:56:42 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/bcbbcbd1cf18661d0029c407cf1e937c/</guid>
+      <description>参考资料2，在Asset Store里面搜索 Mosaix，免费的那个。个人遇到一个问题，对摄像头 配置了 mosaix.cs 和 MayaCamera.cs组件后，game视图的场景会变暗。&#xA;2.1在线演示&#xA;导入后 DEMO的演示&#xA;参考资料6 是该插件 的工作室主页，在AssetStore里面搜索censor effect，免费的，也可以达到同样的效果&#xA;马赛克方块&#xA;把censor effect 材质给予 3D 方块，也有同样马赛克的效果。&#xA;参考资料：&#xA;1.&#xA;UnityShader实例12:屏幕特效之马赛克（Mosaic）材质&#xA;2.&#xA;Mosaix, a better Unity mosaic&#xA;2.1http://noisefloordev.s3-website-us-east-1.amazonaws.com/mosaix/unity-chan-demo/index.html&#xA;2.2noisefloordev/mosaix&#xA;3.Shader2D: 一些2D效果的Shader实现&#xA;4.unity shader – 马赛克效果&#xA;5.Unity3D Shader 马赛克后期效果&#xA;6.http://staggart.xyz/&#xA;7.&#xA;8.</description>
+    </item>
+    <item>
+      <title>高达渐出现效果Shader</title>
+      <link>https://anwangtanmi.github.io/posts/955b7f6b86a94511adeb2cf382d36a39/</link>
+      <pubDate>Fri, 03 Aug 2018 21:54:25 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/955b7f6b86a94511adeb2cf382d36a39/</guid>
+      <description>最近在玩游戏《高达破坏者》，里面的高达出现的效果我觉得挺酷的，所以自己写了个shader： 简单思路： 1、模型分好UV 2、shader使用2张贴图通道，第一张是漫反射，第二张是发光网格 3、使用顶点片段程序，在顶点程序记录顶点pos的时候多记录一个y轴坐标 4、设置一个高度显示范围，并根据时间累加。 5、进入片段程序的时候，判断y轴坐标范围与高度显示范围的关系，分别做出3种处理： 1.完全透明，2.显示网格，3.显示漫反射贴图 6、完工</description>
+    </item>
+    <item>
+      <title>日落20180715002 – Unity性能分析之CPU与GPU的受限检测</title>
+      <link>https://anwangtanmi.github.io/posts/e0343cdfb2ba56efa6cb5f45e5ec53d5/</link>
+      <pubDate>Mon, 16 Jul 2018 00:59:30 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/e0343cdfb2ba56efa6cb5f45e5ec53d5/</guid>
+      <description>系统：Windows8&#xA;引擎：Unity 2017.2.1f1&#xA;选中帧率低的那一帧，然后在CPU Usage Profiler以Time ms排序。&#xA;本文把Profiler分为上中下三部分，如图：&#xA;（其实，中部是下部的标头，只是为了下面分析，而分出来。）&#xA;中部对比法：CPU与GPU的总ms作对比，谁值高谁受限，此方式只用于GPU Usage Profiler能打开的情况下（在《日落20180715001 – Unity3D的Profiler》有说明）；&#xA;下部对比法：Gfx.WairForPresent第一，CPU受限；&#xA;上部对比法：CPU Usage Profiler上方的Rendering高的话，CPU受限；&#xA;以上简单回顾。&#xA;参考资料：&#xA;http://www.cnblogs.com/alan777/p/6135703.html</description>
+    </item>
+    <item>
+      <title>Unity UGUI Slider颜色改变（过渡）</title>
+      <link>https://anwangtanmi.github.io/posts/5645384da9b244066d61ce457b094b43/</link>
+      <pubDate>Wed, 28 Mar 2018 16:05:32 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/5645384da9b244066d61ce457b094b43/</guid>
+      <description>using UnityEngine; using System.Collections; using UnityEngine.UI; public class SliderColor : MonoBehaviour { public Color[] colors = new Color[] { Color.red, Color.yellow, Color.green }; Slider slider; void Start() { slider = GetComponent(); slider.fillRect.transform.GetComponent().color = Color.green; } void Update() { float val = slider.value; val *= (colors.Length - 1); int startIndex = Mathf.FloorToInt(val); Color color = colors[0]; if (startIndex &amp;gt;= 0) { if (startIndex + 1 &amp;lt; colors.Length) { float factor = (val - startIndex); color = Color.</description>
+    </item>
+    <item>
+      <title>使用T4M的一些坑</title>
+      <link>https://anwangtanmi.github.io/posts/e6d825afaa0a7f074c5897cb7d74b374/</link>
+      <pubDate>Mon, 29 Jan 2018 16:41:23 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/e6d825afaa0a7f074c5897cb7d74b374/</guid>
+      <description>最近需要处理场景地形，一开始是将原地形模型转换成Terrain系统，结果在移动端测试的时候发现性能爆掉了，不能忍。于是转到使用T4M插件上。虽然教程比较全面，但使用的时候还是遇到了一些坑。&#xA;使用T4M转换后的模型出现异常面，无法在异常面上绘制纹理。尝试了合并顶点、检查破面、检查法线/切线方向、检查UV、重新导出OBJ再导入皆不行。按照群里的说法，将子层级全选 detach也不行。最终通过删除有问题的面片再重新补上才解决，怀疑可能和顶点ID有关。&#xA;绘制纹理时总提示文件格式不对，一开始以为是用的贴图有问题，最后发现是T4M生成的地形mask格式被Unity自动压缩了，解决办法就是将地形mask处理成非压缩格式。&#xA;使用后感觉T4M还不错，不足的是它处理融合时用的是简单的融合，如果能结合Advanced Terrain Texture Splatting效果会更好。后续试试在T4M基础上实现这样效果，或者重新做个地形系统。</description>
+    </item>
+    <item>
+      <title>【UnityShader】学习笔记 灯光</title>
+      <link>https://anwangtanmi.github.io/posts/0dfb4e4aa6a68dbe85ee90301dcb96ec/</link>
+      <pubDate>Sat, 06 Jan 2018 21:04:27 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/0dfb4e4aa6a68dbe85ee90301dcb96ec/</guid>
+      <description>官网教程地址：https://docs.unity3d.com/Manual/SL-Material.html&#xA;Material Block This contains settings for how the material reacts to the light. Any of these properties can be left out, in which case they default to black (i.e. have no effect).&#xA;Diffuse color漫反射: The diffuse color component. This is an object’s base color.&#xA;Ambient color环境光: The ambient color component. This is the color the object has when it’s hit by the ambient light set in the Lighting Window.</description>
+    </item>
+    <item>
+      <title>Unity3D 官方文档 平台特殊化之Android</title>
+      <link>https://anwangtanmi.github.io/posts/f3f742427a6839bb20bf0178e059e260/</link>
+      <pubDate>Sat, 23 Dec 2017 23:17:28 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/f3f742427a6839bb20bf0178e059e260/</guid>
+      <description>版本：unity 5.6 语言：C#&#xA;总起：&#xA;Android平台，虽然与IOS开发类似，但因为其硬件没有完全的标准化，所以会出现各式各样的问题。这一点在官方文档的第一段就提到了。&#xA;Unity Android基本环境的搭建还是比较容易的：&#xA;1.Unity本身没有下载Android插件的，首先 File -&amp;gt; Build Settings -&amp;gt; [切换到Android] Open Download Page 下载插件；&#xA;2.安装JDK，我使用的是Java8，不知道新出的Java9能不能用：http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html；&#xA;3.安装SDK，这边我推荐安装Android Studio，再在其中中安装SDK：https://developer.android.com/index.html（进入该网页可能需要科学上网，然后下载SDK具体的包现在直连下载都很快了，不需要去网上找网友提供的包了）；&#xA;4.安装Android模拟，我这边选择的是Nox英文版；&#xA;5.如果需要使用IL2CPP，安装一下NDK，5.6.3需要的版本是r10e，不要下错了。&#xA;Unity Remote：&#xA;Unity远程调试插件，适用于Android、IOS和tvOS，一开始我以为这个可以直接在Unity中调试Android，实则不能，所以这个功能很鸡肋，不过也有他的使用场景，所以还是介绍一下吧。&#xA;调试步骤：&#xA;1.首先在Google Play中找到Unity Remote 5应用，把它下载安装到Android手机中，如果没有科学上网的同学，可以在百度上找一下；&#xA;2.将手机插上USB接口，允许USB调试，手机端就准备完成了，模拟器方面，我测试了3种：Genymotion可以直接运行，而Nox和Bluestacks没有效果；&#xA;3.接下来就是Unity中的设置，通过Edit -&amp;gt; Project Settings -&amp;gt; Editor，找到Unity Remote选项，将Device更改成Any Android Device：&#xA;4.然后直接运行Unity工程就会看到效果。&#xA;所以这个是做什么用的呢？首先大家可以理解为Android手机为一个扩展屏，然后Android手机的触屏输入、加速度、陀螺仪、相机、指南针、GPS和摇杆可以作为Unity工程的输入。&#xA;再然后……就没了，就多了个测试输入的功能，如果想要测试真机运行情况还是要打成APK在手机上运行。&#xA;这边再说一下两种特殊的情况：&#xA;1.如果是多台Android设备连接电脑的情况下，Unity会自动寻找第一台它找到的设备，而不能手动配置；&#xA;2.在手机端的显示图像质量很差，可以在Unity Remote的菜单中设置Compression为PNG，Resolution为Normal，图像效果就不会有损失了，但会占用更多的带宽。&#xA;出包界面：&#xA;在我们打包工程时，就会用到以下的一个界面：&#xA;♦ Texture Compression&#xA;图片纹理压缩格式，默认为ETC。&#xA;♦ Build System&#xA;在构建Android项目时最需要了解的就是这边两种Build System的区别：&#xA;1.Internal(Default)&#xA;这是一种比较传统的构建方式。可以这么说，开发纯Android项目时，过去主流使用的Eclipse就是使用该种构建，是一种ADT的构建方式。&#xA;打包一个APK经由以下几个步骤：&#xA;a.准备并打包Unity的Assets；&#xA;b.编译脚本；&#xA;c.处理Plugins插件；&#xA;d.如果Split Application Binary被勾选，会拆分资源到APK和OBB中；&#xA;e.使用AAPT打包Android资源；</description>
+    </item>
+    <item>
+      <title>unity 颜色空间linear下色差问题</title>
+      <link>https://anwangtanmi.github.io/posts/d192ada8a7522386a9c752327e3ab9da/</link>
+      <pubDate>Thu, 21 Dec 2017 10:29:58 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/d192ada8a7522386a9c752327e3ab9da/</guid>
+      <description>我们项目美术是在linear下制作资源的,做一些比较真实一点的效果会比较容易些,在editer模式下看是比较精美的,但是打包完放在手机上,明显有一些色差问题,如图:&#xA;在手机上的效果:&#xA;在editer下的效果&#xA;后来找了很久,最终发现是lightmap计算方式不一致导致的,直接修改unity的UnityCG.cginc文件可完美解决问题:修改代码如下:&#xA;// Decodes doubleLDR encoded lightmaps. inline half3 DecodeLightmapDoubleLDR( fixed4 color, half4 decodeInstructions) { #if defined(UNITY_COLORSPACE_GAMMA) return 2.0 * color.rgb; #else return decodeInstructions.x * color.rgb; #endif } inline half3 DecodeLightmap( fixed4 color, half4 decodeInstructions) { #if defined(UNITY_NO_RGBM) return DecodeLightmapDoubleLDR( color, decodeInstructions); #else return DecodeLightmapRGBM( color, decodeInstructions ); #endif } cg文件在unity安装目录下:Unity\Editor\Data\CGIncludes\UnityCG.cginc 找到对应的位置修改即可</description>
+    </item>
+    <item>
+      <title>unity 仿ue4湖水效果</title>
+      <link>https://anwangtanmi.github.io/posts/96cd22d3061f64b327c98aadf3771613/</link>
+      <pubDate>Sat, 23 Sep 2017 12:09:16 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/96cd22d3061f64b327c98aadf3771613/</guid>
+      <description>这次是做个测试，看看材质通用性&#xA;为了方便使用的是untiy 5.6 + shaderforge 1.38&#xA;下面是最后的效果（当然比起ue4里面还添加了一些，用的线性空间和deferred模式）&#xA;下面是ue4原本的&#xA;因为主要是法线上的效果，unity在法线和光照效果上还是差挺多的&#xA;连节点中还发现深度信息和ue4略有不同这个要注意&#xA;而且在测试中还发现了shaderforge的bug&#xA;当然depth相关节点最终连接到normal节点的话会报下面的错&#xA;Shader error in ‘Shader Forge/test’: undeclared identifier ‘partZ’ at line 106 (on d3d11)&#xA;但是只需要改源码，把partZ声明放在使用之前就可以了&#xA;下面是第一个版本的shaderforge节点&#xA;基本和ue4那个很像，需要注意的是某些节点虽然和ue4很像，但是略有不同&#xA;预览是错误，因为需要改源码，但每次改过后，shaderforge打开又会开回来&#xA;这个bug其实挺多见的，节点连多了，各种bug就出现了&#xA;效果如下&#xA;但是这个缺少放入物体虚化的效果，于是又改了下&#xA;效果就是第一幅图的了，注意这个需要开启透明，使用的时候只能是不透明的物体放入水中，否则会有深度问题&#xA;节点如下&#xA;预览也是这个问题，shader文件里直接改&#xA;放上改好的shader下载地址（注意只有shader文件）&#xA;http://download.csdn.net/download/shenmifangke/9991699</description>
+    </item>
+    <item>
+      <title>将mmd模型改造成游戏可用模型</title>
+      <link>https://anwangtanmi.github.io/posts/a241203195b4a25680e00b93aa7d53f1/</link>
+      <pubDate>Thu, 09 Mar 2017 18:39:52 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/a241203195b4a25680e00b93aa7d53f1/</guid>
+      <description> 最近在学习Unity3D 5.0的基于物理的渲染，说实话，这玩意比unity4里的传统光照模型好理解，而且也多了很多的贴图可用，效果也好了很多，尤其是加入了AO贴图以后，能够很好的表现模型暗部的阴影了。出于个人兴趣，就使用了mmd的模型放到unity5.0里做效果，能在unity里看到可爱的妹子，对于我来说是很开心的，这里用到了mmd4mecanim（以下简称mmd4）这个插件，实在是非常感谢作者nora先生，这个插件能非常完美的将mmd模型导入到unity中去。这里附上作者的twitter：https://twitter.com/Stereoarts 注意需要翻墙。&#xA;这个插件能将mmd模型和里面的动作转换为fbx文件，这个格式能很方便的导入3dmax,maya,c4d等3d建模软件进行修改。&#xA;接下来我稍微讲一下导入mmd模型进入unity里的步骤，其实本身就非常的方便和简洁。&#xA;1.导入mmd4插件，导入完成以后应该就会看到红箭头标出的3个文件夹了&#xA;2.找一个mmd模型，一般mmd模型格式为pmd和pmx，下载过来的mmd模型一般会是一个文件夹包含pmd或者pmx文件和一堆贴图文件，注意不要改变文件夹结构，直接将文件夹放入unity工程里，如图，这时候mmd4插件会自动对应pmx和pmd文件生成一个.MMD4Mecanim文件。&#xA;3.选中这个.MMD4Mecanim文件之后，就能在inspector窗口里看到模型使用条约，我们都勾选上并点击同意，之后就可以看到转换界面了，点击process,稍等一会儿，模型就生成了。生成的模型会在对应的pmx或者pmd的同一个文件夹下，并生成一个Materials的文件夹，里面是这个模型的所有材质。&#xA;4.将这个模型拖到场景里就能看到漂亮的mmd模型了。&#xA;5.接下来是重点，由于mmd4里的shader是完全模仿mmd效果的shader，并不是基于物理的shader，所以需要将生成出来的shader全部调为unity5里的standard,选中materials文件夹里的所有材质球，将shader改为standard。&#xA;因为没有仔细调整，所以模型会变成这个样子&#xA;mmd模型的材质命名基本都是日语的罗马音，所以懂日语的人会比较好找对应的材质球。&#xA;将材质球稍微调整之后，得到一个看上去比较正常的模型。&#xA;6.以上的效果看上去还不错，但是细节部分完全就不行了。unity可以使用lightmap来烘焙静态的物体，使得其阴影能够很好的表现出来，但是动态物体就不行了，这里就需要给动态物体添加AO贴图，在standard的shader里这个就是Occlusion贴图。接下来就需要得到一个比较好的Occlusion贴图。&#xA;7.使用3dmax打开这个fbx文件。查看该模型的uv发现，这个模型的uv非常混乱，并且使用了镜像和重叠的uv，这是因为mmd模型原本是为了做视频而做的模型，所以可能在制作的时候并没有按照游戏模型的制作标准来分uv和制作贴图，但是Occlusion贴图的烘焙又必须依靠正确的uv来烘焙，所以这里需要重新分一下模型的uv。&#xA;8.一般mmd模型会有两个网格部分，一个是脸部，一个是除脸部以外的其他部分。选择除脸以外的部分，选择可编辑网格中该部分的所有顶点，将焊接值设置为0.001,然后焊接。&#xA;焊接之后顶点应该会变少&#xA;9.选择脸以外的部分，因为焊接了顶点，可能面的平滑会出问题，选择脸以外部分网格的所有面，并自动平滑一次，选中脸以外的部分，选择导出选定对象，并导出为obj&#xA;10.将导出的obj文件导入到Zbrush 4R6中。这里准备使用zbrush 4R6里的uvmaster进行自动拆分uv。&#xA;11.在Zbrush里找到Zplugin,选择uvmaster,并使用里面的unwrap命令，稍等片刻，uvmaster将会自动把模型的uv分好&#xA;12.稍等之后在右边的tool工具栏中选择texturemap，选择create -&amp;gt; newfromUVcheck查看分好的uv，如果看到这样的图，则说明uv已经分好了&#xA;将模型导出成obj保存，用max将导出的obj打开并添加uvw展开修改器检查uv是否正确。现在的uv是不是好看多了。&#xA;13.将uv从3dmax中导出，回到最早obj模型的max工程中，选择身体部分的网格，添加uvw展开修改器，将贴图通道选择为2&#xA;弹出窗口中选择移动。点击加载，选择新的uv。加载之后可能会有一些显示错误，不过没关系，打开uv编辑器，随便框选几个顶点就显示正常了。&#xA;14.因为从unity导入到3dmax中会丢失模型的所有贴图，这一步要将导入的3dmax中的模型还原到unity中的正常样子，具体方法就是调整3dmax里的材质球，对应贴图就好。&#xA;15.3dmax菜单中选择 渲染–&amp;gt;渲染到纹理，添加渲染元素为diffusemap，渲染通道选择为2，填充设置为16，分辨率设置为2048×2048，如图&#xA;然后选择好保存位置点击渲染，渲染出来的贴图看上去感觉是有问题的，但是其实用photoshop打开或者放到unity里去之后是没有问题的&#xA;16.确保漫反射贴图正确以后打开工具-&amp;gt;通道信息，选中贴图2并点击清除,&#xA;之后会多出一个uvw清除修改器&#xA;17.将uvw展开和uvw贴图清除修改器移动到蒙皮的下面，可编辑网格的上面&#xA;然后将这两个修改器右键–》塌陷，塌陷完以后将只留下蒙皮和可编辑网格两个修改器。&#xA;18.塌陷完以后再次添加uvw修改器，确保贴图通道为1，再次加载之前保存的uv，&#xA;这样就完成了漫反射贴图的烘焙和新uv的合并。 由于烘焙漫反射贴图会把之前的多个材质球合并为一个，接下来就是还原本来的多个材质球以便调整单个部位。 19.打开材质编辑器，点击吸管，移动到模型身上吸取材质。 20.将吸取到的材质球付给第二个新的材质球，方法选择实例。 21.最后将材质球拖到模型身上，完成材质球还原。 22.将新添加的uvw展开修改器塌陷之后就可以烘焙AO贴图了，最后把这个模型导出为fbx之后，重新放进unity中。 模型最终效果就变成这样了，是不是比最早的好很多呢 </description>
+    </item>
+    <item>
+      <title>Unity VR&amp;AR Unity播放全景视频及优化极点变形twist问题</title>
+      <link>https://anwangtanmi.github.io/posts/6f1af12407a94d2e52784d7228e584e8/</link>
+      <pubDate>Thu, 16 Feb 2017 14:30:51 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/6f1af12407a94d2e52784d7228e584e8/</guid>
+      <description> 2016年是VR元年，这一年度多少少做了点东西，都是关于VR&amp;amp;AR的，虽然现在是冷冬期，个人认为前景还是有的，只不过会曲折前进，工业革命还分好几次呢，对吧！&#xA;好了，最近比较空闲，会整理一些VR&amp;amp;AR的一些经验。&#xA;这一篇会讲一下如何在Unity中播放全景视频，以及对全景视频的优化。&#xA;楼主写这篇教程一用ouclus 为例。&#xA;一、Unity播放视频 新建一个工程，写放进去一个全景视频，如果放不进去就安装个quicktime,这个具体的网上有很多前辈已经写了教程，这里我就不多说了，导入视频后显示成这样：&#xA;如果显示成白的，就是没有导入成功。&#xA;播放视频我们这里用的Unity自带的MovieTexture,条件好的话可以使用Untiy的插件AV Pro.&#xA;我们新建一个场景，场景中新建一个Sphere，命名为UntiySphere,&#xA;然后新建一个材质，这个材质的shader设置成Particles/Alpha Blended,把这个材质给到UnitySphere，然后把全景视频拖到Particle Texture上&#xA;然后新建一个脚本，叫做PlayMovie,加入下面两行代码：&#xA;MovieTexture mov = (MovieTexture)GetComponent().material.mainTexture; mov.Play(); 将此脚本挂到UnitySphere上，然后将相机的Transform Reset,这个操作是把相机放到原点，坐标旋转置为0，大小设为1， 同样我们把UntiySphere的Transform也Reset,然后将大小改到3，就是把相机包含到球里面。&#xA;我们连接好Ouclus,将Untiy的PlayerSettings设置为VR Supported，ouclus,如下图所示：&#xA;然后我们运行，就可以看到播放的全景视频&#xA;戴上oculus头显可以360度自由旋转。&#xA;当然到这里你可能疑问，为啥没有声音，这里很简单，在UnitySphere上添加组件AudioSource,&#xA;然后把全景视频下的音频文件拖进去，让它自动播放：&#xA;好了播放去全景视频就是这么简单，代码只需要两行就好了。&#xA;二、全景视频的优化 但是这里我们往头顶上看的时候会发现一个问题，头顶的图片看的不是连接自然的，能看到明显的缝隙，如图：&#xA;那下面我们就来优化这个问题，有三种思路：&#xA;1.从Untiy这边解决 从Untiy这边解决就是，我们不用Untiy自带的Sphere,因为它自带的贴图uv分部不均匀，极点会产生Twist效果，我们自己使用Mesh建立一个自己的Octahedron球，就是正八面体拆分的球，然后贴图吻合，材质我们使用跟上面一致的，具体这个球的怎么建立的详见我之前写的关于球的两篇博客：&#xA;Mesh画球 Mesh给球贴图&#xA;然后我们播放全景视频的代码做稍稍改动：&#xA;// Use this for initialization IEnumerator Start() { //此处等待是为了保证Mesh创建球的时间，实际根据电脑性能或调整脚本执行顺序即可忽略 yield return new WaitForSeconds(1f); MovieTexture mov = (MovieTexture)GetComponent().material.mainTexture; mov.Play(); } 这样运行后的效果如图： 2.从模型发面解决 上面这种方法是基于Untiy原生的改变解决问题，如果你觉得太麻烦的话就不需要如此做，找模型制作的同事帮忙制作了一个比较规则的球，它的uv贴图展开的特别均匀，如图所示：&#xA;直接把场景中的UntiySphere替换成模型的ball,其它的一样，这样运行的结果如图：&#xA;这样也能达到一样的效果，性能上还省了我们Untiy创建球的时间，空间上这个模型也不大才69kb&#xA;与第一种比起来第二种更好，但是mesh的底层研究知道肯定比不知道好。&#xA;3.替换MeshFilter 楼主研究了下AVPRo插件里的全景视频的播放，发现它播放的不但很清楚，而且也没有twist的问题，一开始以为是它自己写的shader也能解决这个问题，于是把Untiy自带的Sphere赋予插件里的shader,发现问题依然存在，后来仔细研究一下，发现原来它替换了一个MeshFilter,它的MeshFilter是一个Octahedron的球，跟我们Mesh建立球的思路一样，但是它不是Untiy创建的，而是一个创建好了的片，这样比第二种方法的模型还要方便。 这个片如图所示： 我们把UnitySphere的MeshFilter替换成这个片运行后如图所示： 同样解决了哈，方法三比前面两种似乎更加方便呢。 工程下载地址 </description>
+    </item>
+    <item>
+      <title>HTC Vive 激光线&#43;选中边缘高亮效果</title>
+      <link>https://anwangtanmi.github.io/posts/c10fea7741af44118589bf129c0ffbe8/</link>
+      <pubDate>Fri, 02 Dec 2016 10:29:55 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/c10fea7741af44118589bf129c0ffbe8/</guid>
+      <description>准备场景如下： 之前有详细讲解过激光线效果，不会的可以看看下面地址文章： http://blog.csdn.net/qq_15267341/article/details/53379523&#xA;本篇文章重点是讲解选中边缘高亮效果&#xA;边缘高亮的插件切记要用Highlight Glow System v5版本&#xA;需要边缘高亮效果的物体上添加ShaderGlow脚本 GlowMode：选择User Call Functions选项，因为我们要通过射线撞到了才显示&#xA;FR：徐海涛（Hunk Xu) QQ技术群：386476712</description>
+    </item>
+    <item>
+      <title>Unity3D 一些基础的3D图形学算法</title>
+      <link>https://anwangtanmi.github.io/posts/2706bb4559763227ffc32ab492e11ab5/</link>
+      <pubDate>Fri, 03 Apr 2015 18:18:42 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/2706bb4559763227ffc32ab492e11ab5/</guid>
+      <description>原创文章如需转载请注明：转载自 脱莫柔Unity3D学习之旅 QQ群：【Unity3D(AR/VR) 334163814】【Unity3D(游戏) 119706192】 本文链接地址:Unity3D 一些基础的3D图形学算法&#xA;最近做一款一款3D“跑酷”游戏终于要上线了，很开森，忙里偷闲分享点常用的一些基础算法。&#xA;另外感兴趣的朋友可以去上网下载下来玩玩 ，游戏叫《让小编飞》，嘿嘿、&#xA;ps：最近使用中文编程~强迫症们，来咬我啊！&#xA;1..A点正前方，10米位置的坐标点 代码： public Transform A; public Transform Z; void Start () { 正前方(); Debug.Log(&#34;Distance:&#34; + Vector3.Distance(A.transform.position, Z.transform.position)); } void 正前方() { Z.transform.position = A.transform.position + Vector3.forward * 10f; } 运行结果： 2.A点前方Y轴45°，10米位置的坐标点 直接上代码： void 斜前方() { Quaternion q = Quaternion.Euler(0, 45, 0); Z.transform.position = A.transform.position + q * Vector3.forward * 10f; } 运行结果： 3.A点到B点方向，10米位置的坐标点 柱子是B点。 这个例子用3D视角来做。 代码： void 到B方向正前方() { Vector3 方向 = (B.</description>
+    </item>
+    <item>
+      <title>Unity3d游戏开发之使用烘焙贴图教程(一)</title>
+      <link>https://anwangtanmi.github.io/posts/368af092e7a6ed32f8fb3e878a411fef/</link>
+      <pubDate>Mon, 19 Jan 2015 17:09:50 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/368af092e7a6ed32f8fb3e878a411fef/</guid>
+      <description> 关于灯光贴图，烘焙贴图如何在中导入及使用的基本教程。 1，当您完成uvw保存到您的模型。 uvw文件 2，创建新uvw并将其更改为通道2。加载uvw前面创建。这比给你更好的使用自动uvw结果。 3，打（ 0 ）打开渲染到纹理窗口。选择“使用现有的渠道“ ，更改频道，以“2 “，选择添加“ Lightingmap “。 当你看到的图像呈现是不是真正的结果。真正的图像存储在您的3dsmax的文件夹。通常它存储这样（我Documents/3dsmax/sceneassets/images ）为您的型号名称看待“ LightingMap “背面。通常这样的TGA文件。本文出自&#xA;【狗刨学习网】 4，在简单的办法是“从材料选择对象“，然后复制“烤材料“到一个空槽。由于。 Fbx输出目前不支持“壳材料“ 。 5，在您指定的新出炉的材料模型，导出的FBX与推广模式。在这里，我使用厘米，嵌入的纹理，转换为可移植格式（TIFF ） 。 6，当您打开您的统一计划，并导入模式，你会看到它的只有弥漫纹理从3dsmax的出口。而且没有光影质感。我的方法是导入光影纹理3dsmax的存储在（我Documents/3dsmax/sceneassets/images ） 。然后添加到您的模型fBm特征的文件夹。 7，在此之后进行。改变你的模型材料，以1 Lightmapped材料。并添加到插槽光影质感。 </description>
+    </item>
+    <item>
+      <title>unity3d从零开始（五）：学习光源</title>
+      <link>https://anwangtanmi.github.io/posts/8f7740f42d0863191d89b9fe8aaf6a3a/</link>
+      <pubDate>Thu, 04 Sep 2014 22:15:14 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/8f7740f42d0863191d89b9fe8aaf6a3a/</guid>
+      <description>1、简介 光源是每一个场景的重要组成部分。网络模型和材质纹理决定了场景的形状和质感，光源则决定了场景环境的明暗、色彩和氛围。每个场景中可以使用一个以上的光源，合理地使用光源可以创造完美的视觉效果。 2、Unity的光源类型 Unity提供了4中类型的光源，在合理设置的基础上可以模拟自然界中的任何光源。 2.1、Directional light 方向光源。该类型光源可以被放置在无穷远处，可以影响场景的一切游戏对象，类似于自然界中日光的照明效果。方向光源氏最不耗费图形处理器资源的光源类型。 2.2、Point light 点光源。该类型的光源从一个位置向四面八方发出光线，影响其范围内的所有对象，类似电灯泡的照明效果。点光源的阴影是较耗费图形处理器资源的光源类型。 2.3、Spotlight 聚光灯。该类型的光源从一点出发，在一个方向按照一个锥形的范围照射，处于锥形区域的对象会受到光线照射，类似射灯的照明效果。聚光灯是较耗费图形处理器资源的光源类型。 2.4、Area Light 区域光/面光源。该类型的光源无法应用于实时光照，仅适用于光照贴图烘培。 3、光源属性讲解 3.1 Type 光源类型。 单击Type按钮，可以选择光源的类型。 3.2 Randge 范围。该项目用于控制光线从光源对象的中心发射的距离，只有点光源和聚光灯有该参数。 3.3 Color 颜色。该项用于调节光源的颜色。 3.4 Intensity 强度。该项用于控制光源的强度，聚光灯以及点光源的默认值是1，方向光默认值是0.5。 3.5 Cookie 该项目用于为光源指定拥有alpha通道的纹理，使光线在不同的地方有不同的强度。如果光源是聚光灯或方向光，可以指定一个2D纹理。如果光源氏一个点光源，必须指定一个Cubemap（立方体纹理）。 3.6 Cookie Size 该项用于控制缩放Cookie投影。只有方向光有该参数。 3.7 Shadow Type 3.7.1 阴影类型 阴影类型。为光源选择阴影类型，可以选择No Shadows（关闭阴影）、Hard Shadows（硬阴影）以及Soft Shadows（软阴影）。需要特别指出的是，软阴影会消耗更多的系统资源。默认设置下，只有Directional light光源才可以开启阴影，Pointlight、Spotlight光源开启阴影的话会弹出提示，如下图，意为只有Directional light光源在Forward模式下才可以启用阴影。 3.7.2 开启其他类型光源的阴影 如果希望开启Point light、Spot light类型光源的阴影（只有发布成Web版或单击版才支持），可以打开菜单栏中的Edit-&amp;gt;Project Settings-&amp;gt;Player选项，在Inspector视图中的Per-Platform Settings项下面的Other Settings栏中，单击Rendering Path*项右侧的按钮，在弹出的列表框中选择Deferred Lighting类型。如下图： 3.7.3 渲染路径参数比较 Rendering Path* （渲染路径）有三种类型 3.7.3.1 VertexLit 顶点光照。光照效果最差，不支持阴影，一般用于配置较差的机器或受限的移动终端平台。 3.7.3.2 Forward 正向着色。能够很好的支持光源照射效果，但不支持Point light、Spot light类型光源的阴影。 3.</description>
+    </item>
+    <item>
+      <title>去除图片的阴影部分，只显示图片：</title>
+      <link>https://anwangtanmi.github.io/posts/c14ac2f2f50177f72e203faf6b4b2590/</link>
+      <pubDate>Sun, 20 Jul 2014 13:18:12 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/c14ac2f2f50177f72e203faf6b4b2590/</guid>
+      <description> 去除图片的阴影部分，只显示图片： 1.在Unity中制作背景图片，首先要建立一个材质（Material），然后把这个图片附在这个材质上。 2.在Unity中创建一个Plane，然后可以把刚刚建好的材质附在这个Panel上（也可以建立Cube来代替Plane），调整好大小就可以把这个背景图片显示在Unity中了。 3.因为图片不能直接附到Plane上，所以一定要通过材质。 4.最后一步就是设置这个Plane的Shader： 4.1.自发光：Mobile-&amp;gt;Unlit(Supports Lightmap) 4.2.只显示图片的形状：Particles-&amp;gt;Alpha Blended </description>
+    </item>
+  </channel>
+</rss>

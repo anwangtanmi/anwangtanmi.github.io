@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>年龄预测 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/</link>
+    <description>Recent content in 年龄预测 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 25 Sep 2018 11:44:38 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SSR-Net（Soft Stagewise Regression Network）</title>
+      <link>https://anwangtanmi.github.io/posts/8b5126432249c10567704c7310a04634/</link>
+      <pubDate>Tue, 25 Sep 2018 11:44:38 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/8b5126432249c10567704c7310a04634/</guid>
+      <description>摘要 1.受DEX启发: 将年龄预测回归问题变为多分类问题 2.由粗到细策略,每个阶段执行部分年龄分类,任务量少（Stagewise）：每个阶段预测类别少，产生更小参数和更紧凑的模型 3.解决量化年龄问题,引入动态范围,让每个bin可以平移和缩放（Soft ）：允许bin根据输入来进行平移和缩放 4.模型大小可以达到0.32M 损失函数 在训练时，最小化平均误差函数,这里,年龄预测&#xA;逐步回归 在DEX网络中，将年龄区间分为互不重叠的子区间bin，所以每一个bin的宽度为,我们假设第i段bin所代表的年龄为., DEX将网络作为s个类别年龄分类问题。给定输入图像x，输出分布向量来表示x属于每个年龄组的可能性。年龄的期望值为&#xA;为了进一步减少参数量，我们加入coarse-to-fine strategy，假设我们有K个阶段，第k个阶段有个bins。对于每个阶段我们训练网络输出分布向量,预测出的年龄阶段为&#xA;其中每一个bin的宽度,这里i是bin的索引.&#xA;动态范围 将年龄区间统一划分为非重叠区间在处理年龄组不平衡和年龄连续性方面不够灵活，粗粒度问题更严重。引入动态范围：允许每个bin可以根据输入图像进行移位(shifted,调整bin的索引i)和缩放(scaled，调整).&#xA;为了调整，我们引入，,是网络的回归输出，由此得到调整后的宽度. 为了实现偏移，对每个bins添加偏移量，,由此得到索引改变 模型结构 上图所示采用2-stream 结构: 不同的激活函数和池化方式可以提取不同特征,提高融合特征的丰富度。在每个阶段，来自两个流的特征被送入融合块。融合块负责产生分段输出，&#xA;对于，两个获得的特征图通过逐元素乘法融合，经过Tanh激活函数，将输出限制为[-1,1] 都是向量，经过全连接层，Relu保证分布概率为正值，输出限制为[-1,1] 在给定网络分段输出参数，后&#xA;结果分析 紧凑模型中表现最好。&#xA;GITHUB</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数据结构与算法 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</link>
+    <description>Recent content in 数据结构与算法 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 21 Nov 2019 10:21:36 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>蓄水池抽样算法（Reservoir Sampling）</title>
+      <link>https://anwangtanmi.github.io/posts/46afcfb86f45c1668fb87f9ef3377be6/</link>
+      <pubDate>Thu, 21 Nov 2019 10:21:36 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/46afcfb86f45c1668fb87f9ef3377be6/</guid>
+      <description>一、问题 蓄水池算法是一个数据抽样算法，寥寥几行，却暗藏玄机。主要用来解决如下问题：&#xA;给定一个数据流，数据流长度N很大，且N直到处理完所有数据之前都不可知，请问如何在只遍历一遍数据（O(N)）的情况下，能够随机选取出m个不重复的数据。&#xA;这个场景强调了3件事：&#xA;数据流长度N很大且不可知，所以不能一次性存入内存。 时间复杂度为O(N)。 随机选取m个数，每个数被选中的概率为m/N。 第1点限制了不能直接取N内的m个随机数，然后按索引取出数据。第2点限制了不能先遍历一遍，然后分块存储数据，再随机选取。第3点是数据选取绝对随机的保证。讲真，在不知道蓄水池算法前，我想破脑袋也不知道该题做何解。&#xA;二、核心代码及原理 蓄水池抽样算法的核心如下：&#xA;int[] reservoir = new int[m]; // init for (int i = 0; i &amp;lt; reservoir.length; i++) { reservoir[i] = dataStream[i]; } for (int i = m; i &amp;lt; dataStream.length; i++) { // 随机获得一个[0, i]内的随机整数 int d = rand.nextInt(i + 1); // 如果随机整数落在[0, m-1]范围内，则替换蓄水池中的元素 if (d &amp;lt; m) { reservoir[d] = dataStream[i]; } } 注：这里使用已知长度的数组dataStream来表示未知长度的数据流，并假设数据流长度大于蓄水池容量m。&#xA;算法思路大致如下：&#xA;如果接收的数据量小于m，则依次放入蓄水池。 当接收到第i个数据时，i &amp;gt;= m，在[0, i]范围内取以随机数d，若d的落在[0, m-1]范围内，则用接收到的第i个数据替换蓄水池中的第d个数据。 重复步骤2。 算法的精妙之处在于：当处理完所有的数据时，蓄水池中的每个数据都是以m/N的概率获得的。</description>
+    </item>
+  </channel>
+</rss>

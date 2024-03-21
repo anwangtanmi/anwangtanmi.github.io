@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>qt on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/categories/qt/</link>
+    <description>Recent content in qt on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 19 Dec 2018 22:35:53 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/categories/qt/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>QML仿微信聊天界面-消息气泡自适应</title>
+      <link>https://anwangtanmi.github.io/posts/1bafd5584d5dce268b1191788e1b37ab/</link>
+      <pubDate>Wed, 19 Dec 2018 22:35:53 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/1bafd5584d5dce268b1191788e1b37ab/</guid>
+      <description> 实现消息气泡自适应变换：&#xA;中英文混合自适应；&#xA;自动换行自适应；&#xA;单行文本： 多行文本 改变宽度文本自动调整 实现方案： Rectangle{ id:bodyleft height:ctxLH*(tt.lineCount-1)+35 implicitWidth:Math.min(fitWidth(tt.text),root.width*0.6) anchors.left: imgl1.right color:&#34;white&#34; radius:5 Item{ anchors.margins: 10 anchors.fill: parent anchors.verticalCenter: parent.verticalCenter Text{ id:tt anchors.fill: parent text:label wrapMode: fitWidth(tt.text)&amp;gt;root.width*0.6?Text.WrapAnywhere:Text.NoWrap } } } 主要实现代码：&#xA;气泡宽度：取最小 implicitWidth:Math.min(fitWidth(tt.text),root.width*0.6) //Rectangle 搭配文本换行策略 fitWidth(tt.text)&amp;gt;root.width*0.6?Text.WrapAnywhere:Text.NoWrap //Text 气泡高度：取最大 height:Math.max(img.height,bodyleft.height) 获取内容宽度：&#xA;function fitWidth(text){ return fontMetrics.advanceWidth(text); } </description>
+    </item>
+    <item>
+      <title>qt中lineedit的几个属性设置</title>
+      <link>https://anwangtanmi.github.io/posts/2fe16e833240a61fb1ec7e548b9be389/</link>
+      <pubDate>Thu, 19 Oct 2017 09:45:36 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/2fe16e833240a61fb1ec7e548b9be389/</guid>
+      <description> 1.lineedit不可修改，但内容不变成灰色&#xA;ui-&amp;gt;lineEdit-&amp;gt;setFocusPolicy(Qt::NoFocus); 2.lineedit不可修改，内容变成灰色&#xA;ui-&amp;gt;lineEdit-&amp;gt;setEnabled(false); 3.lineedit不显示边框&#xA;ui-&amp;gt;lineEdit-&amp;gt;setStyleSheet(&#34;background:transparent;border-width:0;border-style:outset&#34;); </description>
+    </item>
+    <item>
+      <title>TCP包防粘连的读取方法</title>
+      <link>https://anwangtanmi.github.io/posts/578a562309b36994285785884aa57e1c/</link>
+      <pubDate>Sun, 26 Jun 2016 16:10:16 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/578a562309b36994285785884aa57e1c/</guid>
+      <description>当我们发送TCP包的时候你是一个一个发的，但是当你接收的时候就可能会一下收到多个包，为了防止少接收包，我是用这种方法的： 首先包的前2个字节声明了这个包后面的数据大小。&#xA;void TcpClientSocket::OnReceiveMessage() { QDataStream in(this); in.setVersion(QDataStream::Qt_5_5); while(bytesAvailable()&amp;gt;=sizeof(quint16)){ if(blockSize==0) in&amp;gt;&amp;gt;blockSize; if(bytesAvailable()break; TranslateMessage(); blockSize=0; } } 上面这段代码是我在Qt下写的。 blockSize 是包的数据大小（不包括2字节的数据大小声明） 当数据缓存大于等于2个字节（就是起码可以读到数据声明）时，就进行数据读取。如果blockSize = 0 ，说明这是一个新的数据包，然后首先读取包的大小到blockSize, 然后接下来就是等待缓存大于等于blockSize，然后进行读取 解析数据.</description>
+    </item>
+    <item>
+      <title>SSH 7.2p2 移植到fl2440记录</title>
+      <link>https://anwangtanmi.github.io/posts/d512532b92f335332047e5299045976f/</link>
+      <pubDate>Tue, 14 Jun 2016 17:21:10 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/d512532b92f335332047e5299045976f/</guid>
+      <description>SSH简介 SSH的移植 编译条件 下载 配置安装 zlib的编译与安装 openssl的编译与安装 openssh的编译安装 sshd在开发板上的配置 现在可以启动sshd了使用全路径 密钥登录使用步骤详情 error error while loading shared libraries libzso1 sshd_config No such file or directory strip process terminated abnormally make check-config Error 2 ignored sshd re-exec requires execution with an absolute path Privilege separation user sshd does not exist Could not load host key或varempty must be owned by root ssh_exchange_identification Connection closed by remote host sshPermission denied please try again 可以SSH远程用密码验证登录开发板但无法使用秘钥对验证登录 Host key verification failed SSH简介： ssh：Secure SHell，个人理解就是一种安全的网络传输服务程序 ，由客户端和服务器组成，两者间数据传输的不再是明文，而是加密后的暗文，安全性高。安全登录验证方式有两种：基于口令的安全验证，基于密钥的安全验证。具体的网上介绍的太杂，感觉前后矛盾点大就是那个将公钥传给服务端，可明明都是将私钥放到服务端，让我费解好半天。 http://skypegnu1.</description>
+    </item>
+    <item>
+      <title>Qt实战之开发软件数据获取助手</title>
+      <link>https://anwangtanmi.github.io/posts/8f3d727e742a31967e4ac037f576b39b/</link>
+      <pubDate>Tue, 28 Jul 2015 10:09:15 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/8f3d727e742a31967e4ac037f576b39b/</guid>
+      <description>前段时间，受朋友委托，需要做一个能够获取别人软件文本框中内容的助手。当然这需要调用win api来解决问题。一开始，我想都没想,就用getWindowText()。。。。居然没用，好郁闷。于是查msdn。。发现关于返回值,是这样写的&#xA;Return Values&#xA;The length, in characters, of the copied string, not including the terminating null character, indicates success. Zero indicates that the window has no title bar or text, if the title bar is empty, or if the window or control handle is invalid. To get extended error information, call GetLastError. This function cannot retrieve the text of an edit control in another application.&#xA;原来是不能跨线程获取数据。。。。。。好吧。。那没办法。接着用SendMessage发送WM_GETTEXT。。。测试记事本是完全没有问题的。。。但是对那个软件却不起作用。。。。。于是各种百度。。无果。。好吧。。暂时搁一搁。。后来，同学在用vb弄文本框时发现了EM_GETLINECOUNT和 EM_GETLINE 。至此，这个问题算是解决了。</description>
+    </item>
+  </channel>
+</rss>

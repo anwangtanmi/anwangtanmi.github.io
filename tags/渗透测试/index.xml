@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>渗透测试 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/</link>
+    <description>Recent content in 渗透测试 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 11 Apr 2020 10:48:21 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>如何使用tor代理网络</title>
+      <link>https://anwangtanmi.github.io/posts/2ce9d57e94b7ca6c5f5cdc8bb052d5d9/</link>
+      <pubDate>Sat, 11 Apr 2020 10:48:21 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/2ce9d57e94b7ca6c5f5cdc8bb052d5d9/</guid>
+      <description> 如何使用tor代理网络 为什么要用tor kali中配置tor代理服务 注意 为什么要用tor tor网络使用多层代理，每间隔十分钟会换一次代理，能够更好的匿名访问网络。&#xA;kali中配置tor代理服务 我使用的是kali linux，安装tor命令如下&#xA;apt-get install tor 安装tor服务后，编辑/etc/proxychains.conf文件，该文件中规定了tor网络代理服务器的数量和顺序。注释掉strict_chains，启用dynamic_chains，以防止代理服务器停止工作或者遇到重载荷导致的proxychain失效。&#xA;vim /etc/proxychains.conf&#xA;编辑/etc/proxychains.conf文件中的[ProxyList]，添加开放代理，进一步模糊自己的ip地址&#xA;终端窗口启动tor服务&#xA;service tor start 查看tor运行状态&#xA;service tor status 确定代理是否已经生效&#xA;proxychains firefox www.whatismyip.com&#xA;可以看到ip地址非本机原有ip地址，即可验证成功&#xA;注意 tor提供的只是匿名服务，但它不能保证隐私。输入个人凭证会暴露自己的信息。 在tor浏览器套件中的漏洞，据称被执法部门用于探测系统并获取用户信息。 ProxyChains不会处理UDP流量。 浏览器中的应用程序也可能会获取你的ip。 点赞 收藏 分享 文章举报 ch_dq 发布了8 篇原创文章 ·&#xA;获赞 8 ·&#xA;访问量 4166 私信 关注 </description>
+    </item>
+    <item>
+      <title>root用户无法运行tor解决办法(The tor browser bundle should not be run as root )</title>
+      <link>https://anwangtanmi.github.io/posts/6434b18f833aa6646156fb8f71450837/</link>
+      <pubDate>Wed, 16 Aug 2017 11:44:41 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/6434b18f833aa6646156fb8f71450837/</guid>
+      <description> ﻿﻿ 遇到这个问题，有两个解决办法： 1、创建一个用户，运行tor；&#xA;2、编辑“start-tor-browser”文件，找到下面语句，删除或注释掉即可运行：&#xA;#if [ “`id -u`” -eq 0 ]; then&#xA;# complain “The Tor Browser Bundle should not be run as root. Exiting.”&#xA;# exit 1&#xA;#fi&#xA;点赞 1 收藏 分享 文章举报 guangyinglanshan 发布了59 篇原创文章 ·&#xA;获赞 179 ·&#xA;访问量 59万+ 私信 关注 </description>
+    </item>
+  </channel>
+</rss>

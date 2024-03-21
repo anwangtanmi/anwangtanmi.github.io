@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ubuntu on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/ubuntu/</link>
+    <description>Recent content in ubuntu on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 16 Jan 2020 14:55:01 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ubuntu16.04下安装cuda10.2 &#43; cuDNN 7.6.5.32（包含Nvidia驱动）</title>
+      <link>https://anwangtanmi.github.io/posts/ece587e006dee7c838c4b1c62a446258/</link>
+      <pubDate>Thu, 16 Jan 2020 14:55:01 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/ece587e006dee7c838c4b1c62a446258/</guid>
+      <description>Ubuntu16.04安装cuda10.2 + cuDNN 7.6.5.32 （包含Nvidia驱动） 此经验帖参考了CUDA官网教程、cuDNN官网安装教程及师兄经验帖，经测试适用于惠普暗影精灵笔记本（Nvidia GTX 1660 Ti 显卡） &amp;amp; 组装台式机（Nvidia RTX 2080 Ti 显卡）.&#xA;1、CUDA 10.2安装（包含Nvidia显卡驱动） 如果Ubuntu系统下没有装过Nvidia显卡驱动，不必单独安装，直接装CUDA即可自动安装显卡驱动.&#xA;（1）注意先看自己显卡型号是不是支持CUDA&#xA;查看显卡型号的命令：&#xA;$ lspci | grep -i nvidia&#xA;支持CUDA的Nvidia显卡型号列表&#xA;（2）如果显卡支持，就可以去官网下载CUDA，选Ubuntu16.04对应的runfile(local)文件：&#xA;CUDA 10.2官网下载地址 默认下载到Home目录下&#xA;（3）去home目录下找到自己下载的CUDA的run文件名字，如cuda_10.2.89_440.33.01_linux.run，记下来一会要用&#xA;（4）命令行模式下安装CUDA&#xA;先 Ctrl+Alt+F1 进入命令行模式：&#xA;$ sudo service lightdm stop&#xA;$ sudo sh ./cuda_10.2.89_440.33.01_linux.run&#xA;按照它要求的选择accept，install，耐心等它装完&#xA;$ sudo service lightdm start&#xA;（5）重新进入图形界面后，配置环境文件&#xA;$ sudo gedit ~/.bashrc&#xA;在末尾加上以下内容：&#xA;export PATH=/usr/local/cuda-10.2/bin:$PATH export LD_LIBRARY_PATH=/usr/local/cuda-10.2/lib64:$LD_LIBRARY_PATH 保存退出&#xA;$ source ~/.bashrc&#xA;检查安装情况：&#xA;nvidia-smi 检查GPU，nvcc -V 检查CUDA</description>
+    </item>
+    <item>
+      <title>Ubuntu 19.10 终极 美化 优化</title>
+      <link>https://anwangtanmi.github.io/posts/006ed258399320912782b40845190693/</link>
+      <pubDate>Sat, 19 Oct 2019 20:19:15 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/006ed258399320912782b40845190693/</guid>
+      <description>Ubuntu19.10 终极美化 1.附上我的截图： 2.主题 首先不得不吐槽一下中文字体优化的确实不咋地，所以我就用了英文的桌面。。。。。&#xA;2.1 安装tweak sudo apt install gnome-tweak-tool 2.2 我的tweak配置 2.3 主题下载 在gnome look上下载主题鼠标主题和图标&#xA;我使用的这个主题不错仿mac的主题 MacOS-themes&#xA;鼠标指针主题Capitaine Cursors&#xA;图标主题OS Catalina&#xA;网站上还有好多各式各样的主题有兴趣的话可以下载下来试试&#xA;如果网络较慢的话可以使用我的百度网盘分享&#xA;链接: https://pan.baidu.com/s/1-ha6K28Yfkzw99Y3nrnyYw&amp;amp;shfl=shareset&#xA;提取码: ihhx&#xA;微云：https://share.weiyun.com/5nTsnW7&#xA;2.4 安装主题 2.4.1 使用命令安装主题和shell主题 cd /Download tar -xvf FileName.tar //解压 sudo cp -r 解压后的文件夹名称 /usr/share/themes 2.4.2 安装图标和鼠标图标 cd /Download tar -xvf FileName.tar //解压 sudo cp -r 解压后的文件夹名称 /usr/share/icons 2.4.3 终极安装法 如果你嫌命令太麻烦的话就用这个办法&#xA;sudo nautilus 这个命令会打开管理员权限的文件管理器，将解压后的文件复制到相应的文件夹就行了。&#xA;Tip：&#xA;shell主题要大开Tweak&amp;gt;Extensions&amp;gt;User themes才能更换&#xA;我觉得19.10自带的shell主题就已经很好了gnomelook中也没有什么比较好看的用默认的就好了，安装完成后使用tewak选择新的主题就行了。。。。。。。。。&#xA;3 安装插件 首先安装下必要的插件</description>
+    </item>
+    <item>
+      <title>ubuntu下安装svn</title>
+      <link>https://anwangtanmi.github.io/posts/f5ea99ccf16a3d72e4c189477132fb6c/</link>
+      <pubDate>Tue, 17 Apr 2018 01:29:33 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/f5ea99ccf16a3d72e4c189477132fb6c/</guid>
+      <description>ubuntu下安装svn 1、下载安装&#xA;apt install subversion 2、创建目录和仓库&#xA;mkdir -p /home/.svn/repository svnadmin create /home/.svn/repository/ 3、进入配置文件(我这里用的是隐藏目录)&#xA;cd /home/.svn/repository/conf 4、打开svnserve.conf并配置&#xA;vim svnserve.conf 将 这三处改成 注意要顶格写 然后保存退出 5、修改passwd文件&#xA;vim passwd 添加用户名和密码，例如&#xA;zhaoyang = 123456 6、修改authz文件&#xA;vim authz 在[group]下面加上&#xA;admin=zhaoyang [/] @admin=rw 7、启动svn服务&#xA;svnserve -d -r /home/.svn 8、在客户端测试 地址就是 svn://ip/repository 注意默认端口是3690，要开放此端口&#xA;9、接下来配置开机自启 启动方法1：&#xA;先查一下svnserve的位置&#xA;which svnserve 例如返回&#xA;/usr/bin/svnserve 记住这个，后面脚本需要 开始写脚本&#xA;cd /etc/init.d vim svn.sh 打开后写入&#xA;#!/bin/bash /usr/bin/svnserve -d -r /home/.svn 保存退出后给文件添加可执行权限&#xA;chmod +x /etc/init.d/svn.sh 10、打开 /etc/rc.</description>
+    </item>
+    <item>
+      <title>Ubuntu14.04下安装AMD闭源显卡驱动fglrx（开发专用）</title>
+      <link>https://anwangtanmi.github.io/posts/24a5839752e66773373c4e8dccbbb283/</link>
+      <pubDate>Wed, 08 Mar 2017 23:47:22 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/24a5839752e66773373c4e8dccbbb283/</guid>
+      <description>我的电脑是AMD的R9 200系列显卡。&#xA;安装完Ubuntu系统之后，进入system setting可以看到当前使用的是开源驱动。&#xA;接下来我把我整理出来的目前可行的安装方法分享给大家。&#xA;（额外补充一点，在你安装完Ubuntu系统之后，建议马上在设置中将镜像服务器，也就是源换成中国的源，我使用的是中科大的源，貌似是mirror.ustc.edu）&#xA;第一步：去AMD官网下载对应版本的驱动包。&#xA;去官网下载时发现，一共有4个包，前缀分别是fglrx-core 、fglrx_… 、fglrx-amdccc和fglrx-dev。先把这4个包都下载下来。&#xA;第二步：安装dependencies依赖项。&#xA;刚入门Ubuntu的人可能会被依赖项整懵逼，我也是被坑过很多次了……在terminal终端中输入以下命令：&#xA;sudo apt-get install xserver-xorg-dev build-essential cdbs dh-make dkms execstack dh-modaliases libqtgui4 debhelper debconf libc++6 dkms libqtgui4 libelfg0 linux-headers-generic&#xA;点击回车之后开始安装，不过你很有可能会碰到一个提示说dependencies出问题，然后列出一些依赖包说不会安装（英文后缀是not to be installed）。这个时候你不要慌，此时遇到这个问题很有可能是你在装Ubuntu系统的时候就已经装了一些依赖包，导致你后面装额外包的时候会因为这些包已经装过了就出问题。一般来说可以忽略掉，但是如果你不放心的话，就sudo apt-get remove XXX，（其中XXX就是那些提示已经安装的包，也就是提示说not to be installed的包），然后重新执行上面那一长串的代码。安装完了之后记得再执行一下下面这段代码：&#xA;sudo apt-get install unity-control-center&#xA;因为如果你把那些已经安装的依赖包卸载了重新装的话，卸载的时候可能就把系统设置那个功能包也删了（Ubuntu的依赖包就是这么诡异），所以你需要重新安装那个部分。&#xA;然后还要安装一部分依赖包，而这部分依赖包主要的作用是在64bit系统下兼容32bit的编译方法。&#xA;sudo apt-get install lib32gcc1 libc6-i386 lib32z1 lib32ncurses5 lib32bz2-1.0 第三步：安装AMD驱动&#xA;（如果你直接忽略了第二部所说的那个依赖包的提示，那么在开始安装驱动之前，你需要安装dkms，语法是sudo apt-get install dkms；如果你是卸载并重装依赖包，就不用再装dkms了）&#xA;从官网上下载了4个包，这些包的安装顺序是有讲究的。&#xA;首先，在Terminal中进入你放驱动包的目录。（一般来说，在Ubuntu中用浏览器下载的话，都是先放在Downloads那个文件夹下面的）&#xA;cd path-to-the-package （记住，path-to-the-package是需要替换成具体的路径的，不懂的话可以去百度一下Ubuntu系统命令行的使用）&#xA;然后按照以下代码顺序安装（一次输入一行代码）：&#xA;sudo dpkg -i fglrx-core （然后按Tab键可以自动补全名称，下同不赘述）</description>
+    </item>
+    <item>
+      <title>Ubuntu安装教程-以我的HP为例</title>
+      <link>https://anwangtanmi.github.io/posts/b384271cee60b2d975b391b9ac4c9704/</link>
+      <pubDate>Sat, 15 Oct 2016 17:31:40 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/b384271cee60b2d975b391b9ac4c9704/</guid>
+      <description>前言: 这是我第一次在CSDN上写博客，从我安装ubuntu开始。安装双系统并不困难，只要你做好了知识的储备就好。这一次我是用U盘引导安装的。&#xA;材料/工具： ubuntu的iso镜像，直接去ubuntu官网下载，一般以最新版为好。 UltraISO软通碟，也是以最新版本为好，这是用来把系统镜像导入U盘的软件。 一个3G左右的U盘，里面的资料要备份，到时候导入镜像会被格式化。&#xA;开始： step1: 下载UltraISO安装,安装全都是默认选项。 step2: 打开软件，导入iso镜像，点击启动，写入 然后，按照如图设置，其中选择打算写入系统的U盘，最后点击写入。&#xA;等待几分钟，刻录完成，就可关闭了。&#xA;step3:（暂时没找到图，以后找到再保存） 这是整个过程比较关键的一步，以我的惠普为例，进去BIOS设置U盘为第一启动。 在开机或者重启的瞬间，一直轻按F10（不用加上Fn）,进入BIOS设置。 进入System Contiguration选项。 找到boot order选项，通过F5或者F6上下调整顺序，把USB Hard Disk上调到第一顺序，再按F10退出并且保存。 step4: 上一步保存推出之后，系统会自动重启。 进入Ubuntu安装界面。 选择语言–简体中文，然后点击试用Ubuntu。 step5: 安装完成之后，是如下界面： step6: 选择语言，进行如下几个步骤： 选择与windows系统共存，这样会自动为你分配内存，点击安装。 step7: 最后，这是安的状态，到这里就完成了。其他的系统配置，自己慢慢摸索。:</description>
+    </item>
+    <item>
+      <title>Ubuntu 下tor的安装</title>
+      <link>https://anwangtanmi.github.io/posts/7ec782bc89a19d8665fe2cb6f5ffa5ed/</link>
+      <pubDate>Tue, 26 Jan 2016 18:41:33 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/7ec782bc89a19d8665fe2cb6f5ffa5ed/</guid>
+      <description>The Onion Route更好地帮助匿名&#xA;安装 1.官网下载 不会翻墙的同学直接移步方法2，官网已被墙。 直接去官网上下载软件包tor-browser-linux64-5.0.6_zh-CN.tar.xz https://www.torproject.org/download 不会安装的同学可以学习一下（高手绕道）&#xA;解压 （不过话说直接上网问的那些人：你们为什么不用man tar） 可以在终端中直接输入如下命令解压&#xA;tar xvJf XXX.tar.xz 根据dingdingdingchris的说法（我没试过） 对于tar版本大于1.22（http://www.gnu.org/software/tar/），可以直接用命令&#xA;tar -xvf XXX.tar.xz 因为从1.15起tar就可以自动识别压缩的格式。&#xA;不过在解压的时候我用xz命令解压遇到了报错&#xA;xz -d XXX.tar.xz xz 输入文件有多个硬链接,跳过 好像重启了一下就好了……我也不知道有什么问题。推荐用tar xvJf命令亲测有效&#xA;安装 解压后的文件就是可执行的文件，可以开始使用了。运行start-tor-browser.desktop即可。&#xA;应用程序启动器 “start-tor-browser.desktop“ 还没有被标记为 信任。如果您不知道这个文件的来源，那么启动它可能会不安全。 如果报错如上请看这里&#xA;更多信息和参考资料：http://www.linuxidc.com/Linux/2015-07/119609.htm&#xA;下面顺便提一下tar的一般安装方法，如果你不感兴趣可以无视&#xA;一般来讲tar里面的东西可能是源代码，也可能是可执行文件。 请阅读附带的INSTALL文件、README文件&#xA;一般对于要编译的文件： 执行“./configure”命令为编译做好准备 执行“make”命令进行软件编译 执行“make install”完成安装 执行“make clean”删除安装时产生的临时文件&#xA;但是不是绝对的，具体怎么操作 阅读附带的INSTALL文件、README文件 阅读附带的INSTALL文件、README文件 阅读附带的INSTALL文件、README文件 重要的事情说三遍！！伸手党一定要先读readme&#xA;2.apt 教程在这里 为了文章的完整性，搬运到这里 在终端中安装&#xA;sudo add-apt-repository ppa:webupd8team/tor-browser sudo apt-get update sudo apt-get install tor-browser 安装完成后直接运行tor-browser-en.sh即可 卸载</description>
+    </item>
+    <item>
+      <title>ubuntu 安装tor</title>
+      <link>https://anwangtanmi.github.io/posts/1df258e0ac461b3eff5316b883a9c8bb/</link>
+      <pubDate>Thu, 14 Jun 2012 14:22:05 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/1df258e0ac461b3eff5316b883a9c8bb/</guid>
+      <description>1.lsb_release -c or cat /etc/debian_version&#xA;Ubuntu 10.04 or Trisquel 4.0 is “lucid”&#xA;2.Then add this line to your/etc/apt/sources.listfile:&#xA;#deb http://deb.torproject.org/torproject.org main&#xA;#torproject.org 已经被和谐&#xA;deb http://mirror.netcologne.de/torproject.org lucid main&#xA;3.Then add the gpg key used to sign the packages by running the followingcommands at your command prompt:&#xA;gpg –keyserver keys.gnupg.net –recv 886DDD89 gpg –export A3C4F0F979CAA22CDBA8F512EE8CBC9E886DDD89 | sudo apt-key add –&#xA;4.install tor&#xA;sudo apt-get install tor tor-geoipdb&#xA;5.install polipo&#xA;sudo apt-get install polipo</description>
+    </item>
+    <item>
+      <title>Windows7 网络自动断开的困境</title>
+      <link>https://anwangtanmi.github.io/posts/f250865f3f7bb7794fd5ef62c173a649/</link>
+      <pubDate>Sun, 06 Nov 2011 20:00:14 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/f250865f3f7bb7794fd5ef62c173a649/</guid>
+      <description>Windows7 网络自动断开的困境&#xA;Windows7如果说给我最大的感受，就是不好用，太不好用了。自从电脑升级到Windows7，我就得了网络恐惧症。&#xA;整夜下载是不行了，笔记本休眠，网络就断。什么电源管理，网卡电源都设置了，还是不行。&#xA;什么狗屁网络和共享中心，不知道怎么删除一个重复项，合并也是不知道Windows说的什么意思。&#xA;开始没装驱动，连屏幕明暗都无法调节了。我气的以为笔记本坏了。后来找联想的驱动，才好了。费了一个晚上的时间。&#xA;显示和隐藏图标里，一个已经卸载的迅雷图标仍然存在，我把注册表都搜遍了，凡是有迅雷和Thunder,xmp.exe字样的&#xA;项全都删除了，还是存在那里。今天又出现无法关机的错误，被我强制关掉电源了。&#xA;迅雷这东西，卸载之后，注册表里全是它的垃圾，能不能做东西地道一些啊。我是有洁癖的。&#xA;今天突然发现显示和隐藏图标里迅雷不见了。&#xA;装好之后反复提醒我要升级到IE8，你当我傻啊，现在IE9都出来了。于是安装了IE9，没办法，除了网银需要，平时&#xA;上网从来不用IE。这东西怎么看怎么别扭。&#xA;为了下载，最后把Ubuntu11装上了。这个是真好用，不需要操心任何事情。一切都帮你做好。&#xA;1）用Windows7自带磁盘管理工具shrink一块磁盘出来，不要格式化，不要做任何动作。&#xA;2）下载Ubuntu11，根据你的CPU选择32/64位的Desktop版。准备一个USB盘，4个G足够了。&#xA;3）按Ubuntu网站的介绍方式把下载的iso灌到USB盘里。&#xA;4）设置bios启动次序为usb优先。&#xA;5）关机，插u盘，开机，选择安装。&#xA;Ubuntu11可以和windows共存，而且从ubuntu里可以访问windows的文件系统。太方便了。以后windows&#xA;坏了也不用担心了，用Ubuntu11就可以恢复里面的文件。</description>
+    </item>
+    <item>
+      <title>Tor on Ubuntu Lucid Lynx</title>
+      <link>https://anwangtanmi.github.io/posts/79b53a49cb7923afe721bc8d676909ad/</link>
+      <pubDate>Wed, 04 Aug 2010 14:17:56 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/79b53a49cb7923afe721bc8d676909ad/</guid>
+      <description>Since Lucid Lynx is still in beta, tor isn’t packaged up at torproject.org yet but there is a PPA! https://launchpad.net/~sevenmachines/+archive/tor&#xA;$ sudo add-apt-repository ppa:sevenmachines/tor&#xA;$ sudo apt-get update&#xA;$ sudo apt-get install tor vidalia privoxy firefox-torbutton&#xA;To start it up with a vidalia:&#xA;Applications &amp;gt; Internet &amp;gt; Vidalia&#xA;Click on settings and add privoxy to the proxy “/usr/sbin/privoxy”&#xA;Stop tor in Vidalia and make sure privoxy is down.&#xA;$ sudo /etc/init.</description>
+    </item>
+    <item>
+      <title>Install flash plugin to Chrome Browser on Ubuntu 9.10</title>
+      <link>https://anwangtanmi.github.io/posts/9212e74232ad64eac671aa3d9af59371/</link>
+      <pubDate>Sat, 30 Jan 2010 15:34:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/9212e74232ad64eac671aa3d9af59371/</guid>
+      <description>http://www.howtoforge.com/how-to-enable-adobes-flash-player-in-google-chrome-ubuntu-9.04-p2&#xA;Open a terminal (Applications &amp;gt; Accessories &amp;gt; Terminal):&#xA;If the Flash plugin is already installed for Firefox, we have to find out where it is located:&#xA;sudo updatedb&#xA;sudo locate libflashplayer.so&#xA;If it is installed, output should be similar to this one…&#xA;falko@falko-desktop:~$ sudo locate libflashplayer.so&#xA;/opt/Adobe AIR/Versions/1.0/Resources/libflashplayer.so&#xA;/usr/lib/flashplugin-installer/libflashplayer.so&#xA;falko@falko-desktop:~$&#xA;… which means the Flash plugin is located in /usr/lib/flashplugin-installer/libflashplayer.so. If there’s no output, this means that the Flash plugin isn’t installed – you can then install it as follows:</description>
+    </item>
+  </channel>
+</rss>

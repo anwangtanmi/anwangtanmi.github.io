@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>threejs on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/categories/threejs/</link>
+    <description>Recent content in threejs on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 18 Dec 2018 10:41:03 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/categories/threejs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>threejs基本图形之网络模型</title>
+      <link>https://anwangtanmi.github.io/posts/f75c44be3e3e4745fe2383cd842c819c/</link>
+      <pubDate>Tue, 18 Dec 2018 10:41:03 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/f75c44be3e3e4745fe2383cd842c819c/</guid>
+      <description>现在就是若干的常用图形使用一览。&#xA;我们要记住一个核心点，那就是所有几何体都是由若干个三角形组成的。切记。非常核心！！！&#xA;threejs基本图形之网络模型&#xA;首先，所有图形都是由点、线或面构成，所以有：&#xA;Points：点或点云，可以用点或点云表示图形&#xA;Line/LineSegments：直线和虚线，可以用线或线团表示图形&#xA;Mesh：网格模型，可以用若干三角面表示图形&#xA;–&amp;gt; –&amp;gt;</description>
+    </item>
+    <item>
+      <title>Three.js – MeshLambertMaterial 用于暗淡不光亮表面的材质</title>
+      <link>https://anwangtanmi.github.io/posts/cfb5fc7a81b82e64e684226f9d35dd7b/</link>
+      <pubDate>Tue, 07 Aug 2018 10:02:48 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/cfb5fc7a81b82e64e684226f9d35dd7b/</guid>
+      <description>这种材质，可以创建看上去并不光亮（不具有光滑度）的表面，例如墙体等。该材质会对场景中的光源产生反应，并且该材质自身也会发出颜色，自身发出的颜色不受环境的影响。&#xA;示例：https://ithanmang.gitee.io/threejs/home/201808/20180807/01-meshLambertMaterial.html&#xA;基础材质中很多属性，它基本上都具有，不同的是，它具有一个自发光的属性emissive，可以设置自发光的颜色、强度、以及贴图属性。&#xA;它的color属性是漫反射的颜色，默认为白色。&#xA;示例代码 &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&#34;en&#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&#34;UTF-8&#34;&amp;gt; &amp;lt;title&amp;gt;MeshLambertMaterial 暗淡并不光亮的材质&amp;lt;/title&amp;gt; &amp;lt;style&amp;gt; body { margin: 0; overflow: hidden; /*溢出隐藏*/ } &amp;lt;/style&amp;gt; &amp;lt;script src=&#34;../../libs/build/three-r93.min.js&#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&#34;../../libs/examples/js/controls/OrbitControls.js&#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&#34;../../libs/examples/js/libs/dat.gui.min.js&#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&#34;../../libs/examples/js/libs/stats.min.js&#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&#34;../../libs/examples/js/Detector.js&#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;script&amp;gt; let stats = initStats(); let scene, camera, renderer, controls, guiControls; let directionalLightHelper; // 场景 function initScene() { scene = new THREE.Scene(); scene.background = new THREE.Color(0xB0E2FF); scene.fog = new THREE.Fog(scene.background, 1, 5000); } // 相机 function initCamera() { camera = new THREE.</description>
+    </item>
+    <item>
+      <title>Three.js – MeshBasicMaterial 材质</title>
+      <link>https://anwangtanmi.github.io/posts/a8182e476d9cb69e3539571091b5c36c/</link>
+      <pubDate>Fri, 03 Aug 2018 17:33:35 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/a8182e476d9cb69e3539571091b5c36c/</guid>
+      <description>MeshBasicMaterial是一种非常简单的材质，继承自Material，这种材质不受光线的影响，可以显示模型的线框，对场景中的雾化会有反应。&#xA;通过操作示例可以对这种材质有一定的了解&#xA;示例：https://ithanmang.gitee.io/threejs/home/201808/20180802/02-meshBasicMaterial.html&#xA;构造函数 MeshBasicMaterial( parameters : Object ) 参数 parameters：可选参数一般指定为颜色，{color:0xffffff}，也可以添加别的从Material父类继承来的属性。&#xA;除却继承的属性外，MeshBasicMaterial也有自己独有的属性，以下是部分属性。&#xA;属性 简介 alphaMap alpha地图是一种灰度纹理，它控制着表面的不透明度（黑色：完全透明;白:完全不透明)。默认为null。 color 材料的颜色值，默认为白色 combine 将材质表面颜色与环境贴图相结合，默认为THREE.Multiply，如果选择混合模式，则反射率是用来混合两种颜色的 envMap 环境贴图，默认为null lightMap 灯光贴图，默认为null lightMapIntensity 灯光贴图的强度，默认为1 lights 材料是否受到光线影响，默认为false map 贴图，默认为null reflectivity 反射率，表面对环境的影响程度，有效范围在0 – 1之间，默认为1 wireframe 是否以线框模式呈现，默认为false 示例代码 &amp;lt;!DOCTYPE html&amp;gt; &amp;lt;html lang=&#34;en&#34;&amp;gt; &amp;lt;head&amp;gt; &amp;lt;meta charset=&#34;UTF-8&#34;&amp;gt; &amp;lt;title&amp;gt;MeshBasicMaterial 基础材质&amp;lt;/title&amp;gt; &amp;lt;style&amp;gt; body { margin: 0; overflow: hidden; /*溢出隐藏*/ } &amp;lt;/style&amp;gt; &amp;lt;script src=&#34;../../libs/build/three.min.js&#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&#34;../../libs/examples/js/controls/OrbitControls.js&#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&#34;../../libs/examples/js/libs/dat.gui.min.js&#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&#34;../../libs/examples/js/libs/stats.min.js&#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;script src=&#34;../../libs/examples/js/Detector.js&#34;&amp;gt;&amp;lt;/script&amp;gt; &amp;lt;/head&amp;gt; &amp;lt;body&amp;gt; &amp;lt;script&amp;gt; let stats = initStats(); let scene, camera, renderer, light, controls, guiControls; // 场景 function initScene() { scene = new THREE.</description>
+    </item>
+    <item>
+      <title>three.js给场景加上阴影</title>
+      <link>https://anwangtanmi.github.io/posts/13ca629af9edf76cf374eb573ff7c4bc/</link>
+      <pubDate>Mon, 20 Nov 2017 13:39:53 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/13ca629af9edf76cf374eb573ff7c4bc/</guid>
+      <description> 学习交流欢迎加群：789723098，博主会将一些demo整理共享 现实世界中（假设只在地球，先不考虑外太空），只要有光的地方就会有阴影产生。所以当我们构建好一个具备光照的场景后，还必须给其加上阴影，才能更清楚地显示场景中各个元素的关系，光照和阴影是webgl和three.js开发大型场景必不可少的元素，如果少了这两者，想象一下，地球上一切事物如果没有阴影，没有灯光，那么是不是世界乌漆嘛黑，什么都看不见？本节先不讲光照，先讲讲阴影的投射和接收，各种光源和材质的介绍和应用，在后面会单独写文章进行详细介绍。接下来先看看怎样给场景添加阴影。&#xA;添加阴影主要是这几个步骤：&#xA;渲染器一定要允许产生阴影：&#xA;//渲染器 //antialias:true增加抗锯齿效果 renderer = new THREE.WebGLRenderer({antialias:true}); renderer.setClearColor(new THREE.Color(0x000000));//设置窗口背景颜色为黑 renderer.setSize(window.innerWidth, window.innerHeight);//设置窗口尺寸 renderer.shadowMapEnabled = true;//开启阴影，加上阴影渲染 灯光要投下阴影，否则场景不会产生阴影：&#xA;var spotLight = new THREE.SpotLight(0xffffff); spotLight.position.set(-50, 60, 15); spotLight.castShadow = true;//开启灯光投射阴影 物体要投下阴影和接受阴影，假设这里的物体为Mesh；否则也不会有阴影产生：&#xA;Mesh.castShadow = true;//开启投影 Mesh.receiveShadow = true;//接收阴影 当阴影添加完毕后，就可以产生阴影的效果啦。接下来实现一个有阴影的场景，其效果如下图所示：&#xA;这个实例的静态版本在我另一片博文：点击打开链接，轨道控制器鼠标交互的版本在这篇博文：点击打开链接。&#xA;但有一点需要特别注意，光源的位置一定要距离合适，否则容易引起阴影模糊粗糙的像打马赛克一样，像下面的图所示：&#xA;下面附上示例代码：&#xA;threejs-basic-geometry </description>
+    </item>
+    <item>
+      <title>three.js 源码注释（五十一）Material /MeshDepthMaterial.js</title>
+      <link>https://anwangtanmi.github.io/posts/9e6a72953fd646467509bcc0ee37849f/</link>
+      <pubDate>Sun, 28 Dec 2014 00:03:57 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/9e6a72953fd646467509bcc0ee37849f/</guid>
+      <description>商域无疆 (http://blog.csdn.net/omni360/)&#xA;本文遵循“署名-非商业用途-保持一致”创作公用协议&#xA;转载请保留此句：商域无疆 – 本博客专注于 敏捷开发及移动和物联设备研究：数据可视化、GOLANG、Html5、WEBGL、THREE.JS，否则，出自本博客的文章拒绝转载或再转载，谢谢合作。&#xA;俺也是刚开始学,好多地儿肯定不对还请见谅.&#xA;以下代码是THREE.JS 源码文件中materials/MeshDepthMaterial.js文件的注释.&#xA;更多更新在 : https://github.com/omni360/three.js.sourcecode&#xA;/** * @author mrdoob / http://mrdoob.com/ * @author alteredq / http://alteredqualia.com/ * * parameters = { * opacity: , * * blending: THREE.NormalBlending, * depthTest: , * depthWrite: , * * wireframe: , * wireframeLinewidth: * } */ /* ///MeshDepthMaterial方法根据参数parameters创建基于相机远近裁切面自动变换亮度(明暗度)的mesh(网格)的材质类型,离相机越近,材质越亮(白),离相机越远,材质越暗(黑). ///parameters参数的格式看上面.MeshDepthMaterial对象的功能函数采用,定义构造的函数原型对象来实现.大部分属性方法继承自材质的基类Material. */ ///MeshDepthMaterial ///string类型的JSON格式材质属性参数 ///返回MeshDepthMaterial,网格深度材质. THREE.MeshDepthMaterial = function ( parameters ) { THREE.Material.call( this );&#x9;//调用Material对象的call方法,将原本属于Material的方法交给当前对象MeshDepthMaterial来使用. this.</description>
+    </item>
+  </channel>
+</rss>

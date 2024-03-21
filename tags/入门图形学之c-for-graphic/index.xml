@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>入门图形学之C for Graphic on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/</link>
+    <description>Recent content in 入门图形学之C for Graphic on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 09 Jan 2020 13:12:35 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C for Graphic：geometry vertex to cube</title>
+      <link>https://anwangtanmi.github.io/posts/ee15b6245ca6ffc3f5645007631999d6/</link>
+      <pubDate>Thu, 09 Jan 2020 13:12:35 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/ee15b6245ca6ffc3f5645007631999d6/</guid>
+      <description>最近晚上在玩3ds路易鬼屋2暗月，其中路易进出鬼屋和实验室的效果有点意思，就是路易身体网格顶点变成立方体，然后穿越屏幕，跟老式科幻电影中人体变成数字信号一样，效果图如下：&#xA;原本我以为这些效果都是美术做的particle animation，后面突然想到其实用geometryshader就可以实现（如果不知道geometry的同学可以返回之前看一下，有个大概的理解）。geometryshader属于桌面dx10的特性，当然vulkan dx都支持，以后嵌入式设备大面积使用vulkan的时候，嵌入式设备也可以用很多桌面图形库的特性（顺便说一下，好多设备都不支持opengl4.x版本，导致很多shader写法都用不了，各种报shader is not support on this device，这个也没办法）。一般情况下，我们使用unity编写shader，可编程函数就vertex/fragment/surface三个，而geometry则允许我们在vertex和fragment之间再操作顶点，更加灵活（想比如传统的vertex单纯的变换一下顶点的坐标，geometry则能操作点线面，包括坐标和增减等）。&#xA;那么我们要想模仿路易鬼屋那样的穿越效果，则需要使用geometry将网格的顶点变换成立方体，比如一个顶点扩展出八个顶点组成一个cube，下面我们来shader实现一下。&#xA;首先来一张示意图：&#xA;简单明了，通过vertex扩展出v0-7的顶点然后建立网格即可，代码如下：&#xA;Shader &#34;Custom/VertexToCubeShader&#34; { Properties { _MainTex (&#34;Texture&#34;, 2D) = &#34;white&#34; {} _CubeWidth(&#34;Cube Width&#34;,Range(0,0.1)) = 0.1 } SubShader { Tags { &#34;RenderType&#34;=&#34;Opaque&#34; } LOD 100 Pass { CGPROGRAM #pragma target 4.0 #pragma vertex vert #pragma fragment frag #pragma geometry geom #include &#34;UnityCG.cginc&#34; struct app2vert { float4 vertex : POSITION; float2 uv : TEXCOORD0; }; struct vert2geom { float4 vertex:POSITION; float2 uv:TEXCOORD0; }; struct geom2frag { float4 vertex : SV_POSITION; float2 uv : TEXCOORD0; }; sampler2D _MainTex; float4 _MainTex_ST; float _CubeWidth; vert2geom vert (app2vert v) { vert2geom o; o.</description>
+    </item>
+  </channel>
+</rss>

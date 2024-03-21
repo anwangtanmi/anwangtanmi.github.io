@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tor专栏 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/tor%E4%B8%93%E6%A0%8F/</link>
+    <description>Recent content in Tor专栏 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 16 Apr 2020 17:04:22 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/tor%E4%B8%93%E6%A0%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tor的配置</title>
+      <link>https://anwangtanmi.github.io/posts/32888eba1293b2bfc095bafd79360f66/</link>
+      <pubDate>Thu, 16 Apr 2020 17:04:22 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/32888eba1293b2bfc095bafd79360f66/</guid>
+      <description> 出于对学术的热爱（不要脸的好奇心）被onion深深吸引，以下介绍本人配置安装过程。&#xA;一.tor工作原理 Tor由已经安装了Tor软件的电脑连接网络而成。名为onion的原因也在于它的结构与一层层结构的洋葱极为相似。如果你想看到核心就要一层层剥开外表皮。每个路由器之间的传输都经过点对点的密钥(symmetric key)进行加密，形成层次的结构。“洋葱”的核心相当于客户端，各节点就是一层层的外皮，用来保护信息的来源。&#xA;用Tor创建一条私有网路路径时，客户端通过网络上的中继递增地建立一条由若干加密连接组成的环路（circuit）。环路一次扩展一跳（hop），环路上的中继仅仅知道它从哪一个中继接收数据以及发送到哪一个中继。没有一台单独的中继知道数据包的完整的路径。客户端与环路的每一跳都协商一组独立的密钥，这样可以保证数据通过任何一跳都无法跟踪。&#xA;二.配置过程 1.下载安装tor browser 下载地址：https://www.torproject.org/download/&#xA;2.配置代理 1）tor在国内是无法直连的，如果你本身挂着梯子的话直接点connect。我用的是V2ray的，如果有需要的也可以找我，我有多平台资源。&#xA;如果你啥都没配选择configure。&#xA;ps：安装时可以选择中文，我这里选了英语。&#xA;2）第一个选项是配置网桥的，可选可不选。速度很慢建议别选，我试了试估计一辈子都很难连上。&#xA;第二个选项是通过私有代理连入，你选的节点够快的话速度就快。&#xA;建议去开源的proxy网站看下选个还不错的节点，下面有给链接，当然你也可以自己选别的你觉得好的。&#xA;【推荐几个免费的proxy网址：】&#xA;1.https://www.socks-proxy.net/&#xA;2.https://proxygather.com/&#xA;选哪个无所谓，选一个速度快点的。复制粘贴类型，地址和端口号进行连接。注意下类型别写错了。个人觉得电脑挂梯子连快一点。不过都要等。&#xA;3）经过漫长的等待，很漫长。大概十几分钟。&#xA;4）加载出页面表示连接成功。&#xA;点赞 收藏 分享 文章举报 这里是春春 发布了1 篇原创文章 ·&#xA;获赞 1 ·&#xA;访问量 176 私信 关注 </description>
+    </item>
+  </channel>
+</rss>

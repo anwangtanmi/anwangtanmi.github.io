@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>iOS on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/categories/ios/</link>
+    <description>Recent content in iOS on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 15 Jun 2019 23:08:26 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/categories/ios/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WWDC2019 ——iOS13适配（持续更新）</title>
+      <link>https://anwangtanmi.github.io/posts/41458635bdb4f88e37f7a65bfc930aac/</link>
+      <pubDate>Sat, 15 Jun 2019 23:08:26 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/41458635bdb4f88e37f7a65bfc930aac/</guid>
+      <description>第一、Web Content适配 https://developer.apple.com/videos/play/wwdc2019/511/&#xA;https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme&#xA;问题展示 先看两张图：&#xA;如上图所示，如果h5未适配dark模式，则在dark模式下原来的页面内容展示就就存在问题。&#xA;适配方法 这里主要介绍基于CSS样式的修改来适配web内容&#xA;首先，一定要声明当前支持的color-scheme有两种样式，这一句很重要，用东北话说就是“必须的”&#xA;:root { color-scheme: light dark; } 适配的策略就是为两种color-scheme设置不同的颜色样式。&#xA;1、文本适配 如图一，它的CSS描述为&#xA;body { color: black; } h1 { color: #333; } .header { background-color: #593a78; color: white; } 这里相关的颜色样式都是写死的，所以dark模式下才会出现图二的情况。现在我们来看如何适配下面这段代码：&#xA;h1 { color: #333; } .header { background-color: #593a78; color: white; } 然后可用如下方式改造：&#xA;:root { color-scheme: light dark; --post-title-color: #333; --header-bg-color: #593a78; --header-txt-color: white; } h1 { color: var(--post-title-color); } .header { background-color: var(--header-bg-color); color: var(--header-txt-color); } 这里所做的工作实际上是抽象了颜色的值的setter和getter，即不同模式下的值统一定义，然后使用时通过var()去自动获取。</description>
+    </item>
+    <item>
+      <title>彻底解决IOS HTML页面上光标跳行、光标不跟随页面问题</title>
+      <link>https://anwangtanmi.github.io/posts/84f9f3631f3074065f956a7904e06aad/</link>
+      <pubDate>Wed, 05 Dec 2018 11:59:29 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/84f9f3631f3074065f956a7904e06aad/</guid>
+      <description>继：修复IOS上滑动HTML界面光标乱跳&#xA;声明：这里只是说明一种处理方法&#xA;继上一篇文章，处理IOS滑动时，光标不跟随页面滚动，处理方法是，监听touchmove事件，获取当focus的元素，使之失去光标；但是这种方法并不能真正的解决问题，比如，你进入页面，并不滑动页面，而是去点击屏幕可见区域最底下的输入框时，问题就出来了，如图：&#xA;这里说一下，网络上大多说是IOS上fixed定位，修改定位为absolute；或者是添加fastclick.js库，加速手机上tap事件的响应；&#xA;问题就出在这里，你确定你的页面是定位的因素？你确定添加了fastclick库就可以了？如果尝试了上面两种方法还不行，你可以接着往下看；&#xA;仔细观察页面，当你点击最后一行输入框时、滑动页面时，或者是弹框；你可以看到页面上的活动元素先聚焦再滚动；也就是说，activate元素的聚焦事件在页面滚动之前或者滚动完成之前就已经完成了，所以这时候页面滚动，而光标又不跟随滚动，就造成了光标跳行、错乱的问题。&#xA;解决方法：&#xA;一、输入框在聚焦的时候，会弹起软键盘；所以，我们监听软键盘弹起事件，在弹起事件后，进行dom重绘，但是这种必须要加延时，代码如下：&#xA;document.body.addEventListener(&#39;focusin&#39;, function () { //软键盘弹起事件 var node = document.activeElement; //当前focus的dom元素 setTimeout(function () { if (node) { if (node.nodeName == &#34;TEXTAREA&#34; || node.nodeName == &#39;INPUT&#39;) { //如果是input或textarea if (node.style.textShadow === &#39;&#39;) { node.style.textShadow = &#39;rgba(0,0,0,0) 0 0 0&#39;; //改变某个不可见样式，触发dom重绘 } else { node.style.textShadow = &#39;&#39;; } } } }, 1000); }); 二、监听屏幕滚动事件；是屏幕滚动，不是手指滑动的事件，因为我这里使用的是sencha Touch移动端框架，所以，可能会不适应，但是道理是一样的；代码如下：&#xA;initialize: function () { var me = this; me.callParent(); me.</description>
+    </item>
+    <item>
+      <title>iOS9系统下使用UITextField的一个坑——内容从不可见到可见会多出一个空格</title>
+      <link>https://anwangtanmi.github.io/posts/2db55ce7e3c736815e6a39f4f7f2bcaa/</link>
+      <pubDate>Thu, 23 Feb 2017 17:15:39 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/2db55ce7e3c736815e6a39f4f7f2bcaa/</guid>
+      <description>最近项目测试，在产品经理手机上发现一个问题——在UITextField输入密码后点击可见会发现光标往后移了一位即输入的内容多出一个空格。效果图如下：&#xA;然而我在自己测试过程中却没有发现这个问题，于是再次在我的测试机和模拟器上进行测试，在测试完所有模拟器和测试机后问题仍没有复现。于是想，可能是系统的问题，我的模拟器以及测试机都是iOS10.0的系统，而产品经理的手机系统是iOS9.2的，于是就又上网下载了9.0模拟器进行测试。果然，在9.0的模拟器上问题复现了。在上网查资料之后也找到了解决问题的方法，代码如下：&#xA;NSString * text = _passwordField.text;&#xA;_passwordField.text = @” “;&#xA;_passwordField.text = text;&#xA;_passwordField.secureTextEnt 在点击显示按钮的时候先将一个为空格的字符串赋值给textfield，再将textfield原来的内容赋值给textfield。</description>
+    </item>
+    <item>
+      <title>iOS 彩色图片置灰，灰度图片</title>
+      <link>https://anwangtanmi.github.io/posts/aad6a2d5fe2578364debf417e7ea41b5/</link>
+      <pubDate>Mon, 08 Aug 2016 18:14:36 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/aad6a2d5fe2578364debf417e7ea41b5/</guid>
+      <description>理论依据： 所谓颜色或灰度级指黑白显示器中显示像素点的亮暗差别，在彩色显示器中表现为颜色的不同，灰度级越多，图像层次越清楚逼真。灰度级取决于每个像素对应的刷新&#xA;存储单元的位数和显示器本身的性能。如每个象素的颜色用16位&#xA;二进制数表示，我们就叫它16位图，它可以表达2的16次方即65536种颜色。如每一个象素采用24位二进制数表示，我们就叫它24位图，它可以表达2的24次方即16777216种颜色。 灰度就是没有色彩，RGB色彩分量全部相等。如果是一个二值灰度图象，它的象素值只能为0或1，我们说它的灰度级为2。用个例子来说明吧:一个256级灰度的图象，如果RGB三个量相同时，如：RGB(100,100,100)就代表灰度为100,RGB(50,50,50)代表灰度为50。 彩色图象的灰度其实在转化为黑白图像后的像素值（是一种广义的提法），转化的方法看应用的领域而定，一般按加权的方法转换，R， G，B 的比一般为3：6：1。 任何颜色都由红、绿、蓝&#xA;三原色组成，假如原来某点的颜色为RGB(R，G，B)，那么，我们可以通过下面几种方法，将其转换为灰度： 1.&#xA;浮点&#xA;算法：Gray=R*0.3+G*0.59+B*0.11 2.整数方法：Gray=(R*30+G*59+B*11)/100 3.移位方法：Gray =(R*77+G*151+B*28)&amp;gt;&amp;gt;8; 4.&#xA;平均值法：Gray=（R+G+B）/3; 5.仅取绿色：Gray=G； 通过上述任一种方法求得Gray后，将原来的RGB(R,G,B)中的R,G,B统一用Gray替换，形成新的颜色RGB(Gray,Gray,Gray)，用它替换原来的RGB(R,G,B)就是灰度图了。 综上所述，就有了面两种方法，其实也就算一种吧，仅供大家参考。 方法1： //UIImage:&#xA;去色功能的实现（图片灰色显示） – (&#xA;UIImage&#xA;*)grayImage:(&#xA;UIImage&#xA;*)sourceImage {&#xA;int&#xA;width = sourceImage.&#xA;size&#xA;.&#xA;width&#xA;;&#xA;int&#xA;height = sourceImage.&#xA;size&#xA;.&#xA;height&#xA;;&#xA;CGColorSpaceRef&#xA;colorSpace =&#xA;CGColorSpaceCreateDeviceGray&#xA;();&#xA;CGContextRef&#xA;context =&#xA;CGBitmapContextCreate&#xA;(&#xA;nil&#xA;, width, height,&#xA;8&#xA;,&#xA;0&#xA;, colorSpace,&#xA;kCGImageAlphaNone&#xA;);&#xA;CGColorSpaceRelease</description>
+    </item>
+    <item>
+      <title>SpriteBuilder实现2D精灵光影明暗反射效果(一)</title>
+      <link>https://anwangtanmi.github.io/posts/81d6130265ee4d2322dcb1c545655a58/</link>
+      <pubDate>Tue, 17 Nov 2015 16:50:08 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/81d6130265ee4d2322dcb1c545655a58/</guid>
+      <description>其实不用3D建模,用2D的图像就可以模拟3D场景中光照反射的效果.&#xA;这里我们不得不提到一个normalMap(法线图)的概念,请各位童鞋自己度娘吧,简单来说它可以使得2D表面生成一定细节程度的光照方向和反射效果.&#xA;我们首先要制作精灵的法线贴图,至于怎么做,懂3D制图的童鞋应该都知道,有专门的软件.不过对于本猫猪这种图痴来说,也有简单容易上手的工具,名字为SpriteIlluminator,可以到其官网下载:&#xA;https://www.codeandweb.com/spriteilluminator&#xA;软件非常不错,可惜要收费 ;( 不过有7天的试用期限,以下是软件运行界面:&#xA;至于怎么用,大家可以看其简明教程:&#xA;https://www.codeandweb.com/blog/2015/03/17/cocos2d-dynamic-lighting-tutorial&#xA;而在这里可以看到更多的教程:&#xA;https://www.codeandweb.com/blog&#xA;以下就是其教程中,app完成后实际的效果:&#xA;还是相当不错的,我们在下篇中就来简单说说用SpriteBuilder如何完成类似效果.</description>
+    </item>
+    <item>
+      <title>IOS使用navigationController跳转到下一页面黑屏问题。</title>
+      <link>https://anwangtanmi.github.io/posts/261335be215f0ef161d88d7cb3db7e23/</link>
+      <pubDate>Sun, 02 Aug 2015 22:29:08 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/261335be215f0ef161d88d7cb3db7e23/</guid>
+      <description>最近公司给公司做个ios项目，由于刚接触到oc，技术也比较菜，遇到问题，解决了好长时间，特此记下。&#xA;之前跳转使用如下语句，跳转成功后只有标题，下面是黑屏： QHProCatalogController *viewController = [[QHProCatalogControlleralloc]init];&#xA;self.navigationItem.title=@”返回“;&#xA;NSLog(@”nav=%@”,self.navigationController);&#xA;[self.navigationControllerpushViewController:viewController animated:YES];&#xA;现在修改成如下语句解决问题：&#xA;QHProCatalogController *view = [self.storyboardinstantiateViewControllerWithIdentifier:@”procatalog”];&#xA;self.navigationItem.title=@”返回“;&#xA;[self.navigationControllerpushViewController:view animated:YES];&#xA;instantiateViewControllerWithIdentifier:@”procatalog”这里是storyboard id是procatalog。&#xA;如此问题即可解决。</description>
+    </item>
+  </channel>
+</rss>

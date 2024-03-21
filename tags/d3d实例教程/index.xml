@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>D3D实例教程 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/</link>
+    <description>Recent content in D3D实例教程 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 05 Aug 2013 14:08:35 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CImage类</title>
+      <link>https://anwangtanmi.github.io/posts/fbf5791fa0635fc668390b75f83af188/</link>
+      <pubDate>Mon, 05 Aug 2013 14:08:35 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/fbf5791fa0635fc668390b75f83af188/</guid>
+      <description>本系列文章由zhmxy555编写，转载请注明出处。 http://blog.csdn.net/zhmxy555/article/details/7422922&#xA;作者：毛星云 邮箱： [email protected] 欢迎邮件交流编程心得&#xA;我们知道，Visual C++中的CBitmap类的功能简直太弱小了，这曾经让Visual C++在图像处理方面的功能比较尴尬。之前笔记里面，我们采用的CBitmap配合GDI进行透明图像的处理有些晦涩繁琐，而且受到图像素材的限制，可以说是有些落后，不是太实用。&#xA;为了解决这个问题，这节笔记我们将系统的学习MFC和ATL中新增一个图像处理的类，它就是华丽而强大的CImage类。&#xA;由于本节笔记是对CImage类的一个非常系统近乎完全的介绍，我尽量让它涵盖到了CImage类的所有的属性和类成员，所以&#xA;篇幅也许比以往的笔记内容都长，里面的不少内容是用到的时候才需要掌握或者查阅的，并不用强行记忆。&#xA;一，概念讲解部分&#xA;1.CImage类的定位和概述&#xA;首先，我们简单介绍一下CImage类的定位。&#xA;CImage是MFC和ATL共享的新类，它提供了增强的位图支持，包括加载、保存和转换JPEG，BMP，GIF，PNG图像格式的能力。可以说是微软意识到了CBitmap的不足，然后推出了一个CBitmap的增强版。使用CImage类，需在代码头部加入包含atlimage.h文件，即添加代码#include “atlimage.h”。&#xA;由于CImage拥有功能强大的类成员函数的支持，它便具有了下列四个比较出彩的特性： 1、AlphaBlend支持像素级的颜色混合，从而实现透明和半透明的效果。 2、PlgBlt能使一个矩形区域的位图映射到一个平行四边形区域中，而且还可能使用位屏蔽操作。 3、TransparentBlt在目标区域中产生透明图像&#xA;4、MaskBlt在目标区域中产生源位图与屏蔽位图合成的效果。&#xA;2.以CImage类做媒，让CBitmap类也能处理丰富的图片格式&#xA;解决的思路比较明朗，我们采用CImage类的Load函数加载图片，之后用Detch取得HBITMAP的句柄，然后再将此句柄附加给CBitmap的对象就行了。&#xA;这样就实现了让CBitmap类也可以操作JPG/JPEG/GIF/PNG格式的图片。&#xA;具体代码如下：&#xA;[cpp]&#xA;view plain&#xA;copy&#xA;print&#xA;? #include “atlimage.h” CImage image； //定义一个CBitmap类 image.Load（“filename”）； //filename为要加载的文件地址 HBITMAP hBitmap=image.Detach(); //返回被分离的图片的句柄 CBitmap bmp; // 定义一个bitmap bmp.Attach(hBitmap); //进行句柄的附加 然后就可以用CBitmap进行余下的操作了。&#xA;3.CImage额外的一些性质&#xA;CImage类对于DIB（device-independent bitmap）设备无关位图文件和非DIB都可以处理。我们可以通过Create函数或者CImage：：Load来处理DIB部分，用Attach函数来将非DIB部分附加到一个CImage对象上。&#xA;对于以下函数，只支持DIB部分的位图文件，他们是：&#xA;GetBitsGetColorTable，GetMaxColorTableEntries，GetPitch，GetPixelAddress，IsIndexed，SetColorTable。&#xA;我们可以通过CImage类中的IsDIBSection（）函数来帮助我们判断一个位图文件是否为DIB部分，其定义如下：&#xA;[cpp]&#xA;view plain&#xA;copy&#xA;print&#xA;? bool IsDIBSection( ) const throw( ); //如果返回值为true，则该文件为DIB；返回flase则不是DIB文件 我们需要注意的是，CImage不能被选到一个新的CDC（ class of device-context设备描述表的类），CImage会为图像创建自己的HDC（设备描述表DC的句柄）。因为一个HBITMAP只能被选入到一个HDC中一次，也就是说这个与CImage相关的HBITMAP不能被选到一个其他的HDC中。</description>
+    </item>
+  </channel>
+</rss>

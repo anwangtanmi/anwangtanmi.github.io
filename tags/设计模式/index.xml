@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>设计模式 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+    <description>Recent content in 设计模式 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 12 Mar 2011 21:50:00 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>测试模式点滴：清理环境</title>
+      <link>https://anwangtanmi.github.io/posts/aa2cea3aea3e93cbceb000590f592621/</link>
+      <pubDate>Sat, 12 Mar 2011 21:50:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/aa2cea3aea3e93cbceb000590f592621/</guid>
+      <description> 准备实践自动化测试的朋友可以看看这本书：XUnit Test Patterns——Refactoring Test Code，及其网站http://xunitpatterns.com/。估计国内还没有译本。书的内容不错，只是倾向于单元测试，还糅合了其它诸如“反测试模式”（文中称为bad smells，大概如同code complete里面描述的bad smells差不多，只是这里从自动化测试代码的角度而言）的内容。我对测试模式比较感兴趣，就采摘一些与大家共享。 上一篇已经就准备环境谈了很多，清理环境就显得轻松一点，但是问题和影响还是会出人意料。&#xA;占用有限资源的测试尤其容易出问题。一个接一个的测试用例如果没有恰当的释放占用的资源，就会让后面的某个测试用例失败，而且是随机的一个，这种失败让人摸不着头脑。例如数据库的连接，注册表项，甚至是临时文件忘了删除也是个问题。&#xA;跟准备环境一样，清理环境也有类似的测试模式。&#xA;l 永久准备&#xA;n 道理跟准备环境时一样，把环境重设为一个固定状态。很多时候根本就是准备环境和清理环境的代码是共享的。&#xA;l 回滚清理&#xA;n 这个跟数据库里面的回滚（rollback）原理是一致的，如果准备环境时执行的步骤之间存在依赖，清理环境时就得顾及这个依赖。&#xA;n 你可以理解为反洋葱头清理，如果准备环境时以ABCD…的顺序初始化，清理的时候就以…DCBA的顺序清理。通常洋葱头类的协定是先执行基类的函数，那么反洋葱头类的协定则是最后执行基类的函数。&#xA;l 垃圾收集清理&#xA;n 运用类似垃圾收集的原理，测试用例执行过程中产生的各种资源占用都会被登记在册，直到清理阶段逐一清除。&#xA;n 比如为了调试和诊断产生了不少文件，虽然这些文件是需要保留的，但多个测试用例执行之后它们产生的文件就会相混淆，所以产生的文件需要被归档整理后删除，哪些文件需要这么做呢？可以用垃圾收集方法登记起来，最后统一处理。&#xA;不好好做清理环境的后果可以是&#xA;l 单个执行测试用例没问题，全部一起执行则无法全部完成。&#xA;l 增加、删除测试用例或者改变测试用例的执行顺序则无法全部完成。&#xA;l 某些测试用例失败之后其它不该失败的测试用例也失败了。&#xA;l 一次全部测试用例执行之后无法再全部执行一次。&#xA;l 对于同一个测试用例的集合分散在多台机器上执行时，有些测试机器能全部完成，有些则不行。&#xA;调试和诊断这类问题费心费力，而且没有任何价值，因为设计良好的清理环境就可以避免这些问题。&#xA;点赞 收藏 分享 文章举报 站内首发文章 iteye_2449 发布了0 篇原创文章 ·&#xA;获赞 9 ·&#xA;访问量 12万+ 私信 关注 </description>
+    </item>
+  </channel>
+</rss>

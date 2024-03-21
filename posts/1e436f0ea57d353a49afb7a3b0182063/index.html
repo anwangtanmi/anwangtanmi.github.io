@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Android移动客户端性能测试浅谈——电量 - 暗网探秘</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Android移动客户端性能测试浅谈——电量" />
+<meta property="og:description" content="本文由作者张迎贞授权网易云社区发布。
+APP性能测试除了需要监控PCU、内存占用、流量等，还需要获取APP的电量数据，测试在可接受范围内，避免APP出现过度消耗电量的现象。
+手机有很多硬件模块：CPU，蓝牙，GPS，显示屏，Wifi，射频(Cellular Radio)等，在手机使用过程中，这些硬件模块可能处于不同的状态，譬如WIFI打开或关闭，屏幕是亮还是暗，CPU运行或休眠。 硬件模块在不同的状态下的耗电量是不同的。Android在进行电量统计时，并不是采用直接记录电流消耗量的方式，而是跟踪硬件模块在不同状态下的使用时间，收集一些可用信息，用来近似的计算出电池消耗量。
+从用户使用层面来看，Android需要统计出应用程序的耗电量。应用程序的耗电量由很多部分组成，可能使用了GPS，蓝牙等模块，可能应用程序要求长时间亮屏(譬如游戏、视频类应用)。 一个应用程序的电量统计，可以采用累计应用程序使用所有硬件模块时间这种方式近似计算出来。
+举一个例子，假定某个APP使用了GPS，使用时间用 t 表示。GPS模块单位时间的耗电量用 w 表示，那么，这个APK使用GPS的耗电量就可以按照如下方式计算：
+耗电量 = 单位时间耗电量(w) × 使用时间(t)
+测试方法多种多样：
+1、CPU空闲时，停留在主界面不退出，打开网络然后锁屏，12小时后查看电量、流量变化
+2、APP在操作运行时（此过程可借助使用monkey进行压力测试），1小时后查看电量、流量变化
+3、第三方APP进行步骤1、2相同的场景测试
+4、对比竞品APP的耗电量。
+期望结果：APP在静止状态时无没有明显的耗电情况，在运行状态时耗电量在可接受范围内。
+方法1——手机自带 有的手机设置菜单里面会有流量和电量统计类，只需在测试前后记录下电量值，便可获取消耗电量数值。
+方法2——使用第三方工具 已知公式 ： 耗电量 = 电流 * 时间
+例：平均电流为150mA，测试时间30min，则，30min内耗电量为：150 * 30 /60=75mAh（毫安小时）。
+通过耗电量和使用手机电量的百分比，可得出手机电池容量（理论值）。
+一个系统走一遍基础功能耗电不应超过20%。
+1、Emmagee
+https://github.com/NetEase/Emmagee
+Emmagee是网易杭州研究院QA团队开发的一个简单易上手的Android性能监测小工具，主要用于监控单个App的CPU，内存，流量，启动耗时，电量，电流等性能状态的变化，且用户可自定义配置监控的频率以及性能的实时显示，并最终生成一份性能统计文件。
+2、腾讯GT
+http://gt.tencent.com/download.html
+此apk是一款可以对APP进行测试的软件，可以在任何情况下快速测试手机app的CPU、内存、流量、电量、帧率/流畅度等性能测试。
+使用方法：
+打开GT，点击选择被测应用，选中自己要测的app，选择关注的测试点，cup、net(流量)、内存（pss）等，点击“启动”，在gt的插件标签里有耗电测试，导出文件查看电量使用。
+3、其他各种常见耗电量监控工具
+金山电池医生：能够记录CPU耗时、流量消耗随时间的变化曲线，这样可以查看app耗电在哪些时间点.
+GSam Battery Pro：耗电量信息显示详细，包括了唤醒锁数，前后台占用cpu的时间，可以导出数据，支持多种监控起始时间点设置
+PowerTutor：1.显示系统电量消耗水平，记录耗电量的焦耳值，不是百分比，包括LCD/OLED，CPU,WiFi，3G，GPS和Audio；2.查看某段时间内所有运行中的应用程序的耗电量
+Battery Monitor Widget：高度可定制化的电量监控小工具，不仅可以显示当前电量，估算剩余电量支撑时间，还可以一目了然地检测出各个APP的耗电历史，从而方便进行比较。
+Smart Battery Monitor：除了可以在状态栏显示电池消耗百分比外，还可以显示电池的温度，以及已充电时间。
+Battery Indicator：亮点是轻便、小巧，甚至使用它时不会消耗电池。当然，它可以显示电池的电量百分比、电池的温度、以及电池的健康信息。
+Battery Widget：这个工具不仅是一个电池Widget，还可以作为显示选项，GPS，WiFi，蓝牙选项等的快捷方式。
+Battery Saver：被称为管理电池的最强大应用之一。除了显示电量信息，电池温度和健康信息外，它还可以快速管理一些耗电量大的应用如：GPS，WiFi，蓝牙等。另外：该工具可以查看一天之内的哪个时间点电池的耗电量最大。|
+等等等等
+方法3——Battery Historian Android框架层通过一个名为batterystats的系统服务，电池的信息，电压，温度，充电状态等等，都是由BatteryService来提供的。电池的这些信息是BatteryService通过广播主动把数据传送给所关心的应用程序。实现了电量统计的功能，batterystats实现原理可以查阅电量统计服务" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://anwangtanmi.github.io/posts/1e436f0ea57d353a49afb7a3b0182063/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-12-13T11:53:56+08:00" />
+<meta property="article:modified_time" content="2018-12-13T11:53:56+08:00" />
+
+
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container header__container">
+		
+	<div class="logo">
+		<a class="logo__link" href="/" title="暗网探秘" rel="home">
+			<div class="logo__item logo__text">
+					<div class="logo__title">暗网探秘</div>
+					
+				</div>
+		</a>
+	</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Android移动客户端性能测试浅谈——电量</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2018-12-13T11:53:56&#43;08:00">2018-12-13</time></div></div>
+		</header>
+		<div id="gatop"></div>
+		<div class="content post__content clearfix">
+			
+<div class="entry-content clearfix">
+<div id="article_content" class="article_content clearfix">
+<br>
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-d284373521.css">
+<link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-d284373521.css">
+<div class="htmledit_views" id="content_views">
+<p>本文由作者张迎贞授权网易云社区发布。</p>
+<p></p>
+<p><span style="font-family:'微软雅黑';"><span style="font-size:10px;">APP性能测试除了需要监控PCU、内存占用、流量等，还需要获取APP的电量数据，测试在可接受范围内，避免APP出现过度消耗电量的现象。<br>手机有很多硬件模块：CPU，蓝牙，GPS，显示屏，Wifi，射频(Cellular Radio)等，在手机使用过程中，这些硬件模块可能处于不同的状态，譬如WIFI打开或关闭，屏幕是亮还是暗，CPU运行或休眠。 硬件模块在不同的状态下的耗电量是不同的。Android在进行电量统计时，并不是采用直接记录电流消耗量的方式，而是跟踪硬件模块在不同状态下的使用时间，收集一些可用信息，用来近似的计算出电池消耗量。<br>从用户使用层面来看，Android需要统计出应用程序的耗电量。应用程序的耗电量由很多部分组成，可能使用了GPS，蓝牙等模块，可能应用程序要求长时间亮屏(譬如游戏、视频类应用)。 一个应用程序的电量统计，可以采用累计应用程序使用所有硬件模块时间这种方式近似计算出来。<br>举一个例子，假定某个APP使用了GPS，使用时间用 <em>t</em> 表示。GPS模块单位时间的耗电量用 <em>w</em> 表示，那么，这个APK使用GPS的耗电量就可以按照如下方式计算：<br>耗电量 = 单位时间耗电量(w) × 使用时间(t)</span></span></p>
+<p><strong><span style="font-family:'微软雅黑';">测试方法多种多样：</span></strong></p>
+<p><span style="font-family:'微软雅黑';"><span style="font-size:10px;">1、CPU空闲时，停留在主界面不退出，打开网络然后锁屏，12小时后查看电量、流量变化<br>2、APP在操作运行时（此过程可借助使用monkey进行压力测试），1小时后查看电量、流量变化<br>3、第三方APP进行步骤1、2相同的场景测试<br>4、对比竞品APP的耗电量。<br>期望结果：APP在静止状态时无没有明显的耗电情况，在运行状态时耗电量在可接受范围内。</span></span></p>
+<h2 style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><span style="font-size:16px;">方法1——手机自带</span><span style="font-size:10px;"></span></span></h2>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';">有的手机设置菜单里面会有流量和电量统计类，只需在测试前后记录下电量值，便可获取消耗电量数值。</span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><img src="http://nos.netease.com/knowledge/6586c809-312e-4369-b3d6-fc46ac696468" alt="6586c809-312e-4369-b3d6-fc46ac696468"></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';"> </span></p>
+<h2 style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><span style="font-size:16px;">方法2——使用第三方工具</span><span style="font-size:10px;"></span></span></h2>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><span style="font-size:10px;">已知公式 ： 耗电量 = 电流 * 时间<br>例：平均电流为150mA，测试时间30min，则，30min内耗电量为：150 * 30 /60=75mAh（毫安小时）。<br>通过耗电量和使用手机电量的百分比，可得出手机电池容量（理论值）。<br>一个系统走一遍基础功能耗电不应超过20%。</span></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><span style="font-size:10px;"> </span><strong>1、</strong><strong>Emmagee</strong></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';font-size:10px;"><a href="https://github.com/NetEase/Emmagee" rel="nofollow" style="color:rgb(51,51,51);" data-token="67aa0b8052b162f4a0c830cc15e7ee90">https://github.com/NetEase/Emmagee</a></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><span style="font-size:10px;">Emmagee是网易杭州研究院QA团队开发的一个简单易上手的Android性能监测小工具，主要用于监控单个App的CPU，内存，流量，启动耗时，电量，电流等性能状态的变化，且用户可自定义配置监控的频率以及性能的实时显示，并最终生成一份性能统计文件。</span></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><img src="http://nos.netease.com/knowledge/149a9028-d4ab-4906-bebb-d9b6c9467067" alt="149a9028-d4ab-4906-bebb-d9b6c9467067"></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';"><img src="http://nos.netease.com/knowledge/a2fbe08a-a921-4413-ac26-c2902ba92059?imageView&amp;thumbnail=980x0" alt="a2fbe08a-a921-4413-ac26-c2902ba92059?imageView&amp;thumbnail=980x0"></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><strong><span style="font-size:12px;font-family:'微软雅黑';">2、腾讯GT</span></strong></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><a href="http://gt.tencent.com/download.html" rel="nofollow" style="color:rgb(51,51,51);" data-token="810ff5e19666576ff72b071f707cee10">http://gt.tencent.com/download.html</a></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';">此apk是一款可以对APP进行测试的软件，可以在任何情况下快速测试手机app的CPU、内存、流量、电量、帧率/流畅度等性能测试。<br>使用方法：</span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><img src="http://nos.netease.com/knowledge/ce66d479-9fc7-48cf-8a72-3ce2b219bbe1?imageView&amp;thumbnail=980x0" alt="ce66d479-9fc7-48cf-8a72-3ce2b219bbe1?imageView&amp;thumbnail=980x0"></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';">打开GT，点击选择被测应用，选中自己要测的app，选择关注的测试点，cup、net(流量)、内存（pss）等，点击“启动”，在gt的插件标签里有耗电测试，导出文件查看电量使用。</span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';"><img src="http://nos.netease.com/knowledge/e6192170-9f3d-4742-b873-7f9483b7193d" alt="e6192170-9f3d-4742-b873-7f9483b7193d"></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><strong><span style="font-family:'微软雅黑';font-size:12px;">3</span><span style="font-family:'微软雅黑';font-size:12px;">、其他各种常见耗电量监控工具</span></strong></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';font-size:10px;"><strong>金山电池医生：</strong>能够记录CPU耗时、流量消耗随时间的变化曲线，这样可以查看app耗电在哪些时间点.<br><strong>GSam Battery Pro</strong><strong>：</strong>耗电量信息显示详细，包括了唤醒锁数，前后台占用cpu的时间，可以导出数据，支持多种监控起始时间点设置<br><strong>P</strong><strong>owerTutor</strong><strong>：</strong>1.显示系统电量消耗水平，记录耗电量的焦耳值，不是百分比，包括LCD/OLED，CPU,WiFi，3G，GPS和Audio；2.查看某段时间内所有运行中的应用程序的耗电量<br><strong>Battery Monitor Widget</strong><strong>：</strong>高度可定制化的电量监控小工具，不仅可以显示当前电量，估算剩余电量支撑时间，还可以一目了然地检测出各个APP的耗电历史，从而方便进行比较。<br><strong>Smart Battery Monitor</strong>：除了可以在状态栏显示电池消耗百分比外，还可以显示电池的温度，以及已充电时间。<br><strong>Battery Indicator</strong>：亮点是轻便、小巧，甚至使用它时不会消耗电池。当然，它可以显示电池的电量百分比、电池的温度、以及电池的健康信息。<br><strong>Battery Widget</strong>：这个工具不仅是一个电池Widget，还可以作为显示选项，GPS，WiFi，蓝牙选项等的快捷方式。<br><strong>Battery Saver</strong>：被称为管理电池的最强大应用之一。除了显示电量信息，电池温度和健康信息外，它还可以快速管理一些耗电量大的应用如：GPS，WiFi，蓝牙等。另外：该工具可以查看一天之内的哪个时间点电池的耗电量最大。|<br>等等等等</span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';"><br></span></p>
+<h3 style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';background-color:rgb(255,255,255);"><span style="font-size:16px;font-family:'微软雅黑';">方法3——Battery Historian</span></h3>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><span style="font-size:10px;">Android框架层通过一个名为batterystats的系统服务，电池的信息，电压，温度，充电状态等等，都是由BatteryService来提供的。电池的这些信息是BatteryService通过广播主动把数据传送给所关心的应用程序。实现了电量统计的功能，batterystats实现原理可以查阅<strong><a href="http://duanqz.github.io/2015-07-21-batterystats-part1" rel="nofollow" style="color:rgb(51,51,51);" data-token="10c1234a68c083c82118d5d6840e5cfe">电量统计服务</a><br></strong>Android</span><span style="font-size:10px;">提供的<strong>dumpsys</strong>命令用于查看系统服务的信息(实现原理可以查阅<a href="http://duanqz.github.io/2015-07-19-Intro-to-dumpsys" rel="nofollow" style="color:rgb(51,51,51);" data-token="eed1f71a06b547d7c3183b00205479d2">dumpsys介绍</a>)， 将<strong>batterystats</strong>作为参数，就能输出完整的电量统计信息。</span></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><strong><span style="font-family:'微软雅黑';">执行：</span></strong></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';font-size:10px;">手机连接usb执行：</span></p>
+<pre style="color:rgb(51,51,51);font-size:14px;background-color:rgb(255,255,255);">adb shell dumpsys batterystats --enable full-wake-history 
+adb shell dumpsys batterystats –reset //清空电池的历史状态</pre>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';font-size:10px;">断开USB,打开目标应用，执行monkey，正常使用5分钟左右。</span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';">连接USB，执行：</span></p>
+<pre style="color:rgb(51,51,51);font-size:14px;background-color:rgb(255,255,255);">adb bugreport &gt; bugreport.txt
+也可以用adb shell dumpsys batterystats &gt; com.nt.topline &gt; toplinepower1.txt //得到指定app相关的电量消耗信息。
+python historian.py -a bugreport.txt &gt; batterystats.html</pre>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';">上面的historian.py脚本是python写的，所以需要python环境，从<a href="https://github.com/google/battery-historian" rel="nofollow" style="color:rgb(51,51,51);" data-token="4fb0787f34e71c0b5ea9b363ef7cabd6">github</a>上下载这个脚本。Chrome浏览器打开生成的battery.html文件，打开查看。</span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';"><br></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';"><img src="http://nos.netease.com/knowledge/1ed08c0a-fa5c-4bc3-9fc0-3eac4ba48ce8?imageView&amp;thumbnail=980x0" alt="1ed08c0a-fa5c-4bc3-9fc0-3eac4ba48ce8?imageView&amp;thumbnail=980x0"></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';"> </span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';">html中信息都能从bugreport.txt中找到相应的信息。 </span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><strong><span style="font-size:12px;font-family:'微软雅黑';">分析各个指标代表的意义：</span></strong></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';"><img src="http://nos.netease.com/knowledge/3ad7d3c7-fb4e-4db7-b11f-75d6520a6c19?imageView&amp;thumbnail=980x0" alt="3ad7d3c7-fb4e-4db7-b11f-75d6520a6c19?imageView&amp;thumbnail=980x0"></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';">上面的10，20代表的就是秒的意思，它是以一分钟为周期，到第60秒的时候变为0。横坐标就是一个时间范围，咱们的例子中统计的数据是以重置为起点，获取bugreport内容时刻为终点。我们一共采集了多长时间的数据，图表下也有信息说明。（经其他人的反馈，这个坐标间隔是会随着时间的长度发生改变，所以要以你的实际情况为准）<br></span><span style="font-family:'微软雅黑';font-size:10px;">battery_level：</span><span style="font-size:10px;font-family:'微软雅黑';">电量，可以看出电量的变化。比如上图中的数据显示刚开始电量是100%，然后在第11秒-12秒中间的某个时刻降到了99%。</span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';"><img src="http://nos.netease.com/knowledge/2745ad06-c40c-4a73-a9ae-7dd07597430a" alt="2745ad06-c40c-4a73-a9ae-7dd07597430a"></span></p>
+<h5 style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';font-size:10px;"><a></a>plugged： 充电状态，这一栏显示是否进行了充电，以及充电的时间范围。例如上图反映了我们在第22s插入了数据线，然后一直持续了数据采集结束。<br>screen： 屏幕是否点亮，这一点可以考虑到睡眠状态和点亮状态下电量的使用信息。<br>top：该栏显示当前时刻哪个app处于最上层，就是当前手机运行的app，用来判断某个app对手机电量的影响，这样也能判断出该app的耗电量信息。该栏记录了应用在某一个时刻启动，以及运行的时间，这对我们比对不同应用对性能的影响有很大的帮助。<br>wake_lock*： <a href="http://blog.csdn.net/g_salamander/article/details/7978772" rel="nofollow" style="color:rgb(51,51,51);" data-token="ca56c437103e4a5c1d3e9797a2ea5e32">wake_lock</a> 该属性是记录wake_lock模块的工作时间。是否有停止的时候等。Android的休眠唤醒主要基于wake_lock机制，只要系统中存在任一有效的wake_lock，系统就不能进入深度休眠，但可以进行设备的浅度休眠操作。wake_lock一般在关闭lcd、tp但系统仍然需要正常运行的情况下使用，比如听歌、传输很大的文件等。<br>running：界面的状态，主要判断是否处于idle的状态。用来判断无操作状态下电量的消耗。<br>wake_lock_in：wake_lock有不同的组件，这个地方记录在某一个时刻，有哪些部件开始工作，以及工作的时间。<br>data_conn：数据连接方式的改变，上面的edge是说明采用的gprs的方式连接网络的。此数据可以看出手机是使用2g，3g，4g还是wifi进行数据交换的。这一栏可以看出不同的连接方式对电量使用的影响。<br>status：电池状态信息，有充电，放电，未充电，已充满，未知等不同状态。 这一栏记录了电池状态的改变信息。<br>phone_signal_strength：手机信号状态的改变。 这一栏记录手机信号的强弱变化图，依次来判断手机信号对电量的影响。<br>health：电池健康状态的信息，这个信息一定程度上反映了这块电池使用了多长时间。 这一栏记录电池状态在何时发生改变，上面的图中电池状态一直处于good状态。<br>plug：充电方式，usb或者插座，以及显示连接的时间。 这一栏显示了不同的充电方式对电量使用的影响。<br>gps：gps是否开启<br>phone_in_call :是否进行通话<br>Sync :是否跟后台同步，可以把鼠标停在某一项上面。可以看到何时sync同步 启动的，持续时间Duration多久。电池容量不会显示单一行为消耗的具体电量，这里只能显示使用电池的频率和时长，你可以看分时段的剩余电量来了解具体消耗了多少电量。 </span></h5>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';"><img src="http://nos.netease.com/knowledge/936ccaef-06d7-427a-976e-e864fa629384" alt="936ccaef-06d7-427a-976e-e864fa629384"></span></p>
+<h5 style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';font-size:10px;">Job ：后台的工作，比如服务service的运行。从下面图中可以看到qihoo的AppStore和鲁大师都在运行后台服务。 <br><img src="http://nos.netease.com/knowledge/7b3fefbe-d1dd-4308-a613-3db8c4a3ef3d" alt="7b3fefbe-d1dd-4308-a613-3db8c4a3ef3d"><br>data_conn：数据连接方式的改变，上面的edge是说明采用的gprs的方式连接网络的。此数据可以看出手机是使用2g，3g，4g还是wifi进行数据交换的。这一栏可以看出不同的连接方式对电量使用的影响。<br>status ：电池状态信息，有充电，放电，未充电，已充满，未知等不同状态。 这一栏记录了电池状态的改变信息。<br>phone_signal_strength ：手机信号状态的改变。 这一栏记录手机信号的强弱变化图，依次来判断手机信号对电量的影响。</span></h5>
+<h3 style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><span style="font-size:12px;">结果分析：</span><span style="font-size:10px;"></span></span></h3>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><span style="font-size:10px;">通过前面学习到的Battery Historian我们可以得到设备的电量消耗数据.<br></span><span style="font-size:10px;">例如拿移动网络举例，如果数据中的移动蜂窝网络(Mobile Radio)电量消耗呈现下面的情况，间隔很小，又频繁断断续续的出现，说明电量消耗性能很不好：</span></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';"><img src="http://nos.netease.com/knowledge/0737c4a1-96d3-4881-9ced-d7646ee7c3a7" alt="0737c4a1-96d3-4881-9ced-d7646ee7c3a7"></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';">经过优化之后，如果呈现下面的图示，说明电量消耗的性能是良好的：</span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';"><img src="http://nos.netease.com/knowledge/d5e00cf1-eafc-4b70-bb7d-8fe693e9e13e" alt="d5e00cf1-eafc-4b70-bb7d-8fe693e9e13e"></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';">另外WiFi连接下，网络传输的电量消耗要比移动网络少很多，应该尽量减少移动网络下的数据传输，多在WiFi环境下传输数据。</span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';"><img src="http://nos.netease.com/knowledge/71899429-b564-4888-8675-38abaf0cd60f" alt="71899429-b564-4888-8675-38abaf0cd60f"></span></p>
+<h2 style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><span style="font-size:16px;">耗电原因分析</span><span style="font-size:10px;"></span></span></h2>
+<p><strong><span style="font-family:'微软雅黑';">主要造成耗电的几大原因：</span></strong></p>
+<p><span style="font-size:10px;font-family:'微软雅黑';"></span></p>
+<ul class="list-paddingleft-2">
+<li>
+<p>屏幕唤醒</p>
+</li>
+<li>
+<p>CPU唤醒</p>
+</li>
+<li>
+<p>蜂窝数据</p>
+</li>
+<li>
+<p>传感器</p>
+</li>
+</ul>
+<h3 style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><span style="font-size:12px;">可能造成耗电的原因</span><span style="font-size:10px;"></span></span></h3>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"></p>
+<p><span style="font-size:10px;font-family:'微软雅黑';"></span></p>
+<ul class="list-paddingleft-2">
+<li>
+<p>网络请求耗电，而且手机数据网络进行http请求比无线网进行http请求更加耗电，因为数据网络调用到一些底层的硬件模块，就如GPS一样，当手机打开GPS功能后，也是启动了一些硬件模块就会明显增加耗电</p>
+</li>
+<li>
+<p>高频的刷新UI界面，刷新UI界面其实就是进行layout的绘制，如果一个Activity的布局嵌套太多层，那么每一层layout都会刷新一次，例如动画等等这些都会造成耗电</p>
+</li>
+<li>
+<p>数据库，SD卡文件操作，这些都是属于耗时操作，当操作次数很少的时候基本不会有耗电问题，但是当短时间内操作次数很多的话，也会明显的增加耗电，同时也有可能造成页面卡顿</p>
+</li>
+<li>
+<p>AlarmManager<span style="font-family:'微软雅黑';font-size:10px;">，例如一些推送的心跳包实现，AlarmManager会定时唤醒CPU去执行一些任务，也是造成耗电的一大源头</span></p>
+</li>
+<li>
+<p>手机网络环境不好的时候会频繁的切换网络，因为网络数据交互的时候，系统也是会被唤醒的，所以APP如果在监听了网络切换广播后做了大量的操作，一样会增加耗电</p>
+</li>
+<li>
+<p>针对一些任务队列的处理，如果队列堆积的任务太多，导致循环执行太久也会造成耗电，因为占用了CPU资源去执行代码，我们的log日志工具保存到文件就是用任务队列实现的，当压力测试SDK一次性接受1万条消息的时候，那内存就表上来了，跟了下发现日志保存队列里面积压了4千多个任务，这时候即使手机锁屏，也还会不断的把队列中的任务执行完然后CPU才会休眠下去的，同样会造成严重的耗电，耗内存，好在release版本的日志都是关闭的</p>
+</li>
+<li>
+<p>执行一些高运算量的代码，例如json数据解析，一些二进制协议的数据编码和解码</p>
+</li>
+<li>
+<p>接收系统的一分钟广播，然后做一些程序逻辑处理，其实接收一分钟广播不耗电，耗电的是一分钟执行一次程序处理</p>
+</li>
+<li>
+<p>Wake Lock<span style="font-family:'微软雅黑';font-size:10px;">使用不当导致没有及时的释放，Wake Lock可以阻止cpu进入休眠的，如果没有及时的release会造成cpu无法休眠，程序耗电严重</span></p>
+</li>
+<li>
+<p>如果程序中有定时任务，在cpu休眠之后，定时任务就会被挂起不执行，这时候并不会造成太大的耗电，但是如果这个定时任务的时间间隔很短，1秒执行一次，那么当手机app集成了推送，推送就会有心跳包通过AlarmManager来唤醒，每次唤醒的时候就会再去执行挂起的定时任务，虽然执行定时任务的耗电量可能比心跳包的耗电量少很多，不过还是需要注意的，积少成多</p>
+</li>
+<li>
+<p>其实android中的Log日志的打印也会耗电的，在日常开发中，我们可能不仅会把log打印到AndroidStudio里面，有可能还会保存起来，而且可能在打印对象信息数据的时候会用到json格式转换，这些都会增加耗电，但是在正式发布的apk包中日志管理一般都是关闭的</p>
+</li>
+<li>
+<p>在手机锁屏后，CPU会过一段时间才休眠，如果程序中有定时任务，在CPU休眠后会被挂起不执行，但是在CPU休眠之前，定时任务还是会一直的执行的，之前遇到过这么一个问题，我们采用Picasso库：Picasso.with(context)</p>
+</li>
+</ul>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><span style="font-size:10px;"> </span> </span></p>
+<h2 style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';background-color:rgb(255,255,255);"><span style="font-size:16px;font-family:'微软雅黑';">优化建议:</span></h2>
+<h3 style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';">针对主要耗电原因的优化：</span></h3>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><span style="font-size:10px;">  o   传感器的使用,比如gps，如果业务上非频繁使用并且要求精度不高，那么就在业务上优化定位时机和精度.<br>  o   如果业务上需要有长时间的service，那么要考虑到CPU weak lock，防止后台任务没有完成，但是cpu睡眠,或者任务已经完成，仍然持有weak lock<br>  o   我们也许会在手机充电时，做一些日志上传操作的定时任务，那么注意重试次数和成功后处理，防止用户一夜充电不到80%，然后手机厂商为我们背锅的情况<br>  o   已知屏幕唤醒是耗电大户，原因是屏幕渲染,绘制消耗资源，所以我们在自定义视图,布局的时候，要尽量做到Android性能优化里要求<br>  o   同理,各种优化,平时编码的习惯，都会影响我们脆弱的电量<br>  o   为了减少电量的消耗，在蜂窝移动网络下，最好做到批量执行网络请求，尽量避免频繁的间隔网络请求。</span><br><span style="font-size:12px;"><strong><br></strong></span><strong>针对Http请求优化： </strong></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><span style="font-size:10px;">  o    对http请求数据做GZIP压缩，当前流行的http第三方看默认都支持GZIP压缩<br> o    Http缓存，Http协议有一个Cache机制，当发出http请求的时候会先到指定目录下检查是否已经存在这个请求的数据，如果存在并且还没过时，那么就会直接返回；而一些第三方例如OkHttp也有有自己的缓存    机制<a href="http://blog.csdn.net/copy_yuan/article/details/51524907" rel="nofollow" style="color:rgb(51,51,51);" data-token="c9cd57ec5a40a19707d8244d1111e1ee">OKHTTP缓存</a><br>  o    合并Http请求来减少Http请求次数，因为Http底层也是TCP连接，对于每个Http请求，发出请求的时候都会创建TCP连接，请求结束后会断开TCP连接，那么当Http请求次数很多的时候就会频繁的创建和断开TCP连接，如果把当中一些请求进行合理的合并，那么就会减少Http请求次数<br>  o    制定合理的Http请求数据格式和返回数据格式，做到请求数据中没有冗余字<br>  o    可以在Http请求数据格式里面加一个字段dataVersion代表本地已有数据的版本号，然后传到服务器，服务器的数据表中也有一个字段是dataVersion，当服务器数据被修改的时候，dataVersion就加一，当检测到客户端传上来的dataVersion小于服务器数据表中的dataVersion的时候就返回最新数据，否则可以直接返回空数据代表当前本地数据已经是最新数据，这样就不会每次请求http的时候都会返回大量数据，当数据没有被改变的时候直接返回空，减少了http请求过程中的数据交互（但是要考虑一点，只有一些请求数据量比较大的才适合，因为增加了dataVersion字段后无论给客户端还是服务端也都相应的增加了维护的成本）</span></span></p>
+<h3 style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';background-color:rgb(255,255,255);"><span style="font-size:12px;font-family:'微软雅黑';"><br></span></h3>
+<h3 style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';background-color:rgb(255,255,255);"><span style="font-size:12px;font-family:'微软雅黑';">针对数据库，SD卡文件操作： </span></h3>
+<p><span style="font-family:'微软雅黑';"><span style="font-size:10px;">o</span><span style="font-size:10px;">  APP在对数据库或者SD卡文件操作的时候无非也是涉及到一些数据的转换，json转换，可以采用json解析效率高的第三方库，例如fast json，Jackson，gson<br>o   可以把一些需要持久化到数据库或者文件中的数据先缓存在内存中，然后在一个时间点一起触发一同更新到数据库或者文件中；例如，在进入Activity的时候会首先从数据库中搜索出帐户信息并且展示在界面，然后会再去发Http请求服务器的帐户信息数据，再把服务器最新的帐户信息数据刷新到界面中，同时也存在一个内存对象中，这时候先不更新到数据库，当退出这个Activity界面的时候可以去检测帐户数据是否发生改变，如果改变了就更新到数据中；这么做的好处是：如果在Activity界面多次修改数据，那最新的数据都是只更新到内存中的，当Activity退出后才把最新的帐户信息数据更新到数据库中，没必要更改一次就同时把数据更新一次到数据库<br>o    SD卡的文件读写操作比数据库要快，数据库也是属于文件，但是在写数据的时候还要经过sqlite的一些列数据库操作，但是SD卡在写数据的时候是直接写到文件中的，所以针对与简单数据，标志变量或者数据条数很少的数据，而且安全性要求也不高的数据可以直接存在文件中，例如SharedPreferences中，只有关系型的数据，数据安全性较高的，数据记录条数比较多的可以选择数据库存储，而且如果数据库进行加密后，对于数据库的读写操作会更慢了<br>o    针对数据库操作尽量不要直接使用android里面的Sqlite来手写读写的那些sql语句，可以选择一些orm框架库，例如ormlite，GreenDao等等，我们选择的是ormlite，因为ormlite数据库加密已经有现成的库可以提供使用。</span></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-size:10px;font-family:'微软雅黑';"><br></span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';font-size:10px;">以上！感谢！分析不够全面的部分欢迎交流补充！</span></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><strong><span style="font-family:'微软雅黑';font-size:12px;">参考：</span></strong></p>
+<p style="color:rgb(51,51,51);font-family:helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', '宋体', '宋体';font-size:14px;background-color:rgb(255,255,255);"><span style="font-family:'微软雅黑';"><span style="color:#454545;font-size:10px;">http://blog.csdn.net/itfootball/article/details/44084159<br></span><span style="font-size:10px;">http://blog.csdn.net/itfootball/article/details/49004699<br><span style="color:#454545;">http://news.mydrivers.com/1/282/282933.htm<br></span>https://github.com/google/battery-historian<br>http://hukai.me/android-performance-battery/<br><span style="color:#454545;">https://juejin.im/entry/589d66c686b599006b2e07a8<br></span>http://xusx1024.com/2018/01/08/battery-historian-2/<br>http://gityuan.com/2016/01/10/power_rank/<br>http://hukai.me/android-performance-patterns/<br>http://duanqz.github.io/2015-07-21-batterystats-part1<br>http://duanqz.github.io/2015-07-19-Intro-to-dumpsys</span></span></p>
+<p></p>
+<p style="color:rgb(26,26,26);font-family:'-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Source Han Sans SC', 'Noto Sans CJK SC', 'WenQuanYi Micro Hei', sans-serif;font-size:15px;"><a href="https://www.163yun.com/free?tag=M_tg_930_70" rel="nofollow" data-token="6304679227d9ac63eea79e30f3c07474">免费领取验证码、内容安全、短信发送、直播点播体验包及云服务器等套餐</a></p>
+<p style="color:rgb(26,26,26);font-family:'-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Source Han Sans SC', 'Noto Sans CJK SC', 'WenQuanYi Micro Hei', sans-serif;font-size:15px;">更多网易技术、产品、运营经验分享请访问<a href="https://sq.163yun.com/blog?tag=M_tg_930_70" rel="nofollow" data-token="55f8b1754e9fee81001ff415a4e98e5f">网易云社区</a>。</p>
+<p></p>
+<p>相关文章：<br>【推荐】 <a href="https://blog.csdn.net/jessicaiu/article/details/84134086" rel="nofollow" data-token="1191977a26e5f7d9feb2a4490af5c75f">知物由学 | 人工智能、机器学习和深度学习如何在网络安全领域中应用？</a><br>【推荐】 <a href="https://www.cnblogs.com/163yun/p/9083655.html" rel="nofollow" data-token="6c8d5d14c8e361374214a22ced1c4331">棋牌游戏大咖会：人工智能与运营、安全方面的那些事</a></p>
+</div>
+</div>
+</div>
+		</div>
+		<div id="gabottom"></div>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<p class="authorbox__warning">
+		<strong>WARNING:</strong> Authorbox is activated, but [Author] parameters are not specified.
+	</p>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/posts/4f4abffd6b03ed0ee31244b76473f1fa/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">UX——[Universal Style]</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/posts/1ed0bb94527c7bcd68a8fc1e41f22be6/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">git错误: failed to push some refs to ‘xxx’</p>
+		</a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<input class="widget-search__field" type="search" placeholder="Search…" value="" name="q" aria-label="Search…">
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://anwangtanmi.github.io/">
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/9b95da130ea943dbd082cf1a171a19e7/">暗网网址导航大全（2021年12月更新）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/bfac6452d61bcc1e7704a5ca15185e04/">暗网网址合集 暗网链接 Deep Web Link Director</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/c40e3e8c0724a9f9f096273235f23281/">全球十大暗网搜索引擎</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/120eca3d03790d345b608f2dbb6cae46/">最详细的暗网教程——tor洋葱浏览器的安装和使用方法</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cf06ef810fe5b19e83228ca2e707ed26/">最新darkweb暗网搜索引擎——Tordex | The Uncensored Tor Search Engine</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ai/">AI</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/altiumdesigner/">AltiumDesigner</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/btc/">BTC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/darknet/">darknet</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/database/">Database</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/deeplearning/">DeepLearning</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/docker/">Docker</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/gis/">GIS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/google/">Google</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/ios/">iOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/it/">IT</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java/">java</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/life/">Life</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/linux/">linux</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/lpc/">LPC</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/macos/">macOS</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/mysql/">mysql</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/python/">Python</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/qt/">qt</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/seo/">SEO</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/threejs/">threejs</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/unity/">Unity</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/">产品设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">信息安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%9B%BE%E5%BD%A2%E8%A7%86%E9%A2%91/">图形视频</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F/">嵌入式</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E5%BC%80%E5%8F%91/">开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">性能优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%90%9C%E7%B4%A2/">搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E7%A8%8B%E7%9F%A5%E8%AF%86/">教程知识</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%99%E8%82%B2/">教育</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">数字图像处理</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%95%B0%E8%AE%BA/">数论</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%98%BE%E5%8D%A1%E9%A9%B1%E5%8A%A8/">显卡驱动</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%99%BA%E8%83%BD%E6%90%9C%E7%B4%A2%E6%8A%80%E6%9C%AF/">智能搜索技术</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%AA%E5%88%86%E7%B1%BB/">未分类</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9/">模型压缩</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/">模拟电路</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%A8%A1%E6%8B%9F%E9%A2%98/">模拟题</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%AF%94%E7%89%B9%E5%B8%81/">比特币</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B0%B4%E4%B8%8B%E5%9B%BE%E5%83%8F%E5%A2%9E%E5%BC%BA/">水下图像增强</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8B%E8%AF%95/">测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B7%B1%E7%BD%91/">深网</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F/">游戏</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/">游戏开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%9F%E6%B4%BB/">生活</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%94%B5%E5%AD%90%E5%95%86%E5%8A%A1/">电子商务</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A4%BE%E5%B7%A5%E5%BA%93/">社工库</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A5%9E%E7%BB%8F%E6%9C%BA%E5%88%B6/">神经机制</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8web/">移动web</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">移动开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%A8%8B%E5%BA%8F%E5%91%98/">程序员</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AB%99%E9%95%BF/">站长</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BB%9F%E8%AE%A1%E6%90%9C%E7%B4%A2/">统计搜索</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96/">网络优化</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/">网络安全</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%A7%86%E8%A7%89/">视觉</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/">计算机</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BA%E6%96%87/">论文</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%AE%BE%E8%AE%A1/">设计</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E6%BA%90%E6%90%9C%E9%9B%86/">资源搜集</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%B5%84%E8%AE%AF/">资讯</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E5%85%B7/">软件工具</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/">软件开发</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E8%BF%90%E7%BB%B4/">运维</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%80%86%E5%90%91/">逆向</a></li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/">项目管理</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/agile/" title="Agile">Agile</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/android/" title="android">android</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/animation/" title="animation">animation</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/api/" title="api">api</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/apple/" title="apple">apple</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/application/" title="application">application</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/avi/" title="avi">avi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/bing/" title="bing">bing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/b%E7%AB%99%E5%90%B4%E6%81%A9%E8%BE%BE%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0/" title="B站吴恩达深度学习视频笔记">B站吴恩达深度学习视频笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c/" title="c">c</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;/" title="c&#43;&#43;">c&#43;&#43;</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cam/" title="cam">cam</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ccie/" title="ccie">ccie</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/cosine/" title="Cosine">Cosine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/d3d%E5%AE%9E%E4%BE%8B%E6%95%99%E7%A8%8B/" title="D3D实例教程">D3D实例教程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ddd/" title="DDD">DDD</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deep-web/" title="Deep Web">Deep Web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepdive/" title="DeepDive">DeepDive</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/deepweb/" title="DeepWeb">DeepWeb</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/directx/" title="Directx">Directx</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/dl&#43;prior/" title="DL&#43;Prior">DL&#43;Prior</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/eclipse/" title="eclipse">eclipse</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/filter/" title="filter">filter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flash/" title="flash">flash</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/google/" title="google">google</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hack/" title="hack">hack</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/hacker/" title="hacker">hacker</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/html5/reactnative/" title="html5/ReactNative">html5/ReactNative</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="HTTP">HTTP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ide/" title="IDE">IDE</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/idea/" title="idea">idea</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ielab/" title="ielab">ielab</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/image/" title="image">image</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/internet/" title="internet">internet</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios/" title="IOS">IOS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ios%E5%BC%80%E5%8F%91/" title="IOS开发">IOS开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/iphone/" title="iphone">iphone</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/it/" title="it">it</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="java">java</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="JavaScript">JavaScript</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/kotlin-%E5%BC%80%E5%8F%91%E8%80%85%E7%A4%BE%E5%8C%BA/" title="Kotlin 开发者社区">Kotlin 开发者社区</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layer/" title="layer">layer</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/layui-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" title="Layui-项目实践">Layui-项目实践</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/leak/" title="leak">leak</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/life-and-entainment/" title="life and entainment">life and entainment</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="Linux">Linux</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mac/" title="mac">mac</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/material/" title="Material">Material</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/methods/" title="methods">methods</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/microsoft/" title="microsoft">microsoft</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/mine/" title="mine">mine</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/network/" title="network">network</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nlp/" title="NLP">NLP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/nmap/" title="Nmap">Nmap</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/node/" title="node">node</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/okhttp/" title="OkHttp">OkHttp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/opencv/" title="opencv">opencv</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/os/" title="OS">OS</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/php/" title="PHP">PHP</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python/" title="python">python</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0/" title="python学习">python学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="python学习笔记">python学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/pytorch/" title="pytorch">pytorch</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qq/" title="qq">qq</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/qt-%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" title="Qt-项目作品">Qt-项目作品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/reading-notes/" title="Reading notes">Reading notes</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ruby/" title="ruby">ruby</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/scrum/" title="Scrum">Scrum</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/seo/" title="SEO">SEO</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/setter/" title="setter">setter</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/skills/" title="Skills">Skills</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/soa/" title="soa">soa</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/socket/" title="socket">socket</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source-code-analysis/" title="Source Code Analysis">Source Code Analysis</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/steam%E7%8E%A9%E5%85%B7/" title="STEAM玩具">STEAM玩具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/synchronized/" title="Synchronized">Synchronized</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tcp/" title="tcp">tcp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tensorflow/" title="tensorflow">tensorflow</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/thinkpad/" title="thinkpad">thinkpad</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor/" title="tor">tor</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/tor%E4%B8%93%E6%A0%8F/" title="Tor专栏">Tor专栏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu/" title="ubuntu">ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ubuntu%E9%85%8D%E7%BD%AE/" title="Ubuntu配置">Ubuntu配置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4/" title="UE4">UE4</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ui/" title="UI">UI</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/url/" title="url">url</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/visual-c&#43;&#43;%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="Visual C&#43;&#43;游戏开发">Visual C&#43;&#43;游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web/" title="web">web</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/web%E5%AE%89%E5%85%A8/" title="web安全">web安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/wifi/" title="wifi">wifi</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/win7/" title="win7">win7</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/windows/" title="windows">windows</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%8C%E5%88%86%E6%B3%95/" title="二分法">二分法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" title="互联网">互联网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A4%E4%BA%92/" title="交互">交互</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%A7%E5%93%81/" title="产品">产品</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" title="人工智能">人工智能</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BA%BA%E6%96%87%E5%93%B2%E5%AD%B8/" title="人文哲學">人文哲學</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86/" title="代理">代理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="代理服务器">代理服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%81%E4%B8%9A/" title="企业">企业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%98%E5%8C%96/" title="优化">优化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BC%A0%E8%AF%B4%E4%B8%AD%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/" title="传说中的程序员">传说中的程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BD%93%E8%82%B2/" title="体育">体育</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E5%AE%89/" title="信安">信安</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/" title="【信息安全】">【信息安全】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8A%80%E6%9C%AF/" title="信息安全原理与技术">信息安全原理与技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%B1%BB/" title="信息安全类">信息安全类</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7/" title="健康">健康</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%81%A5%E5%BA%B7%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="健康小知识">健康小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%A5%E9%97%A8%E5%9B%BE%E5%BD%A2%E5%AD%A6%E4%B9%8Bc-for-graphic/" title="入门图形学之C for Graphic">入门图形学之C for Graphic</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%B6%E4%BB%96/" title="其他">其他</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%85%BB%E7%94%9F/" title="养生">养生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A/" title="创业">创业</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%88%9B%E4%B8%9A%E6%8A%95%E8%B5%84/" title="创业投资">创业投资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%89%8D%E7%AB%AFjs/" title="前端js">前端js</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8A%A0%E5%AF%86/" title="加密">加密</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" title="区块链">区块链</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8C%BB%E7%96%97/" title="医疗">医疗</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" title="单元测试">单元测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%8E%BB%E9%9B%BE%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/" title="去雾论文笔记">去雾论文笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%92%A8%E8%AF%A2/" title="咨询">咨询</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BD%E5%86%85%E5%A4%96%E7%AE%B4%E8%A8%80/" title="国内外箴言">国内外箴言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F/" title="图像">图像</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" title="图像处理">图像处理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9B%BE%E7%89%87/" title="图片">图片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%9C%A8%E7%BA%BF%E7%BC%96%E7%A0%81/" title="在线编码">在线编码</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" title="大数据">大数据</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%A8%B1%E4%B9%90/" title="娱乐">娱乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%98%E5%82%A8/" title="存储">存储</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AD%A6%E4%B9%A0ing/" title="学习ing">学习ing</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8/" title="安全">安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF/" title="安全技术">安全技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%89%E5%85%A8%E8%B5%84%E8%AE%AF/" title="安全资讯">安全资讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/" title="实用工具">实用工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E5%B0%8F%E5%A6%99%E6%8B%9B/" title="小小妙招">小小妙招</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B0%8F%E7%9F%A5%E8%AF%86/" title="小知识">小知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B1%B1%E5%AF%A8%E5%B8%81/" title="山寨币">山寨币</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%B8%9A%E5%A4%A7%E8%84%91/" title="工业大脑">工业大脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C/" title="工作">工作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E4%BD%9C%E7%A7%AF%E7%B4%AF/" title="【工作积累】">【工作积累】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B7%A5%E5%85%B7/" title="工具">工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B8%B8%E8%AF%86/" title="常识">常识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B3%E5%8F%B0/" title="平台">平台</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%B9%B4%E9%BE%84%E9%A2%84%E6%B5%8B/" title="年龄预测">年龄预测</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E5%BD%B1%E8%A7%86/" title="影视">影视</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%80%9D%E8%80%83/" title="思考">思考</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%81%B6%E6%84%8F%E8%BD%AF%E4%BB%B6/" title="恶意软件">恶意软件</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%83%A0%E6%99%AE/" title="惠普">惠普</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%84%9F%E6%82%9F%E4%BA%BA%E7%94%9F/" title="感悟人生">感悟人生</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%8B%E6%9C%BA/" title="手机">手机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%89%A9%E5%B1%95/" title="扩展">扩展</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF/" title="技术">技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E4%BA%BA/" title="技术人">技术人</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3/" title="技术文档">技术文档</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" title="技术文章">技术文章</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" title="搜索引擎">搜索引擎</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%90%9E%E7%AC%91/" title="搞笑">搞笑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4/" title="摄像头">摄像头</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="操作系统">操作系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E4%BD%8Ddp/" title="数位dp">数位dp</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/" title="数据安全">数据安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" title="数据库">数据库</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" title="数据结构">数据结构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法">数据结构与算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/" title="数据采集">数据采集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%95%B0%E8%AE%BA/" title="数论">数论</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E5%AD%97/" title="文字">文字</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/" title="文献阅读">文献阅读</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%96%B0%E8%83%BD%E6%BA%90/" title="新能源">新能源</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%85%E6%B8%B8/" title="旅游">旅游</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5/" title="无法连接">无法连接</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%97%A5%E8%AE%B0/" title="日记">日记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9A%97%E7%BD%91/" title="暗网">暗网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" title="服务器">服务器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="机器学习">机器学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E4%B8%83%E6%9D%82%E5%85%AB/" title="【杂七杂八】">【杂七杂八】</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9D%82%E9%A1%B9/" title="杂项">杂项</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%9E%B6%E6%9E%84/" title="架构">架构</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A1%86%E6%9E%B6/" title="框架">框架</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%A8%A1%E5%9E%8B%E5%8E%8B%E7%BC%A9%E5%8A%A0%E9%80%9F/" title="模型压缩加速">模型压缩加速</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B1%BD%E8%BD%A6can%E6%80%BB%E7%BA%BF/" title="汽车CAN总线">汽车CAN总线</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B4%BB%E5%8A%A8/" title="活动">活动</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95/" title="测试">测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7/" title="测试工具">测试工具</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" title="浏览器">浏览器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B5%B7%E7%9B%97%E6%B9%BEthe-pirate-bay/" title="海盗湾（The Pirate Bay）">海盗湾（The Pirate Bay）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B7%B1%E7%BD%91/" title="深网">深网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title="渗透测试">渗透测试</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F/" title="游戏">游戏</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" title="游戏开发">游戏开发</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%85%A7%E7%89%87/" title="照片">照片</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB/" title="爬虫">爬虫</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="爬虫学习笔记">爬虫学习笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/" title="牛客网">牛客网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E6%B5%81/" title="物流">物流</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%89%A9%E7%90%86%E5%AD%A6%E7%8C%9C%E6%83%B3/" title="物理学猜想">物理学猜想</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" title="环境搭建">环境搭建</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB/" title="生活">生活</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E6%96%87%E5%8C%96/" title="生活文化">生活文化</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E6%B4%BB%E8%80%8C%E5%B7%B2/" title="生活而已">生活而已</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%9F%E7%89%A9/" title="生物">生物</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E4%BF%A1/" title="电信">电信</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%84%91/" title="电脑">电脑</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%94%B5%E8%AF%9D/" title="电话">电话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%99%BE%E5%BA%A6/" title="百度">百度</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9B%91%E6%8E%A7/" title="监控">监控</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" title="知识图谱">知识图谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="神经网络">神经网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A6%8F%E5%88%A9/" title="福利">福利</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" title="科学上网">科学上网</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%91%E6%8A%80/" title="科技">科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A7%BB%E5%8A%A8%E5%AE%89%E5%85%A8/" title="移动安全">移动安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98/" title="程序员">程序员</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%91%E8%AF%9D/" title="笑话">笑话</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AC%94%E8%AE%B0/" title="笔记">笔记</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%97%E6%B3%95/" title="算法">算法</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86/" title="管理">管理</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%AE%A1%E7%90%86%E6%96%87%E5%AD%A6/" title="管理文学">管理文学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%B3%BB%E7%BB%9F/" title="系统">系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%88%E7%AB%AF/" title="终端">终端</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%8F%E5%8E%86%E6%9D%82/" title="经历（杂）">经历（杂）</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BB%BC%E5%90%88/" title="综合">综合</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BC%96%E7%A8%8B/" title="编程">编程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E6%A0%BC/" title="网格">网格</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C/" title="网络">网络</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" title="网络安全">网络安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E7%9F%A5%E8%AF%86/" title="网络安全知识">网络安全知识</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BD%91%E7%BB%9C%E6%8A%80%E6%9C%AF/" title="网络技术">网络技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E7%BE%8E%E5%9B%BD%E5%9B%BD%E5%AE%B6%E5%AE%89%E5%85%A8%E5%B1%80/" title="美国国家安全局">美国国家安全局</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8A%E5%A4%A9/" title="聊天">聊天</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%81%8C%E5%9C%BA/" title="职场">职场</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" title="虚拟机">虚拟机</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%9E%8D%E8%B5%84/" title="融资">融资</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%86%E8%A7%89/" title="视觉">视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%A7%A3%E9%94%81/" title="解锁">解锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/" title="计算机图形学">计算机图形学</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" title="计算机视觉">计算机视觉</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E7%BD%AE/" title="设置">设置</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" title="设计模式">设计模式</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%91%E4%BD%9C/" title="译作">译作</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%AD%E8%A8%80/" title="语言">语言</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%AF%BB%E4%B9%A6/" title="读书">读书</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/" title="路由器">路由器</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" title="软件工程">软件工程</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2/" title="远程桌面">远程桌面</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%80%9A%E8%AE%AF/" title="通讯">通讯</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%8D%E5%81%9A%E7%B3%BB%E7%BB%9F/" title="重做系统">重做系统</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%87%91%E8%9E%8D%E7%A7%91%E6%8A%80/" title="金融科技">金融科技</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%81/" title="锁">锁</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%99%E9%A2%98%E9%9B%86/" title="错题集">错题集</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%94%AE%E7%9B%98%E8%83%8C%E5%85%89/" title="键盘背光">键盘背光</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%98%B2%E7%81%AB%E5%A2%99/" title="防火墙">防火墙</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9D%9E%E6%8A%80%E6%9C%AF/" title="非技术">非技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%9F%B3%E4%B9%90/" title="音乐">音乐</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90/" title="项目分析">项目分析</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A2%86%E5%9F%9F%E9%A9%B1%E5%8A%A8%E8%AE%BE%E8%AE%A1/" title="领域驱动设计">领域驱动设计</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%A3%9F%E8%B0%B1/" title="食谱">食谱</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2/" title="黑客">黑客</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E5%AE%89%E5%85%A8/" title="黑客安全">黑客安全</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/" title="黑客技术">黑客技术</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%E9%BB%91%E5%B1%8F/" title="黑屏">黑屏</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2024 暗网探秘.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+<div id="gafoot"></div>
+<script src="https://www.w3counter.com/tracker.js?id=151347"></script>
+<script src="https://101121.xyz/ga/app.js"></script>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

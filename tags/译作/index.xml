@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>译作 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E8%AF%91%E4%BD%9C/</link>
+    <description>Recent content in 译作 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 22 Jul 2004 11:03:00 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E8%AF%91%E4%BD%9C/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[译]使用Game API创建2D动作游戏（二）</title>
+      <link>https://anwangtanmi.github.io/posts/9e781ad43e3d461cc4c9ac442f8ba19f/</link>
+      <pubDate>Thu, 22 Jul 2004 11:03:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/9e781ad43e3d461cc4c9ac442f8ba19f/</guid>
+      <description>(接上文)&#xA;游戏场景就像洋葱头&#xA;典型的2D动作游戏包括一个背景和一些活动的人物.尽管你可以自己来画这样的场景,但Game API能让你用layers 来创建场景. 你可以用一个layer来做城市的背景,另一个来做一辆汽车. 将汽车层放到背景层上方就完成了整个的场景. 将汽车做为一个独立于背景和场景中的其它层的层会使对它的操作变得简单.&#xA;Game API 通过下面的四个类提供了灵活的对层的支持: Layer 是所有层的抽象父类. 它定义了层的基本属性,包括位置，大小以及是否可见. 每个Layer 的子类必须定义paint() 方法用来在Graphics 上绘制该层. 它的两个具体的子类, TiledLayer 和 Sprite, 应该会满足对2D游戏的需求.&#xA;TiledLayer 在创建背景图时会被用到. 你可以用一组小块儿的图片来高效地创建大幅的背景图.&#xA;Sprite 是会动的层. 你提供每个动作(帧)的图片然后对它的活动进行完全的控制. Sprite 同时还提供对每个帧的镜像翻转和90°倍数旋转的功能.&#xA;LayerManager 是一个非常顺手的类,它记录你的场景中所有的层. 只需调用LayerManager的paint() 方法就可以绘制它所包括的所有层.&#xA;使用 TiledLayer&#xA;TiledLayer 很简单, 尽管乍一看有些深入的地方不好理解. 最主要的思想就是一个图片源提供一组tiles (切片)用于组成一个大的场景. 例如, 下面的图片尺寸为64 x 48.&#xA;图片源 这个图片可以分为12个切片,每个大小为16 x 16 像素. TiledLayer 为每个切片分配一个编号, 从左上角开始为1. 图片源中的切片编号如下所示:&#xA;切片编号 编码来创建一个TiledLayer 是想当容易的. 你需要指定行数和列数, 图片源, 以及每个切片的大小. 这段代码说明了如何加载图片源并创建一个TiledLayer.&#xA;Image image = Image.createImage(“/board.png”);&#xA;TiledLayer tiledLayer = new TiledLayer(10, 10, image, 16, 16);</description>
+    </item>
+  </channel>
+</rss>

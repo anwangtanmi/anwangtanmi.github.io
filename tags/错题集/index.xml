@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>错题集 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E9%94%99%E9%A2%98%E9%9B%86/</link>
+    <description>Recent content in 错题集 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 13 Dec 2019 13:14:47 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E9%94%99%E9%A2%98%E9%9B%86/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Antinomy与水晶都</title>
+      <link>https://anwangtanmi.github.io/posts/c47ef32d922105ca97b628c2c0e20c42/</link>
+      <pubDate>Fri, 13 Dec 2019 13:14:47 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/c47ef32d922105ca97b628c2c0e20c42/</guid>
+      <description>题目链接&#xA;链接：https://ac.nowcoder.com/acm/contest/2908/F&#xA;来源：牛客网&#xA;题目描述 沉迷《原初幻想41》的冒险者Antinomy穿越到了第一世界，这是暗之战士一切开始的地方——水晶都/クリスタリウム/The Crystarium&#xA;见完水晶公后，Antinomy逛了逛，发现水晶都的防护罩由好几个魔法装置维持着，这些点由一条路通向水晶都的二层，在地图上看非常规整，于是他突发奇想：&#xA;假设在地图上有nnn个装置，第iii个（从111开始）装置的坐标是(i,yi)(i,y_i)(i,yi​)，是否可以找出两条平行的直线，让这nnn个装置中的每一个都恰好在两条直线的其中一条上？要求每条直线至少经过一个装置。每个装置可看做一个点。&#xA;找出这两条这样的直线的话就可以修路，使得在食罪灵来袭时以最快的速度支援。你能计算出来吗？&#xA;输入描述: 第一行为一个数字nnn表示装置个数&#xA;第二行为nnn个空格分隔的整数表示y1,y2,y3,…,yny_1,y_2,y_3,…,y_ny1​,y2​,y3​,…,yn​&#xA;输出描述: 如果能够找到那么输出QWQ，否则输出QAQ 题目描述不多赘述了，网上好几个假算法的题解，服了&#xA;这个题目直接暴力即可，但是需要注意可能一个点孤立其余点共线，只需要特判一下你选出来的那个点孤立的时候可行与否即可，可行还需要和后面的其余点不共线（斜率不同）&#xA;代码很详细，自己领会吧&#xA;#include using namespace std; #define FAST_READ #define DEBUG puts(&#34;------------&#34;) typedef struct Point { int x, y; Point() { } Point(int x, int y) { this-&amp;gt;x = x; this-&amp;gt;y = y; } } po; double calculate(po a, po b) { //计算两点斜率 return (double)(a.y - b.y) / (double)(a.x - b.x); } vector arr; int n; int main() { #ifdef DEBUG cin.</description>
+    </item>
+  </channel>
+</rss>

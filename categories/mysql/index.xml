@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mysql on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/categories/mysql/</link>
+    <description>Recent content in mysql on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 15 Mar 2019 13:37:33 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/categories/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mysql5.6解压版安装及root账户密码修改教程</title>
+      <link>https://anwangtanmi.github.io/posts/ec2e397257ed944362178d4913b93ab8/</link>
+      <pubDate>Fri, 15 Mar 2019 13:37:33 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/ec2e397257ed944362178d4913b93ab8/</guid>
+      <description>mysql数据库的安装分为解压版和msi文件安装，msi的就不在赘述，本文只针对解压版的安装进行讲解。 注：所有的命令行操作都是在管理员模式下进行&#xA;首先从mysql官网进行下载所需要的数据库版本，点我去官网下载&#xA;把下载好的压缩包解压到本地磁盘，解压位置自行设置&#xA;配置mysql的路径&#xA;配置mysql系统的环境变量&#xA;管理员模式下进入cmd，切换到解压后的bin目录的路径下，使用mysqld -install命令进行安装&#xA;提示Service successfully installed则安装成功，然后输入net start mysql进行服务的启动&#xA;**~~至此数据库安装完成~~** mysql的卸载 先关闭mysql的服务，然后切换到bin目录的路径下，使用命令mysqld -remove进行卸载&#xA;修改root账户的密码 使用mysqladmin -u root-p password 123456命令即可强制修改&#xA;其中root代表root账户，123456为需要设置的密码</description>
+    </item>
+    <item>
+      <title>免安装版MySql配置过程及安装过程</title>
+      <link>https://anwangtanmi.github.io/posts/784b15d1676236d4b24d64dc2941c8a4/</link>
+      <pubDate>Thu, 26 Apr 2018 17:36:43 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/784b15d1676236d4b24d64dc2941c8a4/</guid>
+      <description>1、从官网下载MySql免安装的压缩包,解压到指定的文件夹，例如我的是：D:\MySql\mysql-5.7.22-winx64&#xA;MySql： 下载地址：http://dev.mysql.com/downloads/mysql/&#xA;2、配置环境变量，将D:\MySql\mysql-5.7.22-winx64\bin路径配置到Path系统变量中&#xA;3、配置my.ini配置文件，在MySql根目录下创建一个my.ini文件，我的配置如下：&#xA;[client] port=3306 default-character-set=utf8 [mysqld] basedir=D:\MySql\mysql-5.7.22-winx64 //这是mysql的安装目录 datadir=D:\MySql\mysql-5.7.22-winx64\data //这是mysql下的data目录 port=3306 character-set-server=utf8 [mysql] default-character-set=utf8 4、配置完成后，以管理员的身份打开cmd,运行命令：mysqld —initialize,此命令的主要作用就是在你的mysql路径下生成一个data文件夹，然后运行mysqld –install MySql –defaults-file=”D:\MySql\mysql-5.7.22-winx64\my.ini”,用于安装你的mysql服务。&#xA;5、安装好后我们继续执行启动服务的命令：net start MySQL，如果提示：找不到服务或指定的文件，你就需要在注册表中更改一些东西，如图：&#xA;在ImagePath中更改成你的mysql下bin中的mysqld的路径。&#xA;6、当然此时我们还没有root的密码，我们需要做的就是在配置文件中加一句skip-grant-tables,注意是在[mysqld]下，如图：&#xA;然后重启mysql服务，直接输入：mysql -u root -p ,不用输入密码直接登录进来啦。&#xA;进入数据库后执行以下命令：use mysql;接下来我们就可以更改数据库密码了，执行：update mysql.user set authentication_string=password(‘root’) where user=’root’ and Host =’localhost’;这里括号中的root即为所要设置的密码。&#xA;执行完之后，别忘了再输入一行命令：flush privileges，刷新数据库，最后,quit。把刚刚加进来的skip-grant-tables给去掉，重启mysql服务。&#xA;以上就是我自己安装和配置mysql的一个过程，希望对大家有帮助。</description>
+    </item>
+    <item>
+      <title>centos7安装mysql5.7.18完整实用教程（★firecat推荐★）</title>
+      <link>https://anwangtanmi.github.io/posts/bf31b196b129865b2dcdf46668b22004/</link>
+      <pubDate>Thu, 27 Jul 2017 17:35:12 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/bf31b196b129865b2dcdf46668b22004/</guid>
+      <description>CentOS 7的yum源中貌似没有正常安装mysql时的mysql-sever文件，需要去官网上下载https://downloads.mysql.com/archives/community/&#xA;1、准备工作&#xA;最简单的安装mysql-server服务，只需要准备好如下5个软件包即可，我们可以使用rpm -ivh命令进行安装&#xA;mysql-community-common-5.7.18-1.el7.x86_64.rpm&#xA;mysql-community-libs-5.7.18-1.el7.x86_64.rpm –（依赖于common）&#xA;mysql-community-client-5.7.18-1.el7.x86_64.rpm –（依赖于libs）&#xA;mysql-community-server-5.7.18-1.el7.x86_64.rpm –（依赖于client、common）&#xA;mysql-community-devel-5.7.18-1.el7.x86_64.rpm — 里面内容是c语言版本的客户端库函数和头文件&#xA;注：c语言客户端默认安装位置是&#xA;头文件 /usr/include/mysql&#xA;静态和动态库 /usr/lib64/mysql&#xA;2、按顺序逐个安装rpm&#xA;[root@localhost mysql]# rpm -ivh mysql-community-common-5.7.18-1.el7.x86_64.rpm&#xA;warning: mysql-community-common-5.7.18-1.el7.x86_64.rpm: Header V3 DSA/SHA1 Signature, key ID 5072e1f5: NOKEY&#xA;Preparing… ################################# [100%]&#xA;file /usr/share/mysql/czech/errmsg.sys from install of mysql-community-common-5.7.18-1.el7.x86_64 conflicts with file from package mariadb-libs-1:5.5.50-1.el7_2.x86_64&#xA;笔者注：提示库冲突，需要先卸载centos原有的mariadb-libs。请注意，这样会同时卸载掉谷歌浏览器。没关系，先安装完mysql，然后再把谷歌浏览器装回来。&#xA;[root@localhost mysql]# yum remove mysql-libs&#xA;笔者注：然后再正式安装，注意先后顺序&#xA;[root@localhost mysql]# rpm -ivh mysql-community-common-5.7.18-1.el7.x86_64.rpm&#xA;warning: mysql-community-common-5.7.18-1.el7.x86_64.rpm: Header V3 DSA/SHA1 Signature, key ID 5072e1f5: NOKEY</description>
+    </item>
+    <item>
+      <title>Linux 使用rpm方式安装最新mysql（5.7.16）步骤以及常见问题解决</title>
+      <link>https://anwangtanmi.github.io/posts/3c2c8d5038cfe86bcc9b885b097a3688/</link>
+      <pubDate>Thu, 15 Dec 2016 15:19:12 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/3c2c8d5038cfe86bcc9b885b097a3688/</guid>
+      <description>前几天在阿里云买了个服务器 ，准备自己玩玩，现将最新版mysql(5.7.16)安装步骤，以及遇到问题及解决过程分享如下： 第一步：下载rpm包 mysql官网下载：http://dev.mysql.com/downloads/mysql/ 但如果你的下载网速不好的话也可以点下面的链接下载自己想要的版本 http://mirrors.sohu.com/mysql/MySQL-5.7/ 我用的是（CentOs6.5）下载的是： mysql-5.7.16-1.el6.x86_64.rpm-bundle.tar文件&#xA;第二步：进行安装 具体如下： 1. 检查系统自带的MySQL及相关RPM包，是否安装 rpm -qa | grep -i mysql 如果有安装，则移除（rpm –e 名称） yum -y remove mysql 2. 创建用户和组（如果已经创建则跳过） groupadd mysql useradd -r -g mysql mysql 3. 解压tar文件，并安装 进入文件目录 运行：tar -xf mysql-5.7.16-1.el6.x86_64.rpm-bundle.tar 解压完成,然后依次执行。 rpm -ivh mysql-community-common-5.7.16-1.el6.x86_64.rpm rpm -ivh mysql-community-libs-5.7.16-1.el6.x86_64.rpm rpm -ivh mysql-community-client-5.7.16-1.el6.x86_64.rpm rpm -ivh mysql-community-server-5.7.16-1.el6.x86_64.rpm 到此，mysql已经安装完成。 4. 基础配置&#xA;执行：service mysqld start 出现下图表示安装成功&#xA;关闭mysql服务：service mysqld stop&#xA;初始化(这里是以root身份执行的)：bin/mysqld --initialize --user=mysql&#xA;注：使用–initialize会为root账户生成一个随机的初始密码，我们可以使用命令：mysql -u root -p，然后输入密码来登录MySQL。使用–initialize-insecure不会为root账户生成一个随机的初始密码，我们可以使用命令：mysql -u root –skip-password直接登录MySQL，这里我是用的第一种。</description>
+    </item>
+    <item>
+      <title>windows下mysql5.7.13msi安装及绿色版安装方法</title>
+      <link>https://anwangtanmi.github.io/posts/0d2724d68c2e0e9fd5bae4e9d1b7072e/</link>
+      <pubDate>Mon, 04 Jul 2016 19:15:11 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/0d2724d68c2e0e9fd5bae4e9d1b7072e/</guid>
+      <description>0x1 msi安装方法 0x11下载mysql软件 到mysql官网下载最新的mysql版本 下载地址：https://www.mysql.com/downloads/ 下载完成后，双击mysql-installer-community-5.7.13.0.msi进行安装，一路下一步，安装好就行，中间有个配置root密码的地方，记得设置一个比较安全的密码。&#xA;0x12配置mysql的root账户远程登陆 最新版本的mysql的配置文件my.ini中已经没有bindaddress这个选项，如果有的话，将其值改为0.0.0.0 my.ini的路径：C:\ProgramData\MySQL\MySQL Server 5.7\my.ini&#xA;打开路径C:\Program Files\MySQL\MySQL Server 5.7\bin，不选中任何文件，然后右击–&amp;gt;在此处打开命令窗口 输入mysql -uroot -p，直接回车，不用输入密码 然后输入下面语句，给root@%赋予全部权限，%是任意ip的意思，123456是数据库的密码&#xA;mysql&amp;gt; Grant all privileges on *.* to &#39;root&#39;@&#39;%&#39; identified by &#39;123456&#39; with grant option; 然后输入下面语句来刷新&#xA;mysql&amp;gt; flush privileges; 0x2 mysql5.6绿化版安装 0x21下载绿色版的mysql并进行配置 下载该文件，解压到指定地方，例如D:\elk 将D:\elk\mysql-5.6.31-winx64\bin添加到环境变量的path中 将D:\elk\mysql-5.6.31-winx64下的my-default.ini文件重命名为my.ini 并编辑my.ini，填上basedir和datadir的路径和port的值，如下图所示 以管理员权限打开cmd窗口，切换到D:\elk\mysql-5.6.31-winx64\bin路径下，执行命令安装mysql服务&#xA;mysqld -install 安装成功后，使用下面命令启动mysql&#xA;net start mysql 0x22配置root账户的密码和远程登陆 打开cmd 登陆mysql，输入如下命令&#xA;mysql -uroot -p 提示输入密码，直接回车就好 给root账号添加密码&#xA;update user set authentication_string=PASSWORD(&#39;123456&#39;) where user=&#39;root&#39;; 修改root账户的管辖的范围&#xA;update user set host=&#39;%&#39; where user=&#39;root&#39; and host=&#39;localhost&#39;; 重启下mysql服务就好了</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ccie on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/ccie/</link>
+    <description>Recent content in ccie on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 08 Apr 2019 12:08:17 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/ccie/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>网工面试99%都会遇到的问题——OSPF 数据包类型</title>
+      <link>https://anwangtanmi.github.io/posts/40eecbb20c0473a4c4a35cc4688a8054/</link>
+      <pubDate>Mon, 08 Apr 2019 12:08:17 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/40eecbb20c0473a4c4a35cc4688a8054/</guid>
+      <description>网工面试99%都会遇到的问题——OSPF 数据包类型&#xA;OSPF的包有多层封装，可以象剥洋葱皮一样看每一层。&#xA;如图1所示，最外层是IP头（思科的OSPF包允许的最大尺寸是1500字节），IP头里面封装的是5种OSPF包类新中的一种。&#xA;每一种包以自己的包头开始，包头后面根据不同的包类型，内容也有所不同，比如Hello包的内容是邻居列表；链路状态请求包包含了一系列LSAs描述；LSAs更新包则包含了一系列的LSAs。&#xA;OSPF包的多层封装&#xA;这里需要注意的是，OSPF的包只能在邻居间互相传递，它们绝对不能被路由到始发网段之外。&#xA;利用任何一个抓包软件抓到的OSPF包都可以看到，OSPF包的TTL值为1，这也就保证了这个包只能被传一跳。&#xA;下面来详细分析一下每一种包头：&#xA;OSPF包头，5种OSPF包类型的包头，结构完全一样，只是包的类型和数据不同&#xA;OSPF包头&#xA;每一个OSPF包都是以一个24字节的IP包头开始的。&#xA;Version 字段是OSPF的版本号，现在最新的版本号为2。&#xA;Type 字段是本OSPF包的类型，OSPF共有5种类型的包&#xA;类型代码 1 为 Hello&#xA;类型代码 2 为 Database Description&#xA;类型代码 3 为 Link State Request&#xA;类型代码 4 为 Link State Update&#xA;类型代码 5 为 Link State Acknowledgment&#xA;Packet Length 字段是本OSPF包的长度（包括包头），单位是字节。最长为1500字节&#xA;Router ID 字段是OSPF包的始发路由器Router ID&#xA;Area ID 字段是OSPF包始发的区域ID，也就是始发的发送接口属于的区域ID，若这个是在virtual-link上发送，则Area ID是0，因为virtual-link就是属于Area 0的。&#xA;Checksum 字段是对整个包的标准的IP校验和。&#xA;AuType 字段是OSPF启动的认证模式&#xA;0 未启动认证&#xA;1 明文验证&#xA;2 MD5验证&#xA;Authentication 字段是包被认证所必须的信息。&#xA;若认证类型为0，则本字段的内容被忽略；若认证类型为1，则本字段包含最长为64比特的密码；若认证类型为2，则本字段包含Key ID、认证数据的长度、非递减序号。</description>
+    </item>
+  </channel>
+</rss>

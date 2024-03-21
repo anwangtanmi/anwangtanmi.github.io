@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>opencv on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/opencv/</link>
+    <description>Recent content in opencv on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 24 Sep 2018 10:17:34 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/opencv/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>关于opencv更改摄像头参数（帧率，分辨率，曝光度……）的几个问题</title>
+      <link>https://anwangtanmi.github.io/posts/3104bf37f79ba45e74548afd28b7d431/</link>
+      <pubDate>Mon, 24 Sep 2018 10:17:34 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/3104bf37f79ba45e74548afd28b7d431/</guid>
+      <description>1，适用于VideoCapture打开的摄像头 VideoCapture capture(0); 设置摄像头参数 不要随意修改&#xA;capture.set(CV_CAP_PROP_FRAME_WIDTH, 1080);//宽度&#xA;capture.set(CV_CAP_PROP_FRAME_HEIGHT, 960);//高度&#xA;capture.set(CV_CAP_PROP_FPS, 30);//帧率 帧/秒&#xA;capture.set(CV_CAP_PROP_BRIGHTNESS, 1);//亮度 capture.set(CV_CAP_PROP_CONTRAST,40);//对比度 40&#xA;capture.set(CV_CAP_PROP_SATURATION, 50);//饱和度 50&#xA;capture.set(CV_CAP_PROP_HUE, 50);//色调 50&#xA;capture.set(CV_CAP_PROP_EXPOSURE, 50);//曝光 50 获取摄像头参数&#xA;得到摄像头的参数&#xA;capture.get(CV_CAP_PROP_FRAME_WIDTH);&#xA;capture.get(CV_CAP_PROP_FRAME_HEIGHT);&#xA;capture.get(CV_CAP_PROP_FPS);&#xA;capture.get(CV_CAP_PROP_BRIGHTNESS);&#xA;capture.get(CV_CAP_PROP_CONTRAST);&#xA;capture.get(CV_CAP_PROP_SATURATION);&#xA;capture.get(CV_CAP_PROP_HUE);&#xA;capture.get(CV_CAP_PROP_EXPOSURE); 获取视频参数：&#xA;capture.get(CV_CAP_PROP_FRAME_COUNT);//视频帧数 然后你会发现除了个别参数你能更改之外（如曝光度），大分布你是不能更改的，甚至都没办法得到，这种并不适用&#xA;2，不做开发，只是单纯的更改 那么推荐一个软件，amcap，百度网盘链接，https://pan.baidu.com/s/1pL8nq0V#list/path=%2F，很简单很容易上手。&#xA;补，现在突然想起来我的一个学长告诉我的，利用这个软件调节摄像头的曝光度，可以改变帧率，且摄像头会记住曝光度的设置（其他特性就没有这个特点）。-2019.3.12&#xA;3，修改opencv的文件，不过效果可能和第一个差不多 大概是在opencv的这个位置，找一下，modules/highgui/src/cap_v4l.cpp，里面有关于参数的设置，位置比较靠前，可以搜索，也可以直接找到&#xA;大致在200多行&#xA;4，v4l2 下面是我找到的一篇参考，可以突破帧率的限制，当然前提是摄像头支持&#xA;https://blog.csdn.net/c406495762/article/details/72732135&#xA;目前只适用于Linux系统，本人试验过，120帧的摄像头在只打开摄像头时可以达到100帧左右，设置的图片分辨率越小，能达到的帧率越高&#xA;#include #include #include #include #include #include #include #include #include #include #include #include #include #include #include #include &#34;opencv2/highgui/highgui.hpp&#34; #include &#34;opencv2/imgproc/imgproc.hpp&#34; #include #include #include #include using namespace std; using namespace cv; #define CLEAR(x) memset(&amp;amp;(x), 0, sizeof(x)) #define IMAGEWIDTH 3264 #define IMAGEHEIGHT 2448 #define WINDOW_NAME1 &#34;</description>
+    </item>
+    <item>
+      <title>捕获海康威视IPCamera图像，转成OpenCV可以处理的图像（一）</title>
+      <link>https://anwangtanmi.github.io/posts/2f906de0d41d8c3aad5e16ae7ba9283e/</link>
+      <pubDate>Mon, 16 Jun 2014 18:32:41 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/2f906de0d41d8c3aad5e16ae7ba9283e/</guid>
+      <description>海康威视IPCamera图像捕获 捕获海康威视IPCamera图像，转成OpenCV可以处理的IplImage图像（一）&#xA;捕获海康威视IPCamera图像，转成OpenCV可以处理的IplImage图像（二）&#xA;所使用海康威视摄像头型号：DS-2CD4026FWD-(A)(P)&#xA;海康威视IPCamera图像捕获方法有两种：&#xA;（1）利用SDK里面的NET_DVR_CaptureJPEGPicture_NEW进行视频抓图&#xA;（2）捕获实时流，将实时流解码成YV12，然后转换成RGB&#xA;在这篇博文里，我先介绍第一种方法。&#xA;第一种方法，关键是调用NET_DVR_CaptureJPEGPicture_NEW这个函数。关于这个函数的参数，可以在SDK中找到，我这里截个图以作说明。&#xA;这个函数Ret是用于返回该图像大小的一个参数，但是该函数的这个参数大概是没有用引用或者指针的方式来传递参数，导致返回值一直是我初始化的0，因此为后面的操作带来了些许的不便——不得不使用一个较大的内存来保存图像一定能存储的下。&#xA;NET_DVR_CaptureJPEGPicture_NEW这个函数是将单帧数据捕获并保存成JPEG，存放在指定的内存空间中。也就是内存里的JPEG。为了获得OpenCV能处理的IplImage图像，必须在内存中进行解码。&#xA;OpenCV在内存中解码的函数只有一个：imdecode，下图是imdecode的说明&#xA;该函数要求buf必须是数组或者是byte类型的vector. 因此需要对char * 类型的JPEG压缩图像进行存储格式转换。&#xA;#include #include #include #include #include &#34;HCNetSDK.h&#34; #include &#34;highgui.h&#34; #include &#34;cv.h&#34; using namespace cv; using namespace std; //typedef HWND (WINAPI *PROCGETCONSOLEWINDOW)(); //PROCGETCONSOLEWINDOW GetConsoleWindow; int main(int argc, char * argv[]) {&#x9;//--------------------------------------- // 初始化 NET_DVR_Init(); //设置连接时间与重连时间 NET_DVR_SetConnectTime(2000, 1); NET_DVR_SetReconnect(10000, true); //--------------------------------------- //获取控制台窗口句柄 //HMODULE hKernel32 = GetModuleHandle((LPCWSTR)&#34;kernel32&#34;); //GetConsoleWindow = (PROCGETCONSOLEWINDOW)GetProcAddress(hKernel32,&#34;GetConsoleWindow&#34;); //--------------------------------------- // 注册设备 LONG lUserID; NET_DVR_DEVICEINFO_V30 struDeviceInfo; lUserID = NET_DVR_Login_V30(&#34;</description>
+    </item>
+  </channel>
+</rss>

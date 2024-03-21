@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>环境搭建 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
+    <description>Recent content in 环境搭建 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 23 Sep 2019 18:30:19 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Odoo12.0的环境搭建以及配置(Windows环境下)</title>
+      <link>https://anwangtanmi.github.io/posts/9121fdbd075359c07c7ec78cd2de267a/</link>
+      <pubDate>Mon, 23 Sep 2019 18:30:19 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/9121fdbd075359c07c7ec78cd2de267a/</guid>
+      <description>Odoo的环境搭建以及数据库的配置 这里采用Odoo12.0的版本进行搭建，大家可以去github官网上进行代码的下载.&#xA;源码链接：https://github.com/odoo/odoo&#xA;1.因为odoo本来就是用Python写的，所以我们这里也是用Python来作为运行环境，用到的当然就是Python3环境和Pycharm编码工具了，这个两个大家自行下载，网上很多资源的，去官网也可以下载到，具体的安装我也不做赘述了，相信大家都可以完成！&#xA;2.然后我们需要下载odoo所依赖的大象数据库（Postgresql）下载链接在这里。 https://www.enterprisedb.com/downloads/postgres-postgresql-downloads&#xA;下载完之后傻瓜式一键安装就行，不过提醒大家一定要记得自己安装时设置的密码哦！&#xA;3.windows系统下的Postgresql大家为了使用方便可以去下载一个navicate(图像化界面)，然后在里面对数据库进行连接以及设置。&#xA;4.以上的做完之后咱们就该去Pycharm里面进行依赖包的安装了，大家如果是第一次配置的Python的话需要去安装pip工具，用来安装odoo开发所需的一些依赖库，或者使用pycharm的package安装功能，然后直接打开Pycharm的终端，输入命令***pip install requrements.txt***安装所需要的依赖包。&#xA;pip安装的办法贼多，我就不啰嗦了，参考网站一个。http://jingyan.baidu.com/article/e73e26c0d94e0524adb6a7ff.html&#xA;5.然后在你的总文件夹下创建一个odoo.conf文件，它和odoo-bin（启动文件）是在一块的，平级的，然后在里面进行数据库的配置，在这之前大家得西先创建好数据库。&#xA;6.具体的配置信息在下边options配置信息表里，大家可以去看看，配置完成后，依赖包也装完了那么，直接从它的入口函数odoo-bin里面启动它就行，然后在浏览器里输入localhost:8069 访问就OK了。&#xA;7.其实这个大致流程就是这样，但是其中会有很多BUG，以及安装过程中遇到的问题，我就不一一赘述了，每个人碰见的问题也不一样，如果大家碰见了解决不了的问题，可以在我的博客下方留言，我会第一时间为大家做出解答，对于odoo我也是个新手，希望能和大家一块学习进步！！！&#xA;[options] addons模块的查找路径 addons_path = D:\odoo\Odoo 10.0\server\odoo\addons 超级管理员（用于创建，还原和备份数据库的操作） admin_passwd = admin bin_path = D:\odoo\Odoo 10.0\thirdparty 用于导入导出的csv文件的默认分隔符 csv_internal_sep = , data目录， 用于存放session信息，附件 data_dir = C:\Users\hongli\AppData\Local\OpenERP S.A.\Odoo 数据库 主机命 db_host = localhost 数据库最大链接数 db_maxconn = 64 指定要使用的数据库名字 db_name = False 数据库密码 db_password = openpgpwd 数据库端口 db_port = 5432 创建数据库是使用的数据库模板 db_template = template1 用户名 db_user = openpg 过滤要显示的数据库名称 dbfilter = .</description>
+    </item>
+    <item>
+      <title>渗透基础环境搭建–cms</title>
+      <link>https://anwangtanmi.github.io/posts/9d2d7369863efa8226701edbb0e2f8f4/</link>
+      <pubDate>Mon, 25 Feb 2019 10:06:05 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/9d2d7369863efa8226701edbb0e2f8f4/</guid>
+      <description>CMS（内容管理系统） CMS是&#34;Content Management System&#34;的缩写，意为&#34;内容管理系统&#34;。 内容管理系统是企业信息化建设和电子政务的新宠，也是一个相对较新的市场。对于内容管理，业界还没有一个统一的定义，不同的机构有不同的理解。（通俗来说：为你提供网站建设所需要的前后端的模板，下载之后只需要修改些静态页面原本就行） 国内主流的cms网站 PHPCMS选择织梦/帝国/科讯/高旋 （PHP+mysql）&#xA;ASPCMS如动易/逐浪（asp+access）&#xA;海洋cms （做视频的）&#xA;1、Windows 平台： IIS/Apache/Nginx + PHP(5.x) + MySQL(5.x)&#xA;2、Linux/Unix 平台： Apache/Nginx + PHP (5.x) + MySQL(5.x)&#xA;虚拟机网络 仅主机模式 ：只能使虚拟机与主机ping通，无法上网； NAT模式 ：可以与主机平通，虚拟机可以上网； 桥接模式 ：接在主机的网卡上，并且通过路由器映射，能使公网访问虚拟机网站； 将虚拟机服务器连接上公网 原虚拟机IP&#xA;使用桥接&#xA;将虚拟机IP设置成与主机同一网段&#xA;打开路由器，使用端口映射&#xA;外网访问成功&#xA;HTTP协议&#xA;变换IP保温，绕过超时限制&#xA;x-forvarded-for:&#xA;client-ip:&#xA;refere:</description>
+    </item>
+  </channel>
+</rss>

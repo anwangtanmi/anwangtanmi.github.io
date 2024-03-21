@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Synchronized on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/synchronized/</link>
+    <description>Recent content in Synchronized on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 22 Aug 2019 15:27:46 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/synchronized/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Synchronized解析——一层一层剥开洋葱的心</title>
+      <link>https://anwangtanmi.github.io/posts/a5a3954caa8923175dbf9c5c2c281577/</link>
+      <pubDate>Thu, 22 Aug 2019 15:27:46 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/a5a3954caa8923175dbf9c5c2c281577/</guid>
+      <description>Synchronized解析——一层一层剥开洋葱的心&#xA;引入：https://juejin.im/post/5d5374076fb9a06ac76da894#heading-9&#xA;前言 synchronized，是解决并发情况下数据同步访问问题的一把利刃。那么synchronized的底层原理是什么呢？下面我们来一层一层剥开它的心，就像剥洋葱一样，看个究竟。&#xA;Synchronized的使用场景 接下来，我们先剥开synchronized的第一层，反编译其作用的代码块以及方法。&#xA;synchronized作用于代码块&#xA;public class SynchronizedTest { public void doSth(){ synchronized (SynchronizedTest.class){ System.out.println(&#34;test Synchronized&#34; ); } } } 反编译，可得：&#xA;由图可得，添加了synchronized关键字的代码块，多了两个指令monitorenter、monitorexit。即JVM使用monitorenter和monitorexit两个指令实现同步，monitorenter、monitorexit又是怎样保证同步的呢？我们等下剥第二层继续探索。&#xA;synchronized作用于方法 public synchronized void doSth(){ System.out.println(&#34;test Synchronized method&#34; ); } 反编译，可得：&#xA;由图可得，添加了synchronized关键字的方法，多了ACC_SYNCHRONIZED标记。即JVM通过在方法访问标识符(flags)中加入ACC_SYNCHRONIZED来实现同步功能。&#xA;monitorenter、monitorexit、ACC_SYNCHRONIZED&#xA;剥完第一层，反编译synchronized的方法以及代码块，我们已经知道synchronized是通过monitorenter、monitorexit、ACC_SYNCHRONIZED实现同步的，它们三作用都是啥呢？我们接着剥第二层：&#xA;monitorenter monitorenter指令介绍&#xA;1 ———————————————–&#xA;Each object is associated with a monitor. A monitor is locked if and only if it has an owner. The thread that executes monitorenter attempts to gain ownership of the monitor associated with objectref, as follows:</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数据库 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+    <description>Recent content in 数据库 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 23 Oct 2018 19:47:46 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SQLSERVER遇到的一些分布式事务问题</title>
+      <link>https://anwangtanmi.github.io/posts/6e83fd6c45ee8c13a4a981dcda7754df/</link>
+      <pubDate>Tue, 23 Oct 2018 19:47:46 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/6e83fd6c45ee8c13a4a981dcda7754df/</guid>
+      <description>SQLSERVER 遇到的分布式事务问题 MSDTC 该伙伴事务管理器已经禁止了它对远程/网络事务的支持 此事务已明地或暗地被确认或终止 事务中的登记已经存在 MSDTC 今天在两台数据库服务器重装系统后，由于公司防火墙策略做了一些调整，导致两台机器不能互ping。虽然dblink建立成功，但是通过程序调用存储过程时，会报错。以下是主要按顺序的三个报错。再这三个问题之前，首先确定下自己的服务器中的服务，最好两台都查看。&#xA;服务为：Distributed Transaction Coordinator&#xA;该伙伴事务管理器已经禁止了它对远程/网络事务的支持 该问题主要是因为本地计算机组的策略问题，通过控制面板-管理工具-组件服务，双击打开组件服务，依次点开组件服务-计算机-我的电脑-Distributed Transaction Coordinator，右击本地 DTC，选择属性，如下图设置进行勾选：&#xA;此设置需要两台服务器都设置。&#xA;此事务已明地或暗地被确认或终止 在上面步骤完成再执行存储过程时，会发现报这个错，这里需要添加的解决方式为：&#xA;设置两台服务器的防火墙入站规则，添加135端口； 在防火墙设置中，允许的程序中，勾选上“分布式事务处理”，如下图：&#xA;事务中的登记已经存在 做好上述选项后，再执行存储过程，发现了这个问题，这时，你需要在每个有事务的存储过程中，在事务开始前增加一段代码即可.“Set XACT_ABORT ON”&#xA;Set XACT_ABORT ON Begin Transaction 到此，问题解决，完美。</description>
+    </item>
+    <item>
+      <title>Mybatis查询时，区分大小写</title>
+      <link>https://anwangtanmi.github.io/posts/03da92cd42a753bb9f7631499e8896a0/</link>
+      <pubDate>Fri, 21 Sep 2018 15:42:02 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/03da92cd42a753bb9f7631499e8896a0/</guid>
+      <description> 登陆的时候，发现输入账号的不同大小写竟然能够登陆。Mybatis查询代码如下&#xA;select from userName=#{userName} 通过多次断点查询后，发现是上面的xml文件没写对。&#xA;userName=#{userName} 这样写不匹配大小写。&#xA;解决办法，加个BINARY&#xA;select from BINARY userId=#{uid} </description>
+    </item>
+    <item>
+      <title>如何安装MySQL</title>
+      <link>https://anwangtanmi.github.io/posts/7ae49d640616d8ea6e7a69074d47e5d0/</link>
+      <pubDate>Mon, 10 Sep 2018 17:36:51 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/7ae49d640616d8ea6e7a69074d47e5d0/</guid>
+      <description>如何安装MySQL 本文详细记录了小白首次如何安装MySQL服务器的步骤，如有疑问，欢迎沟通，谢谢。&#xA;下载mysql客户端（解压版） 配置 MySQL 的配置文件 重置密码 一. 下载mysql服务端（解压版）&#xA;访问MYSQL官网，进入下载页面 在导航栏内点击Community，然后选择MySQL Community Server 进入MySQL Community Server的下载页面后，将滚动条滚动到页面最下方。在页面内选择电脑的操作系统，然后选择对应的解压版进行下载 点击 Download 按钮进入下载页面，点击下图中的 No thanks, just start my download. 就可立即下载 文件下载到本地后是一个ZIP文件，我们将文件解压到指定文件夹。（这里可以自定义，需要记住解压后的文件所在目录地址，后期配置文件需要访问。我是解压到了C:\Users\USER\Downloads\mysql-8.0.12-winx64） 解压完成后，相应目录下就会有mysql-8.0.12-winx64这个文件夹了 二. 配置 MySQL 的配置文件 在上一个步骤中，我们已经下载了MySQL服务端，并且将文件解压缩到指定目录下。然后就要对MySQL进行初始化的配置 1. 打开刚刚解压的文件夹 C:\Users\USER\Downloads\mysql-8.0.12-winx64 ，在该文件夹下创建 my.ini 配置文件，将以下基本信息复制到my.ini文件内（注意，basedir 与 datadir 的路径要替换成mysql实际的解压路径 ）：&#xA;[mysql] # 设置mysql客户端默认字符集 [mysqld] # 设置3306端口 port = 3306 # 设置mysql的安装目录 basedir=C:\Users\USER\Downloads\mysql-8.0.12-winx64 # 设置mysql数据库的数据的存放目录 datadir=C:\Users\USER\Downloads\mysql-8.0.12-winx64 max_connections=20 # 服务端使用的字符集默认为8比特编码的latin1字符集 character-set-server=utf8 # 创建新表时将使用的默认存储引擎 default-storage-engine=INNODB 2.接下来我们来启动 MySQL 数据库并完成初始化。&#xA;首先找到CMD命令提示符，右键以管理员身份运行： 在命令行内输入如下命令，切换到对应目录下（进入到mysql子目录bin）</description>
+    </item>
+    <item>
+      <title>Mysql 1042错误处理</title>
+      <link>https://anwangtanmi.github.io/posts/474b74b1d3d252b7bdbb9cc8707ccb88/</link>
+      <pubDate>Fri, 02 Nov 2012 20:02:56 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/474b74b1d3d252b7bdbb9cc8707ccb88/</guid>
+      <description> MySQL Client连接远程的linux下MySQL服务器，提示：1042 Can’t get hostname for your address的错误信息。 解决方法：&#xA;编辑/etc/my.cnf，在：&#xA;[mysqld]&#xA;内添加一行：skip-name-resolve即可。 </description>
+    </item>
+  </channel>
+</rss>

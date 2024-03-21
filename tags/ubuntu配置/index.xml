@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ubuntu配置 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/ubuntu%E9%85%8D%E7%BD%AE/</link>
+    <description>Recent content in Ubuntu配置 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 25 Feb 2020 00:28:12 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/ubuntu%E9%85%8D%E7%BD%AE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Win10/Ubuntu16.04 双系统下在Ubuntu系统安装CUDA10.1 cudnn7.6 PyTorch1.4</title>
+      <link>https://anwangtanmi.github.io/posts/fc54ba0ed0b58b2e001114917a2768c3/</link>
+      <pubDate>Tue, 25 Feb 2020 00:28:12 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/fc54ba0ed0b58b2e001114917a2768c3/</guid>
+      <description>是一次花费了不少精力的安装，看了很多博文和经验贴，以下方法在我的笔记本上可用&#xA;硬件配置：惠普暗影精灵4，GTX1060显卡&#xA;一、安装cuda 1.1 选择cuda版本 安装cuda之前要先确认自己的GPU是否支持cuda，安装开始我自己陷入了一个误区，以为不同型号的GPU支持的cuda版本有限，而疲于搜索1060显卡对应的cuda版本，实际上nvidia官网上列出来的支持cuda的GPU型号，是支持全范围的cuda的，因此只需要根据自己的需要选择cuda版本就行。我想要安装目前最新的PyTorch1.4-gpu，对应的cuda要求9.2或者10.1，因此我选择安装cuda 10.1。&#xA;1.2 如何安装 选择好cuda版本10.1之后，就可以去官网下载。英伟达的官网下载做的很一般，找了半天只能找到最新的10.2的下载，没有先前版本的链接。于是谷歌搜索，找到了对应的官网页面，如上。&#xA;之前的很多教程，因为时代原因都有些过于繁琐了，看到的一些方案如下：&#xA;（1）需要先下载安装对应版本的NVIDIA显卡驱动，再下载.runfile文件安装，安装过程中不再选择装驱动。&#xA;（2）先卸载原始英伟达驱动，之后步骤同上。&#xA;（3）双系统安装总会出一些问题：如这篇文章所写。我暂时没有遇到。&#xA;实际上，现在只需要按照安装界面的提示操作即可，不需要提前对驱动做任何多余操作，安装cuda过程中会安装对应的驱动。&#xA;官网截图如下：&#xA;我使用的.deb文件安装，按照安装说明依次将命令行复制到终端执行，其中第二条要注意不要使用网站上的，要用你自己终端里执行完第一句之后生成的命令。安装完成后正常来说就cuda安装已经结束了。&#xA;但是因为我的双系统设置了UEFI启动，因此我的终端显示要设置密码，重启，这里实际上是因为要验证你安装的显卡驱动，添加对它的信任，这里一开始不知道从哪里输入密码，后来找到了很好的答案：如何输入验证密码？实际上就是按住ctrl键下滑鼠标滚轮就可以。解决 Ubuntu 在启动时冻结的问题这篇文章对这里的设置也有帮助和指导。&#xA;重启验证之后，cuda10.1及其以来的显卡驱动就安装好了。完全不像谷歌搜出来的一大把文章说的那么麻烦。&#xA;安装完需要添加环境变量：以下方法参考这篇文章。&#xA;# 用gedit打开这个文件，在他后面追加内容 $ gedit ~/.bashrc 打开文件后添加以下内容，保存再关闭文件。 # cuda export PATH=/usr/local/cuda-10.1/bin${PATH:+:${PATH}} export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}} 最后再在终端输入命令激活更新我们的设置：&#xA;source ~/.bashrc 验证安装成功：&#xA;nvcc -V 二、安装cudnn 安装cudnn就很简单了，在官网下载，下载之前需要注册，然后根据cuda版本和系统版本，下载对应的文件，我下载的是7.6.4，然后：&#xA;# 首先切换到你存放cuDNN安装包的地方，一般默认放在用户的Download文件夹下 $ cd ~/Downloads/ # 解压下载的cuDNN压缩包 $ tar xvzf cudnn-10.1-linux-x64-v7.6.4.38.tgz # 将解压的文件复制到对应的cuda的安装路径下，复制完解压的文件就可以删掉了 $ sudo cp cuda/include/cudnn.h /usr/local/cuda/include $ sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64 # 所有用户添加读权限 $ sudo chmod a+r /usr/local/cuda/include/cudnn.</description>
+    </item>
+  </channel>
+</rss>

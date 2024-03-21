@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>摄像头 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E6%91%84%E5%83%8F%E5%A4%B4/</link>
+    <description>Recent content in 摄像头 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Mon, 20 Nov 2017 11:20:25 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E6%91%84%E5%83%8F%E5%A4%B4/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>《树莓派开发笔记 – 第1部分 基础篇》第6章 树莓派摄像头操作</title>
+      <link>https://anwangtanmi.github.io/posts/20e42050126656d6d393482e07f3ac37/</link>
+      <pubDate>Mon, 20 Nov 2017 11:20:25 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/20e42050126656d6d393482e07f3ac37/</guid>
+      <description>6.1树莓派基本操作 目前提供了三个应用程序，分别为：raspistill、raspivid、raspistillyuv。其中 raspistill 和 raspistillyuv 非常相似，并且都是用于捕捉图像，而 raspivid 用于捕捉视频。&#xA;所有应用程序均基于命令行方式运行，通过 OpenMAX 的 mmal API 进行编写。OpenMAX 的 mmal API 提供了更易使用的系统组件。注意，mmal 是一个由 Broadcom 为 Videocore 4 系统定制的 API。&#xA;应用程序使用了四个 OpenMAX（mmal）组件：camera（摄像）、preview（预览）、encoder（编码）、null_sink。所有应用程序均使用了摄像组件，raspistill 使用了图像编码组件，raspivid 使用了视频编码组件，raspistillyuv 没有使用编码组件，而是直接将 YUV 或 RGB 从摄像组件输出到文件。&#xA;预览显示为可选参数，但是可以用于全屏或输出到指定的显示器显示区域进行显示。如果预览被禁用，那么 null_silk 组件将会对预览帧进行“吸收”。这是由于尽管不需要摄像头生成供显示所用的的预览帧，但是仍需要使用它们进行曝光计算和白平衡设置的缘故。&#xA;此外，还可以省略文件名参数，这样既可以直接预览显示而不写入文件，或者直接输出到标准输出设备上。命令行帮助可以通过直接输入应用程序名称获得。&#xA;6.1.1安装摄像头硬件 警告：摄像头对静电非常敏感。如果您在安装摄像头电路板时没有防静电手环，可以尝试触摸一下水龙头、金属水槽或其它类似的东西即可。&#xA;摄像头电路板与 Raspberry Pi 通过一条 15 芯的排线进行连接。仅有两个连接座需要连接，排线需要安装到摄像头电路板和 Raspberry Pi 上。您需要正确安装，否则摄像头无法工作。对于摄像头电路板，排线末端的蓝色标记应该背对着电路板。而 Raspberry Pi 部分，蓝色标记应该正对着网络接口方向。&#xA;尽管两部分连接座不尽相同，但它们的工作方式很相似。对于 Raspberry Pi，拉起连接座两端的卡扣。它应该很容易拉起，并能够轻微活动。把排线完全插入到连接座中，并保证竖直，然后轻轻按下两端的卡扣。摄像头电路板方面，也需要您将卡扣向电路板相反方向拉开，然后轻轻插入排线，最后将卡扣推回。摄像头电路板的连接座与 Pi 上的区别就在这里。&#xA;6.1.2安装摄像头软件 执行下文介绍的命令行进行下载并安装最新的内核，GPU 固件及应用程序。您需要连接到互联网才可以实现以下操作。&#xA;$sudo apt-get update $sudo apt-get upgrade 接下来，您首先需要在 Raspberry Pi 的 raspi-config 程序中启用摄像头的支持。</description>
+    </item>
+  </channel>
+</rss>

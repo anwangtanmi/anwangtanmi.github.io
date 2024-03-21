@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>文献阅读 on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/</link>
+    <description>Recent content in 文献阅读 on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 21 Dec 2019 15:15:14 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/%E6%96%87%E7%8C%AE%E9%98%85%E8%AF%BB/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>论文阅读：Dual-Domain Single Image De-Raining Using Conditional Generative Adversarial Network</title>
+      <link>https://anwangtanmi.github.io/posts/933ebca45ad40a0fafc9e1da25ef77d4/</link>
+      <pubDate>Sat, 21 Dec 2019 15:15:14 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/933ebca45ad40a0fafc9e1da25ef77d4/</guid>
+      <description>2019ICIP：Dual-Domain ID-CGAN 通过上一篇看到的文章提出的ID-CGAN，然后看到了这篇文章提出了一种双域的ID-CGAN。&#xA;文章主要提出了一种利用空间域和含雨图像小波变换系数的去雨方法，同时使用了CGAN网络。其中，生成器接收含雨图像的空间域和频率域的输入，然后产生5个候选的去雨图像，然后通过一个深度残差网络来合并这些候选去雨图像，预测出一个去雨图像。并且为了保证图像的视觉质量，还使用了感知损失，这些都与ID-CGAN较为相同。&#xA;创新之处：&#xA;1、提出了一个基于CGAN网络的结合空间域和频率域的去雨方法。&#xA;2、使用感知损失函数来保证去雨图像的质量。&#xA;3、使用了哈尔小波变换得到图像的频率域信息。&#xA;前人工作：&#xA;1、雨纹会造成监控、卫星追踪、自动驾驶等很多问题。&#xA;2、去雨问题看成一种图像分层问题，将含雨图像分离成一个无雨的背景图像和一个雨纹层图像。由于雨条纹具有较高的像素相关性，大部分采用雨图像的空间域。&#xA;3、DDN&#xA;4、JORDER&#xA;5、通过对稀疏或稠密雨图进行分类，在矩阵分解框架中对雨纹进行建模。&#xA;6、ID-CGAN&#xA;7、DID-MDN&#xA;以上所说，都是利用雨图的空间域信息基于高像素相关性的存在。&#xA;8、Shen，也就是下面的启发论文，从相同的雨天图像使用深度CNN网络，利用了哈尔小波和暗通道先验的概念来预测去雨图像的小波系数。&#xA;在此基础上，本文发现发现小波子带更适合预测雨纹图，如果在雨纹图的空间域特征的基础上，向网络提供这些频域线索，可以取得显著的改善。&#xA;网络结构：&#xA;图a 为小波子带LH、HL、HH.&#xA;图b 为网络的整体结构，主要分为生成器和判别器两块。&#xA;具体实现：&#xA;1、颜色空间选取&#xA;更理想的颜色空间为YCbCr ,与RGB颜色空间不同，YCbCr是去相关的。&#xA;由于雨纹噪声的伪周期加性和高频特性，对得到的不同颜色的条纹 Cb / Y-B和Cr / Y-R进行平滑处理，只在亮度通道中保留噪声。&#xA;因此，提出的方法只在Y通道去除雨纹。&#xA;该模型除了空间域特征外，还提供了频率域特征作为输入。&#xA;虽然从空间到频域的图像变换通常会破坏像素相关性，这给CNN的使用带来了挑战，但是离散小波变换，更具体的说是Haar小波，在一定程度上保持了图像的空间相关性。&#xA;小波变换：&#xA;小波变换将二维离散信号(如图像)分解成四个强调图像分辨率的子带。&#xA;其中，近似子带LL表示图像的背景细节，子带LH表示沿y轴变化，HL表示沿x轴变化，HH表示对角线细节变化。&#xA;通常采用LL子带的二进划分进行细节分析。然而，随着大多数背景推断的消除，子带LH, HL和HH保存了关于雨条纹的各种信息。因此，这些子带更适合预测雨纹图，而不是直接将雨图像的亮度通道映射到雨纹图。其余有用的背景细节保留在雨图的亮度通道中，并与选定的小波子带一起作为输入。&#xA;即输入 = 选定的小波子带 + 保留背景细节的雨图亮度通道&#xA;———–&amp;gt;&#xA;将雨图转换到YCbCr 空间。IY表示其亮度通道。&#xA;四个小波子带分别为：近似子带LL，水平子带LH，垂直子带HL，对角子带HH&#xA;同时，子带Wh IY, WIvY, WIdY在空间上被放大了2倍。&#xA;目标函数：&#xA;2、生成器网络&#xA;生成器的目的是利用含雨图像的空间域和频域来学习多幅候选去雨图像。&#xA;如图所示，生成器部分由四个独立的模块组成，分别是P1，P2，P3，P4。&#xA;P1接收INY作为输入，处理空间域的线索。P2，3，4分别接收图中三个W作为输入，处理频率域。&#xA;其中，P1模块由子网络S-Net组成，S-Net包含六个3×3的卷积层，空域步长1×1，每层分别有4，8，16，32，64，1个滤波器。同时，每层有BN（助快速收敛）+ReLU激活函数。&#xA;P1是使用含雨图像的空间特征生成候选的清晰图像C1。&#xA;P2,P3,P4模块由子网络F-Net组成，F-Net包含四个3×3的卷积层，空域步长1×1，每层分别有4，8，16，1个滤波器。同时，每层有BN（助快速收敛）+ReLU激活函数。&#xA;P2，P3和P4模块是利用更适合生成雨图的小波子带LH、HL和HH中的线索，来输出中间雨图Rh、Rv和Rd。&#xA;然后将生成的中间雨图串接之后输入一个十层的ResNet进一步细化生成一个合成的雨图Rmerged。&#xA;再之后，生成候选的清晰图像。&#xA;C2 = INY – R merged.</description>
+    </item>
+  </channel>
+</rss>

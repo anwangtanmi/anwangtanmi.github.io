@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>android on 暗网探秘</title>
+    <link>https://anwangtanmi.github.io/tags/android/</link>
+    <description>Recent content in android on 暗网探秘</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 21 Jul 2017 16:18:13 +0800</lastBuildDate>
+    <atom:link href="https://anwangtanmi.github.io/tags/android/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Android_PopupWindow</title>
+      <link>https://anwangtanmi.github.io/posts/e0709c87f3eece9a028501a10c0d85bc/</link>
+      <pubDate>Fri, 21 Jul 2017 16:18:13 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/e0709c87f3eece9a028501a10c0d85bc/</guid>
+      <description> PopupWindow 不同于其他对话框—&amp;gt;Dialog对话框弹出后，主界面变暗并且无法操作，无法获取焦点 PopupWindow对话框弹出后主界面仍然可以获取焦点&#xA;创建和Dialog类似 ①、xml中自定义创建pop窗体的布局 ②、创建自定义PopupWindow类 ③、调用 </description>
+    </item>
+    <item>
+      <title>最近很火的OkHttp剥洋葱系列</title>
+      <link>https://anwangtanmi.github.io/posts/83a4b961cd9973706589a119f63e01c3/</link>
+      <pubDate>Mon, 31 Oct 2016 14:35:24 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/83a4b961cd9973706589a119f63e01c3/</guid>
+      <description>最近很火的OkHttp剥洋葱系列 最近因为Retrofit组合Rxjava系列火的不得了，我也是最近事情较少所以好好研究了一下这种组合。如果你不了解Retrofit你肯定会问跟我们今天说的OkHttp有什么关系：Retrofit内部使用OkHttp实现。当然如果只是因为Retrofit，那我们完全没有必要专门拿出一篇文章来写，毕竟安卓4.4开始Google开始将OkHttp整合到系统里面，为什么要整合OkHttp呢？我们来分析下。&#xA;首先列出来几个常用的请求框架吧： 1.HttpURLConnection 这个安卓自带的请求框架应该没什么好说了，总结一下就一个字 繁。当然它也是有优势的，身为基础的请求框架 可塑性很强。基本可以满足你开发的需求，但是代码冗余。 2.Volley 这个框架是我比较常用的，自Volley发布以来一直受大量程序旺的追捧，当然我也是其中一个旺。相比其他框架Volley采用链式请求，代码清晰简介易配置，而且解决了activity消失返回数据的处理问题。实为居家旅行必备良药。但是封装的越完善可塑性就越差，对于一个新手来说，修改Volley请求那叫一个苦逼，别问我为什么。 3.OkHttp 这个框架相比HttpURLConnection封装的要好一些，相比于Volley可塑性那是相当的好。 针对可塑性：HttpURLConnection&amp;gt;OkHttp&amp;gt;Volley 针对简易性：Volley&amp;gt;Okhttp&amp;gt;HttpURLConnection&#xA;究竟要用那个框架完全取决于你的项目需求。这里仅仅抛砖引玉&#xA;Android studio请引入（强烈建议使用AS）：&#xA;compile &#39;com.squareup.okhttp:okhttp:2.4.0&#39; 一，get请求 废话不多说先上代码&#xA;OkHttpClient client = new OkHttpClient(); //创建请求可以编辑请求的头 体 等 具体看类代码 Request request = new Request.Builder() .url(&#34;&#34;) .addHeader(&#34;&#34;, &#34;&#34;) .cacheControl(null) .build(); Call call = client.newCall(request); //将线程加入调度，等待结果返回，注意回调函数运行在线程中 call.enqueue(new Callback() { @Override public void onFailure(Request request, IOException e) { } @Override public void onResponse(Response response) throws IOException { response.isSuccessful();//是否成功 response.body().string();//返回参数 response.body().byteStream();//获取流输入 } }); call.</description>
+    </item>
+    <item>
+      <title>android surfaceview播放视频前,出现黑屏</title>
+      <link>https://anwangtanmi.github.io/posts/9760bde15c46b6727f6c643f79625256/</link>
+      <pubDate>Tue, 12 Jan 2016 08:40:56 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/9760bde15c46b6727f6c643f79625256/</guid>
+      <description> 问下，surfaceview播放视频前，总是黑屏2秒钟，就显示画面，有谁碰到过么 ？ 回答1：那是加载啊 缓冲buffer100% 。 回答2： 这是正常情况.. 回答3：我们是还没有播放的情况下,先实现图片在上面,这样就看不出来了 回答4：原因是 Activity加载布局后，才开始加载surfaceview，其他布局都加载好了，但是sur就黑屏2秒 回答5：不光是你播放的时候会黑屏,轮循播放每次开始的时候都会有 提问：当一模一样的图片放在survuew位置？我也试过，还是黑屏 提问：今天经理要我消除黑屏，我查了好多资料都实现不了 回答：提取第一帧图片就好了 提问：怎么提取 回答：用一个ImageView先覆盖在surfaceVIew的上面 Bitmap bitmap = ThumbnailUtils.createVideoThumbnail(videoPath, Images.Thumbnails.FULL_SCREEN_KIND);&#xA;看你是弄小图还是大图.修改下参数就可以了&#xA;你不要把图片弄在SurfaceView中显示,就在ImageView中显示就好了啊 </description>
+    </item>
+    <item>
+      <title>使用adb解锁</title>
+      <link>https://anwangtanmi.github.io/posts/2b7af8c8674921109b067c2fad1dd2fd/</link>
+      <pubDate>Tue, 08 Sep 2015 13:08:40 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/2b7af8c8674921109b067c2fad1dd2fd/</guid>
+      <description>手机锁屏忘记密码，可以通过adb进行解屏安全不丢失东西&#xA;1)下载adb.zip,并解压到D盘&#xA;2)通过dos进入d盘的adb目录下，cmd 输入D:\adb”并回车，然后输入”D:”回车;&#xA;3)输入”adb shell”并回车&#xA;4)输入”su”并回车&#xA;5)输入”cd data/system”&#xA;6)输入”ls”查看system目录下的文件&#xA;7)看到有一个”password.key”,输入“rm password.key”删除此文件;&#xA;8)重启手机就可以了&#xA;当然了还可以通过刷机、或双清来解决，但是我觉得通过adb才是安全的&#xA;adb工具下载地址：http://download.csdn.net/detail/niuba123456/9088571&#xA;﻿﻿</description>
+    </item>
+    <item>
+      <title>android 设备在设置节能模式的情况下 调用 Toast 会 唤醒屏幕 突然变亮</title>
+      <link>https://anwangtanmi.github.io/posts/00ceed7243c79292f04380588de71785/</link>
+      <pubDate>Thu, 16 Jul 2015 16:27:44 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/00ceed7243c79292f04380588de71785/</guid>
+      <description>最近在开发中遇到题目所说的问题 特此记录一下&#xA;首先，设备设置从不休眠，设置节能模式为15秒（即：15秒后设备亮度变暗）&#xA;然后，进入我们开发的应用，在我们开发的应用中会定时执行某项上传任务，当网络未连接时，会提示用户 “网络未连接，请检查网络”&#xA;如果用 Toast.makeText(NetWorkErrorActivity.this, “网络未连接，请检查网络”,Toast.LENGTH_SHORT).show(); 这样提示的话&#xA;会唤醒屏幕 ，因为会定时执行任务，所以每次提示后都会唤醒屏幕 到时耗电&#xA;所以可以换用AlertDialog 方式提示</description>
+    </item>
+    <item>
+      <title>输入WIFI密码，连接按钮显示为灰色</title>
+      <link>https://anwangtanmi.github.io/posts/06012ca1bf6675564371a8e7f86a1adf/</link>
+      <pubDate>Mon, 21 Jan 2013 14:23:02 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/06012ca1bf6675564371a8e7f86a1adf/</guid>
+      <description>问题描述：&#xA;在手机连接WIFI的时候，输入密码后“连接”仍是灰色显示，只有当输入&amp;gt;=8 位的时候“连接”按钮才能正常按下。&#xA;手机系统为:android 4.0&#xA;wifi密码是：7位&#xA;原因找到了，就像上文提到的，WIFI密码必须&amp;gt;=8位。&#xA;可参考一下：&#xA;http://en.wikipedia.org/wiki/Wi-Fi_Protected_Access#Security_.26_Insecurity_in_pre-shared_key_mode</description>
+    </item>
+    <item>
+      <title>Android–Day01</title>
+      <link>https://anwangtanmi.github.io/posts/9053ded286d20b5855dc2cb6f17affb3/</link>
+      <pubDate>Sun, 16 Sep 2012 11:43:03 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/9053ded286d20b5855dc2cb6f17affb3/</guid>
+      <description>传输协议跟传输速度&#xA;2G GPRS 20~30kB&#xA;2.5G EDGE 40~70kb&#xA;3G HSDPA 7.2M/s adsl&#xA;4G 16M/s 光纤.&#xA;95M 每个基站的速度&#xA;中国电信明推3G 暗推wifi&#xA;乐phone 乐os&#xA;阿里云 android 移动 ophone&#xA;其实上面&#xA;的都是android系统&#xA;家庭智能开发&#xA;ipv6 家庭网关:&#xA;home gateway.&#xA;dalvik 虚拟机 google 公司根据sun公司的规范&#xA;自己重新实现的java虚拟机.&#xA;jvm工作方式&#xA;.java -&amp;gt; .class -&amp;gt;.jar&#xA;dalvik 工作方式&#xA;.java -&amp;gt; .class -&amp;gt; 优化.dex -&amp;gt;&#xA;SDK : standard develope kits&#xA;JDK : java develop kits&#xA;android-sdk-windows.zip 开发包 sdk是分版本的 最新的版本 r20的版本&#xA;adt android develop kits eclipse的一个插件.</description>
+    </item>
+    <item>
+      <title>手机阅读类软件的36种配色方案</title>
+      <link>https://anwangtanmi.github.io/posts/ff28a93f49bc9efd4c6d2368eb737e13/</link>
+      <pubDate>Fri, 13 Apr 2012 09:09:15 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/ff28a93f49bc9efd4c6d2368eb737e13/</guid>
+      <description>我最近在写一个 Android 程序，主要以显示特定文本内容为主，所以颜色的搭配、界面的舒适就比较重要。于是，我根据网络上流传的一些配色讨论和常见手机软件的配色效果，整理了一些比较成功的配色图样，主要可以分为暗、中、亮三大类，适用于手机显示的夜间模式、普通模式与强光模式。 我希望各位朋友能够在评论中指出自己认为最适当的10种方案，以便让我的软件中借鉴采用。由于对色彩学不熟悉，前景背景的搭配也不一定适当，我更希望大家能提出一些更好的配色方案。&#xA;这是方案 1&#xA;多套配色方案，看书舒适又润眼&#xA;背景：#262626&#xA;前景：#ccffff 这是方案 2&#xA;多套配色方案，看书舒适又润眼&#xA;背景：#100a0b&#xA;前景：#726866 这是方案 3&#xA;多套配色方案，看书舒适又润眼&#xA;背景：#2f2f2f&#xA;前景：#ffffcc 这是方案 4&#xA;多套配色方案，看书舒适又润眼&#xA;背景：#330000&#xA;前景：#ffffff 这是方案 5&#xA;多套配色方案，看书舒适又润眼&#xA;背景：#330000&#xA;前景：#0ac200 这是方案 6&#xA;多套配色方案，看书舒适又润眼&#xA;背景：#303000&#xA;前景：#cccaa1 这是方案 7&#xA;多套配色方案，看书舒适又润眼&#xA;背景：#4b2c23&#xA;前景：#ccffff 这是方案 8&#xA;多套配色方案，看书舒适又润眼&#xA;背景：#4a4a4a&#xA;前景：#ccffff 这是方案 9&#xA;多套配色方案，看书舒适又润眼&#xA;背景：#360e38&#xA;前景：#ccffff 这是方案 10&#xA;多套配色方案，看书舒适又润眼&#xA;背景：#330033&#xA;前景：#ffffff 这是方案 11 典雅&#xA;多套配色方案，看书舒适又润眼&#xA;背景：#522c54&#xA;前景：#ececa0 这是方案 12 典雅&#xA;多套配色方案，看书舒适又润眼&#xA;背景：#224800&#xA;前景：#ccffff 这是方案 13 时尚</description>
+    </item>
+    <item>
+      <title>手,机,暗,码(未测试，用者谨慎)（转）</title>
+      <link>https://anwangtanmi.github.io/posts/442ce5ea39a96104ed466d4ae11d1710/</link>
+      <pubDate>Thu, 28 Jul 2011 15:41:47 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/442ce5ea39a96104ed466d4ae11d1710/</guid>
+      <description>不同厂商的手机都会隐藏，独特的代码，用来查看系统及固件版本，或者进行硬件的测试，当然Android 手机也不例外，除了好像计算机一样能显示更详细的手机信息外，更可重设为原厂设定，更新相机韧体等。但部份代码要谨慎使用，因为可能令手机失去原有的功能， 笔者只是网络转载，出现问题一概恕不负责。&#xA;*#*#4636#*#* 显示手机信息、电池信息、电池记录、使用统计数据、WiFi 信息&#xA;上面这条为乐Phone经常用到的，只要在电话拨号的地方输入即可。&#xA;*#*#7780#*#* 重设为原厂设定，不会删除预设程序，及SD 卡档案。&#xA;*2767*3855# 重设为原厂设定，会删除SD 卡所有档案。&#xA;*#*#34971539#*#* 显示相机相机韧体版本，或更新相机韧体&#xA;*#*#273283*255*663282*#*#* 开启一个能让你备份媒体文件的地方，例如相片、声音及影片等&#xA;*#*#197328640#*#* 启动服务模式，可以测试手机部分设置及更改设定&#xA;*#*#232339#*#*或 *#*#526#*#* 或 *#*#528#*#* – WLAN 测试&#xA;*#*#232338#*#*– 显示WiFi MAC 地址&#xA;*#*#1472365#*#*– GPS 测试&#xA;*#*#1575#*#*– 其它GPS 测试&#xA;*#*#232331#*#*– 蓝牙测试&#xA;*#*#232337#*#– 显示蓝牙装置地址&#xA;*#*#8255#*#*-启动GTalk 服务监视器&#xA;*#*#7594#*#* 当长按关机按钮时，会出现一个切换手机模式的窗口，包括: 静音模式、飞航模式及关机，你可以用以上代码，直接变成关机按钮。&#xA;显示手机韧体的代码&#xA;*#*#4986*2650468#*#*– PDA、Phone、H/W、RFCallDate&#xA;*#*#1234#*#*– PDA 及Phone&#xA;*#*#1111#*#*– FTA SW 版本&#xA;*#*#2222#*#*– FTA HW 版本 *#*#44336#*#*– PDA 、Phone、CSC、Build Time、Changelist number&#xA;各项硬件测试&#xA;*#*#0283#*#*– Packet Loopback&#xA;*#*#0*#*#*– LCD 测试</description>
+    </item>
+    <item>
+      <title>Android电源管理</title>
+      <link>https://anwangtanmi.github.io/posts/c6dff486ce0787bb7e75e52381634b6a/</link>
+      <pubDate>Thu, 19 Nov 2009 18:36:00 +0800</pubDate>
+      <guid>https://anwangtanmi.github.io/posts/c6dff486ce0787bb7e75e52381634b6a/</guid>
+      <description>Android电源管理&#xA;一、 相关概念&#xA;1. 出于节电的需要，一般应用在用户一段时间无操作的情况下屏幕变暗，然后进后休眠状态&#xA;2. 用户只能在”设置-&amp;gt;声音和显示”中设置所有应用默认的屏幕亮度和进行待机的时间&#xA;3. 电源管理的实现分内核应用两部分，通过下面介绍的接口，我们可以设置应用程序的电源管理，以控制与其休眠相关的状态（是否需要进入休眠，调整cpu频率，键盘灯的开关，屏幕的亮暗等）&#xA;二、 设置电源管理常用的几种状态&#xA;PARTIAL_WAKE_LOCK 屏幕关，键盘灯关，不休眠&#xA;SCREEN_MID_WAKE_LOCK 屏幕灰，键盘灯关，不休眠&#xA;SCREEN_BRIGHT_WEEK_LOCK 屏幕亮，键盘灯关，不休眠&#xA;FULL_WAKE_LOCK 屏幕亮，键盘灯亮，不休眠&#xA;三、 使用电源管理注意事项&#xA;1. 可在onCreate时设置该界面的电源管理，在onDestroy时取消设置&#xA;2. 可在onResume时设置该界面的电源管理，在onPause时取消设置&#xA;3. 注意设置是以Activity为单位，不是以应用为单位&#xA;4. 注意在AndroidManifest.xml中声明该应用有设置电源管理的权限&#xA;5. 注意加锁解锁要成对出现&#xA;6. 注意多个用途最好用多个锁，不要一锁多用，以免出错&#xA;7. 注意对运行在后台和异常时对锁的处理&#xA;8. 注意在网络连接或传输时最好加锁，以免传输被中断&#xA;9. 注意加锁以保证程序逻辑&#xA;四、 代码举例&#xA;1. 源码修改&#xA;1) 引入电源管理包，以使用相关类&#xA;import android.os.PowerManager;&#xA;2) 类中加入变量&#xA;PowerManager.WakeLock mWakeLock;&#xA;3) 修改onCreate&#xA;public void onCreate(Bundle savedInstanceState) {&#xA;super.onCreate(savedInstanceState);&#xA;PowerManager pm =&#xA;(PowerManager) getSystemService(Context.POWER_SERVICE); mWakeLock = pm.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK, “XYTEST”); mWakeLock.acquire(); }</description>
+    </item>
+  </channel>
+</rss>
